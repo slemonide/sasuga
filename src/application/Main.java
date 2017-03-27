@@ -2,9 +2,9 @@ package application;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
 /**
@@ -14,6 +14,8 @@ import com.jme3.scene.shape.Box;
  */
 public class Main extends SimpleApplication {
 
+    private static final int MAX_NODES = 100 * 100 * 2;
+
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
@@ -21,14 +23,21 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        Box b = new Box(1, 1, 1);
-        Geometry geom = new Geometry("Box", b);
+        for (int i = 0; i < MAX_NODES; i++) {
+            Box b = new Box(0.1f, 0.1f, 0.1f);
+            Spatial node = new Geometry("Box", b);
 
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
+            Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+            node.setMaterial(mat);
 
-        rootNode.attachChild(geom);
+            float x = (float) (100 * Math.random());
+            float y = (float) (100 * Math.random());
+            float z = (float) (100 * Math.random());
+
+            node.setLocalTranslation(x, y, z);
+
+            rootNode.attachChild(node);
+        }
     }
 
     @Override
