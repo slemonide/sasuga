@@ -1,0 +1,11 @@
+graph TD;
+    ServerApp     ---     ChunkManager;
+    ServerApp     ---     ClientManager;
+    ServerApp     -->     DataSaver;
+    ChunkManager  --> |*| Chunk;
+    Chunk         -->     Trail;
+    Trail         --> |2| Trail;
+    Trail         --> |*| Node;
+    Chunk         --> |3| Position
+    Node          -->     Position
+    ClientManager --> |*| Client;
