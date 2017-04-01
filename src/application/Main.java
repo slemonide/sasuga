@@ -2,21 +2,18 @@ package application;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
-import com.jme3.renderer.Camera;
+import com.jme3.math.Quaternion;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
-/**
- * This is the Server Class of your Game. You should only do initialization here.
- * Move your Logic into AppStates or Controls
- * @author normenhansen
- */
+import static java.lang.Math.*;
+
 public class Main extends SimpleApplication {
 
-    private static final int MAX_NODES = 50 * 50 * 2;
-    private static final double MIN_DELAY = 10;
+    private static final int MAX_NODES = 100 * 100 * 2;
+    private static final double MIN_DELAY = 1;
     private double delay;
 
     public static void main(String[] args) {
@@ -27,18 +24,45 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         delay = 0;
+
+        int i;
+        for (i = 0; i < MAX_NODES; i++) {
+            Box b = new Box(0.1f, 0.1f, 0.1f);
+            Spatial node = new Geometry("Box", b);
+
+            Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+            node.setMaterial(mat);
+
+            float x = (float) (100 * random() - 50);
+            float y = (float) (100 * random() - 50);
+            float z = (float) (100 * random() - 50);
+
+            node.setLocalTranslation(x, y, z);
+
+            node.setLocalRotation(new Quaternion((float) (Math.random() * 2 * Math.PI),
+                    (float) (Math.random() * 2 * Math.PI),
+                    (float) (Math.random() * 2 * Math.PI),
+                    (float) (Math.random() * 2 * Math.PI)));
+
+            node.setLocalScale((float) (Math.random() + 0.5),
+                    (float) (Math.random() + 0.5), (float) (Math.random() + 0.5));
+
+            rootNode.attachChild(node);
+        }
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        delay += tpf;
-        if (delay <= MIN_DELAY) {
-            return;
-        }
-        delay = 0;
-
-        rootNode.detachAllChildren();
-
+//        delay += tpf;
+//        if (delay <= MIN_DELAY) {
+//            return;
+//        }
+//        delay = 0;
+//
+//        for (Spatial node : rootNode.getChildren()) {
+//            node.setLocalScale(node.getWorldScale().mult(0.9f));
+//        }
+/*
         for (int i = 0; i < MAX_NODES; i++) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -54,12 +78,11 @@ public class Main extends SimpleApplication {
 
             rootNode.attachChild(node);
         }
+        */
     }
 
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
-
-        rm.setCamera(new Camera(100, 100), true);
     }
 }
