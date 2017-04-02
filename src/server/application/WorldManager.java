@@ -79,7 +79,8 @@ public class WorldManager extends Observable implements Runnable {
     private Set<Cell> growAround(Cell cell) {
         Set<Cell> newCells = new HashSet<Cell>();
 
-        for (Cell neighbourComplementElement : cell.getNeighboursComplement()) {
+        Set<Cell> neighboursComplement = cell.getNeighboursComplement();
+        for (Cell neighbourComplementElement : neighboursComplement) {
             if (neighbourComplementElement.getNeighbours().size() == 3) {
                 newCells.add(neighbourComplementElement);
             }

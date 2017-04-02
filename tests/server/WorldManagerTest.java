@@ -32,7 +32,7 @@ public class WorldManagerTest {
         assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
         Thread thread = new Thread(WorldManager.getInstance());
         thread.start();
-        Thread.sleep(10);
+        Thread.sleep(1000);
         assertEquals(0, WorldManager.getInstance().getCells().size());
         thread.interrupt();
     }
@@ -57,11 +57,12 @@ public class WorldManagerTest {
         WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
         WorldManager.getInstance().add(new Cell(new Vector3(1, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 3);
-        Thread thread = new Thread(WorldManager.getInstance());
-        thread.start();
-        Thread.sleep(1000);
+        //Thread thread = new Thread(WorldManager.getInstance());
+        //thread.start();
+        //Thread.sleep(1000);
+        WorldManager.getInstance().tick();
         assertEquals(0, WorldManager.getInstance().getCells().size());
-        thread.interrupt();
+        //thread.interrupt();
     }
 
     @Test
@@ -70,7 +71,7 @@ public class WorldManagerTest {
         WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
         WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 1)));
         WorldManager.getInstance().tick();
-        assertEquals(5, WorldManager.getInstance().getCells().size());
+        assertEquals(9, WorldManager.getInstance().getCells().size());
         assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
         assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0, 0))));
         assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(-1, 0, 0))));
