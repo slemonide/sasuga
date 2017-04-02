@@ -14,7 +14,7 @@ public class Server {
         PrintStream out = new PrintStream(client.getOutputStream());
         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-        while (true) {
+            while (true) {
             if (in.readLine().equals("PING")) {
                 out.println("PONG");
             } else {

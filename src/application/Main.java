@@ -8,7 +8,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
-import static java.lang.Math.*;
+import static java.lang.Math.random;
 
 public class Main extends SimpleApplication {
 

@@ -11,17 +11,20 @@ Three dimensional cellular automata.
 Denotes a group of nodes whose future state can be computed without the
 need to access other chunks (in general).
 * *nodes* describes nodes in this chunk that was before and that can
-  come after
+  come after (positions are relative)
 * *p1*, *p2*, *p3* are the corners of the bounding box of the chunk
   (changing the order of these corners rotates the chunk)
 
 ### Trail is one of:
-A state of the chunk in terms of its node composition. A future of the
-chunk is computed by accessing the next trail (if chunks don't collide).
-A lot of recomputation can be avoided by reusing trails.
 * * Trail *previous*
   * Trail *next*
 * EmptyTrail
+A state of the chunk in terms of its node composition. A future of the
+chunk is computed by accessing the next trail (if chunks don't collide).
+A lot of recomputation can be avoided by reusing trails.
+
+Accessible methods:
+* next()
 
 ----------
 * *previous* is the previous trail
