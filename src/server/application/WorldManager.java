@@ -73,6 +73,15 @@ public class WorldManager extends Observable implements Runnable {
     }
 
     private void growAround(Cell cell) {
+        for (Cell neighbourComplementElement : cell.getNeighboursComplement()) {
+            tryGrowing(neighbourComplementElement);
+        }
+    }
+
+    private void tryGrowing(Cell cell) {
+        if (cell.getNeighbours().size() == 3) {
+            cells.add(cell);
+        }
     }
 
     private void die() {

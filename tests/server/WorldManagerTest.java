@@ -1,11 +1,13 @@
 package server;
 
-import com.jme3.math.Vector3f;
 import org.junit.Before;
 import org.junit.Test;
 import server.application.Cell;
+import server.application.Vector3;
 import server.application.WorldManager;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class WorldManagerTest {
     @Before
@@ -25,9 +27,9 @@ public class WorldManagerTest {
 
     @Test
     public void testSimpleDie() {
-        WorldManager.getInstance().add(new Cell(new Vector3f(0, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 1);
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3f(0, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
         WorldManager.getInstance().run();
         assertEquals(WorldManager.getInstance().getCells().size(), 0);
     }
