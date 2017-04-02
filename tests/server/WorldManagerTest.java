@@ -26,11 +26,55 @@ public class WorldManagerTest {
     }
 
     @Test
-    public void testSimpleDie() {
+    public void testSimpleDie() throws InterruptedException {
         WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 1);
         assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
-        WorldManager.getInstance().run();
+        Thread thread = new Thread(WorldManager.getInstance());
+        thread.start();
+        Thread.sleep(10);
+        assertEquals(0, WorldManager.getInstance().getCells().size());
+        thread.interrupt();
+    }
+
+    @Test
+    public void testHarderDie() throws InterruptedException {
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 1)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 10, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 10, 1)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 4);
+        Thread thread = new Thread(WorldManager.getInstance());
+        thread.start();
+        Thread.sleep(1000);
         assertEquals(WorldManager.getInstance().getCells().size(), 0);
+        thread.interrupt();
+    }
+
+    @Test
+    public void testAnotherDie() throws InterruptedException {
+        WorldManager.getInstance().add(new Cell(new Vector3(-1, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(1, 0, 0)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 3);
+        Thread thread = new Thread(WorldManager.getInstance());
+        thread.start();
+        Thread.sleep(1000);
+        assertEquals(0, WorldManager.getInstance().getCells().size());
+        thread.interrupt();
+    }
+
+    @Test
+    public void testGrow() {
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, -1)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 1)));
+        WorldManager.getInstance().tick();
+        assertEquals(5, WorldManager.getInstance().getCells().size());
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(-1, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 1, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, -1, 0))));
     }
 }

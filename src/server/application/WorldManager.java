@@ -1,9 +1,6 @@
 package server.application;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Manages chunks
@@ -61,38 +58,43 @@ public class WorldManager extends Observable implements Runnable {
      * If there are 2 or 3 cells around a given cell, cell survives.
      * If there are 0, 1 or more than 3 cells around a given cell, cell dies off
      */
-    private void tick() {
-        grow();
-        die();
+    public void tick() {
+        Set<Cell> toAdd = grow();
+        Set<Cell> toKill = die();
+
+        cells.addAll(toAdd);
+        cells.removeAll(toKill);
     }
 
-    private void grow() {
+    private Set<Cell> grow() {
+        Set<Cell> newCells = new HashSet<Cell>();
+
         for (Cell cell : cells) {
-            growAround(cell);
+            newCells.addAll(growAround(cell));
         }
+
+        return newCells;
     }
 
-    private void growAround(Cell cell) {
+    private Set<Cell> growAround(Cell cell) {
+        Set<Cell> newCells = new HashSet<Cell>();
+
         for (Cell neighbourComplementElement : cell.getNeighboursComplement()) {
-            tryGrowing(neighbourComplementElement);
+            if (neighbourComplementElement.getNeighbours().size() == 3) {
+                newCells.add(neighbourComplementElement);
+            }
         }
+
+        return newCells;
     }
 
-    private void tryGrowing(Cell cell) {
-        if (cell.getNeighbours().size() == 3) {
-            cells.add(cell);
-        }
-    }
-
-    private void die() {
+    private Set<Cell> die() {
+        Set<Cell> toKill = new HashSet<Cell>();
         for (Cell cell : cells) {
-            tryKilling(cell);
+            if (cell.getNeighbours().size() <= 1 || cell.getNeighbours().size() > 3) {
+                toKill.add(cell);
+            }
         }
-    }
-
-    private void tryKilling(Cell cell) {
-        if (cell.getNeighbours().size() <= 1 || cell.getNeighbours().size() > 3) {
-            cells.remove(cell);
-        }
+        return toKill;
     }
 }

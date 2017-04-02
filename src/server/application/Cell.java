@@ -34,7 +34,7 @@ public class Cell {
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {
-                    if (x != 0 && y != 0 && z != 0) {
+                    if (x != 0 || y != 0 || z != 0) {
                         if (WorldManager.getInstance().getCells().contains(new Cell(this.position.add(x, y, z)))) {
                             neighbours.add(new Cell(this.position.add(x, y, z)));
                         }
@@ -51,7 +51,7 @@ public class Cell {
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {
-                    if (x != 0 && y != 0 && z != 0) {
+                    if (x != 0 || y != 0 || z != 0) {
                         if (!WorldManager.getInstance().getCells().contains(new Cell(this.position.add(x, y, z)))) {
                             neighboursComplement.add(new Cell(this.position.add(x, y, z)));
                         }
