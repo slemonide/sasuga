@@ -2,6 +2,7 @@ package server.ui;
 
 import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;
+import javafx.application.Application;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 
@@ -30,5 +31,9 @@ public class ServerApp {
         System.out.println("OK");
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
+        WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
+
+        // Launch graphGUI
+        Application.launch(PopulationGraphGUI.class, args);
     }
 }
