@@ -1,6 +1,10 @@
 # JLife
 Three dimensional cellular automata.
 
+## Usage:
+Currently, only server is (partially) implemented. To run it, execute *src/server/ui/ServerApp.java*.
+Also, a small demo of the 3D gui is awailable at *src/application/Main.java*. It works on its own, you don't have to start a server to run it.
+
 ## Current Progress:
 * Under development
 
