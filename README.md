@@ -1,6 +1,9 @@
 # JLife
 Three dimensional cellular automata.
 
+## Current Progress:
+* Under development
+
 ### Chunk is:
 * Set<Trail< Node>> *nodes*
 * Position *p1*
