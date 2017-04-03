@@ -1,4 +1,4 @@
-package server.application;
+package server.model;
 
 import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;

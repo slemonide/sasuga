@@ -4,9 +4,9 @@ import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;
 import org.junit.Before;
 import org.junit.Test;
-import server.application.Cell;
-import server.application.WorldGenerator;
-import server.application.WorldManager;
+import server.model.Cell;
+import server.model.WorldGenerator;
+import server.model.WorldManager;
 
 import java.util.Set;
 

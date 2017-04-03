@@ -1,4 +1,4 @@
-package server.application;
+package server.ui;
 
 import java.io.*;
 import java.net.*;

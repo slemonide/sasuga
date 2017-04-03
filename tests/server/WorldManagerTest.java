@@ -2,9 +2,9 @@ package server;
 
 import org.junit.Before;
 import org.junit.Test;
-import server.application.Cell;
-import server.application.Vector3;
-import server.application.WorldManager;
+import server.model.Cell;
+import server.model.Vector3;
+import server.model.WorldManager;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

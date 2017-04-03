@@ -1,4 +1,4 @@
-package server.application;
+package server.model;
 
 import java.util.*;
 
@@ -10,15 +10,14 @@ import java.util.*;
  * Manages world
  */
 public class WorldManager extends Observable implements Runnable {
+    private static final int UPPER_CELL_BOUND = 4;
+    private static final int LOWER_CELL_BOUND = 1;
     private static WorldManager instance;
-    private Set<Cell> cells;
+    private Set<Cell> cells = new HashSet<Cell>();
+    private int tickTime = 0;
+    private int generation = 0;
 
-    /**
-     * Creates a new world with no cells in it
-     */
-    private WorldManager() {
-        cells = new HashSet<Cell>();
-    }
+    private WorldManager() {}
 
     /**
      * Singleton pattern
@@ -81,8 +80,21 @@ public class WorldManager extends Observable implements Runnable {
         Set<Cell> toAdd = grow();
         Set<Cell> toKill = die();
 
+        // tickTime measurement
+        long startTime = System.nanoTime();
+
         cells.addAll(toAdd);
         cells.removeAll(toKill);
+
+        // tickTime measurement
+        long endTime = System.nanoTime();
+        tickTime = (int) (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+
+        // update generation
+        generation++;
+
+        setChanged();
+        notifyObservers("tick");
     }
 
     /**
@@ -107,7 +119,7 @@ public class WorldManager extends Observable implements Runnable {
 
         Set<Cell> neighboursComplement = cell.getNeighboursComplement();
         for (Cell neighbourComplementElement : neighboursComplement) {
-            if (neighbourComplementElement.getNeighbours().size() == 3) {
+            if (neighbourComplementElement.getNeighbours().size() == UPPER_CELL_BOUND) {
                 newCells.add(neighbourComplementElement);
             }
         }
@@ -121,10 +133,26 @@ public class WorldManager extends Observable implements Runnable {
     private Set<Cell> die() {
         Set<Cell> toKill = new HashSet<Cell>();
         for (Cell cell : cells) {
-            if (cell.getNeighbours().size() <= 1 || cell.getNeighbours().size() > 3) {
+            if (cell.getNeighbours().size() <= LOWER_CELL_BOUND || cell.getNeighbours().size() > UPPER_CELL_BOUND) {
                 toKill.add(cell);
             }
         }
         return toKill;
+    }
+
+    /**
+     * Produce the time one tick takes
+     * @return time in ms
+     */
+    public int getTickTime() {
+        return tickTime;
+    }
+
+    /**
+     * Produce the current generation
+     * @return generation
+     */
+    public int getGeneration() {
+        return generation;
     }
 }
