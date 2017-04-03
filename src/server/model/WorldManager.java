@@ -10,7 +10,7 @@ import java.util.*;
  * Manages world
  */
 public class WorldManager extends Observable implements Runnable {
-    private static final int UPPER_CELL_BOUND = 4;
+    private static final int UPPER_CELL_BOUND = 9;
     private static final int LOWER_CELL_BOUND = 1;
     private static WorldManager instance;
     private Set<Cell> cells = new HashSet<Cell>();
