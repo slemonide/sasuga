@@ -9,8 +9,17 @@ package server.application;
  * A vector in 3D Euclidean space
  */
 public class Vector3 {
+    /**
+     * x component
+     */
     public final int x;
+    /**
+     * y component
+     */
     public final int y;
+    /**
+     * z component
+     */
     public final int z;
 
     /**

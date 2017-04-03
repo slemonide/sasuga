@@ -9,6 +9,13 @@ import server.application.WorldManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * @author      Danil Platonov <slemonide@gmail.com>
+ * @version     0.1
+ * @since       0.1
+ *
+ * Test for WorldManager
+ */
 public class WorldManagerTest {
     @Before
     public void runBefore() {

@@ -11,6 +11,9 @@ import java.util.Set;
  * Represents an alive node.
  */
 public class Cell {
+    /**
+     * Position of this cell
+     */
     private Vector3 position;
 
     /**

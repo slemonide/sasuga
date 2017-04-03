@@ -3,7 +3,7 @@ package server.application;
 import java.io.*;
 import java.net.*;
 
-public class Server {
+public class ServerNetworkingExample {
     public static void main(String a[]) throws IOException {
         int port = 4444;
         Socket client;
