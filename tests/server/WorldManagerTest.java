@@ -26,6 +26,12 @@ public class WorldManagerTest {
     }
 
     @Test
+    public void testTickNoCells() {
+        WorldManager.getInstance().tick();
+        assertTrue(WorldManager.getInstance().getCells().isEmpty());
+    }
+
+    @Test
     public void testSimpleDie() throws InterruptedException {
         WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 1);
@@ -52,17 +58,44 @@ public class WorldManagerTest {
     }
 
     @Test
-    public void testAnotherDie() throws InterruptedException {
+    public void testDieTwoCellsOneCellAPart() {
         WorldManager.getInstance().add(new Cell(new Vector3(-1, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
         WorldManager.getInstance().add(new Cell(new Vector3(1, 0, 0)));
-        assertEquals(WorldManager.getInstance().getCells().size(), 3);
-        //Thread thread = new Thread(WorldManager.getInstance());
-        //thread.start();
-        //Thread.sleep(1000);
+        assertEquals(WorldManager.getInstance().getCells().size(), 2);
         WorldManager.getInstance().tick();
         assertEquals(0, WorldManager.getInstance().getCells().size());
-        //thread.interrupt();
+    }
+
+    @Test
+    public void testDieTwoCellsOneCellAPartThread() throws InterruptedException {
+        WorldManager.getInstance().add(new Cell(new Vector3(-1, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(1, 0, 0)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 2);
+        Thread thread = new Thread(WorldManager.getInstance());
+        thread.start();
+        Thread.sleep(1000);
+        assertEquals(0, WorldManager.getInstance().getCells().size());
+        thread.interrupt();
+    }
+
+    @Test
+    public void testDieTwoCellsFarApart() {
+        WorldManager.getInstance().add(new Cell(new Vector3(-2, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(2, 0, 0)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 2);
+        Thread thread = new Thread(WorldManager.getInstance());
+        WorldManager.getInstance().tick();
+        assertEquals(0, WorldManager.getInstance().getCells().size());
+    }
+
+    @Test
+    public void testDieTwoCellsTwoApart() {
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector3(3, 0, 0)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 2);
+        Thread thread = new Thread(WorldManager.getInstance());
+        WorldManager.getInstance().tick();
+        assertEquals(0, WorldManager.getInstance().getCells().size());
     }
 
     @Test
