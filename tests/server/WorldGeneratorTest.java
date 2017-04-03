@@ -4,12 +4,13 @@ import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;
 import org.junit.Before;
 import org.junit.Test;
+import server.application.Cell;
 import server.application.WorldGenerator;
 import server.application.WorldManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import java.util.Set;
+
+import static org.junit.Assert.*;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -108,7 +109,7 @@ public class WorldGeneratorTest {
     @Test
     public void testGenerateOneDimensionX() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.5,100,1,1);
-        assertEquals(WorldManager.getInstance().getCells().size(), 50);
+        assertEquals(50, WorldManager.getInstance().getCells().size());
     }
 
     @Test
@@ -143,7 +144,38 @@ public class WorldGeneratorTest {
 
     @Test
     public void testGenerateThreeDimensionsXYZ() throws InvalidDensityException, InvalidDimensionException {
-        WorldGenerator.generate(0.9321,100,200,300);
-        assertEquals(WorldManager.getInstance().getCells().size(), (int) (0.9321 * 100 * 200 * 300));
+        WorldGenerator.generate(0.9321,100,50,150);
+        assertEquals(WorldManager.getInstance().getCells().size(), (int) (0.9321 * 100 * 50 * 150));
+    }
+
+    @Test
+    public void testGenerateBoundaries() throws InvalidDensityException, InvalidDimensionException {
+        WorldGenerator.generate(0.9321,100,50,150);
+        int maxX, minX, maxY, minY, maxZ, minZ;
+        maxX = minX = maxY = minY = maxZ = minZ = 0;
+
+        Set<Cell> cells = WorldManager.getInstance().getCells();
+
+        for (Cell cell : cells) {
+            int x = cell.getPosition().x;
+            int y = cell.getPosition().y;
+            int z = cell.getPosition().z;
+
+            maxX = (x > maxX) ? x : maxX;
+            maxY = (y > maxY) ? y : maxY;
+            maxZ = (z > maxZ) ? z : maxZ;
+
+            minX = (x < minX) ? x : minX;
+            minY = (y < minY) ? y : minY;
+            minZ = (z < minZ) ? z : minZ;
+        }
+
+        assertTrue(maxX <= 50);
+        assertTrue(maxY <= 25);
+        assertTrue(maxZ <= 175);
+
+        assertTrue(minX >= -50);
+        assertTrue(minY >= -25);
+        assertTrue(minZ >= -175);
     }
 }
