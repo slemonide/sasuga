@@ -26,6 +26,16 @@ public class WorldManagerTest {
     }
 
     @Test
+    public void testRemoveCell() {
+        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 1);
+
+
+        WorldManager.getInstance().remove(new Cell(new Vector3(0, 0, 0)));
+        assertEquals(WorldManager.getInstance().getCells().size(), 0);
+    }
+
+    @Test
     public void testTickNoCells() {
         WorldManager.getInstance().tick();
         assertTrue(WorldManager.getInstance().getCells().isEmpty());

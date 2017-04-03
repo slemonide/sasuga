@@ -3,19 +3,26 @@ package server.application;
 import java.util.*;
 
 /**
- * Manages chunks
+ * @author      Danil Platonov <slemonide@gmail.com>
+ * @version     0.1
+ * @since       0.1
+ *
+ * Manages world
  */
 public class WorldManager extends Observable implements Runnable {
     private static WorldManager instance;
     private Set<Cell> cells;
 
+    /**
+     * Creates a new world with no cells in it
+     */
     private WorldManager() {
         cells = new HashSet<Cell>();
     }
 
     /**
      * Singleton pattern
-     * @return
+     * @return instance
      */
     public static WorldManager getInstance() {
         if(instance == null){
@@ -24,33 +31,45 @@ public class WorldManager extends Observable implements Runnable {
         return instance;
     }
 
+    /**
+     * Start time
+     */
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             tick();
         }
     }
 
+    /**
+     * Adds the given cell to the world
+     * @param cell cell to be added
+     */
     public void add(Cell cell) {
         cells.add(cell);
     };
 
+    /**
+     * Remove the given cell from the world
+     * @param cell cell to be removed
+     */
     public void remove(Cell cell) {
         cells.remove(cell);
     }
 
+    /**
+     * Remove all cells
+     */
     public void clear() {
         cells.clear();
     }
 
     /**
      * Produce all of the cells as an unmodifiable list
-     * @return
+     * @return all cells in the world
      */
     public Set<Cell> getCells() {
         return Collections.unmodifiableSet(cells);
     }
-
-
 
     /**
      * Updates the world according to the set rules:
@@ -66,6 +85,9 @@ public class WorldManager extends Observable implements Runnable {
         cells.removeAll(toKill);
     }
 
+    /**
+     * @return set of the cells to be added
+     */
     private Set<Cell> grow() {
         Set<Cell> newCells = new HashSet<Cell>();
 
@@ -76,6 +98,10 @@ public class WorldManager extends Observable implements Runnable {
         return newCells;
     }
 
+    /**
+     * @param cell cell around which to compute next cells to be added
+     * @return cells to be added
+     */
     private Set<Cell> growAround(Cell cell) {
         Set<Cell> newCells = new HashSet<Cell>();
 
@@ -89,6 +115,9 @@ public class WorldManager extends Observable implements Runnable {
         return newCells;
     }
 
+    /**
+     * @return a set of cells to be removed from the world
+     */
     private Set<Cell> die() {
         Set<Cell> toKill = new HashSet<Cell>();
         for (Cell cell : cells) {

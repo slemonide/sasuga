@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * @author      Danil Platonov <slemonide@gmail.com>
+ * @version     0.1
+ * @since       0.1
+ *
  * Represents an alive node.
  */
 public class Cell {
@@ -11,7 +15,7 @@ public class Cell {
 
     /**
      * Create a node at the given position
-     * @param position
+     * @param position position of this node in the global coordinates
      */
     public Cell(Vector3 position) {
         this.position = position;
@@ -19,7 +23,7 @@ public class Cell {
 
     /**
      * Produce the position of this node
-     * @return
+     * @return position
      */
     public Vector3 getPosition() {
         return position;
@@ -27,9 +31,9 @@ public class Cell {
 
     /**
      * Produce the neighbours available so far
-     * @return
+     * @return neighbour cells
      */
-    public Set<Cell> getNeighbours() {
+    Set<Cell> getNeighbours() {
         Set<Cell> neighbours = new HashSet<Cell>();
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
@@ -46,7 +50,11 @@ public class Cell {
         return neighbours;
     }
 
-    public Set<Cell> getNeighboursComplement() {
+    /**
+     * Produce all the possible neighbours minus neighbours available so far
+     * @return complement of the neighbour cells set
+     */
+    Set<Cell> getNeighboursComplement() {
         Set<Cell> neighboursComplement = new HashSet<Cell>();
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
