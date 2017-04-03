@@ -14,7 +14,7 @@ public class WorldManager extends Observable implements Runnable {
     private static final int LOWER_CELL_BOUND = 1;
     private static WorldManager instance;
     private Set<Cell> cells = new HashSet<Cell>();
-    private int tickTime = 0;
+    private long tickTime = 0;
     private int generation = 0;
 
     private WorldManager() {}
@@ -77,18 +77,18 @@ public class WorldManager extends Observable implements Runnable {
      * If there are 0, 1 or more than 3 cells around a given cell, cell dies off
      */
     public void tick() {
-        Set<Cell> toAdd = grow();
-        Set<Cell> toKill = die();
-
         // tickTime measurement
         long startTime = System.nanoTime();
+
+        Set<Cell> toAdd = grow();
+        Set<Cell> toKill = die();
 
         cells.addAll(toAdd);
         cells.removeAll(toKill);
 
         // tickTime measurement
         long endTime = System.nanoTime();
-        tickTime = (int) (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+        tickTime = endTime - startTime;
 
         // update generation
         generation++;
@@ -142,9 +142,9 @@ public class WorldManager extends Observable implements Runnable {
 
     /**
      * Produce the time one tick takes
-     * @return time in ms
+     * @return time in nano seconds
      */
-    public int getTickTime() {
+    public long getTickTime() {
         return tickTime;
     }
 
