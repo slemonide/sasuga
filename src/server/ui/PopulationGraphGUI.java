@@ -4,13 +4,12 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.model.WorldManager;
@@ -19,26 +18,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class PopulationGraphGUI extends Application implements Observer {
-    private static final int MAX_GENERATIONS = 100; // maximum number of generations to be shown
-    private static PopulationGraphGUI instance;
-    private static XYChart.Series dataSeries = new XYChart.Series();
+
+    private LineChart<Number, Number> chart;
+    private XYChart.Series<Number, Number> dataSeries;
+    private NumberAxis generationAxis;
     private Timeline animation;
-    private boolean update = false;
-
-
-    public PopulationGraphGUI() {
-        // create timeline to add new data every 60th of second
-        animation = new Timeline();
-        animation.getKeyFrames()
-                .add(new KeyFrame(Duration.millis(1000),
-                        (ActionEvent actionEvent) -> plotTime()));
-        animation.setCycleCount(Animation.INDEFINITE);
-    }
-
-    private void plotTime() {
-        dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
-                WorldManager.getInstance().getPopulationSize()));
-    }
+    private final int MAX_DATA_POINTS = 60;
+    private static PopulationGraphGUI instance;
 
     /**
      * Singleton pattern
@@ -51,72 +37,72 @@ public class PopulationGraphGUI extends Application implements Observer {
         return instance;
     }
 
-    public void update(Observable o, Object arg) {
-        if (arg.equals("tick")) {
-            //update = true;
-/*
-            dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
-                    WorldManager.getInstance().getPopulationSize()));
+    public PopulationGraphGUI() {
+        // create timeline to add new data every 60th of second
+        animation = new Timeline();
+        animation.getKeyFrames()
+                .add(new KeyFrame(Duration.millis(100),
+                        (ActionEvent actionEvent) -> plotTime()));
+        animation.setCycleCount(Animation.INDEFINITE);
+    }
 
-            // reduce visible data points if there are too many of them
-            if (dataSeries.getData().size() > MAX_GENERATIONS) {
+    public Parent createContent() {
+
+        generationAxis = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
+        final NumberAxis populationAxis = new NumberAxis();
+        chart = new LineChart<>(generationAxis, populationAxis);
+
+        // setup chart
+        chart.setLegendVisible(false);
+        chart.setCreateSymbols(false);
+        chart.setAnimated(false);
+        generationAxis.setLabel("Generation");
+        generationAxis.setForceZeroInRange(false);
+
+        populationAxis.setLabel("Population");
+        populationAxis.setForceZeroInRange(false);
+
+        // add starting data
+        dataSeries = new XYChart.Series<>();
+        dataSeries.setName("Population vs. Generation");
+
+        chart.getData().add(dataSeries);
+
+        return chart;
+    }
+
+    private void plotTime() {
+        dataSeries.getData().add(new XYChart.Data<Number, Number>(WorldManager.getInstance().getGeneration(),
+                WorldManager.getInstance().getPopulationSize()));
+        if (WorldManager.getInstance().getGeneration() > MAX_DATA_POINTS) {
+            generationAxis.setLowerBound(WorldManager.getInstance().getGeneration() - MAX_DATA_POINTS + 1);
+            generationAxis.setUpperBound(WorldManager.getInstance().getGeneration() + 1);
+            if (dataSeries.getData().size() > MAX_DATA_POINTS) {
                 dataSeries.getData().remove(0);
             }
-            */
         }
+    }
+
+    public void play() {
+        animation.play();
+    }
+
+    @Override
+    public void stop() {
+        animation.pause();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setScene(new Scene(createContent()));
         primaryStage.setTitle("Total Population Graph");
-
-        // CHARTS START
-        final NumberAxis generationAxis = new NumberAxis();
-        generationAxis.setForceZeroInRange(false);
-        final NumberAxis populationAxis = new NumberAxis();
-        populationAxis.setForceZeroInRange(false);
-        //defining the axes
-        generationAxis.setLabel("Generation");
-        populationAxis.setLabel("Population");
-        //creating the chart
-        final LineChart<Number,Number> lineChart =
-                new LineChart<Number,Number>(generationAxis,populationAxis);
-
-        lineChart.setTitle("Population vs. Generation");
-
-        lineChart.getData().add(dataSeries);
-        lineChart.setCreateSymbols(false);
-        lineChart.setLegendVisible(false);
-
-        // CHARTS END
-
-        // UPDATE BEGIN
-        Task task = new Task<XYChart.Series>() {
-            @Override public XYChart.Series call() {
-                while (!Thread.currentThread().isInterrupted()) {
-                    if (update) {
-                        dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
-                                WorldManager.getInstance().getPopulationSize()));
-
-                        // reduce visible data points if there are too many of them
-                        if (dataSeries.getData().size() > MAX_GENERATIONS) {
-                            dataSeries.getData().remove(0);
-                        }
-                    }
-                    update = false;
-                }
-                return dataSeries;
-            }
-        };
-        dataSeries.dataProperty().bind(task.valueProperty());
-        new Thread(task).start();
-
-        // UPDATE END
-
-        StackPane root = new StackPane();
-        root.getChildren().add(lineChart);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.setMaximized(true);
         primaryStage.show();
+        primaryStage.setMaximized(true);
+        play();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

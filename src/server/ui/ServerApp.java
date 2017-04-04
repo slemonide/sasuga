@@ -35,8 +35,8 @@ public class ServerApp {
         WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
-        //Application.launch(PopulationGraphGUI.class, args);
-        Application.launch(AnimatedLineChart.class, args);
+        Application.launch(PopulationGraphGUI.class, args);
+        //Application.launch(AnimatedLineChart.class, args);
         //VisualGUI.main(args);
     }
 }
