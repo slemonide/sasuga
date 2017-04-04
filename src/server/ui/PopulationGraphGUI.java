@@ -13,7 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class PopulationGraphGUI extends Application implements Observer {
-    private static final int MAX_GENERATIONS = 200; // maximum number of generations to be shown
+    private static final int MAX_GENERATIONS = 150; // maximum number of generations to be shown
     private static PopulationGraphGUI instance;
     private static XYChart.Series dataSeries = new XYChart.Series();
 
@@ -30,14 +30,16 @@ public class PopulationGraphGUI extends Application implements Observer {
 
     public void update(Observable o, Object arg) {
         if (arg.equals("tick")) {
-                dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
-                        WorldManager.getInstance().getCells().size()));
-                if (dataSeries.getData().size() > MAX_GENERATIONS) {
-                    dataSeries.getData().remove(0);
-                }
+
+            dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
+                    WorldManager.getInstance().getPopulationSize()));
+
+            // reduce visible data points if there are too many of them
+            if (dataSeries.getData().size() > MAX_GENERATIONS) {
+                dataSeries.getData().remove(0);
+            }
         }
     }
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {

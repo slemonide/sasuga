@@ -32,8 +32,10 @@ public class ServerApp {
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
         WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
+        WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
-        // Launch graphGUI
+        // Launch all windows
         Application.launch(PopulationGraphGUI.class, args);
+        //VisualGUI.main(args);
     }
 }

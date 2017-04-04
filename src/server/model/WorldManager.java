@@ -16,6 +16,7 @@ public class WorldManager extends Observable implements Runnable {
     private Set<Cell> cells = new HashSet<Cell>();
     private long tickTime = 0;
     private int generation = 0;
+    private int populationSize = 0;
 
     private WorldManager() {}
 
@@ -45,6 +46,7 @@ public class WorldManager extends Observable implements Runnable {
      */
     public void add(Cell cell) {
         cells.add(cell);
+        populationSize++;
     };
 
     /**
@@ -53,6 +55,7 @@ public class WorldManager extends Observable implements Runnable {
      */
     public void remove(Cell cell) {
         cells.remove(cell);
+        populationSize--;
     }
 
     /**
@@ -60,13 +63,32 @@ public class WorldManager extends Observable implements Runnable {
      */
     public void clear() {
         cells.clear();
+        populationSize = 0;
     }
 
     /**
      * Produce all of the cells as an unmodifiable list
+     * <p>
+     *     DO NOT USE for-each loop with this, use getCellsSnapshot() instead
+     * </p>
      * @return all cells in the world
      */
     public Set<Cell> getCells() {
+        return Collections.unmodifiableSet(cells);
+    }
+
+    /**
+     * Produce the current snapshot of all the cells
+     * @return all cells in the world
+     */
+    public Set<Cell> getCellsSnapshot() {
+        Set<Cell> currentSnapshot = new HashSet<>();
+
+        Iterator<Cell> itr = cells.iterator();
+        while (itr.hasNext()) {
+            currentSnapshot.add(itr.next());
+        }
+
         return Collections.unmodifiableSet(cells);
     }
 
@@ -92,6 +114,10 @@ public class WorldManager extends Observable implements Runnable {
 
         // update generation
         generation++;
+
+        // update populationSize
+        populationSize += toAdd.size();
+        populationSize -= toKill.size();
 
         setChanged();
         notifyObservers("tick");
@@ -146,6 +172,11 @@ public class WorldManager extends Observable implements Runnable {
      */
     public long getTickTime() {
         return tickTime;
+    }
+
+
+    public int getPopulationSize() {
+        return populationSize;
     }
 
     /**
