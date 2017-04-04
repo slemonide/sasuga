@@ -9,6 +9,18 @@ Also, a small demo of the 3D gui is awailable at *src/application/Main.java*. It
 ## Current Progress:
 * Under development
 
+## Screenshots (Yay!):
+ConsoleUI:
+
+![ConsoleUI](doc/ConsoleUI.PNG)
+
+GraphGUI:
+
+![GraphGUI](doc/graphGUI1.PNG)
+![GraphGUI](doc/graphGUI2.PNG)
+![GraphGUI](doc/graphGUI3.PNG)
+![GraphGUI with cyclic populations](doc/graphGUI_cyclicWorld.PNG)
+
 ### Chunk is:
 * Set<Trail< Node>> *nodes*
 * Position *p1*
