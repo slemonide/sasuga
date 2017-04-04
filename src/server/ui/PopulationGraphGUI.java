@@ -1,21 +1,44 @@
 package server.ui;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import server.model.WorldManager;
 
 import java.util.Observable;
 import java.util.Observer;
 
 public class PopulationGraphGUI extends Application implements Observer {
-    private static final int MAX_GENERATIONS = 150; // maximum number of generations to be shown
+    private static final int MAX_GENERATIONS = 100; // maximum number of generations to be shown
     private static PopulationGraphGUI instance;
     private static XYChart.Series dataSeries = new XYChart.Series();
+    private Timeline animation;
+    private boolean update = false;
+
+
+    public PopulationGraphGUI() {
+        // create timeline to add new data every 60th of second
+        animation = new Timeline();
+        animation.getKeyFrames()
+                .add(new KeyFrame(Duration.millis(1000),
+                        (ActionEvent actionEvent) -> plotTime()));
+        animation.setCycleCount(Animation.INDEFINITE);
+    }
+
+    private void plotTime() {
+        dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
+                WorldManager.getInstance().getPopulationSize()));
+    }
 
     /**
      * Singleton pattern
@@ -30,7 +53,8 @@ public class PopulationGraphGUI extends Application implements Observer {
 
     public void update(Observable o, Object arg) {
         if (arg.equals("tick")) {
-
+            //update = true;
+/*
             dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
                     WorldManager.getInstance().getPopulationSize()));
 
@@ -38,6 +62,7 @@ public class PopulationGraphGUI extends Application implements Observer {
             if (dataSeries.getData().size() > MAX_GENERATIONS) {
                 dataSeries.getData().remove(0);
             }
+            */
         }
     }
 
@@ -64,6 +89,29 @@ public class PopulationGraphGUI extends Application implements Observer {
         lineChart.setLegendVisible(false);
 
         // CHARTS END
+
+        // UPDATE BEGIN
+        Task task = new Task<XYChart.Series>() {
+            @Override public XYChart.Series call() {
+                while (!Thread.currentThread().isInterrupted()) {
+                    if (update) {
+                        dataSeries.getData().add(new XYChart.Data(WorldManager.getInstance().getGeneration(),
+                                WorldManager.getInstance().getPopulationSize()));
+
+                        // reduce visible data points if there are too many of them
+                        if (dataSeries.getData().size() > MAX_GENERATIONS) {
+                            dataSeries.getData().remove(0);
+                        }
+                    }
+                    update = false;
+                }
+                return dataSeries;
+            }
+        };
+        dataSeries.dataProperty().bind(task.valueProperty());
+        new Thread(task).start();
+
+        // UPDATE END
 
         StackPane root = new StackPane();
         root.getChildren().add(lineChart);

@@ -11,7 +11,6 @@ import com.jme3.scene.shape.Box;
 import static java.lang.Math.random;
 
 public class Main extends SimpleApplication {
-
     private static final int MAX_NODES = 100 * 100 * 2;
     private static final double MIN_DELAY = 0.0001;
     private double delay;

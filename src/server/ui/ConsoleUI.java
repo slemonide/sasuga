@@ -32,7 +32,7 @@ public class ConsoleUI implements Observer {
         if (arg.equals("tick")) {
             System.out.print("Generation: " + WorldManager.getInstance().getGeneration());
             System.out.print("    ");
-            System.out.print("Number of cells: " + WorldManager.getInstance().getCellsSnapshot().size());
+            System.out.print("Number of cells: " + WorldManager.getInstance().getPopulationSize());
             System.out.print("    ");
             System.out.print("Tick time: " + (double) WorldManager.getInstance().getTickTime() / 1000000000 + " s");
             System.out.print("\n");
