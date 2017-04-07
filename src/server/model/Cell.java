@@ -1,5 +1,6 @@
 package server.model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,9 @@ import java.util.Set;
  * Represents an alive node.
  */
 public class Cell {
+    private static Set<Vector3> neighbourhood = Collections.unmodifiableSet(getNeighbourhood());
+    private static final int RADIUS_IN = 1;
+    private static final int RADIUS_OUT = 2;
     /**
      * Position of this cell
      */
@@ -38,20 +42,57 @@ public class Cell {
      */
     Set<Cell> getNeighbours() {
         Set<Cell> neighbours = new HashSet<Cell>();
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (x != 0 || y != 0 || z != 0) {
-                        if (WorldManager.getInstance().getCells().contains(new Cell(this.position.add(x, y, z)))) {
-                            neighbours.add(new Cell(this.position.add(x, y, z)));
-                        }
-                    }
-                }
+        for (Vector3 neighbour : neighbourhood) {
+            if (WorldManager.getInstance().getCells().contains(new Cell(this.position.add(neighbour)))) {
+                neighbours.add(new Cell(this.position.add(neighbour)));
             }
         }
 
         return neighbours;
     }
+
+    public static void setNeighbourhood(Set<Vector3> neighbourhood) {
+        Cell.neighbourhood = neighbourhood;
+    }
+
+    public static Set<Vector3> getNeighbourhood() {
+        return Cell.neighbourhood;
+    }
+/*
+    static private Set<Vector3> getNeighbourhood() {
+        Set<Vector3> neighbourhood = new HashSet<>();
+
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (x != 0 && z != 0) {
+                    neighbourhood.add(new Vector3(x, 0, z));
+                }
+            }
+        }
+*/
+/*
+        for (int x = - RADIUS_OUT; x <= RADIUS_OUT; x++) {
+            for (int y = - RADIUS_OUT; y <= RADIUS_OUT; y++) {
+                for (int z = - RADIUS_OUT; z <= RADIUS_OUT; z++) {
+                    if (x != 0 && y != 0 && z != 0) {
+                        neighbourhood.add(new Vector3(x, y, z));
+                    }
+                }
+            }
+        }
+
+        for (int x = - RADIUS_IN; x <= RADIUS_IN; x++) {
+            for (int y = - RADIUS_IN; y <= RADIUS_IN; y++) {
+                for (int z = - RADIUS_IN; z <= RADIUS_IN; z++) {
+                    if (x != 0 && y != 0 && z != 0) {
+                        neighbourhood.remove(new Vector3(x, y, z));
+                    }
+                }
+            }
+        }
+*/
+      //  return neighbourhood;
+    //}
 
     /**
      * Produce all the possible neighbours minus neighbours available so far
@@ -59,15 +100,9 @@ public class Cell {
      */
     Set<Cell> getNeighboursComplement() {
         Set<Cell> neighboursComplement = new HashSet<Cell>();
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (x != 0 || y != 0 || z != 0) {
-                        if (!WorldManager.getInstance().getCells().contains(new Cell(this.position.add(x, y, z)))) {
-                            neighboursComplement.add(new Cell(this.position.add(x, y, z)));
-                        }
-                    }
-                }
+        for (Vector3 neighbour : neighbourhood) {
+            if (!WorldManager.getInstance().getCells().contains(new Cell(this.position.add(neighbour)))) {
+                neighboursComplement.add(new Cell(this.position.add(neighbour)));
             }
         }
         return neighboursComplement;

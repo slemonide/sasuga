@@ -10,8 +10,8 @@ import java.util.*;
  * Manages world
  */
 public class WorldManager extends Observable implements Runnable {
-    private static final int UPPER_CELL_BOUND = 9;
-    private static final int LOWER_CELL_BOUND = 1;
+    private static int upperCellBound = 3;
+    private static int lowerCellBound = 1;
     private static WorldManager instance;
     private Set<Cell> cells = new HashSet<Cell>();
     private long tickTime = 0;
@@ -29,6 +29,22 @@ public class WorldManager extends Observable implements Runnable {
             instance = new WorldManager();
         }
         return instance;
+    }
+
+    public static void setUpperBound(int limit) {
+        upperCellBound = limit;
+    }
+
+    public static void setLowerBound(int limit) {
+        lowerCellBound = limit;
+    }
+
+    public static int getUpperBound() {
+        return upperCellBound;
+    }
+
+    public static int getLowerBound() {
+        return lowerCellBound;
     }
 
     /**
@@ -145,7 +161,7 @@ public class WorldManager extends Observable implements Runnable {
 
         Set<Cell> neighboursComplement = cell.getNeighboursComplement();
         for (Cell neighbourComplementElement : neighboursComplement) {
-            if (neighbourComplementElement.getNeighbours().size() == UPPER_CELL_BOUND) {
+            if (neighbourComplementElement.getNeighbours().size() == upperCellBound) {
                 newCells.add(neighbourComplementElement);
             }
         }
@@ -159,7 +175,7 @@ public class WorldManager extends Observable implements Runnable {
     private Set<Cell> die() {
         Set<Cell> toKill = new HashSet<Cell>();
         for (Cell cell : cells) {
-            if (cell.getNeighbours().size() <= LOWER_CELL_BOUND || cell.getNeighbours().size() > UPPER_CELL_BOUND) {
+            if (cell.getNeighbours().size() <= lowerCellBound || cell.getNeighbours().size() > upperCellBound) {
                 toKill.add(cell);
             }
         }

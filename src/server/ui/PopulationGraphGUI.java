@@ -48,7 +48,8 @@ public class PopulationGraphGUI extends Application implements Observer {
 
     public Parent createContent() {
 
-        generationAxis = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
+        //generationAxis = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
+        generationAxis = new NumberAxis();
         final NumberAxis populationAxis = new NumberAxis();
         chart = new LineChart<>(generationAxis, populationAxis);
 
@@ -74,13 +75,14 @@ public class PopulationGraphGUI extends Application implements Observer {
     private void plotTime() {
         dataSeries.getData().add(new XYChart.Data<Number, Number>(WorldManager.getInstance().getGeneration(),
                 WorldManager.getInstance().getPopulationSize()));
+        /*
         if (WorldManager.getInstance().getGeneration() > MAX_DATA_POINTS) {
             generationAxis.setLowerBound(WorldManager.getInstance().getGeneration() - MAX_DATA_POINTS + 1);
             generationAxis.setUpperBound(WorldManager.getInstance().getGeneration() + 1);
             if (dataSeries.getData().size() > MAX_DATA_POINTS) {
                 dataSeries.getData().remove(0);
             }
-        }
+        }*/
     }
 
     public void play() {

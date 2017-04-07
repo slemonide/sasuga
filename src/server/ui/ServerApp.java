@@ -19,15 +19,18 @@ public class ServerApp {
         Thread worldThread = new Thread(WorldManager.getInstance());
 
         // Generate
+        //WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
+        //WorldManager.getInstance().add(new Cell(new Vector3(0, 1, 0)));
+        //WorldManager.getInstance().add(new Cell(new Vector3(0, 2, 0)));
         try {
-            WorldGenerator.generate(0.1, 50, 50, 50);
+            WorldGenerator.generate(0.6, 50, 1, 50);
         } catch (InvalidDensityException e) {
             e.printStackTrace();
         } catch (InvalidDimensionException e) {
             e.printStackTrace();
         }
 
-        worldThread.start();
+        //worldThread.start();
         System.out.println("OK");
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
@@ -35,8 +38,8 @@ public class ServerApp {
         WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
-        Application.launch(PopulationGraphGUI.class, args);
+        //Application.launch(PopulationGraphGUI.class, args);
         //Application.launch(AnimatedLineChart.class, args);
-        //VisualGUI.main(args);
+        VisualGUI.main(args);
     }
 }
