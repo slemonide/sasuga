@@ -60,7 +60,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
             node.setMaterial(mat);
 
-            node.setLocalTranslation(cell.getPosition().x * 0.6f, cell.getPosition().y * 0.6f, cell.getPosition().z * 0.6f);
+            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
 
             rootNode.attachChild(node);
         }

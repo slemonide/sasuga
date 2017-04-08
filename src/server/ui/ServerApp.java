@@ -61,12 +61,12 @@ public class ServerApp {
 
         // Generate
         try {
-            WorldGenerator.generate(0.3, 30, 30, 30);
+            WorldGenerator.generate(0.1, 15, 15, 15);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }
 
-        worldThread.start();
+        //worldThread.start();
         System.out.println("OK");
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
@@ -74,8 +74,8 @@ public class ServerApp {
         WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
-        Application.launch(PopulationGraphGUI.class, args);
+        //Application.launch(PopulationGraphGUI.class, args);
         //Application.launch(AnimatedLineChart.class, args);
-        //VisualGUI.main(args);
+        VisualGUI.main(args);
     }
 }
