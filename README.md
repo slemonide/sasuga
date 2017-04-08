@@ -20,6 +20,12 @@ GraphGUI:
 ![GraphGUI](doc/graphGUI2.PNG)
 ![GraphGUI](doc/graphGUI3.PNG)
 ![GraphGUI with cyclic populations](doc/graphGUI_cyclicWorld.PNG)
+![GraphGUI with exponential growth](doc/expGrowth.PNG)
+
+VisualUI:
+
+![A fluffy cube](doc/VisualUI.PNG)
+
 
 ### Chunk is:
 * Set<Trail< Node>> *nodes*
