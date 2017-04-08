@@ -3,8 +3,13 @@ package server.ui;
 import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;
 import javafx.application.Application;
+import server.model.Cell;
+import server.model.Vector3;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -16,21 +21,52 @@ import server.model.WorldManager;
 public class ServerApp {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
+
+        WorldManager.getInstance().setLowerBound(1);
+        WorldManager.getInstance().setUpperBound(3);
+
+        Set<Vector3> neighbourhood = new HashSet<>();
+/*
+        neighbourhood.add(new Vector3(1,0,0));
+        neighbourhood.add(new Vector3(1,0,1));
+        neighbourhood.add(new Vector3(1,0,-1));
+
+        neighbourhood.add(new Vector3(-1,0,0));
+        neighbourhood.add(new Vector3(-1,0,1));
+        neighbourhood.add(new Vector3(-1,0,-1));
+
+        neighbourhood.add(new Vector3(0,0,1));
+        neighbourhood.add(new Vector3(0,0,-1));
+*/
+
+        neighbourhood.add(new Vector3(1,0,0));
+        neighbourhood.add(new Vector3(-1,0,0));
+        neighbourhood.add(new Vector3(0,0,1));
+        neighbourhood.add(new Vector3(0,0,-1));
+        neighbourhood.add(new Vector3(0,1,0));
+        neighbourhood.add(new Vector3(0,-1,0));
+
+        neighbourhood.add(new Vector3(2,0,0));
+        neighbourhood.add(new Vector3(-2,0,0));
+        neighbourhood.add(new Vector3(0,0,2));
+        neighbourhood.add(new Vector3(0,0,-2));
+        neighbourhood.add(new Vector3(0,2,0));
+        neighbourhood.add(new Vector3(0,-2,0));
+
+
+        WorldManager.getInstance().setNeighbourhood(neighbourhood);
+
+
         Thread worldThread = new Thread(WorldManager.getInstance());
 
         // Generate
-        //WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
-        //WorldManager.getInstance().add(new Cell(new Vector3(0, 1, 0)));
-        //WorldManager.getInstance().add(new Cell(new Vector3(0, 2, 0)));
         try {
-            WorldGenerator.generate(0.6, 50, 1, 50);
-        } catch (InvalidDensityException e) {
-            e.printStackTrace();
-        } catch (InvalidDimensionException e) {
+            WorldGenerator.generate(0.3, 30, 30, 30);
+        } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }
 
-        //worldThread.start();
+        worldThread.start();
         System.out.println("OK");
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
@@ -38,8 +74,8 @@ public class ServerApp {
         WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
-        //Application.launch(PopulationGraphGUI.class, args);
+        Application.launch(PopulationGraphGUI.class, args);
         //Application.launch(AnimatedLineChart.class, args);
-        VisualGUI.main(args);
+        //VisualGUI.main(args);
     }
 }

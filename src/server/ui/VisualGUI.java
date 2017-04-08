@@ -15,7 +15,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 1;
+    private static final double MIN_DELAY = 0.5;
     private double delay;
     private boolean tick = false;
 
@@ -52,7 +52,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
         delay = 0;
         rootNode.getChildren().clear();
-        Set<Cell> cells = WorldManager.getInstance().getCellsSnapshot();
+        Set<Cell> cells = WorldManager.getInstance().getCells();
         for (Cell cell : cells) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -60,7 +60,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
             node.setMaterial(mat);
 
-            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
+            node.setLocalTranslation(cell.getPosition().x * 0.6f, cell.getPosition().y * 0.6f, cell.getPosition().z * 0.6f);
 
             rootNode.attachChild(node);
         }

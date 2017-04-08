@@ -12,9 +12,6 @@ import java.util.Set;
  * Represents an alive node.
  */
 public class Cell {
-    private static Set<Vector3> neighbourhood = Collections.unmodifiableSet(getNeighbourhood());
-    private static final int RADIUS_IN = 1;
-    private static final int RADIUS_OUT = 2;
     /**
      * Position of this cell
      */
@@ -42,21 +39,13 @@ public class Cell {
      */
     Set<Cell> getNeighbours() {
         Set<Cell> neighbours = new HashSet<Cell>();
-        for (Vector3 neighbour : neighbourhood) {
+        for (Vector3 neighbour : WorldManager.getInstance().getNeighbourhood()) {
             if (WorldManager.getInstance().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighbours.add(new Cell(this.position.add(neighbour)));
             }
         }
 
         return neighbours;
-    }
-
-    public static void setNeighbourhood(Set<Vector3> neighbourhood) {
-        Cell.neighbourhood = neighbourhood;
-    }
-
-    public static Set<Vector3> getNeighbourhood() {
-        return Cell.neighbourhood;
     }
 /*
     static private Set<Vector3> getNeighbourhood() {
@@ -100,7 +89,7 @@ public class Cell {
      */
     Set<Cell> getNeighboursComplement() {
         Set<Cell> neighboursComplement = new HashSet<Cell>();
-        for (Vector3 neighbour : neighbourhood) {
+        for (Vector3 neighbour : WorldManager.getInstance().getNeighbourhood()) {
             if (!WorldManager.getInstance().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighboursComplement.add(new Cell(this.position.add(neighbour)));
             }

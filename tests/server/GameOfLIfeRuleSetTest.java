@@ -25,8 +25,8 @@ public class GameOfLIfeRuleSetTest {
 
     @Before
     public void runBefore() {
-        WorldManager.setLowerBound(1);
-        WorldManager.setUpperBound(3);
+        WorldManager.getInstance().setLowerBound(1);
+        WorldManager.getInstance().setUpperBound(3);
 
         Set<Vector3> neighbourhood = new HashSet<>();
         neighbourhood.add(new Vector3(1,0,0));
@@ -40,9 +40,9 @@ public class GameOfLIfeRuleSetTest {
         neighbourhood.add(new Vector3(0,0,1));
         neighbourhood.add(new Vector3(0,0,-1));
 
-        Cell.setNeighbourhood(neighbourhood);
+        WorldManager.getInstance().setNeighbourhood(neighbourhood);
 
-        WorldManager.getInstance().clear();
+        WorldManager.getInstance().reset();
     }
 
     @Test

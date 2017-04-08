@@ -73,31 +73,4 @@ public class Vector3 {
         result = 31 * result + z;
         return result;
     }
-
-    /**
-     * Generate a random vector [x_0, y_0, z_0]
-     * <p>
-     *     produced vector is part of the following set:
-     *     {[x_0, y_0, z_0] : x - x/2 <= x_0 <= x/2,
-     *                        y - y/2 <= y_0 <= y/2
-     *                        z - z/2 <= z_0 <= z/2}
-     * </p>
-     * @param x x - x/2 <= x_0 <= x/2,
-     * @param y y - y/2 <= y_0 <= y/2,
-     * @param z z - z/2 <= z_0 <= z/2,
-     * @return a random vector
-     * @throws InvalidDimensionException if x, y, or z is negative
-     */
-    static Vector3 getRandomVector(int x, int y, int z) throws InvalidDimensionException {
-        if (x < 0 || y < 0 || z < 0) {
-            throw new InvalidDimensionException();
-        }
-
-        Random random = new Random();
-
-        int x_0 = random.nextInt(x/2 + 1) - (x - x/2);
-        int y_0 = random.nextInt(y/2 + 1) - (y - y/2);
-        int z_0 = random.nextInt(z/2 + 1) - (z - z/2);
-        return new Vector3(x_0, y_0, z_0);
-    }
 }

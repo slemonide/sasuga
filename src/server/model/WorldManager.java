@@ -10,8 +10,9 @@ import java.util.*;
  * Manages world
  */
 public class WorldManager extends Observable implements Runnable {
-    private static int upperCellBound = 3;
-    private static int lowerCellBound = 1;
+    private Set<Vector3> neighbourhood = new HashSet<>();
+    private int upperCellBound = 3;
+    private int lowerCellBound = 1;
     private static WorldManager instance;
     private Set<Cell> cells = new HashSet<Cell>();
     private long tickTime = 0;
@@ -31,20 +32,28 @@ public class WorldManager extends Observable implements Runnable {
         return instance;
     }
 
-    public static void setUpperBound(int limit) {
+    public void setUpperBound(int limit) {
         upperCellBound = limit;
     }
 
-    public static void setLowerBound(int limit) {
+    public void setLowerBound(int limit) {
         lowerCellBound = limit;
     }
 
-    public static int getUpperBound() {
+    public int getUpperBound() {
         return upperCellBound;
     }
 
-    public static int getLowerBound() {
+    public int getLowerBound() {
         return lowerCellBound;
+    }
+
+    public void setNeighbourhood(Set<Vector3> neighbourhood) {
+        this.neighbourhood = neighbourhood;
+    }
+
+    public Set<Vector3> getNeighbourhood() {
+        return this.neighbourhood;
     }
 
     /**
@@ -90,21 +99,6 @@ public class WorldManager extends Observable implements Runnable {
      * @return all cells in the world
      */
     public Set<Cell> getCells() {
-        return Collections.unmodifiableSet(cells);
-    }
-
-    /**
-     * Produce the current snapshot of all the cells
-     * @return all cells in the world
-     */
-    public Set<Cell> getCellsSnapshot() {
-        Set<Cell> currentSnapshot = new HashSet<>();
-
-        Iterator<Cell> itr = cells.iterator();
-        while (itr.hasNext()) {
-            currentSnapshot.add(itr.next());
-        }
-
         return Collections.unmodifiableSet(cells);
     }
 
@@ -201,5 +195,12 @@ public class WorldManager extends Observable implements Runnable {
      */
     public int getGeneration() {
         return generation;
+    }
+
+    /**
+     * Resets current world state
+     */
+    public void reset() {
+        instance = new WorldManager();
     }
 }
