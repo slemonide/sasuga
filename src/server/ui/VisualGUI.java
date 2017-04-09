@@ -15,7 +15,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 0.5;
+    private static final double MIN_DELAY = 2;
     private double delay;
     private boolean tick = false;
 
