@@ -2,8 +2,6 @@ package server.ui;
 
 import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;
-import javafx.application.Application;
-import server.model.Cell;
 import server.model.Vector3;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
@@ -18,7 +16,7 @@ import java.util.Set;
  *
  * Main app
  */
-public class ServerApp {
+public class ServerAppStableRules {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
 
@@ -26,17 +24,18 @@ public class ServerApp {
         WorldManager.getInstance().setUpperBound(3);
 
         Set<Vector3> neighbourhood = new HashSet<>();
+/*
+        neighbourhood.add(new Vector3(1,0,0));
+        neighbourhood.add(new Vector3(1,0,1));
+        neighbourhood.add(new Vector3(1,0,-1));
 
-        neighbourhood.add(new Vector3(1,1,1));
-        neighbourhood.add(new Vector3(1,1,-1));
-        neighbourhood.add(new Vector3(1,-1,1));
-        neighbourhood.add(new Vector3(1,-1,-1));
+        neighbourhood.add(new Vector3(-1,0,0));
+        neighbourhood.add(new Vector3(-1,0,1));
+        neighbourhood.add(new Vector3(-1,0,-1));
 
-        neighbourhood.add(new Vector3(-1,1,1));
-        neighbourhood.add(new Vector3(-1,1,-1));
-        neighbourhood.add(new Vector3(-1,-1,1));
-        neighbourhood.add(new Vector3(-1,-1,-1));
-
+        neighbourhood.add(new Vector3(0,0,1));
+        neighbourhood.add(new Vector3(0,0,-1));
+*/
 
         neighbourhood.add(new Vector3(1,0,0));
         neighbourhood.add(new Vector3(-1,0,0));
@@ -45,6 +44,14 @@ public class ServerApp {
         neighbourhood.add(new Vector3(0,1,0));
         neighbourhood.add(new Vector3(0,-1,0));
 
+        neighbourhood.add(new Vector3(2,0,0));
+        neighbourhood.add(new Vector3(-2,0,0));
+        neighbourhood.add(new Vector3(0,0,2));
+        neighbourhood.add(new Vector3(0,0,-2));
+        neighbourhood.add(new Vector3(0,2,0));
+        neighbourhood.add(new Vector3(0,-2,0));
+
+
         WorldManager.getInstance().setNeighbourhood(neighbourhood);
 
 
@@ -52,7 +59,7 @@ public class ServerApp {
 
         // Generate
         try {
-            WorldGenerator.generate(0.1, 10, 10, 10);
+            WorldGenerator.generate(0.1, 15, 15, 15);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }

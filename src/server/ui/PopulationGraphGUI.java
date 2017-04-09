@@ -85,10 +85,6 @@ public class PopulationGraphGUI extends Application implements Observer {
         }*/
     }
 
-    public void play() {
-        animation.play();
-    }
-
     @Override
     public void stop() {
         animation.pause();
@@ -100,7 +96,7 @@ public class PopulationGraphGUI extends Application implements Observer {
         primaryStage.setTitle("Total Population Graph");
         primaryStage.show();
         primaryStage.setMaximized(true);
-        play();
+        animation.play();
     }
 
     @Override
