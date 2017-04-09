@@ -10,11 +10,11 @@ Also, a small demo of the 3D gui is awailable at *src/application/Main.java*. It
 * Under development
 
 ## Screenshots (Yay!):
-ConsoleUI:
+#ConsoleUI:
 
 ![ConsoleUI](doc/ConsoleUI.PNG)
 
-GraphGUI:
+#GraphGUI:
 
 ![GraphGUI](doc/graphGUI1.PNG)
 ![GraphGUI](doc/graphGUI2.PNG)
@@ -22,11 +22,13 @@ GraphGUI:
 ![GraphGUI with cyclic populations](doc/graphGUI_cyclicWorld.PNG)
 ![GraphGUI with exponential growth](doc/expGrowth.PNG)
 
-VisualUI:
+#VisualUI:
 
 ![A fluffy cube](doc/VisualUI.PNG)
 ![A green blob](doc/VisualUI1.PNG)
 ![Reddish-green mountain](doc/VisualUI2.PNG)
+Game Of Life rules:
+![Game Of Life rules](doc/VisualUI3.PNG)
 
 
 ### Chunk is:
