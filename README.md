@@ -25,6 +25,8 @@ GraphGUI:
 VisualUI:
 
 ![A fluffy cube](doc/VisualUI.PNG)
+![A green blob](doc/VisualUI1.PNG)
+![Reddish-green mountain](doc/VisualUI2.PNG)
 
 
 ### Chunk is:
