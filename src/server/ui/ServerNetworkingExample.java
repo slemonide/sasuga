@@ -17,6 +17,7 @@ public class ServerNetworkingExample {
             while (true) {
             if (in.readLine().equals("PING")) {
                 out.println("PONG");
+                System.out.printf("PONG");
             } else {
                 out.println("ERROR");
             }

@@ -1,4 +1,4 @@
-package server;
+package server.tests;
 
 import exceptions.InvalidDensityException;
 import exceptions.InvalidDimensionException;

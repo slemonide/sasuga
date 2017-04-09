@@ -1,10 +1,10 @@
-package client.application;
+package client.ui;
 
 
 import java.io.*;
 import java.net.*;
 
-class Client {
+class ClientExample {
     public static void main(String a[]) throws IOException {
         String server = "127.0.0.1";
         Socket sock = new Socket(server, 4444);

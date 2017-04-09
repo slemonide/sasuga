@@ -1,5 +1,7 @@
 package server.model;
 
+import java.net.Socket;
+
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
  * @version     0.1
@@ -7,5 +9,13 @@ package server.model;
  *
  * Represents a client
  */
-public class Client {
+public class Client implements Runnable {
+    public Client(Socket clientSocket) {
+
+    }
+
+    @Override
+    public void run() {
+
+    }
 }

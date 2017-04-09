@@ -1,7 +1,12 @@
 package server.model;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -12,10 +17,20 @@ import java.util.Observer;
  */
 public class ClientManager implements Runnable, Observer {
     public static final int PORT = 4444;
-
     private static ClientManager instance;
 
-    private ClientManager() {}
+    private ServerSocket serverSocket;
+    private Set<Client> clients;
+
+    private ClientManager() {
+        clients = new HashSet<>();
+        try {
+            serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
+            System.out.printf("ERROR: cannot create a server socket");
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Singleton pattern
@@ -28,7 +43,6 @@ public class ClientManager implements Runnable, Observer {
         return instance;
     }
 
-
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
@@ -37,7 +51,16 @@ public class ClientManager implements Runnable, Observer {
     }
 
     private void handleClients() {
-
+        try {
+            Socket clientSocket = serverSocket.accept();
+            Client client = new Client(clientSocket);
+            Thread clientThread = new Thread(client);
+            clientThread.start();
+            clients.add(client);
+        } catch (IOException e) {
+            System.out.println("ERROR: cannot accept a client socket");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,6 +71,8 @@ public class ClientManager implements Runnable, Observer {
     }
 
     private void notifyClients() {
-
+        for (Client client : clients) {
+            //client.send(); // send updates
+        }
     }
 }
