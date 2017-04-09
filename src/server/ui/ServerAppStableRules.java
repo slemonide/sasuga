@@ -1,7 +1,7 @@
 package server.ui;
 
-import exceptions.InvalidDensityException;
-import exceptions.InvalidDimensionException;
+import server.exceptions.InvalidDensityException;
+import server.exceptions.InvalidDimensionException;
 import server.model.Vector3;
 import server.model.WorldGenerator;
 import server.model.WorldManager;

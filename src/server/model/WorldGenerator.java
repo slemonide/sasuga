@@ -1,7 +1,7 @@
 package server.model;
 
-import exceptions.InvalidDensityException;
-import exceptions.InvalidDimensionException;
+import server.exceptions.InvalidDensityException;
+import server.exceptions.InvalidDimensionException;
 
 import java.util.ArrayList;
 import java.util.Collections;

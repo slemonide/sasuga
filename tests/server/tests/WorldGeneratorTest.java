@@ -1,7 +1,7 @@
 package server.tests;
 
-import exceptions.InvalidDensityException;
-import exceptions.InvalidDimensionException;
+import server.exceptions.InvalidDensityException;
+import server.exceptions.InvalidDimensionException;
 import org.junit.Before;
 import org.junit.Test;
 import server.model.Cell;

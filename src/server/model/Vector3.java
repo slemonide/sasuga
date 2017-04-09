@@ -1,9 +1,5 @@
 package server.model;
 
-import exceptions.InvalidDimensionException;
-
-import java.util.Random;
-
 /**
  *
  * @author      Danil Platonov <slemonide@gmail.com>
