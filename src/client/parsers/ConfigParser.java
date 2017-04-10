@@ -23,6 +23,6 @@ public class ConfigParser {
      */
     public void parse() throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(fileName)));
-        System.out.println(content);
+        System.out.println(content); // debug
     }
 }
