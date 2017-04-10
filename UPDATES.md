@@ -4,6 +4,10 @@
 * Implement several isolated neighborhoods
 * Make server and client configurable through jlife.conf
 * Develop a client-server protocol
+    * Add multiclient support
+    * Only send the differences and/or the data requested
+    by the client
 * Create a client with VisualGUI
 * Create a client with GraphGUI
+* Create a simple text-based client
 * Implement interactive editor in the VisualGUI
