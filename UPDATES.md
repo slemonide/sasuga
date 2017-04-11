@@ -2,6 +2,9 @@
 * Implement support for arbitrary rule set
 * Implement 2 dimension + 1 time dimension Game Of Life
 * Implement several isolated neighborhoods
+* Implement support for arbitrary space
+* Implement regular Euclidean space
+* Implement toroidal space
 * Make server and client configurable through jlife.conf
 * Change project name to something more fancy
 * Develop a client-server protocol
