@@ -28,7 +28,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 2;
+    private static final double MIN_DELAY = 3;
     private Node cellsNode;
     private double delay;
     private boolean tick = false;
@@ -57,6 +57,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
     public void simpleInitApp() {
         delay = 0;
 
+        getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
+                "Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
         addCells();
         addFloor();
         addShadows();

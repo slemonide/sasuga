@@ -30,6 +30,10 @@ Also, a small demo of the 3D gui is awailable at *src/application/Main.java*. It
 Game Of Life rules:
 ![Game Of Life rules](doc/VisualUI3.PNG)
 
+Nicer graphics:
+![With shadows](doc/VisualUIShadows.PNG)
+![With sky sphere and shadows](doc/VisualUIShadowsSkySphere.PNG)
+
 
 ### Chunk is:
 * Set<Trail< Node>> *nodes*
