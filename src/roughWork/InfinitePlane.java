@@ -1,7 +1,11 @@
 package roughWork;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.light.DirectionalLight;
+import com.jme3.light.PointLight;
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
@@ -27,13 +31,18 @@ public class InfinitePlane extends SimpleApplication {
     public void simpleInitApp() {
         delay = 0;
 
-        Box b = new Box(1000000, 0.1f, 1);
+        Box b = new Box(10000, 0.1f, 1);
         Spatial node = new Geometry("Box", b);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
         node.setMaterial(mat);
 
         rootNode.attachChild(node);
+
+        DirectionalLight sun = new DirectionalLight();
+        sun.setColor(ColorRGBA.White);
+        sun.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal());
+        rootNode.addLight(sun);
     }
 
     @Override

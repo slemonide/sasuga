@@ -44,11 +44,11 @@ public class Vector3 {
      * @param z change in the z coordinate
      * @return the sum of this vector and given vector
      */
-    Vector3 add(int x, int y, int z) {
+    public Vector3 add(int x, int y, int z) {
         return new Vector3(this.x + x, this.y + y, this.z + z);
     }
 
-    Vector3 add(Vector3 anotherVector) {
+    public Vector3 add(Vector3 anotherVector) {
         return new Vector3(this.x + anotherVector.x, this.y + anotherVector.y, this.z + anotherVector.z);
     }
 
