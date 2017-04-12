@@ -2,6 +2,7 @@
 * Implement support for arbitrary rule set
 * Implement 2 dimension + 1 time dimension Game Of Life
 * Implement several isolated neighborhoods
+* Implement 3D randomwalk
 * Implement 3D wireworld cellular automation
 * Implement support for arbitrary space
 * Implement regular Euclidean space
