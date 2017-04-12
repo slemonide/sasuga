@@ -1,8 +1,7 @@
-package roughWork;
+package jmeExamples;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
-import com.jme3.light.PointLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -11,11 +10,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import server.model.Cell;
-import server.model.WorldManager;
 
 import java.util.HashSet;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 
 public class InfinitePlane extends SimpleApplication {
