@@ -6,6 +6,7 @@ import server.model.Vector3;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.NeighbourhoodCellular;
+import server.rulesets.ThirdTimeDimension;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,11 +18,11 @@ import java.util.Set;
  *
  * Main app
  */
-public class ServerAppGameOfLifeRules {
+public class ServerAppGameOfLifeRulesThirdTimeDimension {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
 
-        NeighbourhoodCellular gameOfLife = new NeighbourhoodCellular();
+        ThirdTimeDimension gameOfLife = new ThirdTimeDimension();
 
         gameOfLife.setLowerBound(1);
         gameOfLife.setUpperBound(3);
@@ -48,7 +49,7 @@ public class ServerAppGameOfLifeRules {
 
         // Generate
         try {
-            WorldGenerator.generate(0.1, 100, 1, 100);
+            WorldGenerator.generate(0.2, 10, 1, 10);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }

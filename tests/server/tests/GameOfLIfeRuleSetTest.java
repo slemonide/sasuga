@@ -25,8 +25,8 @@ public class GameOfLIfeRuleSetTest {
 
     @Before
     public void runBefore() {
-        WorldManager.getInstance().setLowerBound(1);
-        WorldManager.getInstance().setUpperBound(3);
+        WorldManager.getInstance().getRule().setLowerBound(1);
+        WorldManager.getInstance().getRule().setUpperBound(3);
 
         Set<Vector3> neighbourhood = new HashSet<>();
         neighbourhood.add(new Vector3(1,0,0));
@@ -40,7 +40,7 @@ public class GameOfLIfeRuleSetTest {
         neighbourhood.add(new Vector3(0,0,1));
         neighbourhood.add(new Vector3(0,0,-1));
 
-        WorldManager.getInstance().setNeighbourhood(neighbourhood);
+        WorldManager.getInstance().getRule().setNeighbourhood(neighbourhood);
 
         WorldManager.getInstance().reset();
     }
@@ -48,7 +48,7 @@ public class GameOfLIfeRuleSetTest {
     @Test
     public void testTickBasic() {
         for (int i = 1; i < MAX_TICKS; i++) {
-            WorldManager.getInstance().tick();
+            WorldManager.getInstance().getRule().tick();
             assertEquals(i, WorldManager.getInstance().getGeneration());
             assertEquals(0, WorldManager.getInstance().getPopulationSize());
         }

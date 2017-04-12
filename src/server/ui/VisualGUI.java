@@ -52,7 +52,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
         delay = 0;
         rootNode.getChildren().clear();
-        Set<Cell> cells = WorldManager.getInstance().getCells();
+        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
         for (Cell cell : cells) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -64,7 +64,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
             rootNode.attachChild(node);
         }
-        WorldManager.getInstance().tick();
+        WorldManager.getInstance().getRule().tick();
 
         //Set<Cell> visibleCells = filterVisible(WorldManager.getInstance().getCells());
         /*

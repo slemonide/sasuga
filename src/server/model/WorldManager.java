@@ -1,5 +1,8 @@
 package server.model;
 
+import server.rulesets.RuleSet;
+
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -10,14 +13,10 @@ import java.util.*;
  * Manages world
  */
 public class WorldManager extends Observable implements Runnable {
-    private Set<Vector3> neighbourhood = new HashSet<>();
-    private int upperCellBound = 3;
-    private int lowerCellBound = 1;
     private static WorldManager instance;
-    private Set<Cell> cells = new HashSet<Cell>();
+    private RuleSet rule;
     private long tickTime = 0;
     private int generation = 0;
-    private int populationSize = 0;
 
     private WorldManager() {}
 
@@ -32,148 +31,37 @@ public class WorldManager extends Observable implements Runnable {
         return instance;
     }
 
-    public void setUpperBound(int limit) {
-        upperCellBound = limit;
+    public void setRule(RuleSet rule) {
+        this.rule = rule;
     }
 
-    public void setLowerBound(int limit) {
-        lowerCellBound = limit;
-    }
-
-    public int getUpperBound() {
-        return upperCellBound;
-    }
-
-    public int getLowerBound() {
-        return lowerCellBound;
-    }
-
-    public void setNeighbourhood(Set<Vector3> neighbourhood) {
-        this.neighbourhood = neighbourhood;
-    }
-
-    public Set<Vector3> getNeighbourhood() {
-        return this.neighbourhood;
+    public RuleSet getRule() {
+        return rule;
     }
 
     /**
      * Start time
+     * If rule is not set, don't do anything
      */
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            tick();
-        }
-    }
+            // tickTime measurement
+            long startTime = System.nanoTime();
 
-    /**
-     * Adds the given cell to the world
-     * @param cell cell to be added
-     */
-    public void add(Cell cell) {
-        cells.add(cell);
-        populationSize++;
-    };
-
-    /**
-     * Remove the given cell from the world
-     * @param cell cell to be removed
-     */
-    public void remove(Cell cell) {
-        cells.remove(cell);
-        populationSize--;
-    }
-
-    /**
-     * Remove all cells
-     */
-    public void clear() {
-        cells.clear();
-        populationSize = 0;
-    }
-
-    /**
-     * Produce all of the cells as an unmodifiable list
-     * <p>
-     *     DO NOT USE for-each loop with this, use getCellsSnapshot() instead
-     * </p>
-     * @return all cells in the world
-     */
-    public Set<Cell> getCells() {
-        return Collections.unmodifiableSet(cells);
-    }
-
-    /**
-     * Updates the world according to the set rules:
-     * If there are 3 cells around a given black space, new cell emerges.
-     * If there are 2 or 3 cells around a given cell, cell survives.
-     * If there are 0, 1 or more than 3 cells around a given cell, cell dies off
-     */
-    public void tick() {
-        // tickTime measurement
-        long startTime = System.nanoTime();
-
-        Set<Cell> toAdd = grow();
-        Set<Cell> toKill = die();
-
-        cells.addAll(toAdd);
-        cells.removeAll(toKill);
-
-        // tickTime measurement
-        long endTime = System.nanoTime();
-        tickTime = endTime - startTime;
-
-        // update generation
-        generation++;
-
-        // update populationSize
-        populationSize += toAdd.size();
-        populationSize -= toKill.size();
-
-        setChanged();
-        notifyObservers("tick");
-    }
-
-    /**
-     * @return set of the cells to be added
-     */
-    private Set<Cell> grow() {
-        Set<Cell> newCells = new HashSet<Cell>();
-
-        for (Cell cell : cells) {
-            newCells.addAll(growAround(cell));
-        }
-
-        return newCells;
-    }
-
-    /**
-     * @param cell cell around which to compute next cells to be added
-     * @return cells to be added
-     */
-    private Set<Cell> growAround(Cell cell) {
-        Set<Cell> newCells = new HashSet<Cell>();
-
-        Set<Cell> neighboursComplement = cell.getNeighboursComplement();
-        for (Cell neighbourComplementElement : neighboursComplement) {
-            if (neighbourComplementElement.getNeighbours().size() == upperCellBound) {
-                newCells.add(neighbourComplementElement);
+            if (rule != null) {
+                rule.tick();
             }
-        }
 
-        return newCells;
-    }
+            // tickTime measurement
+            long endTime = System.nanoTime();
+            tickTime = endTime - startTime;
 
-    /**
-     * @return a set of cells to be removed from the world
-     */
-    private Set<Cell> die() {
-        Set<Cell> toKill = new HashSet<Cell>();
-        for (Cell cell : cells) {
-            if (cell.getNeighbours().size() <= lowerCellBound || cell.getNeighbours().size() > upperCellBound) {
-                toKill.add(cell);
-            }
+            // update generation
+            generation++;
+
+            setChanged();
+            notifyObservers("tick");
         }
-        return toKill;
     }
 
     /**
@@ -182,11 +70,6 @@ public class WorldManager extends Observable implements Runnable {
      */
     public long getTickTime() {
         return tickTime;
-    }
-
-
-    public int getPopulationSize() {
-        return populationSize;
     }
 
     /**
@@ -202,5 +85,29 @@ public class WorldManager extends Observable implements Runnable {
      */
     public void reset() {
         instance = new WorldManager();
+    }
+
+    public void clear() {
+        rule.clear();
+    }
+
+    public Set<Cell> getCells() {
+        return rule.getCells();
+    }
+
+    public void add(Cell cell) {
+        rule.add(cell);
+    }
+
+    public void remove(Cell cell) {
+        rule.remove(cell);
+    }
+
+    public int getPopulationSize() {
+        return rule.getCells().size();
+    }
+
+    public void tick() {
+        rule.tick();
     }
 }

@@ -37,10 +37,10 @@ public class Cell {
      * Produce the neighbours available so far
      * @return neighbour cells
      */
-    Set<Cell> getNeighbours() {
+    public Set<Cell> getNeighbours() {
         Set<Cell> neighbours = new HashSet<Cell>();
-        for (Vector3 neighbour : WorldManager.getInstance().getNeighbourhood()) {
-            if (WorldManager.getInstance().getCells().contains(new Cell(this.position.add(neighbour)))) {
+        for (Vector3 neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
+            if (WorldManager.getInstance().getRule().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighbours.add(new Cell(this.position.add(neighbour)));
             }
         }
@@ -87,10 +87,10 @@ public class Cell {
      * Produce all the possible neighbours minus neighbours available so far
      * @return complement of the neighbour cells set
      */
-    Set<Cell> getNeighboursComplement() {
+    public Set<Cell> getNeighboursComplement() {
         Set<Cell> neighboursComplement = new HashSet<Cell>();
-        for (Vector3 neighbour : WorldManager.getInstance().getNeighbourhood()) {
-            if (!WorldManager.getInstance().getCells().contains(new Cell(this.position.add(neighbour)))) {
+        for (Vector3 neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
+            if (!WorldManager.getInstance().getRule().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighboursComplement.add(new Cell(this.position.add(neighbour)));
             }
         }
