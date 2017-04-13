@@ -3,12 +3,12 @@ package jmeExamples;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
+import com.jme3.math.*;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Quad;
 import server.model.Cell;
 
 import java.util.HashSet;
@@ -27,18 +27,18 @@ public class InfinitePlane extends SimpleApplication {
     public void simpleInitApp() {
         delay = 0;
 
-        Box b = new Box(10000, 0.1f, 1);
+        //Box b = new Box(10000, 0.1f, 1);
+        Quad b = new Quad(100, 100);
         Spatial node = new Geometry("Box", b);
+
+        Quaternion q = new Quaternion();
+        node.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
+        node.setLocalTranslation(-50, -1, 50);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
         node.setMaterial(mat);
 
         rootNode.attachChild(node);
-
-        DirectionalLight sun = new DirectionalLight();
-        sun.setColor(ColorRGBA.White);
-        sun.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal());
-        rootNode.addLight(sun);
     }
 
     @Override

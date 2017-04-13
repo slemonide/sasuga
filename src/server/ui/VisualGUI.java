@@ -6,6 +6,8 @@ import com.jme3.light.Light;
 import com.jme3.light.PointLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.renderer.RenderManager;
@@ -15,6 +17,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.WireFrustum;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.BasicShadowRenderer;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
@@ -111,12 +114,15 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void addFloor() {
-        Geometry floor = new Geometry("Box", new Box(100, 1, 100));
+        Geometry floor = new Geometry("Box", new Quad(2000, 2000));
         Material unshaded = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
         floor.setShadowMode(RenderQueue.ShadowMode.Receive);
-        floor.setLocalTranslation(0, -1.1f, 0);
+
+        Quaternion q = new Quaternion();
+        floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
+        floor.setLocalTranslation(-1000, -0.1f, 1000);
         rootNode.attachChild(floor);
     }
 
@@ -127,8 +133,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
             return;
         }
         delay = 0;
-
-        Node nextNode = new Node();
 
         for (Cell cellToAdd : WorldManager.getInstance().getRule().getToAdd()) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
@@ -143,7 +147,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
                     cellToAdd.getPosition().y * 0.2f,
                     cellToAdd.getPosition().z * 0.2f);
 
-            nextNode.attachChild(node);
+            cellsNode.attachChild(node);
         }
 
         for (Cell cellToRemove : WorldManager.getInstance().getRule().getToRemove()) {
@@ -151,8 +155,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
             // TODO: finish
         }
 
-        GeometryBatchFactory.optimize(nextNode);
-        cellsNode.attachChild(nextNode);
+        GeometryBatchFactory.optimize(cellsNode);
         WorldManager.getInstance().getRule().tick();
     }
 
