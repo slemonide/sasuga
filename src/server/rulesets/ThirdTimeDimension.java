@@ -61,4 +61,14 @@ public class ThirdTimeDimension extends NeighbourhoodCellular {
 
         return nextCells;
     }
+
+    @Override
+    public Set<Cell> getToAdd() {
+        return activeCells;
+    }
+
+    @Override
+    public Set<Cell> getToRemove() {
+        return new HashSet<>();
+    }
 }

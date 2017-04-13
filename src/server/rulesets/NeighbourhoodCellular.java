@@ -92,12 +92,12 @@ public class NeighbourhoodCellular implements RuleSet {
 
     @Override
     public Set<Cell> getToAdd() {
-        return null;
+        return toAdd;
     }
 
     @Override
     public Set<Cell> getToRemove() {
-        return null;
+        return toRemove;
     }
 
     /**

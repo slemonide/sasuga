@@ -58,6 +58,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
     public void simpleInitApp() {
         delay = 0;
 
+        flyCam.setMoveSpeed(10);
+
         getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
                 "Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
         addCells();
