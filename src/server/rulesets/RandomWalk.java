@@ -44,7 +44,7 @@ public class RandomWalk implements RuleSet {
             case 2:
                 return new Vector3(0, 1, 0);
             case 3:
-                return new Vector3(0, 0, 0); // here
+                return new Vector3(0, -1, 0); // here
             case 4:
                 return new Vector3(0, 0, 1);
             case 5:
@@ -57,6 +57,20 @@ public class RandomWalk implements RuleSet {
     @Override
     public Set<Cell> getCells() {
         return cells;
+    }
+
+    @Override
+    public Set<Cell> getToAdd() {
+        // only one cell is active (for now)
+        Set<Cell> toAdd = new HashSet<>();
+        toAdd.add(currentCell);
+        return toAdd;
+    }
+
+    @Override
+    public Set<Cell> getToRemove() {
+        // nothing to remove
+        return new HashSet<>();
     }
 
     @Override

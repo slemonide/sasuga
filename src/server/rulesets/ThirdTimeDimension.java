@@ -20,6 +20,10 @@ public class ThirdTimeDimension extends NeighbourhoodCellular {
         super();
 
         activeCells = new HashSet<>();
+
+        // There are no removals in this rule set
+        toRemove = new HashSet<>();
+        toAdd = activeCells;
     }
 
     @Override
@@ -56,5 +60,15 @@ public class ThirdTimeDimension extends NeighbourhoodCellular {
         }
 
         return nextCells;
+    }
+
+    @Override
+    public Set<Cell> getToAdd() {
+        return activeCells;
+    }
+
+    @Override
+    public Set<Cell> getToRemove() {
+        return new HashSet<>();
     }
 }

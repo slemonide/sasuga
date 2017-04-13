@@ -6,6 +6,8 @@ import com.jme3.light.Light;
 import com.jme3.light.PointLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.renderer.RenderManager;
@@ -15,6 +17,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.WireFrustum;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.BasicShadowRenderer;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
@@ -29,7 +32,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 2;
+    private static final double MIN_DELAY = 1;
     private Node cellsNode;
     private double delay;
     private boolean tick = false;
@@ -58,6 +61,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
     public void simpleInitApp() {
         delay = 0;
 
+        flyCam.setMoveSpeed(10);
+
         getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
                 "Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
         addCells();
@@ -70,6 +75,22 @@ public class VisualGUI extends SimpleApplication implements Observer {
         cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
         rootNode.attachChild(cellsNode);
+
+        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
+        for (Cell cell : cells) {
+            Box b = new Box(0.1f, 0.1f, 0.1f);
+            Spatial node = new Geometry("Box", b);
+            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+            Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+            node.setMaterial(mat);
+
+            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
+
+            cellsNode.attachChild(node);
+        }
+
+        GeometryBatchFactory.optimize(cellsNode);
     }
 
     private void addShadows() {
@@ -93,12 +114,15 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void addFloor() {
-        Geometry floor = new Geometry("Box", new Box(100, 1, 100));
+        Geometry floor = new Geometry("Box", new Quad(2000, 2000));
         Material unshaded = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
         floor.setShadowMode(RenderQueue.ShadowMode.Receive);
-        floor.setLocalTranslation(0, -1.1f, 0);
+
+        Quaternion q = new Quaternion();
+        floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
+        floor.setLocalTranslation(-1000, -0.1f, 1000);
         rootNode.attachChild(floor);
     }
 
@@ -109,9 +133,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
             return;
         }
         delay = 0;
-        cellsNode.getChildren().clear();
-        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
-        for (Cell cell : cells) {
+
+        for (Cell cellToAdd : WorldManager.getInstance().getRule().getToAdd()) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
             node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
@@ -119,9 +142,17 @@ public class VisualGUI extends SimpleApplication implements Observer {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
             node.setMaterial(mat);
 
-            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
+            node.setLocalTranslation(
+                    cellToAdd.getPosition().x * 0.2f,
+                    cellToAdd.getPosition().y * 0.2f,
+                    cellToAdd.getPosition().z * 0.2f);
 
             cellsNode.attachChild(node);
+        }
+
+        for (Cell cellToRemove : WorldManager.getInstance().getRule().getToRemove()) {
+            // stub
+            // TODO: finish
         }
 
         GeometryBatchFactory.optimize(cellsNode);
