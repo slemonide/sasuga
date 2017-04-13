@@ -18,6 +18,10 @@ public interface RuleSet {
 
     Set<Cell> getCells();
 
+    Set<Cell> getToAdd();
+
+    Set<Cell> getToRemove();
+
     void add(Cell cell);
 
     Set<Vector3> getNeighbourhood();

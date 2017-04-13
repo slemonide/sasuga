@@ -19,6 +19,8 @@ public class NeighbourhoodCellular implements RuleSet {
     private int upperCellBound;
     private int lowerCellBound;
     Set<Cell> cells;
+    Set<Cell> toAdd;
+    Set<Cell> toRemove;
     int populationSize;
 
     public NeighbourhoodCellular() {
@@ -27,6 +29,9 @@ public class NeighbourhoodCellular implements RuleSet {
         upperCellBound = 3;
         lowerCellBound = 1;
         populationSize = 0;
+
+        toAdd = new HashSet<>();
+        toRemove = new HashSet<>();
     }
 
     public void setUpperBound(int limit) {
@@ -85,6 +90,16 @@ public class NeighbourhoodCellular implements RuleSet {
         return Collections.unmodifiableSet(cells);
     }
 
+    @Override
+    public Set<Cell> getToAdd() {
+        return null;
+    }
+
+    @Override
+    public Set<Cell> getToRemove() {
+        return null;
+    }
+
     /**
      * Updates the world according to the set rules:
      * If there are 3 cells around a given black space, new cell emerges.
@@ -92,15 +107,15 @@ public class NeighbourhoodCellular implements RuleSet {
      * If there are 0, 1 or more than 3 cells around a given cell, cell dies off
      */
     public void tick() {
-        Set<Cell> toAdd = grow(cells);
-        Set<Cell> toKill = die(cells);
+        toAdd = grow(cells);
+        toRemove = die(cells);
 
         cells.addAll(toAdd);
-        cells.removeAll(toKill);
+        cells.removeAll(toRemove);
 
         // update populationSize
         populationSize += toAdd.size();
-        populationSize -= toKill.size();
+        populationSize -= toRemove.size();
     }
 
     /**

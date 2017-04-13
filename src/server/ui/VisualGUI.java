@@ -29,7 +29,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 2;
+    private static final double MIN_DELAY = 1;
     private Node cellsNode;
     private double delay;
     private boolean tick = false;
@@ -70,6 +70,22 @@ public class VisualGUI extends SimpleApplication implements Observer {
         cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
         rootNode.attachChild(cellsNode);
+
+        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
+        for (Cell cell : cells) {
+            Box b = new Box(0.1f, 0.1f, 0.1f);
+            Spatial node = new Geometry("Box", b);
+            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+            Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+            node.setMaterial(mat);
+
+            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
+
+            cellsNode.attachChild(node);
+        }
+
+        GeometryBatchFactory.optimize(cellsNode);
     }
 
     private void addShadows() {
@@ -109,9 +125,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
             return;
         }
         delay = 0;
-        cellsNode.getChildren().clear();
-        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
-        for (Cell cell : cells) {
+        for (Cell cellToAdd : WorldManager.getInstance().getRule().getToAdd()) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
             node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
@@ -119,9 +133,17 @@ public class VisualGUI extends SimpleApplication implements Observer {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
             node.setMaterial(mat);
 
-            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
+            node.setLocalTranslation(
+                    cellToAdd.getPosition().x * 0.2f,
+                    cellToAdd.getPosition().y * 0.2f,
+                    cellToAdd.getPosition().z * 0.2f);
 
             cellsNode.attachChild(node);
+        }
+
+        for (Cell cellToRemove : WorldManager.getInstance().getRule().getToRemove()) {
+            // stub
+            // TODO: finish
         }
 
         GeometryBatchFactory.optimize(cellsNode);
