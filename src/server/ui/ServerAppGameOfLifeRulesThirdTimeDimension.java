@@ -2,6 +2,7 @@ package server.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
+import server.model.Cell;
 import server.model.Vector3;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
@@ -48,11 +49,24 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
         Thread worldThread = new Thread(WorldManager.getInstance());
 
         // Generate
-        try {
-            WorldGenerator.generate(0.05, 500, 1, 500);
+        /*try {
+            WorldGenerator.generate(0.2, 100, 1, 100);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
-        }
+        }*/
+
+
+        // the bottom left thing
+        WorldManager.getInstance().add(new Cell(new Vector3(1, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,3)));
+
+        // other thing
+        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector3(6, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector3(8, 0,3)));
+
 
         //worldThread.start();
         System.out.println("OK");

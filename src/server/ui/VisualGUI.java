@@ -127,6 +127,9 @@ public class VisualGUI extends SimpleApplication implements Observer {
             return;
         }
         delay = 0;
+
+        Node nextNode = new Node();
+
         for (Cell cellToAdd : WorldManager.getInstance().getRule().getToAdd()) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -140,7 +143,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
                     cellToAdd.getPosition().y * 0.2f,
                     cellToAdd.getPosition().z * 0.2f);
 
-            cellsNode.attachChild(node);
+            nextNode.attachChild(node);
         }
 
         for (Cell cellToRemove : WorldManager.getInstance().getRule().getToRemove()) {
@@ -148,7 +151,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
             // TODO: finish
         }
 
-        GeometryBatchFactory.optimize(cellsNode);
+        GeometryBatchFactory.optimize(nextNode);
+        cellsNode.attachChild(nextNode);
         WorldManager.getInstance().getRule().tick();
     }
 
