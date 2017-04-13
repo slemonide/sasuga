@@ -19,6 +19,7 @@ import com.jme3.shadow.BasicShadowRenderer;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
+import jme3tools.optimize.GeometryBatchFactory;
 import server.model.Cell;
 import server.model.WorldManager;
 
@@ -28,7 +29,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 3;
+    private static final double MIN_DELAY = 2;
     private Node cellsNode;
     private double delay;
     private boolean tick = false;
@@ -122,6 +123,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
             cellsNode.attachChild(node);
         }
+
+        GeometryBatchFactory.optimize(cellsNode);
         WorldManager.getInstance().getRule().tick();
     }
 

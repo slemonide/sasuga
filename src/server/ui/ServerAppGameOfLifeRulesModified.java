@@ -38,6 +38,8 @@ public class ServerAppGameOfLifeRulesModified {
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
+        WorldManager.getInstance().setRule(gameOfLife);
+
         Thread worldThread = new Thread(WorldManager.getInstance());
 
         // Generate

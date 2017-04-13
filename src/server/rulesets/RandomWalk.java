@@ -44,7 +44,7 @@ public class RandomWalk implements RuleSet {
             case 2:
                 return new Vector3(0, 1, 0);
             case 3:
-                return new Vector3(0, -1, 0);
+                return new Vector3(0, 0, 0); // here
             case 4:
                 return new Vector3(0, 0, 1);
             case 5:
