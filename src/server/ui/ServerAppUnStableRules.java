@@ -18,7 +18,7 @@ import java.util.Set;
  *
  * Main app
  */
-public class ServerAppStableRules {
+public class ServerAppUnStableRules {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
 
@@ -55,6 +55,12 @@ public class ServerAppStableRules {
         neighbourhood.add(new Vector3(0,2,0));
         neighbourhood.add(new Vector3(0,-2,0));
 
+        neighbourhood.add(new Vector3(3,0,0));
+        neighbourhood.add(new Vector3(-3,0,0));
+        neighbourhood.add(new Vector3(0,0,3));
+        neighbourhood.add(new Vector3(0,0,-3));
+        neighbourhood.add(new Vector3(0,3,0));
+        neighbourhood.add(new Vector3(0,-3,0));
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
@@ -65,13 +71,12 @@ public class ServerAppStableRules {
 
         // Generate
         try {
-            WorldGenerator.generate(0.4, 50, 5, 5);
-            WorldGenerator.generate(0.4, 5, 50, 5);
+            WorldGenerator.generate(0.4, 10, 10, 10);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }
 
-        //worldThread.start();
+        worldThread.start();
         System.out.println("OK");
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
@@ -79,7 +84,7 @@ public class ServerAppStableRules {
         WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
-        //Application.launch(PopulationGraphGUI.class, args);
-        VisualGUI.main(args);
+        Application.launch(PopulationGraphGUI.class, args);
+        //VisualGUI.main(args);
     }
 }

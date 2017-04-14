@@ -32,7 +32,7 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final double MIN_DELAY = 1;
+    private static final double MIN_DELAY = 0.01;
     private Node cellsNode;
     private double delay;
     private boolean tick = false;
@@ -134,6 +134,9 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
         delay = 0;
 
+        cellsNode.getChildren().clear();
+        addCells();
+        /*
         for (Cell cellToAdd : WorldManager.getInstance().getRule().getToAdd()) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -148,7 +151,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
                     cellToAdd.getPosition().z * 0.2f);
 
             cellsNode.attachChild(node);
-        }
+        }*/
 
         for (Cell cellToRemove : WorldManager.getInstance().getRule().getToRemove()) {
             // stub
