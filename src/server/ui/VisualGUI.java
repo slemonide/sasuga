@@ -51,15 +51,17 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
+
+        AppSettings settings = new AppSettings(true);
+        settings.setStereo3D(false);
+        app.setSettings(settings);
+
         app.start();
     }
 
     @Override
     public void simpleInitApp() {
         delay = 0;
-
-        AppSettings settings = new AppSettings(true);
-        settings.setStereo3D(false);
 
         flyCam.setMoveSpeed(10);
 
