@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector3;
+import server.model.Vector;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -22,12 +22,12 @@ public class RandomWalk implements RuleSet {
     public RandomWalk() {
         cells = new HashSet<>();
         currentCells = new HashSet<>();
-        currentCells.add(new Cell(new Vector3(0, 0, 0)));
-        currentCells.add(new Cell(new Vector3(0, 10, 0)));
-        currentCells.add(new Cell(new Vector3(0, 20, 0)));
-        currentCells.add(new Cell(new Vector3(0, 30, 0)));
-        currentCells.add(new Cell(new Vector3(0, 40, 0)));
-        currentCells.add(new Cell(new Vector3(0, 50, 0)));
+        currentCells.add(new Cell(new Vector(0, 0, 0)));
+        currentCells.add(new Cell(new Vector(0, 10, 0)));
+        currentCells.add(new Cell(new Vector(0, 20, 0)));
+        currentCells.add(new Cell(new Vector(0, 30, 0)));
+        currentCells.add(new Cell(new Vector(0, 40, 0)));
+        currentCells.add(new Cell(new Vector(0, 50, 0)));
     }
 
     @Override
@@ -45,22 +45,22 @@ public class RandomWalk implements RuleSet {
         currentCells = nextCells;
     }
 
-    private Vector3 getRandomVector() {
+    private Vector getRandomVector() {
         Random random = new Random();
 
         switch (random.nextInt(6)) {
             case 0:
-                return new Vector3(1, 0, 0);
+                return new Vector(1, 0, 0);
             case 1:
-                return new Vector3(-1, 0, 0);
+                return new Vector(-1, 0, 0);
             case 2:
-                return new Vector3(0, 1, 0);
+                return new Vector(0, 1, 0);
             case 3:
-                return new Vector3(0, 0, 0); // here
+                return new Vector(0, 0, 0); // here
             case 4:
-                return new Vector3(0, 0, 1);
+                return new Vector(0, 0, 1);
             case 5:
-                return new Vector3(0, 0, -1);
+                return new Vector(0, 0, -1);
             default:
                 return null;
         }
@@ -88,7 +88,7 @@ public class RandomWalk implements RuleSet {
     }
 
     @Override
-    public Set<Vector3> getNeighbourhood() {
+    public Set<Vector> getNeighbourhood() {
         return null;
     }
 
@@ -113,7 +113,7 @@ public class RandomWalk implements RuleSet {
     }
 
     @Override
-    public void setNeighbourhood(Set<Vector3> neighbourhood) {
+    public void setNeighbourhood(Set<Vector> neighbourhood) {
 
     }
 }

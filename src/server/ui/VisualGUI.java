@@ -29,10 +29,16 @@ import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication implements Observer {
+    private static final float SCALE = 0.2f;
     private static final double MIN_DELAY = 0.01;
     private Node cellsNode;
     private double delay;
     private boolean tick = false;
+
+
+    public static int xdim;
+    public static int ydim;
+    public static int zdim;
 
     private static VisualGUI instance;
 
@@ -55,6 +61,10 @@ public class VisualGUI extends SimpleApplication implements Observer {
         AppSettings settings = new AppSettings(true);
         settings.setStereo3D(false);
         app.setSettings(settings);
+
+        app.xdim = 0;
+        app.ydim = 1;
+        app.zdim = 2;
 
         app.start();
     }
@@ -87,7 +97,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
             node.setMaterial(mat);
 
-            node.setLocalTranslation(cell.getPosition().x * 0.2f, cell.getPosition().y * 0.2f, cell.getPosition().z * 0.2f);
+            node.setLocalTranslation(cell.getPosition().v[xdim] * SCALE, cell.getPosition().v[ydim] * SCALE, cell.getPosition().v[zdim] * SCALE);
 
             cellsNode.attachChild(node);
         }

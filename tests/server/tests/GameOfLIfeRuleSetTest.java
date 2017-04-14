@@ -3,8 +3,7 @@ package server.tests;
 import org.junit.Before;
 import org.junit.Test;
 import server.model.Cell;
-import server.model.Vector3;
-import server.model.WorldGenerator;
+import server.model.Vector;
 import server.model.WorldManager;
 
 import java.util.HashSet;
@@ -21,24 +20,24 @@ import static org.junit.Assert.*;
  */
 public class GameOfLIfeRuleSetTest {
     private static final int MAX_TICKS = 100;
-    private static final Vector3 ORIGIN = new Vector3(0, 0, 0);
+    private static final Vector ORIGIN = new Vector(0, 0, 0);
 
     @Before
     public void runBefore() {
         WorldManager.getInstance().getRule().setLowerBound(1);
         WorldManager.getInstance().getRule().setUpperBound(3);
 
-        Set<Vector3> neighbourhood = new HashSet<>();
-        neighbourhood.add(new Vector3(1,0,0));
-        neighbourhood.add(new Vector3(1,0,1));
-        neighbourhood.add(new Vector3(1,0,-1));
+        Set<Vector> neighbourhood = new HashSet<>();
+        neighbourhood.add(new Vector(1,0,0));
+        neighbourhood.add(new Vector(1,0,1));
+        neighbourhood.add(new Vector(1,0,-1));
 
-        neighbourhood.add(new Vector3(-1,0,0));
-        neighbourhood.add(new Vector3(-1,0,1));
-        neighbourhood.add(new Vector3(-1,0,-1));
+        neighbourhood.add(new Vector(-1,0,0));
+        neighbourhood.add(new Vector(-1,0,1));
+        neighbourhood.add(new Vector(-1,0,-1));
 
-        neighbourhood.add(new Vector3(0,0,1));
-        neighbourhood.add(new Vector3(0,0,-1));
+        neighbourhood.add(new Vector(0,0,1));
+        neighbourhood.add(new Vector(0,0,-1));
 
         WorldManager.getInstance().getRule().setNeighbourhood(neighbourhood);
 
@@ -67,9 +66,9 @@ public class GameOfLIfeRuleSetTest {
 
     @Test
     public void testTickSimpleOscillator() {
-        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, -1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Vector3(0, 0, 1)));
+        WorldManager.getInstance().add(new Cell(new Vector(0, 0, -1)));
+        WorldManager.getInstance().add(new Cell(new Vector(0, 0, 0)));
+        WorldManager.getInstance().add(new Cell(new Vector(0, 0, 1)));
         /*
          * 0 1 0
          * 0 1 0
@@ -85,18 +84,18 @@ public class GameOfLIfeRuleSetTest {
                  * 1 1 1
                  * 0 0 0
                  */
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0, 0))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(-1, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(0, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(1, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(-1, 0, 0))));
             } else {
                 /*
                  * 0 1 0
                  * 0 1 0
                  * 0 1 0
                  */
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, -1))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 0))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(0, 0, 1))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(0, 0, -1))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(0, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(0, 0, 1))));
             }
             assertEquals(3, WorldManager.getInstance().getPopulationSize());
         }
@@ -111,47 +110,47 @@ public class GameOfLIfeRuleSetTest {
          * 3 | 0 0 0 0 0 0 1 0 0
          */
         // the square
-        WorldManager.getInstance().add(new Cell(new Vector3(1, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(1, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector(2, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector(1, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(2, 0,2)));
 
         // the other thing
-        WorldManager.getInstance().add(new Cell(new Vector3(5, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(5, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector3(6, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(5, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector(5, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(6, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector(6, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(7, 0,2)));
 
         assertEquals(9, WorldManager.getInstance().getPopulationSize());
         // the square
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(2, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0,2))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(2, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(1, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(2, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(1, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(2, 0,2))));
 
         // the other thing
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(5, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(5, 0,2))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(6, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(6, 0,3))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(7, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(5, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(5, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(6, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(6, 0,3))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(7, 0,2))));
 
         for (int i = 0; i < MAX_TICKS; i++) {
             WorldManager.getInstance().tick();
             assertEquals(9, WorldManager.getInstance().getPopulationSize());
             // the square
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(2, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(1, 0,2))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(2, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(1, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(2, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(1, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(2, 0,2))));
 
             // the other thing
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(5, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(5, 0,2))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(6, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(6, 0,3))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector3(7, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(5, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(5, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(6, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(6, 0,3))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Vector(7, 0,2))));
         }
     }
 
@@ -168,15 +167,15 @@ public class GameOfLIfeRuleSetTest {
          *
          */
         // the bottom left thing
-        WorldManager.getInstance().add(new Cell(new Vector3(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(1, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(2, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(2, 0,3)));
 
         // other thing
-        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector3(8, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(7, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector(6, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(7, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(8, 0,3)));
 
 
         for (int i = 1; i < 130; i++) {

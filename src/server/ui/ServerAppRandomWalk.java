@@ -1,16 +1,7 @@
 package server.ui;
 
-import javafx.application.Application;
-import server.exceptions.InvalidDensityException;
-import server.exceptions.InvalidDimensionException;
-import server.model.Vector3;
-import server.model.WorldGenerator;
 import server.model.WorldManager;
-import server.rulesets.NeighbourhoodCellular;
 import server.rulesets.RandomWalk;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -22,7 +13,6 @@ import java.util.Set;
 public class ServerAppRandomWalk {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
-
         WorldManager.getInstance().setRule(new RandomWalk());
 
         Thread worldThread = new Thread(WorldManager.getInstance());

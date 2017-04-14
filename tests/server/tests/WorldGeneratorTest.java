@@ -157,9 +157,9 @@ public class WorldGeneratorTest {
         Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
 
         for (Cell cell : cells) {
-            int x = cell.getPosition().x;
-            int y = cell.getPosition().y;
-            int z = cell.getPosition().z;
+            int x = cell.getPosition().v[0];
+            int y = cell.getPosition().v[1];
+            int z = cell.getPosition().v[2];
 
             maxX = (x > maxX) ? x : maxX;
             maxY = (y > maxY) ? y : maxY;

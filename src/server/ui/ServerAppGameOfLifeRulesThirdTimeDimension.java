@@ -2,11 +2,9 @@ package server.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
-import server.model.Cell;
-import server.model.Vector3;
+import server.model.Vector;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
-import server.rulesets.NeighbourhoodCellular;
 import server.rulesets.ThirdTimeDimension;
 
 import java.util.HashSet;
@@ -28,19 +26,19 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
         gameOfLife.setLowerBound(1);
         gameOfLife.setUpperBound(3);
 
-        Set<Vector3> neighbourhood = new HashSet<>();
+        Set<Vector> neighbourhood = new HashSet<>();
 
-        neighbourhood.add(new Vector3(1,0,-1));
-        neighbourhood.add(new Vector3(1,0,0));
-        neighbourhood.add(new Vector3(1,0,1));
+        neighbourhood.add(new Vector(1,0,-1));
+        neighbourhood.add(new Vector(1,0,0));
+        neighbourhood.add(new Vector(1,0,1));
 
-        neighbourhood.add(new Vector3(0,0,-1));
-        //neighbourhood.add(new Vector3(0,0,0));
-        neighbourhood.add(new Vector3(0,0,1));
+        neighbourhood.add(new Vector(0,0,-1));
+        //neighbourhood.add(new Vector(0,0,0));
+        neighbourhood.add(new Vector(0,0,1));
 
-        neighbourhood.add(new Vector3(-1,0,-1));
-        neighbourhood.add(new Vector3(-1,0,0));
-        neighbourhood.add(new Vector3(-1,0,1));
+        neighbourhood.add(new Vector(-1,0,-1));
+        neighbourhood.add(new Vector(-1,0,0));
+        neighbourhood.add(new Vector(-1,0,1));
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
@@ -57,15 +55,15 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
 /*
         // the bottom left thing
-        WorldManager.getInstance().add(new Cell(new Vector3(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector3(2, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(1, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(2, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Vector(2, 0,3)));
 
         // other thing
-        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector3(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector3(7, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector3(8, 0,3)));*/
+        WorldManager.getInstance().add(new Cell(new Vector(7, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Vector(6, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(7, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Vector(8, 0,3)));*/
 
 
         //worldThread.start();

@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector3;
+import server.model.Vector;
 
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public interface RuleSet {
 
     void add(Cell cell);
 
-    Set<Vector3> getNeighbourhood();
+    Set<Vector> getNeighbourhood();
 
     void setLowerBound(int i);
 
@@ -34,5 +34,5 @@ public interface RuleSet {
 
     void remove(Cell cell);
 
-    void setNeighbourhood(Set<Vector3> neighbourhood);
+    void setNeighbourhood(Set<Vector> neighbourhood);
 }
