@@ -2,8 +2,6 @@ package server.ui;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
-import com.jme3.light.Light;
-import com.jme3.light.PointLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
@@ -15,10 +13,8 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.debug.WireFrustum;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
-import com.jme3.shadow.BasicShadowRenderer;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
@@ -64,7 +60,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         flyCam.setMoveSpeed(10);
 
         getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
-                "Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
+                "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
         addCells();
         addFloor();
         addShadows();
