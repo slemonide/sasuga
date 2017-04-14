@@ -34,6 +34,49 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            serveClient();
+        }
+    }
 
+    private void serveClient() {
+        try {
+            String order = input.readLine();
+
+            if (order.equals("GET CELLS")) {
+                sendPackagedJsonCells();
+            }
+
+        } catch (IOException ignored) {}
+    }
+
+    private void sendPackagedJsonCells() {
+        String jsonPackage = makeJsonPackage();
+        System.out.print(jsonPackage);
+        output.print(jsonPackage);
+    }
+
+    private String makeJsonPackage() {
+        StringBuilder message = new StringBuilder("[");
+
+        for (Cell cell : WorldManager.getInstance().getRule().getCells()) {
+            StringBuilder vectorString = new StringBuilder();
+            int[] vector = cell.getPosition().v;
+            for (int i = 0; i < vector.length; i++) {
+                if (i != 0) {
+                    vectorString.append(", ").append(vector[i]);
+                } else {
+                    vectorString.append(vector[i]);
+                }
+            }
+
+            String cellAddition = "{" + "\"Vector :\"" + "[" + vectorString + "]" + "}";
+
+            message.append(cellAddition).append(",");
+        }
+
+        message.append("]");
+
+        return message.toString();
     }
 }

@@ -38,7 +38,7 @@ import java.util.Set;
  */
 public class VisualGUI extends SimpleApplication {
     private static final float SCALE = 0.2f;
-    private static final double MIN_DELAY = 0.01;
+    private static final double MIN_DELAY = 2;
     private Node cellsNode;
     private double delay;
 

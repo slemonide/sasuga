@@ -54,8 +54,8 @@ public class ServerManager {
     public Set<Cell> getCells() throws IOException {
         input.println("GET CELLS");
         String jsonCells = output.readLine();
+        System.out.println(jsonCells);
         CellsParser cellsParser = new CellsParser(jsonCells);
-        Set<Cell> cells = cellsParser.getCells();
-        return cells;
+        return cellsParser.getCells();
     }
 }

@@ -23,6 +23,7 @@ public class CellsParser {
     public CellsParser(String jsonCells) {
         cells = new HashSet<>();
 
+        System.out.println(jsonCells);
         JSONArray cellsArray = new JSONArray(jsonCells);
 
         for (int i = 0; i < cellsArray.length(); i++) {
