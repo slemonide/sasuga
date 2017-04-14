@@ -1,10 +1,12 @@
 package server.model;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
- * @author      Danil Platonov <slemonide@gmail.com>
+ * @author      Danil Platonov <slemonide@gmail.com>, jacketsj <jacketsj@gmail.com>
  * @version     0.1
  * @since       0.1
  *
@@ -22,12 +24,19 @@ public class Vector {
 
     /**
      * Creates a vector with the given coordinates
-     * @param cooordinates
+     * @param coordinates
      */
-    public Vector(int... cooordinates) {
-        v = new int[cooordinates.length];
-        for (int i = 0; i < cooordinates.length; ++i) {
-            v[i] = cooordinates[i]; //keep it final
+    public Vector(int... coordinates) {
+        v = new int[coordinates.length];
+        for (int i = 0; i < coordinates.length; ++i) {
+            v[i] = coordinates[i]; //keep it final
+        }
+    }
+
+    public Vector(List<Integer> coordinates) {
+        v = new int[coordinates.size()];
+        for (int i = 0; i < coordinates.size(); ++i) {
+            v[i] = coordinates.get(i); //keep it final
         }
     }
 

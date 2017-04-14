@@ -12,27 +12,27 @@ Also, a small demo of the 3D gui is awailable at *src/application/Main.java*. It
 ## Screenshots (Yay!):
 #ConsoleUI:
 
-![ConsoleUI](doc/ConsoleUI.PNG)
+![ConsoleUI](doc/screenshots/ConsoleUI.PNG)
 
 #GraphGUI:
 
-![GraphGUI](doc/graphGUI1.PNG)
-![GraphGUI](doc/graphGUI2.PNG)
-![GraphGUI](doc/graphGUI3.PNG)
-![GraphGUI with cyclic populations](doc/graphGUI_cyclicWorld.PNG)
-![GraphGUI with exponential growth](doc/expGrowth.PNG)
+![GraphGUI](doc/screenshots/graphGUI1.PNG)
+![GraphGUI](doc/screenshots/graphGUI2.PNG)
+![GraphGUI](doc/screenshots/graphGUI3.PNG)
+![GraphGUI with cyclic populations](doc/screenshots/graphGUI_cyclicWorld.PNG)
+![GraphGUI with exponential growth](doc/screenshots/expGrowth.PNG)
 
 #VisualUI:
 
-![A fluffy cube](doc/VisualUI.PNG)
-![A green blob](doc/VisualUI1.PNG)
-![Reddish-green mountain](doc/VisualUI2.PNG)
+![A fluffy cube](doc/screenshots/VisualUI.PNG)
+![A green blob](doc/screenshots/VisualUI1.PNG)
+![Reddish-green mountain](doc/screenshots/VisualUI2.PNG)
 Game Of Life rules:
-![Game Of Life rules](doc/VisualUI3.PNG)
+![Game Of Life rules](doc/screenshots/VisualUI3.PNG)
 
 Nicer graphics:
-![With shadows](doc/VisualUIShadows.PNG)
-![With sky sphere and shadows](doc/VisualUIShadowsSkySphere.PNG)
+![With shadows](doc/screenshots/VisualUIShadows.PNG)
+![With sky sphere and shadows](doc/screenshots/VisualUIShadowsSkySphere.PNG)
 
 
 ### Chunk is:
@@ -84,7 +84,7 @@ A position in the 3D space (for now, perfectly Euclidean).
 ## Server
 Does all the computations.
 
-![doc/ServerClassDiagram.mermaid](doc/ServerClassDiagram.mermaid.png)
+![doc/ServerClassDiagram.mermaid](doc/screenshots/ServerClassDiagram.mermaid.png)
 
 
 ## Clients
