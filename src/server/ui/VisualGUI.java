@@ -33,33 +33,13 @@ public class VisualGUI extends SimpleApplication {
     private static final double MIN_DELAY = 0.01;
     private Node cellsNode;
     private double delay;
-    private boolean tick = false;
 
     //which dimensions are rendered
     public static int xdim;
     public static int ydim;
     public static int zdim;
 
-    private static VisualGUI instance;
-
     private boolean isPaused = false;
-    //keybind checks, these should be moved elsewhere later
-//    private boolean buttonDetectedPause = false;
-//    private boolean buttonDetectedNextDim = false;
-//    private boolean buttonDetectedPrevDim = false;
-
-    private VisualGUI() {};
-
-    /**
-     * Singleton pattern
-     * @return instance
-     */
-    public static VisualGUI getInstance() {
-        if(instance == null){
-            instance = new VisualGUI();
-        }
-        return instance;
-    }
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
@@ -78,15 +58,21 @@ public class VisualGUI extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         delay = 0;
-
         flyCam.setMoveSpeed(10);
 
-        getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
-                "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
+        addSkySphere();
         addCells();
         addFloor();
         addShadows();
+        addEventHandlers();
+    }
 
+    private void addSkySphere() {
+        getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
+                "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
+    }
+
+    private void addEventHandlers() {
         inputManager.addMapping("PAUSE", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("PREVDIM", new KeyTrigger(KeyInput.KEY_MINUS));
         inputManager.addMapping("NEXTDIM", new KeyTrigger(KeyInput.KEY_EQUALS));
