@@ -1,6 +1,9 @@
 package server.ui;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -35,12 +38,18 @@ public class VisualGUI extends SimpleApplication implements Observer {
     private double delay;
     private boolean tick = false;
 
-
+    //which dimensions are rendered
     public static int xdim;
     public static int ydim;
     public static int zdim;
 
     private static VisualGUI instance;
+
+    private boolean isPaused = false;
+    //keybind checks, these should be moved elsewhere later
+//    private boolean buttonDetectedPause = false;
+//    private boolean buttonDetectedNextDim = false;
+//    private boolean buttonDetectedPrevDim = false;
 
     private VisualGUI() {};
 
@@ -80,6 +89,13 @@ public class VisualGUI extends SimpleApplication implements Observer {
         addCells();
         addFloor();
         addShadows();
+
+        inputManager.addMapping("PAUSE", new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addMapping("PREVDIM", new KeyTrigger(KeyInput.KEY_MINUS));
+        inputManager.addMapping("NEXTDIM", new KeyTrigger(KeyInput.KEY_EQUALS));
+        inputManager.addListener(pauseActionListener, "PAUSE");
+        inputManager.addListener(prevDimActionListener, "PREVDIM");
+        inputManager.addListener(nextDimActionListener, "NEXTDIM");
     }
 
     private void addCells() {
@@ -140,6 +156,72 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     @Override
     public void simpleUpdate(float tpf) {
+        if (!isPaused) {
+            UpdateCells(tpf);
+        }
+    }
+
+    private ActionListener pauseActionListener = new ActionListener(){
+        public void onAction(String name, boolean pressed, float tpf){
+//            if (!pressed) {
+//                if (buttonDetectedPause) {
+//                    buttonDetectedPause = false;
+//                    //System.out.println(name + " = " + pressed);
+//                }
+//            }
+            if (pressed) {
+//                if (!buttonDetectedPause) {
+//                    buttonDetectedPause = true;
+                    isPaused = !isPaused;
+                    //System.out.println(name + " = " + pressed);
+//                }
+            }
+        }
+    };
+
+    private ActionListener prevDimActionListener = new ActionListener(){
+        public void onAction(String name, boolean pressed, float tpf){
+//            if (!pressed) {
+//                if (buttonDetectedNextDim) {
+//                    buttonDetectedNextDim = false;
+//                    //System.out.println(name + " = " + pressed);
+//                }
+//            }
+            if (pressed) {
+//                if (!buttonDetectedNextDim) {
+//                    buttonDetectedNextDim = true;
+                    int dim = WorldManager.getInstance().dim;
+                    xdim = (xdim - 1+dim) % dim;
+                    ydim = (ydim - 1+dim) % dim;
+                    zdim = (zdim - 1+dim) % dim;
+                    //System.out.println(name + " = " + pressed);
+//                }
+            }
+        }
+    };
+
+    private ActionListener nextDimActionListener = new ActionListener(){
+        public void onAction(String name, boolean pressed, float tpf){
+//            if (!pressed) {
+//                if (buttonDetectedNextDim) {
+//                    buttonDetectedNextDim = false;
+//                    //System.out.println(name + " = " + pressed);
+//                }
+//            }
+            if (pressed) {
+//                if (!buttonDetectedNextDim) {
+//                    buttonDetectedNextDim = true;
+                    int dim = WorldManager.getInstance().dim;
+                    xdim = (xdim + 1) % dim;
+                    ydim = (ydim + 1) % dim;
+                    zdim = (zdim + 1) % dim;
+                    //System.out.println(name + " = " + pressed);
+//                }
+            }
+        }
+    };
+
+    private void UpdateCells(float tpf) {
         delay += tpf;
         if (delay <= MIN_DELAY) {
             return;

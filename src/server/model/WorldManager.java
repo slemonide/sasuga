@@ -17,6 +17,7 @@ public class WorldManager extends Observable implements Runnable {
     private RuleSet rule;
     private long tickTime = 0;
     private int generation = 0;
+    public int dim = 3;
 
     private WorldManager() {}
 

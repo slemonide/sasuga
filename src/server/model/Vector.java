@@ -11,7 +11,7 @@ import java.util.Collections;
  * A vector in a 3D toroidal space (goodbye Euclidean space!)
  */
 public class Vector {
-    private static final int SIZE = 50;
+    public static final int SIZE = 50;
     //private static final int X_SIZE = 50;
     //private static final int Y_SIZE = 50;
     //private static final int Z_SIZE = 50;
