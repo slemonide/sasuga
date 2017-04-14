@@ -1,6 +1,10 @@
 package client.ui;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.InputListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
@@ -20,6 +24,13 @@ import com.jme3.util.SkyFactory;
  */
 public class VisualGUI extends SimpleApplication {
 
+    private InputListener placeActionListener = new ActionListener() {
+        @Override
+        public void onAction(String s, boolean b, float v) {
+
+        }
+    };
+
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
         app.start();
@@ -33,6 +44,13 @@ public class VisualGUI extends SimpleApplication {
         getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
                 "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
         addFloor();
+        addKeyHandlers();
+    }
+
+    private void addKeyHandlers() {
+        inputManager.addMapping("PLACE", new KeyTrigger(KeyInput.KEY_L));
+
+        inputManager.addListener(placeActionListener, "PLACE");
     }
 
     private void addFloor() {

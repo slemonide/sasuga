@@ -11,7 +11,6 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
-import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -26,12 +25,10 @@ import jme3tools.optimize.GeometryBatchFactory;
 import server.model.Cell;
 import server.model.WorldManager;
 
-import java.util.HashSet;
-import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-public class VisualGUI extends SimpleApplication implements Observer {
+public class VisualGUI extends SimpleApplication {
     private static final float SCALE = 0.2f;
     private static final double MIN_DELAY = 0.01;
     private Node cellsNode;
@@ -157,71 +154,41 @@ public class VisualGUI extends SimpleApplication implements Observer {
     @Override
     public void simpleUpdate(float tpf) {
         if (!isPaused) {
-            UpdateCells(tpf);
+            updateCells(tpf);
         }
     }
 
     private ActionListener pauseActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
-//            if (!pressed) {
-//                if (buttonDetectedPause) {
-//                    buttonDetectedPause = false;
-//                    //System.out.println(name + " = " + pressed);
-//                }
-//            }
             if (pressed) {
-//                if (!buttonDetectedPause) {
-//                    buttonDetectedPause = true;
-                    isPaused = !isPaused;
-                    //System.out.println(name + " = " + pressed);
-//                }
+                isPaused = !isPaused;
             }
         }
     };
 
     private ActionListener prevDimActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
-//            if (!pressed) {
-//                if (buttonDetectedNextDim) {
-//                    buttonDetectedNextDim = false;
-//                    //System.out.println(name + " = " + pressed);
-//                }
-//            }
             if (pressed) {
-//                if (!buttonDetectedNextDim) {
-//                    buttonDetectedNextDim = true;
-                    int dim = WorldManager.getInstance().dim;
-                    xdim = (xdim - 1+dim) % dim;
-                    ydim = (ydim - 1+dim) % dim;
-                    zdim = (zdim - 1+dim) % dim;
-                    //System.out.println(name + " = " + pressed);
-//                }
+                int dim = WorldManager.getInstance().dim;
+                xdim = (xdim - 1+dim) % dim;
+                ydim = (ydim - 1+dim) % dim;
+                zdim = (zdim - 1+dim) % dim;
             }
         }
     };
 
     private ActionListener nextDimActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
-//            if (!pressed) {
-//                if (buttonDetectedNextDim) {
-//                    buttonDetectedNextDim = false;
-//                    //System.out.println(name + " = " + pressed);
-//                }
-//            }
             if (pressed) {
-//                if (!buttonDetectedNextDim) {
-//                    buttonDetectedNextDim = true;
-                    int dim = WorldManager.getInstance().dim;
-                    xdim = (xdim + 1) % dim;
-                    ydim = (ydim + 1) % dim;
-                    zdim = (zdim + 1) % dim;
-                    //System.out.println(name + " = " + pressed);
-//                }
+                int dim = WorldManager.getInstance().dim;
+                xdim = (xdim + 1) % dim;
+                ydim = (ydim + 1) % dim;
+                zdim = (zdim + 1) % dim;
             }
         }
     };
 
-    private void UpdateCells(float tpf) {
+    private void updateCells(float tpf) {
         delay += tpf;
         if (delay <= MIN_DELAY) {
             return;
@@ -230,46 +197,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
         cellsNode.getChildren().clear();
         addCells();
-        /*
-        for (Cell cellToAdd : WorldManager.getInstance().getRule().getToAdd()) {
-            Box b = new Box(0.1f, 0.1f, 0.1f);
-            Spatial node = new Geometry("Box", b);
-            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-
-            Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
-            node.setMaterial(mat);
-
-            node.setLocalTranslation(
-                    cellToAdd.getPosition().x * 0.2f,
-                    cellToAdd.getPosition().y * 0.2f,
-                    cellToAdd.getPosition().z * 0.2f);
-
-            cellsNode.attachChild(node);
-        }*/
-
-        for (Cell cellToRemove : WorldManager.getInstance().getRule().getToRemove()) {
-            // stub
-            // TODO: finish
-        }
 
         GeometryBatchFactory.optimize(cellsNode);
         WorldManager.getInstance().getRule().tick();
-    }
-
-    private Set<Cell> filterVisible(Set<Cell> cells) {
-        Set<Cell> visibleCells = new HashSet<>();
-        return null;
-    }
-
-    @Override
-    public void simpleRender(RenderManager rm) {
-        //TODO: add render code
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg.equals("tick")) {
-            tick = true;
-        }
     }
 }

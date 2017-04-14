@@ -22,7 +22,7 @@ public class ServerAppRandomWalk3 {
 
         WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
         WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
-        WorldManager.getInstance().addObserver(VisualGUI.getInstance());
+        //WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
         //Application.launch(PopulationGraphGUI.class, args);
