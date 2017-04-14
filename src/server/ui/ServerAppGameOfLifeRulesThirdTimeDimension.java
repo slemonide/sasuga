@@ -50,7 +50,7 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
         // Generate
         try {
-            WorldGenerator.generate(0.1, 100, 1, 100);
+            WorldGenerator.generate(0.6, 10, 1, 10);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }

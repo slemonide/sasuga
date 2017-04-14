@@ -16,21 +16,33 @@ import java.util.Set;
  */
 
 public class RandomWalk implements RuleSet {
-    private Cell currentCell;
+    private Set<Cell> currentCells;
     private Set<Cell> cells;
 
     public RandomWalk() {
         cells = new HashSet<>();
-        currentCell = new Cell(new Vector3(0, 0, 0));
+        currentCells = new HashSet<>();
+        currentCells.add(new Cell(new Vector3(0, 0, 0)));
+        currentCells.add(new Cell(new Vector3(10, 0, 0)));
+        currentCells.add(new Cell(new Vector3(20, 0, 0)));
+        currentCells.add(new Cell(new Vector3(30, 0, 0)));
+        currentCells.add(new Cell(new Vector3(40, 0, 0)));
+        currentCells.add(new Cell(new Vector3(50, 0, 0)));
     }
 
     @Override
     public void tick() {
-        Vector3 randomVector = getRandomVector();
-        Cell nextCell = new Cell(currentCell.getPosition().add(randomVector));
+        Set<Cell> nextCells = new HashSet<>();
 
-        cells.add(currentCell);
-        currentCell = nextCell;
+        for (Cell cell : currentCells) {
+            cells.add(cell);
+
+            Cell nextCell = new Cell(cell.getPosition().add(getRandomVector()));
+
+            nextCells.add(nextCell);
+        }
+
+        currentCells = nextCells;
     }
 
     private Vector3 getRandomVector() {
@@ -44,7 +56,7 @@ public class RandomWalk implements RuleSet {
             case 2:
                 return new Vector3(0, 1, 0);
             case 3:
-                return new Vector3(0, -1, 0); // here
+                return new Vector3(1, 0, 0); // here
             case 4:
                 return new Vector3(0, 0, 1);
             case 5:
@@ -61,10 +73,7 @@ public class RandomWalk implements RuleSet {
 
     @Override
     public Set<Cell> getToAdd() {
-        // only one cell is active (for now)
-        Set<Cell> toAdd = new HashSet<>();
-        toAdd.add(currentCell);
-        return toAdd;
+        return currentCells;
     }
 
     @Override
