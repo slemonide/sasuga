@@ -48,10 +48,7 @@ public class WorldManager extends Observable implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             // tickTime measurement
             long startTime = System.nanoTime();
-
-            if (rule != null) {
-                rule.tick();
-            }
+            tick();
 
             // tickTime measurement
             long endTime = System.nanoTime();
@@ -110,5 +107,6 @@ public class WorldManager extends Observable implements Runnable {
 
     public void tick() {
         rule.tick();
+        generation++;
     }
 }

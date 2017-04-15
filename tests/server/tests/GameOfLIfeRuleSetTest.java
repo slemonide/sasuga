@@ -54,7 +54,7 @@ public class GameOfLIfeRuleSetTest {
     @Test
     public void testTickBasic() {
         for (int i = 1; i < MAX_TICKS; i++) {
-            WorldManager.getInstance().getRule().tick();
+            WorldManager.getInstance().tick();
             assertEquals(i, WorldManager.getInstance().getGeneration());
             assertEquals(0, WorldManager.getInstance().getPopulationSize());
         }
