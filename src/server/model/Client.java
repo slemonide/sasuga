@@ -44,6 +44,7 @@ public class Client implements Runnable {
             String order = input.readLine();
 
             if (order.equals("GET CELLS")) {
+                System.out.println("DEBUG: data request <GET CELLS> received");
                 sendPackagedJsonCells();
             }
 
@@ -52,8 +53,7 @@ public class Client implements Runnable {
 
     private void sendPackagedJsonCells() {
         String jsonPackage = makeJsonPackage();
-        System.out.print(jsonPackage);
-        output.print(jsonPackage);
+        output.println(jsonPackage);
     }
 
     private String makeJsonPackage() {

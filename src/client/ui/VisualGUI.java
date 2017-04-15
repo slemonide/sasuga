@@ -105,10 +105,8 @@ public class VisualGUI extends SimpleApplication {
     }
 
     private void addCells() {
-        Set<Cell> cells = null;
         try {
-            cells = ServerManager.getInstance().getCells();
-            for (Cell cell : cells) {
+            for (Cell cell : ServerManager.getInstance().getCells()) {
                 Box b = new Box(0.1f, 0.1f, 0.1f);
                 Spatial node = new Geometry("Box", b);
                 node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
@@ -209,6 +207,5 @@ public class VisualGUI extends SimpleApplication {
         addCells();
 
         GeometryBatchFactory.optimize(cellsNode);
-        WorldManager.getInstance().getRule().tick();
     }
 }

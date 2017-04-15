@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -54,6 +55,7 @@ public class ServerManager {
     public Set<Cell> getCells() throws IOException {
         input.println("GET CELLS");
         String jsonCells = output.readLine();
+        System.out.println("Data received:");
         System.out.println(jsonCells);
         CellsParser cellsParser = new CellsParser(jsonCells);
         return cellsParser.getCells();
