@@ -5,6 +5,7 @@ import org.junit.Test;
 import server.model.Cell;
 import server.model.Vector;
 import server.model.WorldManager;
+import server.rulesets.NeighbourhoodCellular;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,24 +25,30 @@ public class GameOfLIfeRuleSetTest {
 
     @Before
     public void runBefore() {
-        WorldManager.getInstance().getRule().setLowerBound(1);
-        WorldManager.getInstance().getRule().setUpperBound(3);
+        WorldManager.getInstance().reset();
+
+        NeighbourhoodCellular gameOfLife = new NeighbourhoodCellular();
+
+        gameOfLife.setLowerBound(1);
+        gameOfLife.setUpperBound(3);
 
         Set<Vector> neighbourhood = new HashSet<>();
+
+        neighbourhood.add(new Vector(1,0,-1));
         neighbourhood.add(new Vector(1,0,0));
         neighbourhood.add(new Vector(1,0,1));
-        neighbourhood.add(new Vector(1,0,-1));
 
+        neighbourhood.add(new Vector(0,0,-1));
+        //neighbourhood.add(new Vector(0,0,0));
+        neighbourhood.add(new Vector(0,0,1));
+
+        neighbourhood.add(new Vector(-1,0,-1));
         neighbourhood.add(new Vector(-1,0,0));
         neighbourhood.add(new Vector(-1,0,1));
-        neighbourhood.add(new Vector(-1,0,-1));
 
-        neighbourhood.add(new Vector(0,0,1));
-        neighbourhood.add(new Vector(0,0,-1));
+        gameOfLife.setNeighbourhood(neighbourhood);
 
-        WorldManager.getInstance().getRule().setNeighbourhood(neighbourhood);
-
-        WorldManager.getInstance().reset();
+        WorldManager.getInstance().setRule(gameOfLife);
     }
 
     @Test

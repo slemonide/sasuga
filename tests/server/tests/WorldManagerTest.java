@@ -5,6 +5,7 @@ import org.junit.Test;
 import server.model.Cell;
 import server.model.Vector;
 import server.model.WorldManager;
+import server.rulesets.RandomWalk;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class WorldManagerTest {
     @Before
     public void runBefore() {
+        WorldManager.getInstance().setRule(new RandomWalk());
         WorldManager.getInstance().clear();
     }
 

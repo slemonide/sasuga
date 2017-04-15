@@ -49,6 +49,8 @@ public class ServerApp {
             e.printStackTrace();
         }
 
+        System.out.println(WorldManager.getInstance().getPopulationSize());
+
         Thread clientManagerThread = new Thread(ClientManager.getInstance());
         clientManagerThread.start();
 

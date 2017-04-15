@@ -7,6 +7,7 @@ import org.junit.Test;
 import server.model.Cell;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
+import server.rulesets.RandomWalk;
 
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import static org.junit.Assert.*;
 public class WorldGeneratorTest {
     @Before
     public void runBefore() {
+        WorldManager.getInstance().setRule(new RandomWalk());
         WorldManager.getInstance().getRule().clear();
     }
 

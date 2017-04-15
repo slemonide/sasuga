@@ -66,6 +66,8 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
         WorldManager.getInstance().add(new Cell(new Vector(8, 0,3)));*/
 
 
+        System.out.println(WorldManager.getInstance().getRule().getCells().size());
+
         //worldThread.start();
         System.out.println("OK");
 
