@@ -140,7 +140,14 @@ public class VisualGUI extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         if (!isPaused) {
-            updateCells(tpf);
+            updateDelay(tpf);
+        }
+
+        cellsNode.getChildren().clear();
+        addCells();
+
+        if (!isPaused) {
+            updateCells();
         }
     }
 
@@ -174,15 +181,15 @@ public class VisualGUI extends SimpleApplication {
         }
     };
 
-    private void updateCells(float tpf) {
+    private void updateDelay(float tpf) {
         delay += tpf;
         if (delay <= MIN_DELAY) {
             return;
         }
         delay = 0;
+    }
 
-        cellsNode.getChildren().clear();
-        addCells();
+    private void updateCells() {
 
         GeometryBatchFactory.optimize(cellsNode);
         WorldManager.getInstance().getRule().tick();
