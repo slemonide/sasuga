@@ -137,7 +137,7 @@ public class VisualGUI extends SimpleApplication {
 
         Quaternion q = new Quaternion();
         floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
-        floor.setLocalTranslation(-1000, -0.1f, 1000);
+        floor.setLocalTranslation(-1000, -SCALE/2, 1000);
         rootNode.attachChild(floor);
     }
 
@@ -158,7 +158,7 @@ public class VisualGUI extends SimpleApplication {
         }
 
         Vector3f floorTranslation = floor.getLocalTranslation();
-        Vector3f nextFloorTranslation = floorTranslation.setY(minimumY);
+        Vector3f nextFloorTranslation = floorTranslation.setY(minimumY - SCALE/2);
         floor.setLocalTranslation(nextFloorTranslation);
     }
 
