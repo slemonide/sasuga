@@ -1,5 +1,7 @@
 package server.model;
 
+import server.rulesets.RuleSet;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,9 +17,10 @@ public class Cell {
      * Position of this cell
      */
     private Vector position;
+    private RuleSet ruleSet;
 
     /**
-     * Create a node at the given position
+     * Create a cell at the given position and with the "static" ruleset
      * @param position position of this node in the global coordinates
      */
     public Cell(Vector position) {
@@ -25,7 +28,7 @@ public class Cell {
     }
 
     /**
-     * Produce the position of this node
+     * Produce the position of this cell
      * @return position
      */
     public Vector getPosition() {
@@ -46,41 +49,6 @@ public class Cell {
 
         return neighbours;
     }
-/*
-    static private Set<Vector> getNeighbourhood() {
-        Set<Vector> neighbourhood = new HashSet<>();
-
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                if (x != 0 && z != 0) {
-                    neighbourhood.add(new Vector(x, 0, z));
-                }
-            }
-        }
-*/
-/*
-        for (int x = - RADIUS_OUT; x <= RADIUS_OUT; x++) {
-            for (int y = - RADIUS_OUT; y <= RADIUS_OUT; y++) {
-                for (int z = - RADIUS_OUT; z <= RADIUS_OUT; z++) {
-                    if (x != 0 && y != 0 && z != 0) {
-                        neighbourhood.add(new Vector(x, y, z));
-                    }
-                }
-            }
-        }
-
-        for (int x = - RADIUS_IN; x <= RADIUS_IN; x++) {
-            for (int y = - RADIUS_IN; y <= RADIUS_IN; y++) {
-                for (int z = - RADIUS_IN; z <= RADIUS_IN; z++) {
-                    if (x != 0 && y != 0 && z != 0) {
-                        neighbourhood.remove(new Vector(x, y, z));
-                    }
-                }
-            }
-        }
-*/
-      //  return neighbourhood;
-    //}
 
     /**
      * Produce all the possible neighbours minus neighbours available so far

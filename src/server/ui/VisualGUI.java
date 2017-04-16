@@ -140,13 +140,6 @@ public class VisualGUI extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         if (!isPaused) {
-            updateDelay(tpf);
-        }
-
-        cellsNode.getChildren().clear();
-        addCells();
-
-        if (!isPaused) {
             updateCells();
         }
     }
@@ -166,6 +159,8 @@ public class VisualGUI extends SimpleApplication {
                 xdim = (xdim - 1+dim) % dim;
                 ydim = (ydim - 1+dim) % dim;
                 zdim = (zdim - 1+dim) % dim;
+
+                updateCells();
             }
         }
     };
@@ -177,6 +172,8 @@ public class VisualGUI extends SimpleApplication {
                 xdim = (xdim + 1) % dim;
                 ydim = (ydim + 1) % dim;
                 zdim = (zdim + 1) % dim;
+
+                updateCells();
             }
         }
     };
@@ -190,7 +187,8 @@ public class VisualGUI extends SimpleApplication {
     }
 
     private void updateCells() {
-
+        cellsNode.getChildren().clear();
+        addCells();
         GeometryBatchFactory.optimize(cellsNode);
         WorldManager.getInstance().getRule().tick();
     }

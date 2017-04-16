@@ -125,9 +125,7 @@ public class NeighbourhoodCellular implements RuleSet {
     Set<Cell> grow(Set<Cell> cells) {
         Set<Cell> newCells = new HashSet<Cell>();
 
-        for (Cell cell : cells) {
-            newCells.addAll(growAround(cell));
-        }
+        cells.forEach(x -> newCells.addAll(growAround(x)));
 
         return newCells;
     }

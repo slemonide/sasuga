@@ -117,37 +117,37 @@ public class WorldGeneratorTest {
     @Test
     public void testGenerateOneDimensionY() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.77,1,100,1);
-        assertEquals(WorldManager.getInstance().getRule().getCells().size(), 77);
+        assertEquals(77, WorldManager.getInstance().getRule().getCells().size());
     }
 
     @Test
     public void testGenerateOneDimensionZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.911,1,1,100);
-        assertEquals(WorldManager.getInstance().getRule().getCells().size(), 91);
+        assertEquals(91, WorldManager.getInstance().getRule().getCells().size());
     }
 
     @Test
     public void testGenerateTwoDimensionsXY() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.915,10,10,1);
-        assertEquals(WorldManager.getInstance().getRule().getCells().size(), 91);
+        assertEquals(91, WorldManager.getInstance().getRule().getCells().size());
     }
 
     @Test
     public void testGenerateTwoDimensionsXZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.919,10,1,10);
-        assertEquals(WorldManager.getInstance().getRule().getCells().size(), 91);
+        assertEquals(91, WorldManager.getInstance().getRule().getCells().size());
     }
 
     @Test
     public void testGenerateTwoDimensionsYZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.01,1,10,10);
-        assertEquals(WorldManager.getInstance().getRule().getCells().size(), 1);
+        assertEquals(1, WorldManager.getInstance().getRule().getCells().size());
     }
 
     @Test
     public void testGenerateThreeDimensionsXYZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.9321,100,50,150);
-        assertEquals(WorldManager.getInstance().getRule().getCells().size(), (int) (0.9321 * 100 * 50 * 150));
+        assertEquals((int) (0.9321 * 100 * 50 * 150), WorldManager.getInstance().getRule().getCells().size());
     }
 
     @Test
