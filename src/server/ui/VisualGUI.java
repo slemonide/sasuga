@@ -35,9 +35,9 @@ public class VisualGUI extends SimpleApplication {
     private double delay;
 
     //which dimensions are rendered
-    public static int xdim;
-    public static int ydim;
-    public static int zdim;
+    private static int xdim;
+    private static int ydim;
+    private static int zdim;
 
     private boolean isPaused = false;
 
@@ -48,9 +48,9 @@ public class VisualGUI extends SimpleApplication {
         settings.setStereo3D(false);
         app.setSettings(settings);
 
-        app.xdim = 0;
-        app.ydim = 1;
-        app.zdim = 2;
+        xdim = 0;
+        ydim = 1;
+        zdim = 2;
 
         app.start();
     }
@@ -96,7 +96,10 @@ public class VisualGUI extends SimpleApplication {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
             node.setMaterial(mat);
 
-            node.setLocalTranslation(cell.getPosition().v[xdim] * SCALE, cell.getPosition().v[ydim] * SCALE, cell.getPosition().v[zdim] * SCALE);
+            node.setLocalTranslation(
+                    cell.getPosition().getComponent(xdim) * SCALE,
+                    cell.getPosition().getComponent(ydim) * SCALE,
+                    cell.getPosition().getComponent(zdim) * SCALE);
 
             cellsNode.attachChild(node);
         }
@@ -140,15 +143,14 @@ public class VisualGUI extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         if (!isPaused) {
+            updateDelay(tpf);
             updateCells();
         }
     }
 
-    private ActionListener pauseActionListener = new ActionListener(){
-        public void onAction(String name, boolean pressed, float tpf){
-            if (pressed) {
-                isPaused = !isPaused;
-            }
+    private ActionListener pauseActionListener = (name, pressed, tpf) -> {
+        if (pressed) {
+            isPaused = !isPaused;
         }
     };
 

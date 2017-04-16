@@ -1,8 +1,7 @@
 package server.model;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -10,64 +9,74 @@ import java.util.List;
  * @version     0.1
  * @since       0.1
  *
- * A vector in a 3D toroidal space (goodbye Euclidean space!)
+ * A geometrical vector
  */
 public class Vector {
-    public static final int SIZE = 50;
-    //private static final int X_SIZE = 50;
-    //private static final int Y_SIZE = 50;
-    //private static final int Z_SIZE = 50;
     /**
      * components
      */
-    public final int[] v;
+    private Map<Integer, Integer> components;
 
     /**
      * Creates a vector with the given coordinates
-     * @param coordinates
+     * @param coordinates coordinates of the given vector
      */
     public Vector(int... coordinates) {
-        v = new int[coordinates.length];
+        components = new HashMap<>();
+
         for (int i = 0; i < coordinates.length; ++i) {
-            v[i] = coordinates[i]; //keep it final
+            components.put(i, coordinates[i]);
         }
     }
 
     public Vector(List<Integer> coordinates) {
-        v = new int[coordinates.size()];
+        components = new HashMap<>();
+
         for (int i = 0; i < coordinates.size(); ++i) {
-            v[i] = coordinates.get(i); //keep it final
+            components.put(i, coordinates.get(i));
         }
+    }
+
+    public Vector(Map<Integer, Integer> coordinates) {
+        // Make a private copy of the given coordinates
+        components = coordinates.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     /**
      * Create a vector by adding given components to the components of this vector
-     * @param cooordinates
+     * @param coordinates coordinates of the given vector
      * @return the sum of this vector and given vector
      */
-    public Vector add(int... cooordinates) {
-        Vector givenVector = new Vector(cooordinates);
-
+    public Vector add(int... coordinates) {
+        Vector givenVector = new Vector(coordinates);
         return this.add(givenVector);
     }
 
     public Vector add(Vector anotherVector) {
-        int max = Math.max(v.length, anotherVector.v.length);
-        int[] newCoords = new int[max];
-        for (int i = 0; i < max; ++i) {
-            int a = 0;
-            int b = 0;
-            if (i < v.length)
-            {
-                a = v[i];
-            }
-            if (i < anotherVector.v.length)
-            {
-                b = anotherVector.v[i];
-            }
-            newCoords[i]=a+b;
+        Map<Integer, Integer> newCoordinates = components.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        for (Map.Entry<Integer, Integer> entry : anotherVector.getNonZeroComponents().entrySet()) {
+            Integer key = entry.getKey();
+            Integer value = entry.getValue();
+
+            newCoordinates.put(key, value + this.getComponent(key));
         }
-        return new Vector(newCoords);
+
+        return new Vector(newCoordinates);
+    }
+
+    /**
+     * Produce the requested component of this vector
+     * If index < 0, throws InvalidIndexException
+     * @param index index of the component, >= 0
+     * @return vector's component
+     */
+    public int getComponent(int index) {
+        return components.getOrDefault(index, 0);
+    }
+
+    public Map<Integer, Integer> getNonZeroComponents() {
+        return Collections.unmodifiableMap(components);
     }
 
     @Override
@@ -77,24 +86,11 @@ public class Vector {
 
         Vector vector = (Vector) o;
 
-        if (v.length != vector.v.length) {
-            return false;
-        }
-
-        for (int i = 0; i < v.length; ++i) {
-            if (v[i] != vector.v[i]) {
-                return false;
-            }
-        }
-        return true;
+        return components.equals(vector.components);
     }
 
     @Override
     public int hashCode() {
-        int result = 0;
-        for (int c : v) {
-            result = (31 * result + c) % 64;
-        }
-        return result;
+        return components.hashCode();
     }
 }

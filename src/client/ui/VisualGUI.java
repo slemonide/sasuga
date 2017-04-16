@@ -114,7 +114,7 @@ public class VisualGUI extends SimpleApplication {
                 Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
                 node.setMaterial(mat);
 
-                node.setLocalTranslation(cell.getPosition().v[xdim] * SCALE, cell.getPosition().v[ydim] * SCALE, cell.getPosition().v[zdim] * SCALE);
+                //node.setLocalTranslation(cell.getPosition().v[xdim] * SCALE, cell.getPosition().v[ydim] * SCALE, cell.getPosition().v[zdim] * SCALE);
 
                 cellsNode.attachChild(node);
             }

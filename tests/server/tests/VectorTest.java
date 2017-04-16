@@ -15,10 +15,12 @@ public class VectorTest {
     @Test
     public void testConstructor() {
         Vector vector = new Vector(12, 3, 2);
-        assertEquals(12, vector.v[0]);
-        assertEquals(3, vector.v[1]);
-        assertEquals(2, vector.v[2]);
-        assertEquals(3, vector.v.length);
+        assertEquals(12, vector.getComponent(0));
+        assertEquals(3, vector.getComponent(1));
+        assertEquals(2, vector.getComponent(2));
+        assertEquals(3, vector.getNonZeroComponents().size());
+        assertEquals(0, vector.getComponent(100));
+        assertEquals(0, vector.getComponent(-200));
     }
 
     @Test

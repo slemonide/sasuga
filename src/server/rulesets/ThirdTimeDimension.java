@@ -54,9 +54,9 @@ public class ThirdTimeDimension extends NeighbourhoodCellular {
 
         for (Cell cell : cells) {
             nextCells.add(new Cell(new Vector(
-                    cell.getPosition().v[0],
-                    cell.getPosition().v[1] + 1,
-                    cell.getPosition().v[2])));
+                    cell.getPosition().getComponent(0),
+                    cell.getPosition().getComponent(1) + 1,
+                    cell.getPosition().getComponent(2))));
         }
 
         return nextCells;

@@ -2,10 +2,12 @@
   <dictionary name="root">
     <words>
       <w>automata</w>
+      <w>defs</w>
       <w>jlife</w>
       <w>multiclient</w>
       <w>randomwalk</w>
       <w>ruleset</w>
+      <w>shadowmap</w>
       <w>wireworld</w>
     </words>
   </dictionary>

@@ -18,6 +18,7 @@ import java.util.Set;
  */
 
 public class RandomWalk implements RuleSet {
+    private static final int NUMBER_OF_DIMENSIONS = 20;
     private Set<Cell> currentCells;
     private Set<Cell> cells;
 
@@ -33,7 +34,7 @@ public class RandomWalk implements RuleSet {
         cells = new HashSet<>();
         currentCells = new HashSet<>();
 
-        int no = Vector.SIZE  / 10;
+        int no = NUMBER_OF_DIMENSIONS  / 10;
         int[][] pos = new int[no][];
         for (int i = 0; i < no; ++i) {
             pos[i] = new int[DIM];
@@ -86,7 +87,8 @@ public class RandomWalk implements RuleSet {
             dif = -1;
         }
         if (ran != 0) { // go "up" only on e_1 axis
-            newV.v[ran / 2] = dif;
+            // TODO: vector is immutable
+            //newV.getComponent(ran / 2) = dif;
         }
 
         return newV;

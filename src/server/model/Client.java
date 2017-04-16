@@ -59,7 +59,7 @@ public class Client implements Runnable {
 
     private String makeJsonPackage() {
         StringBuilder message = new StringBuilder("[");
-
+/*
         WorldManager.getInstance().add(new Cell(new Vector(0, 2, 0)));
         WorldManager.getInstance().add(new Cell(new Vector(0, 8, 0)));
         System.out.println(WorldManager.getInstance().getCells().size());
@@ -78,7 +78,7 @@ public class Client implements Runnable {
 
             message.append(cellAddition).append(",");
         }
-
+*/
         message.append("]");
 
         return message.toString();
