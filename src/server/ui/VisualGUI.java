@@ -40,6 +40,7 @@ public class VisualGUI extends SimpleApplication {
     private static int zdim;
 
     private boolean isPaused = false;
+    private Geometry floor;
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
@@ -128,7 +129,7 @@ public class VisualGUI extends SimpleApplication {
     }
 
     private void addFloor() {
-        Geometry floor = new Geometry("Box", new Quad(2000, 2000));
+        floor = new Geometry("Box", new Quad(2000, 2000));
         Material unshaded = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
@@ -145,7 +146,18 @@ public class VisualGUI extends SimpleApplication {
         if (!isPaused) {
             updateDelay(tpf);
             updateCells();
+            updateFloor();
         }
+    }
+
+    private void updateFloor() {
+        float minimumY = 0; // should be at least at the sea level
+
+        for (Cell cell : WorldManager.getInstance().getCells()) {
+            minimumY = Math.min(minimumY, cell.getPosition().getComponent(ydim) * SCALE);
+        }
+
+        floor.setLocalTranslation(0, minimumY, 0);
     }
 
     private ActionListener pauseActionListener = (name, pressed, tpf) -> {

@@ -3,9 +3,7 @@ package server.rulesets;
 import server.model.Cell;
 import server.model.Vector;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -16,23 +14,23 @@ import java.util.Set;
  */
 
 public class RandomWalk3 implements RuleSet {
-    private Set<Cell> currentCells;
+    private List<Cell> currentCells; // two current cells can be at the same position
     private Set<Cell> cells;
 
     public RandomWalk3() {
         cells = new HashSet<>();
-        currentCells = new HashSet<>();
+        currentCells = new ArrayList<>();
         currentCells.add(new Cell(new Vector(0, 0, 0)));
-        currentCells.add(new Cell(new Vector(0, 10, 0)));
-        currentCells.add(new Cell(new Vector(0, 20, 0)));
-        currentCells.add(new Cell(new Vector(0, 30, 0)));
-        currentCells.add(new Cell(new Vector(0, 40, 0)));
-        currentCells.add(new Cell(new Vector(0, 50, 0)));
+        currentCells.add(new Cell(new Vector(0, 0, 0)));
+        currentCells.add(new Cell(new Vector(0, 0, 0)));
+        currentCells.add(new Cell(new Vector(0, 0, 0)));
+        currentCells.add(new Cell(new Vector(0, 0, 0)));
+        currentCells.add(new Cell(new Vector(0, 0, 0)));
     }
 
     @Override
     public void tick() {
-        Set<Cell> nextCells = new HashSet<>();
+        List<Cell> nextCells = new ArrayList<>();
 
         for (Cell cell : currentCells) {
             cells.add(cell);
@@ -56,7 +54,7 @@ public class RandomWalk3 implements RuleSet {
             case 2:
                 return new Vector(0, 1, 0);
             case 3:
-                return new Vector(0, 0, 0); // here
+                return new Vector(0, -1, 0);
             case 4:
                 return new Vector(0, 0, 1);
             case 5:
@@ -73,7 +71,7 @@ public class RandomWalk3 implements RuleSet {
 
     @Override
     public Set<Cell> getToAdd() {
-        return currentCells;
+        return (Set<Cell>) currentCells;
     }
 
     @Override
