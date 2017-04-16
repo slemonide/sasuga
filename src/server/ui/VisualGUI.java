@@ -39,7 +39,7 @@ public class VisualGUI extends SimpleApplication {
     private static int ydim;
     private static int zdim;
 
-    private boolean isPaused = false;
+    private boolean isPaused = true;
     private Geometry floor;
 
     public static void main(String[] args) {
@@ -64,6 +64,7 @@ public class VisualGUI extends SimpleApplication {
         addSkySphere();
         addCells();
         addFloor();
+        updateFloor();
         addShadows();
         addEventHandlers();
     }

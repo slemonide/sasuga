@@ -16,11 +16,20 @@ public class ServerAppRandomWalk3 {
         WorldManager.getInstance().setRule(new RandomWalk3());
 
         Thread worldThread = new Thread(WorldManager.getInstance());
+        WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
 
-        //worldThread.start();
         System.out.println("OK");
 
-        WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
+        System.out.print("Generating...");
+        worldThread.start();
+        try {
+            Thread.sleep((long) (1000 * 10));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        worldThread.interrupt();
+        System.out.println("OK");
+
         WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
         //WorldManager.getInstance().addObserver(VisualGUI.getInstance());
 
