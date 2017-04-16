@@ -157,7 +157,9 @@ public class VisualGUI extends SimpleApplication {
             minimumY = Math.min(minimumY, cell.getPosition().getComponent(ydim) * SCALE);
         }
 
-        floor.setLocalTranslation(0, minimumY, 0);
+        Vector3f floorTranslation = floor.getLocalTranslation();
+        Vector3f nextFloorTranslation = floorTranslation.setY(minimumY);
+        floor.setLocalTranslation(nextFloorTranslation);
     }
 
     private ActionListener pauseActionListener = (name, pressed, tpf) -> {
