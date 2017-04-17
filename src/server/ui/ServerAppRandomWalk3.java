@@ -23,7 +23,7 @@ public class ServerAppRandomWalk3 {
         System.out.print("Generating...");
         worldThread.start();
         try {
-            Thread.sleep((long) (1000 * 10));
+            Thread.sleep((long) (1000 * 3));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

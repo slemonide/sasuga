@@ -25,7 +25,7 @@ public class ServerAppUnStableRules {
         NeighbourhoodCellular gameOfLife = new NeighbourhoodCellular();
 
         gameOfLife.setLowerBound(1);
-        gameOfLife.setUpperBound(3);
+        gameOfLife.setUpperBound(2);
 
         Set<Vector> neighbourhood = new HashSet<>();
 /*

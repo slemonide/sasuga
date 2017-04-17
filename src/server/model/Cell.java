@@ -1,6 +1,6 @@
 package server.model;
 
-import server.rulesets.RuleSet;
+import server.rulesets.Rule;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,7 @@ public class Cell {
      * Position of this cell
      */
     private Vector position;
-    private RuleSet ruleSet;
+    private Rule rule;
 
     /**
      * Create a cell at the given position and with the "static" ruleset
@@ -40,7 +40,7 @@ public class Cell {
      * @return neighbour cells
      */
     public Set<Cell> getNeighbours() {
-        Set<Cell> neighbours = new HashSet<Cell>();
+        Set<Cell> neighbours = new HashSet<>();
         for (Vector neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
             if (WorldManager.getInstance().getRule().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighbours.add(new Cell(this.position.add(neighbour)));
@@ -55,7 +55,7 @@ public class Cell {
      * @return complement of the neighbour cells set
      */
     public Set<Cell> getNeighboursComplement() {
-        Set<Cell> neighboursComplement = new HashSet<Cell>();
+        Set<Cell> neighboursComplement = new HashSet<>();
         for (Vector neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
             if (!WorldManager.getInstance().getRule().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighboursComplement.add(new Cell(this.position.add(neighbour)));

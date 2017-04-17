@@ -3,7 +3,6 @@ package server.rulesets;
 import server.model.Cell;
 import server.model.Vector;
 import server.model.WorldManager;
-import server.ui.VisualGUI;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -17,7 +16,7 @@ import java.util.Set;
  * A 3D random walk simulation
  */
 
-public class RandomWalk implements RuleSet {
+public class RandomWalk implements Rule {
     private static final int NUMBER_OF_DIMENSIONS = 20;
     private Set<Cell> currentCells;
     private Set<Cell> cells;
@@ -46,14 +45,6 @@ public class RandomWalk implements RuleSet {
             }
             currentCells.add(new Cell(new Vector(pos[i])));
         }
-
-//        currentCells.add(new Cell(new Vector(0, 0, 0)));
-//        currentCells.add(new Cell(new Vector(0, 0, 0)));
-//        currentCells.add(new Cell(new Vector(0, 10, 0)));
-//        currentCells.add(new Cell(new Vector(0, 20, 0)));
-//        currentCells.add(new Cell(new Vector(0, 30, 0)));
-//        currentCells.add(new Cell(new Vector(0, 40, 0)));
-//        currentCells.add(new Cell(new Vector(0, 50, 0)));
     }
 
     @Override
@@ -121,27 +112,12 @@ public class RandomWalk implements RuleSet {
     }
 
     @Override
-    public void setLowerBound(int i) {
-
-    }
-
-    @Override
-    public void setUpperBound(int i) {
-
-    }
-
-    @Override
     public void clear() {
 
     }
 
     @Override
     public void remove(Cell cell) {
-
-    }
-
-    @Override
-    public void setNeighbourhood(Set<Vector> neighbourhood) {
 
     }
 }

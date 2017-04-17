@@ -1,8 +1,7 @@
 package server.model;
 
-import server.rulesets.RuleSet;
+import server.rulesets.Rule;
 
-import java.awt.*;
 import java.util.*;
 
 /**
@@ -14,7 +13,7 @@ import java.util.*;
  */
 public class WorldManager extends Observable implements Runnable {
     private static WorldManager instance;
-    private RuleSet rule;
+    private Rule rule;
     private long tickTime = 0;
     private int generation = 0;
     public int dim = 3;
@@ -32,11 +31,11 @@ public class WorldManager extends Observable implements Runnable {
         return instance;
     }
 
-    public void setRule(RuleSet rule) {
+    public void setRule(Rule rule) {
         this.rule = rule;
     }
 
-    public RuleSet getRule() {
+    public Rule getRule() {
         return rule;
     }
 

@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * Represents a cellular automata with configurable neighbourhood
  */
-public class NeighbourhoodCellular implements RuleSet {
+public class NeighbourhoodCellular implements Rule {
     private Set<Vector> neighbourhood;
     private int upperCellBound;
     private int lowerCellBound;
@@ -25,7 +25,7 @@ public class NeighbourhoodCellular implements RuleSet {
 
     public NeighbourhoodCellular() {
         neighbourhood = new HashSet<>();
-        cells = new HashSet<Cell>();
+        cells = new HashSet<>();
         upperCellBound = 3;
         lowerCellBound = 1;
         populationSize = 0;
@@ -120,10 +120,10 @@ public class NeighbourhoodCellular implements RuleSet {
 
     /**
      * @return set of the cells to be added
-     * @param cells
+     * @param cells current cells set
      */
     Set<Cell> grow(Set<Cell> cells) {
-        Set<Cell> newCells = new HashSet<Cell>();
+        Set<Cell> newCells = new HashSet<>();
 
         cells.forEach(x -> newCells.addAll(growAround(x)));
 
@@ -135,7 +135,7 @@ public class NeighbourhoodCellular implements RuleSet {
      * @return cells to be added
      */
     private Set<Cell> growAround(Cell cell) {
-        Set<Cell> newCells = new HashSet<Cell>();
+        Set<Cell> newCells = new HashSet<>();
 
         Set<Cell> neighboursComplement = cell.getNeighboursComplement();
         for (Cell neighbourComplementElement : neighboursComplement) {
@@ -149,10 +149,10 @@ public class NeighbourhoodCellular implements RuleSet {
 
     /**
      * @return a set of cells to be removed from the world
-     * @param cells
+     * @param cells current cells set
      */
     Set<Cell> die(Set<Cell> cells) {
-        Set<Cell> toKill = new HashSet<Cell>();
+        Set<Cell> toKill = new HashSet<>();
         for (Cell cell : cells) {
             if (cell.getNeighbours().size() <= lowerCellBound || cell.getNeighbours().size() > upperCellBound) {
                 toKill.add(cell);

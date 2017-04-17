@@ -12,9 +12,9 @@ import java.util.Set;
  *
  * Interface for all rule sets
  */
-public interface RuleSet {
+public interface Rule {
 
-    public void tick();
+    void tick();
 
     Set<Cell> getCells();
 
@@ -26,13 +26,7 @@ public interface RuleSet {
 
     Set<Vector> getNeighbourhood();
 
-    void setLowerBound(int i);
-
-    void setUpperBound(int i);
-
     void clear();
 
     void remove(Cell cell);
-
-    void setNeighbourhood(Set<Vector> neighbourhood);
 }

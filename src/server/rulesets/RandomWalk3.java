@@ -13,7 +13,7 @@ import java.util.*;
  * A 3D random walk simulation
  */
 
-public class RandomWalk3 implements RuleSet {
+public class RandomWalk3 implements Rule {
     private List<Cell> currentCells; // two current cells can be at the same position
     private Set<Cell> cells;
 
@@ -91,27 +91,12 @@ public class RandomWalk3 implements RuleSet {
     }
 
     @Override
-    public void setLowerBound(int i) {
-
-    }
-
-    @Override
-    public void setUpperBound(int i) {
-
-    }
-
-    @Override
     public void clear() {
 
     }
 
     @Override
     public void remove(Cell cell) {
-
-    }
-
-    @Override
-    public void setNeighbourhood(Set<Vector> neighbourhood) {
 
     }
 }
