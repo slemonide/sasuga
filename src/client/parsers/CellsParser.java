@@ -34,7 +34,7 @@ public class CellsParser {
     private void parseCell(JSONObject cellJsonObject) {
         Position position = getVector(cellJsonObject.getJSONArray("Position"));
 
-        cells.add(new StaticCell(position));
+        cells.add(new Cell(position));
     }
 
     private Position getVector(JSONArray vectorArray) {

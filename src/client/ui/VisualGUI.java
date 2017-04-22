@@ -23,8 +23,9 @@ import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
 import jme3tools.optimize.GeometryBatchFactory;
 import server.model.Cell;
-import server.model.WorldManager;
+import server.model.World;
 
+import java.util.Collection;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication {
@@ -88,7 +89,7 @@ public class VisualGUI extends SimpleApplication {
         rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
         rootNode.attachChild(cellsNode);
 
-        Set<Cell> cells = WorldManager.getInstance().getCells();
+        Collection<Cell> cells = World.getInstance().getCells();
         for (Cell cell : cells) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -153,7 +154,7 @@ public class VisualGUI extends SimpleApplication {
     private void updateFloor() {
         float minimumY = 0; // should be at least at the sea level
 
-        for (Cell cell : WorldManager.getInstance().getCells()) {
+        for (Cell cell : World.getInstance().getCells()) {
             minimumY = Math.min(minimumY, cell.getPosition().getComponent(ydim) * SCALE);
         }
 
@@ -206,7 +207,7 @@ public class VisualGUI extends SimpleApplication {
         cellsNode.getChildren().clear();
         addCells();
         GeometryBatchFactory.optimize(cellsNode);
-        WorldManager.getInstance().tick();
+        World.getInstance().tick();
     }
 }
 

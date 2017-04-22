@@ -1,7 +1,7 @@
 package server;
 
 import server.model.ClientManager;
-import server.model.WorldManager;
+import server.model.World;
 import server.ui.ConsoleUI;
 
 /**
@@ -12,7 +12,7 @@ public class Main {
         System.out.print("Starting server... ");
 
         // initialize observers
-        WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
+        World.getInstance().addObserver(ConsoleUI.getInstance());
 
         // initialize threads
         Thread clientManagerThread = new Thread(ClientManager.getInstance());

@@ -1,6 +1,6 @@
 package toRemove.ui;
 
-import server.model.WorldManager;
+import server.model.World;
 import server.ui.ConsoleUI;
 
 /**
@@ -13,16 +13,16 @@ import server.ui.ConsoleUI;
 public class ServerAppRandomWalk {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
-        //WorldManager.getInstance().setRule(new RandomWalk());
+        //World.getInstance().setRule(new RandomWalk());
 
-        Thread worldThread = new Thread(WorldManager.getInstance());
+        Thread worldThread = new Thread(World.getInstance());
 
         //worldThread.start();
         System.out.println("OK");
 
-        WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
-        WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
-        //WorldManager.getInstance().addObserver(VisualGUI.getInstance());
+        World.getInstance().addObserver(ConsoleUI.getInstance());
+        World.getInstance().addObserver(PopulationGraphGUI.getInstance());
+        //World.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
         //Application.launch(PopulationGraphGUI.class, args);

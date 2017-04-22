@@ -1,7 +1,6 @@
 package client.model;
 
 import client.parsers.ConfigParser;
-import server.model.WorldManager;
 
 import java.io.IOException;
 import java.util.HashMap;

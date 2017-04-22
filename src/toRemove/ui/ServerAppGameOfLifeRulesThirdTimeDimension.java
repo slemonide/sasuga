@@ -3,8 +3,8 @@ package toRemove.ui;
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
 import server.model.Position;
-import server.model.WorldGenerator;
-import server.model.WorldManager;
+import server.generator.WorldGenerator;
+import server.model.World;
 import server.rules.ThirdTimeDimension;
 import server.ui.ConsoleUI;
 
@@ -43,9 +43,9 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
-        //WorldManager.getInstance().setRule(gameOfLife);
+        //World.getInstance().setRule(gameOfLife);
 
-        Thread worldThread = new Thread(WorldManager.getInstance());
+        Thread worldThread = new Thread(World.getInstance());
 
         // Generate
         try {
@@ -56,34 +56,34 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
 // glider
         /*
-        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 1)));
-        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 2)));
-        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 3)));
-        WorldManager.getInstance().add(new StaticCell(new Position(2, 0, 2)));
-        WorldManager.getInstance().add(new StaticCell(new Position(1, 0, 1)));
+        World.getInstance().add(new StaticCell(new Position(0, 0, 1)));
+        World.getInstance().add(new StaticCell(new Position(0, 0, 2)));
+        World.getInstance().add(new StaticCell(new Position(0, 0, 3)));
+        World.getInstance().add(new StaticCell(new Position(2, 0, 2)));
+        World.getInstance().add(new StaticCell(new Position(1, 0, 1)));
         */
 
 /*
         // the bottom left thing
-        WorldManager.getInstance().add(new StaticCell(new Position(1, 0,2)));
-        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,2)));
-        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,3)));
+        World.getInstance().add(new StaticCell(new Position(1, 0,2)));
+        World.getInstance().add(new StaticCell(new Position(2, 0,2)));
+        World.getInstance().add(new StaticCell(new Position(2, 0,3)));
 
         // other thing
-        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,1)));
-        WorldManager.getInstance().add(new StaticCell(new Position(6, 0,3)));
-        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,3)));
-        WorldManager.getInstance().add(new StaticCell(new Position(8, 0,3)));*/
+        World.getInstance().add(new StaticCell(new Position(7, 0,1)));
+        World.getInstance().add(new StaticCell(new Position(6, 0,3)));
+        World.getInstance().add(new StaticCell(new Position(7, 0,3)));
+        World.getInstance().add(new StaticCell(new Position(8, 0,3)));*/
 
 
-        //System.out.println(WorldManager.getInstance().getRule().getCells().size());
+        //System.out.println(World.getInstance().getRule().getCells().size());
 
         //worldThread.start();
         System.out.println("OK");
 
-        WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
-        WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
-        //WorldManager.getInstance().addObserver(VisualGUI.getInstance());
+        World.getInstance().addObserver(ConsoleUI.getInstance());
+        World.getInstance().addObserver(PopulationGraphGUI.getInstance());
+        //World.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
         //Application.launch(PopulationGraphGUI.class, args);

@@ -12,7 +12,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import server.model.WorldManager;
+import server.model.World;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -73,12 +73,12 @@ public class PopulationGraphGUI extends Application implements Observer {
     }
 
     private void plotTime() {
-        dataSeries.getData().add(new XYChart.Data<Number, Number>(WorldManager.getInstance().getGeneration(),
-                WorldManager.getInstance().getPopulationSize()));
+        dataSeries.getData().add(new XYChart.Data<Number, Number>(World.getInstance().getGeneration(),
+                World.getInstance().getPopulationSize()));
         /*
-        if (WorldManager.getInstance().getGeneration() > MAX_DATA_POINTS) {
-            generationAxis.setLowerBound(WorldManager.getInstance().getGeneration() - MAX_DATA_POINTS + 1);
-            generationAxis.setUpperBound(WorldManager.getInstance().getGeneration() + 1);
+        if (World.getInstance().getGeneration() > MAX_DATA_POINTS) {
+            generationAxis.setLowerBound(World.getInstance().getGeneration() - MAX_DATA_POINTS + 1);
+            generationAxis.setUpperBound(World.getInstance().getGeneration() + 1);
             if (dataSeries.getData().size() > MAX_DATA_POINTS) {
                 dataSeries.getData().remove(0);
             }

@@ -53,7 +53,7 @@ public class ThirdTimeDimension extends NeighbourhoodCellular {
         Set<Cell> nextCells = new HashSet<>();
 
         for (Cell cell : cells) {
-            nextCells.add(new StaticCell(new Position(
+            nextCells.add(new Cell(new Position(
                     cell.getPosition().getComponent(0),
                     cell.getPosition().getComponent(1) + 1,
                     cell.getPosition().getComponent(2))));

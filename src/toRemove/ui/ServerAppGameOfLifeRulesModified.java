@@ -3,8 +3,8 @@ package toRemove.ui;
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
 import server.model.Position;
-import server.model.WorldGenerator;
-import server.model.WorldManager;
+import server.generator.WorldGenerator;
+import server.model.World;
 import server.rules.NeighbourhoodCellular;
 import server.ui.ConsoleUI;
 
@@ -39,9 +39,9 @@ public class ServerAppGameOfLifeRulesModified {
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
-        //WorldManager.getInstance().setRule(gameOfLife);
+        //World.getInstance().setRule(gameOfLife);
 
-        Thread worldThread = new Thread(WorldManager.getInstance());
+        Thread worldThread = new Thread(World.getInstance());
 
         // Generate
         try {
@@ -53,9 +53,9 @@ public class ServerAppGameOfLifeRulesModified {
         //worldThread.start();
         System.out.println("OK");
 
-        WorldManager.getInstance().addObserver(ConsoleUI.getInstance());
-        WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());
-        //WorldManager.getInstance().addObserver(VisualGUI.getInstance());
+        World.getInstance().addObserver(ConsoleUI.getInstance());
+        World.getInstance().addObserver(PopulationGraphGUI.getInstance());
+        //World.getInstance().addObserver(VisualGUI.getInstance());
 
         // Launch all windows
         //Application.launch(PopulationGraphGUI.class, args);

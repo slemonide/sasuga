@@ -60,10 +60,10 @@ public class Client implements Runnable {
     private String makeJsonPackage() {
         StringBuilder message = new StringBuilder("[");
 /*
-        WorldManager.getInstance().add(new StaticCell(new Position(0, 2, 0)));
-        WorldManager.getInstance().add(new StaticCell(new Position(0, 8, 0)));
-        System.out.println(WorldManager.getInstance().getCells().size());
-        for (StaticCell cell : WorldManager.getInstance().getRule().getCells()) {
+        World.getInstance().add(new StaticCell(new Position(0, 2, 0)));
+        World.getInstance().add(new StaticCell(new Position(0, 8, 0)));
+        System.out.println(World.getInstance().getCells().size());
+        for (StaticCell cell : World.getInstance().getRule().getCells()) {
             StringBuilder vectorString = new StringBuilder();
             int[] vector = cell.getPosition().v;
             for (int i = 0; i < vector.length; i++) {

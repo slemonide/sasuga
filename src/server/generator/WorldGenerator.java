@@ -1,7 +1,10 @@
-package server.model;
+package server.generator;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
+import server.model.Cell;
+import server.model.Position;
+import server.model.World;
 
 import java.util.Random;
 
@@ -48,7 +51,7 @@ public class WorldGenerator {
             for (int y0 = 0; y0 <= y; y0++) {
                 for (int z0 = 0; z0 <= z; z0++) {
                     if (random.nextInt(x * y * z) <= (x * y * z) * cellDensity) {
-                        WorldManager.getInstance().add(new Cell(new Position(
+                        World.getInstance().add(new Cell(new Position(
                                 x0 - x/2,
                                 y0 - y/2,
                                 z0 - z/2)));
