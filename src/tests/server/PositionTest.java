@@ -3,6 +3,9 @@ package tests.server;
 import org.junit.Test;
 import server.model.Position;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 /**
@@ -40,5 +43,15 @@ public class PositionTest {
         assertEquals(new Position(2, 2), position.add(new Position(1)));
         assertEquals(new Position(0, 3), position.add(new Position(-1, 1)));
         assertEquals(new Position(4, 4, 1), position.add(new Position(3, 2, 1)));
+    }
+
+    @Test
+    public void testHashCode() {
+        Set<Position> positionSet = new HashSet<>();
+
+        positionSet.add(new Position(1, 1));
+        positionSet.add(new Position(1, 2, 4, 9));
+
+        assertTrue(positionSet.contains(new Position(1, 1)));
     }
 }

@@ -29,14 +29,6 @@ public class Position {
         }
     }
 
-    public Position(List<Integer> coordinates) {
-        components = new HashMap<>();
-
-        for (int i = 0; i < coordinates.size(); ++i) {
-            components.put(i, coordinates.get(i));
-        }
-    }
-
     public Position(Map<Integer, Integer> coordinates) {
         // Make a private copy of the given coordinates
         components = coordinates.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

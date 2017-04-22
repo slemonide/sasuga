@@ -38,10 +38,10 @@ public class CellsParser {
     }
 
     private Position getVector(JSONArray vectorArray) {
-        List<Integer> coordinates = new ArrayList<>();
+        int[] coordinates = new int[vectorArray.length()];
 
         for (int i = 0; i < vectorArray.length(); i++) {
-            coordinates.add(vectorArray.getInt(i));
+            coordinates[i] = vectorArray.getInt(i);
         }
 
         return new Position(coordinates);
