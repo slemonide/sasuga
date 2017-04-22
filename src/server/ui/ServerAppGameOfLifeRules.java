@@ -2,7 +2,7 @@ package server.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
-import server.model.Vector;
+import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.NeighbourhoodCellular;
@@ -26,19 +26,19 @@ public class ServerAppGameOfLifeRules {
         gameOfLife.setLowerBound(1);
         gameOfLife.setUpperBound(3);
 
-        Set<Vector> neighbourhood = new HashSet<>();
+        Set<Position> neighbourhood = new HashSet<>();
 
-        neighbourhood.add(new Vector(1,0,-1));
-        neighbourhood.add(new Vector(1,0,0));
-        neighbourhood.add(new Vector(1,0,1));
+        neighbourhood.add(new Position(1,0,-1));
+        neighbourhood.add(new Position(1,0,0));
+        neighbourhood.add(new Position(1,0,1));
 
-        neighbourhood.add(new Vector(0,0,-1));
-        //neighbourhood.add(new Vector(0,0,0));
-        neighbourhood.add(new Vector(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
+        //neighbourhood.add(new Position(0,0,0));
+        neighbourhood.add(new Position(0,0,1));
 
-        neighbourhood.add(new Vector(-1,0,-1));
-        neighbourhood.add(new Vector(-1,0,0));
-        neighbourhood.add(new Vector(-1,0,1));
+        neighbourhood.add(new Position(-1,0,-1));
+        neighbourhood.add(new Position(-1,0,0));
+        neighbourhood.add(new Position(-1,0,1));
 
         gameOfLife.setNeighbourhood(neighbourhood);
 

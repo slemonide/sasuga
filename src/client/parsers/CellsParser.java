@@ -3,7 +3,7 @@ package client.parsers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,19 +32,19 @@ public class CellsParser {
     }
 
     private void parseCell(JSONObject cellJsonObject) {
-        Vector vector = getVector(cellJsonObject.getJSONArray("Vector"));
+        Position position = getVector(cellJsonObject.getJSONArray("Position"));
 
-        cells.add(new Cell(vector));
+        cells.add(new Cell(position));
     }
 
-    private Vector getVector(JSONArray vectorArray) {
+    private Position getVector(JSONArray vectorArray) {
         List<Integer> coordinates = new ArrayList<>();
 
         for (int i = 0; i < vectorArray.length(); i++) {
             coordinates.add(vectorArray.getInt(i));
         }
 
-        return new Vector(coordinates);
+        return new Position(coordinates);
     }
 
     public Set<Cell> getCells() {

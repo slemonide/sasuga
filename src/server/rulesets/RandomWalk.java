@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 import server.model.WorldManager;
 
 import java.util.HashSet;
@@ -43,7 +43,7 @@ public class RandomWalk implements Rule {
                     pos[i][j] = i * 10 + j * 2;
                 }
             }
-            currentCells.add(new Cell(new Vector(pos[i])));
+            currentCells.add(new Cell(new Position(pos[i])));
         }
     }
 
@@ -70,9 +70,9 @@ public class RandomWalk implements Rule {
         return ret;
     }
 
-    private Vector getRandomVector() {
+    private Position getRandomVector() {
         int ran = random.nextInt(DIM * 2-1);
-        Vector newV = new Vector(Zero());
+        Position newV = new Position(Zero());
         int dif = 1;
         if (ran % 2 == 0) {
             dif = -1;
@@ -107,7 +107,7 @@ public class RandomWalk implements Rule {
     }
 
     @Override
-    public Set<Vector> getNeighbourhood() {
+    public Set<Position> getNeighbourhood() {
         return null;
     }
 

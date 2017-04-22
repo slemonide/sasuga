@@ -3,7 +3,6 @@ package server.ui;
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
 import server.model.*;
-import server.rulesets.RandomWalk3;
 import server.rulesets.ThirdTimeDimension;
 
 import java.util.HashSet;
@@ -25,18 +24,18 @@ public class ServerApp {
         gameOfLife.setLowerBound(1);
         gameOfLife.setUpperBound(3);
 
-        Set<Vector> neighbourhood = new HashSet<>();
+        Set<Position> neighbourhood = new HashSet<>();
 
-        neighbourhood.add(new Vector(1,0,-1));
-        neighbourhood.add(new Vector(1,0,0));
-        neighbourhood.add(new Vector(1,0,1));
+        neighbourhood.add(new Position(1,0,-1));
+        neighbourhood.add(new Position(1,0,0));
+        neighbourhood.add(new Position(1,0,1));
 
-        neighbourhood.add(new Vector(0,0,-1));
-        neighbourhood.add(new Vector(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
+        neighbourhood.add(new Position(0,0,1));
 
-        neighbourhood.add(new Vector(-1,0,-1));
-        neighbourhood.add(new Vector(-1,0,0));
-        neighbourhood.add(new Vector(-1,0,1));
+        neighbourhood.add(new Position(-1,0,-1));
+        neighbourhood.add(new Position(-1,0,0));
+        neighbourhood.add(new Position(-1,0,1));
 
         gameOfLife.setNeighbourhood(neighbourhood);
 

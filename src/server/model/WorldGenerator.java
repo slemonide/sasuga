@@ -42,7 +42,7 @@ public class WorldGenerator {
 
         int numberOfCellsToBeAdded = (int) (cellDensity * x * y * z);
 
-        List<Vector> possiblePositions = new ArrayList<Vector>();
+        List<Position> possiblePositions = new ArrayList<Position>();
 
         int j = 0;
         while (j < x * y * z) {
@@ -50,14 +50,14 @@ public class WorldGenerator {
             int y0 = (j / x) % y - y/2;
             int z0 = j / (x * y) - z/2;
 
-            possiblePositions.add(new Vector(x0, y0, z0));
+            possiblePositions.add(new Position(x0, y0, z0));
             j++;
         }
         /*
         for (int x0 = x - x/2; x0 <= x/2; x0++) {
             for (int y0 = y - y/2; y0 <= y/2; y0++) {
                 for (int z0 = z - z/2; z <= z/2; z0++) {
-                    possiblePositions.add(new Vector(x0, y0, z0));
+                    possiblePositions.add(new Position(x0, y0, z0));
                 }
             }
         }

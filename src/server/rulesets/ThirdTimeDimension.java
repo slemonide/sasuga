@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +53,7 @@ public class ThirdTimeDimension extends NeighbourhoodCellular {
         Set<Cell> nextCells = new HashSet<>();
 
         for (Cell cell : cells) {
-            nextCells.add(new Cell(new Vector(
+            nextCells.add(new Cell(new Position(
                     cell.getPosition().getComponent(0),
                     cell.getPosition().getComponent(1) + 1,
                     cell.getPosition().getComponent(2))));

@@ -3,7 +3,7 @@ package server.ui;
 import javafx.application.Application;
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
-import server.model.Vector;
+import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.NeighbourhoodCellular;
@@ -27,40 +27,40 @@ public class ServerAppUnStableRules {
         gameOfLife.setLowerBound(1);
         gameOfLife.setUpperBound(2);
 
-        Set<Vector> neighbourhood = new HashSet<>();
+        Set<Position> neighbourhood = new HashSet<>();
 /*
-        neighbourhood.add(new Vector(1,0,0));
-        neighbourhood.add(new Vector(1,0,1));
-        neighbourhood.add(new Vector(1,0,-1));
+        neighbourhood.add(new Position(1,0,0));
+        neighbourhood.add(new Position(1,0,1));
+        neighbourhood.add(new Position(1,0,-1));
 
-        neighbourhood.add(new Vector(-1,0,0));
-        neighbourhood.add(new Vector(-1,0,1));
-        neighbourhood.add(new Vector(-1,0,-1));
+        neighbourhood.add(new Position(-1,0,0));
+        neighbourhood.add(new Position(-1,0,1));
+        neighbourhood.add(new Position(-1,0,-1));
 
-        neighbourhood.add(new Vector(0,0,1));
-        neighbourhood.add(new Vector(0,0,-1));
+        neighbourhood.add(new Position(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
 */
 
-        neighbourhood.add(new Vector(1,0,0));
-        neighbourhood.add(new Vector(-1,0,0));
-        neighbourhood.add(new Vector(0,0,1));
-        neighbourhood.add(new Vector(0,0,-1));
-        neighbourhood.add(new Vector(0,1,0));
-        neighbourhood.add(new Vector(0,-1,0));
+        neighbourhood.add(new Position(1,0,0));
+        neighbourhood.add(new Position(-1,0,0));
+        neighbourhood.add(new Position(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
+        neighbourhood.add(new Position(0,1,0));
+        neighbourhood.add(new Position(0,-1,0));
 
-        neighbourhood.add(new Vector(2,0,0));
-        neighbourhood.add(new Vector(-2,0,0));
-        neighbourhood.add(new Vector(0,0,2));
-        neighbourhood.add(new Vector(0,0,-2));
-        neighbourhood.add(new Vector(0,2,0));
-        neighbourhood.add(new Vector(0,-2,0));
+        neighbourhood.add(new Position(2,0,0));
+        neighbourhood.add(new Position(-2,0,0));
+        neighbourhood.add(new Position(0,0,2));
+        neighbourhood.add(new Position(0,0,-2));
+        neighbourhood.add(new Position(0,2,0));
+        neighbourhood.add(new Position(0,-2,0));
 
-        neighbourhood.add(new Vector(3,0,0));
-        neighbourhood.add(new Vector(-3,0,0));
-        neighbourhood.add(new Vector(0,0,3));
-        neighbourhood.add(new Vector(0,0,-3));
-        neighbourhood.add(new Vector(0,3,0));
-        neighbourhood.add(new Vector(0,-3,0));
+        neighbourhood.add(new Position(3,0,0));
+        neighbourhood.add(new Position(-3,0,0));
+        neighbourhood.add(new Position(0,0,3));
+        neighbourhood.add(new Position(0,0,-3));
+        neighbourhood.add(new Position(0,3,0));
+        neighbourhood.add(new Position(0,-3,0));
 
         gameOfLife.setNeighbourhood(neighbourhood);
 

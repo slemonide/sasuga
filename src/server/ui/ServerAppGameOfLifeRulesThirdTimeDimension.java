@@ -2,7 +2,7 @@ package server.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
-import server.model.Vector;
+import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.ThirdTimeDimension;
@@ -26,19 +26,19 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
         gameOfLife.setLowerBound(1);
         gameOfLife.setUpperBound(3);
 
-        Set<Vector> neighbourhood = new HashSet<>();
+        Set<Position> neighbourhood = new HashSet<>();
 
-        neighbourhood.add(new Vector(1,0,-1));
-        neighbourhood.add(new Vector(1,0,0));
-        neighbourhood.add(new Vector(1,0,1));
+        neighbourhood.add(new Position(1,0,-1));
+        neighbourhood.add(new Position(1,0,0));
+        neighbourhood.add(new Position(1,0,1));
 
-        neighbourhood.add(new Vector(0,0,-1));
-        //neighbourhood.add(new Vector(0,0,0));
-        neighbourhood.add(new Vector(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
+        //neighbourhood.add(new Position(0,0,0));
+        neighbourhood.add(new Position(0,0,1));
 
-        neighbourhood.add(new Vector(-1,0,-1));
-        neighbourhood.add(new Vector(-1,0,0));
-        neighbourhood.add(new Vector(-1,0,1));
+        neighbourhood.add(new Position(-1,0,-1));
+        neighbourhood.add(new Position(-1,0,0));
+        neighbourhood.add(new Position(-1,0,1));
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
@@ -48,22 +48,31 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
         // Generate
         try {
-            WorldGenerator.generate(0.3, 20, 1, 20);
+            WorldGenerator.generate(0.3, 15, 1, 15);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }
 
+// glider
+        /*
+        WorldManager.getInstance().add(new Cell(new Position(0, 0, 1)));
+        WorldManager.getInstance().add(new Cell(new Position(0, 0, 2)));
+        WorldManager.getInstance().add(new Cell(new Position(0, 0, 3)));
+        WorldManager.getInstance().add(new Cell(new Position(2, 0, 2)));
+        WorldManager.getInstance().add(new Cell(new Position(1, 0, 1)));
+        */
+
 /*
         // the bottom left thing
-        WorldManager.getInstance().add(new Cell(new Vector(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector(2, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Vector(2, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Position(1, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Position(2, 0,2)));
+        WorldManager.getInstance().add(new Cell(new Position(2, 0,3)));
 
         // other thing
-        WorldManager.getInstance().add(new Cell(new Vector(7, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Vector(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector(7, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Vector(8, 0,3)));*/
+        WorldManager.getInstance().add(new Cell(new Position(7, 0,1)));
+        WorldManager.getInstance().add(new Cell(new Position(6, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Position(7, 0,3)));
+        WorldManager.getInstance().add(new Cell(new Position(8, 0,3)));*/
 
 
         System.out.println(WorldManager.getInstance().getRule().getCells().size());

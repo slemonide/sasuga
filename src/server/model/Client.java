@@ -54,14 +54,14 @@ public class Client implements Runnable {
     private void sendPackagedJsonCells() {
         String jsonPackage = makeJsonPackage();
         output.println(jsonPackage);
-        //output.println("[{\"Vector\":[0,1,1]}]");
+        //output.println("[{\"Position\":[0,1,1]}]");
     }
 
     private String makeJsonPackage() {
         StringBuilder message = new StringBuilder("[");
 /*
-        WorldManager.getInstance().add(new Cell(new Vector(0, 2, 0)));
-        WorldManager.getInstance().add(new Cell(new Vector(0, 8, 0)));
+        WorldManager.getInstance().add(new Cell(new Position(0, 2, 0)));
+        WorldManager.getInstance().add(new Cell(new Position(0, 8, 0)));
         System.out.println(WorldManager.getInstance().getCells().size());
         for (Cell cell : WorldManager.getInstance().getRule().getCells()) {
             StringBuilder vectorString = new StringBuilder();
@@ -74,7 +74,7 @@ public class Client implements Runnable {
                 }
             }
 
-            String cellAddition = "{" + "\"Vector :\"" + "[" + vectorString + "]" + "}";
+            String cellAddition = "{" + "\"Position :\"" + "[" + vectorString + "]" + "}";
 
             message.append(cellAddition).append(",");
         }

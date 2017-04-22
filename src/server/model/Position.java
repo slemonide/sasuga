@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * A geometrical vector
  */
-public class Vector {
+public class Position {
     /**
      * components
      */
@@ -21,7 +21,7 @@ public class Vector {
      * Creates a vector with the given coordinates
      * @param coordinates coordinates of the given vector
      */
-    public Vector(int... coordinates) {
+    public Position(int... coordinates) {
         components = new HashMap<>();
 
         for (int i = 0; i < coordinates.length; ++i) {
@@ -29,7 +29,7 @@ public class Vector {
         }
     }
 
-    public Vector(List<Integer> coordinates) {
+    public Position(List<Integer> coordinates) {
         components = new HashMap<>();
 
         for (int i = 0; i < coordinates.size(); ++i) {
@@ -37,7 +37,7 @@ public class Vector {
         }
     }
 
-    public Vector(Map<Integer, Integer> coordinates) {
+    public Position(Map<Integer, Integer> coordinates) {
         // Make a private copy of the given coordinates
         components = coordinates.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -47,22 +47,22 @@ public class Vector {
      * @param coordinates coordinates of the given vector
      * @return the sum of this vector and given vector
      */
-    public Vector add(int... coordinates) {
-        Vector givenVector = new Vector(coordinates);
-        return this.add(givenVector);
+    public Position add(int... coordinates) {
+        Position givenPosition = new Position(coordinates);
+        return this.add(givenPosition);
     }
 
-    public Vector add(Vector anotherVector) {
+    public Position add(Position anotherPosition) {
         Map<Integer, Integer> newCoordinates = components.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        for (Map.Entry<Integer, Integer> entry : anotherVector.getNonZeroComponents().entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : anotherPosition.getNonZeroComponents().entrySet()) {
             Integer key = entry.getKey();
             Integer value = entry.getValue();
 
             newCoordinates.put(key, value + this.getComponent(key));
         }
 
-        return new Vector(newCoordinates);
+        return new Position(newCoordinates);
     }
 
     /**
@@ -84,9 +84,9 @@ public class Vector {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Vector vector = (Vector) o;
+        Position position = (Position) o;
 
-        return components.equals(vector.components);
+        return components.equals(position.components);
     }
 
     @Override

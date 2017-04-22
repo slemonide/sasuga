@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.util.Set;
 
@@ -39,7 +39,7 @@ public class Stable implements Rule {
     }
 
     @Override
-    public Set<Vector> getNeighbourhood() {
+    public Set<Position> getNeighbourhood() {
         return null;
     }
 

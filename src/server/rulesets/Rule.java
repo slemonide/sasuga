@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public interface Rule {
 
     void add(Cell cell);
 
-    Set<Vector> getNeighbourhood();
+    Set<Position> getNeighbourhood();
 
     void clear();
 

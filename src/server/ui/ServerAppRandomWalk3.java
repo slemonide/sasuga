@@ -21,13 +21,6 @@ public class ServerAppRandomWalk3 {
         System.out.println("OK");
 
         System.out.print("Generating...");
-        worldThread.start();
-        try {
-            Thread.sleep((long) (1000 * 3));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        worldThread.interrupt();
         System.out.println("OK");
 
         WorldManager.getInstance().addObserver(PopulationGraphGUI.getInstance());

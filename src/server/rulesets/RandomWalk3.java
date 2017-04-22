@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.util.*;
 
@@ -20,12 +20,12 @@ public class RandomWalk3 implements Rule {
     public RandomWalk3() {
         cells = new HashSet<>();
         currentCells = new ArrayList<>();
-        currentCells.add(new Cell(new Vector(0, 0, 0)));
-        currentCells.add(new Cell(new Vector(0, 0, 0)));
-        currentCells.add(new Cell(new Vector(0, 0, 0)));
-        currentCells.add(new Cell(new Vector(0, 0, 0)));
-        currentCells.add(new Cell(new Vector(0, 0, 0)));
-        currentCells.add(new Cell(new Vector(0, 0, 0)));
+        currentCells.add(new Cell(new Position(0, 0, 0)));
+        currentCells.add(new Cell(new Position(0, 0, 0)));
+        currentCells.add(new Cell(new Position(0, 0, 0)));
+        currentCells.add(new Cell(new Position(0, 0, 0)));
+        currentCells.add(new Cell(new Position(0, 0, 0)));
+        currentCells.add(new Cell(new Position(0, 0, 0)));
     }
 
     @Override
@@ -43,22 +43,22 @@ public class RandomWalk3 implements Rule {
         currentCells = nextCells;
     }
 
-    private Vector getRandomVector() {
+    private Position getRandomVector() {
         Random random = new Random();
 
         switch (random.nextInt(6)) {
             case 0:
-                return new Vector(1, 0, 0);
+                return new Position(1, 0, 0);
             case 1:
-                return new Vector(-1, 0, 0);
+                return new Position(-1, 0, 0);
             case 2:
-                return new Vector(0, 1, 0);
+                return new Position(0, 1, 0);
             case 3:
-                return new Vector(0, -1, 0);
+                return new Position(0, -1, 0);
             case 4:
-                return new Vector(0, 0, 1);
+                return new Position(0, 0, 1);
             case 5:
-                return new Vector(0, 0, -1);
+                return new Position(0, 0, -1);
             default:
                 return null;
         }
@@ -86,7 +86,7 @@ public class RandomWalk3 implements Rule {
     }
 
     @Override
-    public Set<Vector> getNeighbourhood() {
+    public Set<Position> getNeighbourhood() {
         return null;
     }
 

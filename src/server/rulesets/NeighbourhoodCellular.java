@@ -1,7 +1,7 @@
 package server.rulesets;
 
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ import java.util.Set;
  * Represents a cellular automata with configurable neighbourhood
  */
 public class NeighbourhoodCellular implements Rule {
-    private Set<Vector> neighbourhood;
+    private Set<Position> neighbourhood;
     private int upperCellBound;
     private int lowerCellBound;
     Set<Cell> cells;
@@ -46,10 +46,10 @@ public class NeighbourhoodCellular implements Rule {
     public int getLowerBound() {
         return lowerCellBound;
     }
-    public void setNeighbourhood(Set<Vector> neighbourhood) {
+    public void setNeighbourhood(Set<Position> neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
-    public Set<Vector> getNeighbourhood() {
+    public Set<Position> getNeighbourhood() {
         return this.neighbourhood;
     }
 

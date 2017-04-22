@@ -3,7 +3,7 @@ package client.tests;
 import client.parsers.CellsParser;
 import org.junit.Test;
 import server.model.Cell;
-import server.model.Vector;
+import server.model.Position;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,7 +39,7 @@ public class CellsParserTest {
 
         Set<Cell> cells = testParser.getCells();
         assertEquals(1, cells.size());
-        assertTrue(cells.contains(new Cell(new Vector(1, 2, 3))));
+        assertTrue(cells.contains(new Cell(new Position(1, 2, 3))));
     }
 
     @Test
@@ -54,11 +54,11 @@ public class CellsParserTest {
 
         Set<Cell> cells = testParser.getCells();
         assertEquals(6, cells.size());
-        assertTrue(cells.contains(new Cell(new Vector(1, 2, 3))));
-        assertTrue(cells.contains(new Cell(new Vector(-12, 2))));
-        assertTrue(cells.contains(new Cell(new Vector(1, 0, 3))));
-        assertTrue(cells.contains(new Cell(new Vector(-1, -2, 3, 5, 2))));
-        assertTrue(cells.contains(new Cell(new Vector(1))));
-        assertTrue(cells.contains(new Cell(new Vector())));
+        assertTrue(cells.contains(new Cell(new Position(1, 2, 3))));
+        assertTrue(cells.contains(new Cell(new Position(-12, 2))));
+        assertTrue(cells.contains(new Cell(new Position(1, 0, 3))));
+        assertTrue(cells.contains(new Cell(new Position(-1, -2, 3, 5, 2))));
+        assertTrue(cells.contains(new Cell(new Position(1))));
+        assertTrue(cells.contains(new Cell(new Position())));
     }
 }
