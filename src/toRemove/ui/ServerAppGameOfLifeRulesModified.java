@@ -1,4 +1,4 @@
-package server.ui;
+package toRemove.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
@@ -6,6 +6,7 @@ import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.NeighbourhoodCellular;
+import server.ui.ConsoleUI;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class ServerAppGameOfLifeRulesModified {
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
-        WorldManager.getInstance().setRule(gameOfLife);
+        //WorldManager.getInstance().setRule(gameOfLife);
 
         Thread worldThread = new Thread(WorldManager.getInstance());
 

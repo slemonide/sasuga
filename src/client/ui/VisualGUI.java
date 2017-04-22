@@ -1,6 +1,5 @@
 package client.ui;
 
-import client.model.ServerManager;
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -29,44 +28,32 @@ import server.model.WorldManager;
 import java.io.IOException;
 import java.util.Set;
 
-/**
- * @author      Danil Platonov <slemonide@gmail.com>, jacketsj <jacketsj@gmail.com>
- * @version     0.1
- * @since       0.1
- *
- * A 3D client
- */
 public class VisualGUI extends SimpleApplication {
     private static final float SCALE = 0.2f;
-    private static final double MIN_DELAY = 2;
+    private static final double MIN_DELAY = 0.01;
     private Node cellsNode;
     private double delay;
 
     //which dimensions are rendered
-    public static int xdim;
-    public static int ydim;
-    public static int zdim;
+    private static int xdim;
+    private static int ydim;
+    private static int zdim;
 
-    private boolean isPaused = false;
+    private boolean isPaused = true;
+    private Geometry floor;
 
     public static void main(String[] args) {
-        VisualGUI app = new VisualGUI();
+        toRemove.ui.VisualGUI app = new toRemove.ui.VisualGUI();
 
         AppSettings settings = new AppSettings(true);
         settings.setStereo3D(false);
         app.setSettings(settings);
 
-        app.xdim = 0;
-        app.ydim = 1;
-        app.zdim = 2;
+        xdim = 0;
+        ydim = 1;
+        zdim = 2;
 
-        try {
-            ServerManager.getInstance().connect();
-            app.start();
-        } catch (IOException e) {
-            System.out.println("ERROR: Cannot connect to the server");
-            e.printStackTrace();
-        }
+        app.start();
     }
 
     @Override
@@ -75,19 +62,11 @@ public class VisualGUI extends SimpleApplication {
         flyCam.setMoveSpeed(10);
 
         addSkySphere();
-        initializeCells();
+        addCells();
         addFloor();
+        updateFloor();
         addShadows();
         addEventHandlers();
-    }
-
-    private void initializeCells() {
-        cellsNode = new Node();
-        cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-        rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
-        rootNode.attachChild(cellsNode);
-
-        addCells();
     }
 
     private void addSkySphere() {
@@ -105,25 +84,29 @@ public class VisualGUI extends SimpleApplication {
     }
 
     private void addCells() {
-        try {
-            for (Cell cell : ServerManager.getInstance().getCells()) {
-                Box b = new Box(0.1f, 0.1f, 0.1f);
-                Spatial node = new Geometry("Box", b);
-                node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        cellsNode = new Node();
+        cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
+        rootNode.attachChild(cellsNode);
 
-                Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
-                node.setMaterial(mat);
+        Set<Cell> cells = WorldManager.getInstance().getCells();
+        for (Cell cell : cells) {
+            Box b = new Box(0.1f, 0.1f, 0.1f);
+            Spatial node = new Geometry("Box", b);
+            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
-                //node.setLocalTranslation(cell.getPosition().v[xdim] * SCALE, cell.getPosition().v[ydim] * SCALE, cell.getPosition().v[zdim] * SCALE);
+            Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+            node.setMaterial(mat);
 
-                cellsNode.attachChild(node);
-            }
+            node.setLocalTranslation(
+                    cell.getPosition().getComponent(xdim) * SCALE,
+                    cell.getPosition().getComponent(ydim) * SCALE,
+                    cell.getPosition().getComponent(zdim) * SCALE);
 
-            GeometryBatchFactory.optimize(cellsNode);
-        } catch (IOException e) {
-            System.out.println("ERROR: did not get cells set");
-            e.printStackTrace();
+            cellsNode.attachChild(node);
         }
+
+        GeometryBatchFactory.optimize(cellsNode);
     }
 
     private void addShadows() {
@@ -147,7 +130,7 @@ public class VisualGUI extends SimpleApplication {
     }
 
     private void addFloor() {
-        Geometry floor = new Geometry("Box", new Quad(2000, 2000));
+        floor = new Geometry("Box", new Quad(2000, 2000));
         Material unshaded = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
@@ -155,32 +138,46 @@ public class VisualGUI extends SimpleApplication {
 
         Quaternion q = new Quaternion();
         floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
-        floor.setLocalTranslation(-1000, -0.1f, 1000);
+        floor.setLocalTranslation(-1000, -SCALE/2, 1000);
         rootNode.attachChild(floor);
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         if (!isPaused) {
-            updateCells(tpf);
+            updateDelay(tpf);
+            updateCells();
+            updateFloor();
         }
     }
 
-    private ActionListener pauseActionListener = new ActionListener(){
-        public void onAction(String name, boolean pressed, float tpf){
-            if (pressed) {
-                isPaused = !isPaused;
-            }
+    private void updateFloor() {
+        float minimumY = 0; // should be at least at the sea level
+
+        for (Cell cell : WorldManager.getInstance().getCells()) {
+            minimumY = Math.min(minimumY, cell.getPosition().getComponent(ydim) * SCALE);
+        }
+
+        Vector3f floorTranslation = floor.getLocalTranslation();
+        Vector3f nextFloorTranslation = floorTranslation.setY(minimumY - SCALE/2);
+        floor.setLocalTranslation(nextFloorTranslation);
+    }
+
+    private ActionListener pauseActionListener = (name, pressed, tpf) -> {
+        if (pressed) {
+            isPaused = !isPaused;
         }
     };
 
     private ActionListener prevDimActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
             if (pressed) {
-                int dim = WorldManager.getInstance().dim;
+                int dim = 3;
                 xdim = (xdim - 1+dim) % dim;
                 ydim = (ydim - 1+dim) % dim;
                 zdim = (zdim - 1+dim) % dim;
+
+                updateCells();
             }
         }
     };
@@ -188,24 +185,29 @@ public class VisualGUI extends SimpleApplication {
     private ActionListener nextDimActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
             if (pressed) {
-                int dim = WorldManager.getInstance().dim;
+                int dim = 3;
                 xdim = (xdim + 1) % dim;
                 ydim = (ydim + 1) % dim;
                 zdim = (zdim + 1) % dim;
+
+                updateCells();
             }
         }
     };
 
-    private void updateCells(float tpf) {
+    private void updateDelay(float tpf) {
         delay += tpf;
         if (delay <= MIN_DELAY) {
             return;
         }
         delay = 0;
+    }
 
+    private void updateCells() {
         cellsNode.getChildren().clear();
         addCells();
-
         GeometryBatchFactory.optimize(cellsNode);
+        WorldManager.getInstance().tick();
     }
 }
+

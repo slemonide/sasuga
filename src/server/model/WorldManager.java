@@ -13,12 +13,13 @@ import java.util.*;
  */
 public class WorldManager extends Observable implements Runnable {
     private static WorldManager instance;
-    private Rule rule;
     private long tickTime = 0;
     private int generation = 0;
-    public int dim = 3;
+    private Map<Position, Cell> cellsMap;
 
-    private WorldManager() {}
+    private WorldManager() {
+        cellsMap = new HashMap<>();
+    }
 
     /**
      * Singleton pattern
@@ -29,14 +30,6 @@ public class WorldManager extends Observable implements Runnable {
             instance = new WorldManager();
         }
         return instance;
-    }
-
-    public void setRule(Rule rule) {
-        this.rule = rule;
-    }
-
-    public Rule getRule() {
-        return rule;
     }
 
     /**
@@ -85,27 +78,29 @@ public class WorldManager extends Observable implements Runnable {
     }
 
     public void clear() {
-        rule.clear();
+        cellsMap.clear();
     }
 
     public Set<Cell> getCells() {
-        return rule.getCells();
+        return null; // stub
     }
 
     public void add(Cell cell) {
-        rule.add(cell);
+        cellsMap.put(cell.getPosition(), cell);
     }
 
     public void remove(Cell cell) {
-        rule.remove(cell);
+        cellsMap.remove(cell.getPosition());
     }
 
     public int getPopulationSize() {
-        return rule.getCells().size();
+        return cellsMap.size();
     }
 
     public void tick() {
-        rule.tick();
+        for (Cell cell : cellsMap.values()) {
+            cell.tick();
+        }
         generation++;
     }
 }

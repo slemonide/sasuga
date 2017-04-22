@@ -1,4 +1,4 @@
-package server.ui;
+package toRemove.ui;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
@@ -25,7 +25,6 @@ import jme3tools.optimize.GeometryBatchFactory;
 import server.model.Cell;
 import server.model.WorldManager;
 
-import java.util.Observer;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication {
@@ -89,7 +88,7 @@ public class VisualGUI extends SimpleApplication {
         rootNode.setShadowMode(RenderQueue.ShadowMode.Off);
         rootNode.attachChild(cellsNode);
 
-        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
+        Set<Cell> cells = WorldManager.getInstance().getCells();
         for (Cell cell : cells) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -172,7 +171,7 @@ public class VisualGUI extends SimpleApplication {
     private ActionListener prevDimActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
             if (pressed) {
-                int dim = WorldManager.getInstance().dim;
+                int dim = 3;
                 xdim = (xdim - 1+dim) % dim;
                 ydim = (ydim - 1+dim) % dim;
                 zdim = (zdim - 1+dim) % dim;
@@ -185,7 +184,7 @@ public class VisualGUI extends SimpleApplication {
     private ActionListener nextDimActionListener = new ActionListener(){
         public void onAction(String name, boolean pressed, float tpf){
             if (pressed) {
-                int dim = WorldManager.getInstance().dim;
+                int dim = 3;
                 xdim = (xdim + 1) % dim;
                 ydim = (ydim + 1) % dim;
                 zdim = (zdim + 1) % dim;
@@ -207,6 +206,6 @@ public class VisualGUI extends SimpleApplication {
         cellsNode.getChildren().clear();
         addCells();
         GeometryBatchFactory.optimize(cellsNode);
-        WorldManager.getInstance().getRule().tick();
+        WorldManager.getInstance().tick();
     }
 }

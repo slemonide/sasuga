@@ -1,4 +1,4 @@
-package server.ui;
+package toRemove.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
@@ -6,6 +6,7 @@ import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.ThirdTimeDimension;
+import server.ui.ConsoleUI;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
-        WorldManager.getInstance().setRule(gameOfLife);
+        //WorldManager.getInstance().setRule(gameOfLife);
 
         Thread worldThread = new Thread(WorldManager.getInstance());
 
@@ -75,7 +76,7 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
         WorldManager.getInstance().add(new Cell(new Position(8, 0,3)));*/
 
 
-        System.out.println(WorldManager.getInstance().getRule().getCells().size());
+        //System.out.println(WorldManager.getInstance().getRule().getCells().size());
 
         //worldThread.start();
         System.out.println("OK");

@@ -1,4 +1,4 @@
-package server.tests;
+package tests.server;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
@@ -23,35 +23,35 @@ import static org.junit.Assert.*;
 public class WorldGeneratorTest {
     @Before
     public void runBefore() {
-        WorldManager.getInstance().setRule(new RandomWalk());
-        WorldManager.getInstance().getRule().clear();
+        //WorldManager.getInstance().setRule(new RandomWalk());
+        //WorldManager.getInstance().getRule().clear();
     }
 
     @Test
     public void testGenerationNoCells() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0,0,0,0);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.3,0,0,0);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.3,5,0,0);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.4,0,4,0);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.7,0,0,5);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.7,0,3,5);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.7,3,0,5);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
 
         WorldGenerator.generate(0.7,90,80,0);
-        assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
+        //assertTrue(WorldManager.getInstance().getRule().getCells().isEmpty());
     }
 
     @Test(expected = InvalidDensityException.class)
@@ -109,45 +109,51 @@ public class WorldGeneratorTest {
     }
 
     @Test
+    public void testGenerateOneDimensionXSmall() throws InvalidDensityException, InvalidDimensionException {
+        WorldGenerator.generate(0.2,10,1,1);
+        assertEquals(2, WorldManager.getInstance().getPopulationSize());
+    }
+
+    @Test
     public void testGenerateOneDimensionX() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.5,100,1,1);
-        assertEquals(50, WorldManager.getInstance().getRule().getCells().size());
+        assertEquals(50, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testGenerateOneDimensionY() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.77,1,100,1);
-        assertEquals(77, WorldManager.getInstance().getRule().getCells().size());
+        assertEquals(77, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testGenerateOneDimensionZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.911,1,1,100);
-        assertEquals(91, WorldManager.getInstance().getRule().getCells().size());
+        assertEquals(91, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testGenerateTwoDimensionsXY() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.915,10,10,1);
-        assertEquals(91, WorldManager.getInstance().getRule().getCells().size());
+        assertEquals(91, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testGenerateTwoDimensionsXZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.919,10,1,10);
-        assertEquals(91, WorldManager.getInstance().getRule().getCells().size());
+        assertEquals(91, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testGenerateTwoDimensionsYZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.01,1,10,10);
-        assertEquals(1, WorldManager.getInstance().getRule().getCells().size());
+        assertEquals(1, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testGenerateThreeDimensionsXYZ() throws InvalidDensityException, InvalidDimensionException {
         WorldGenerator.generate(0.9321,100,50,150);
-        assertEquals((int) (0.9321 * 100 * 50 * 150), WorldManager.getInstance().getRule().getCells().size());
+        assertEquals((int) (0.9321 * 100 * 50 * 150), WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
@@ -156,7 +162,7 @@ public class WorldGeneratorTest {
         int maxX, minX, maxY, minY, maxZ, minZ;
         maxX = minX = maxY = minY = maxZ = minZ = 0;
 
-        Set<Cell> cells = WorldManager.getInstance().getRule().getCells();
+        Set<Cell> cells = WorldManager.getInstance().getCells();
 
         for (Cell cell : cells) {
             int x = cell.getPosition().getComponent(0);

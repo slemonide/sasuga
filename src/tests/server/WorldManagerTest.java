@@ -1,4 +1,4 @@
-package server.tests;
+package tests.server;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class WorldManagerTest {
     @Before
     public void runBefore() {
-        WorldManager.getInstance().setRule(new RandomWalk());
+        //WorldManager.getInstance().setRule(new RandomWalk());
         WorldManager.getInstance().clear();
     }
 

@@ -41,11 +41,11 @@ public class Cell {
      */
     public Set<Cell> getNeighbours() {
         Set<Cell> neighbours = new HashSet<>();
-        for (Position neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
+        /*for (Position neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
             if (WorldManager.getInstance().getRule().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighbours.add(new Cell(this.position.add(neighbour)));
             }
-        }
+        }*/
 
         return neighbours;
     }
@@ -56,11 +56,11 @@ public class Cell {
      */
     public Set<Cell> getNeighboursComplement() {
         Set<Cell> neighboursComplement = new HashSet<>();
-        for (Position neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
+        /*for (Position neighbour : WorldManager.getInstance().getRule().getNeighbourhood()) {
             if (!WorldManager.getInstance().getRule().getCells().contains(new Cell(this.position.add(neighbour)))) {
                 neighboursComplement.add(new Cell(this.position.add(neighbour)));
             }
-        }
+        }*/
         return neighboursComplement;
     }
 
@@ -77,5 +77,9 @@ public class Cell {
     @Override
     public int hashCode() {
         return position.hashCode();
+    }
+
+    public void tick() {
+
     }
 }

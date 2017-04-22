@@ -1,4 +1,4 @@
-package server.ui;
+package toRemove.ui;
 
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
@@ -6,6 +6,7 @@ import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
 import server.rulesets.NeighbourhoodCellular;
+import server.ui.ConsoleUI;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
  *
  * Main app
  */
-public class ServerAppGameOfLifeRules {
+public class ServerAppStableRules {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
 
@@ -27,28 +28,45 @@ public class ServerAppGameOfLifeRules {
         gameOfLife.setUpperBound(3);
 
         Set<Position> neighbourhood = new HashSet<>();
-
-        neighbourhood.add(new Position(1,0,-1));
+/*
         neighbourhood.add(new Position(1,0,0));
         neighbourhood.add(new Position(1,0,1));
+        neighbourhood.add(new Position(1,0,-1));
 
-        neighbourhood.add(new Position(0,0,-1));
-        //neighbourhood.add(new Position(0,0,0));
-        neighbourhood.add(new Position(0,0,1));
-
-        neighbourhood.add(new Position(-1,0,-1));
         neighbourhood.add(new Position(-1,0,0));
         neighbourhood.add(new Position(-1,0,1));
+        neighbourhood.add(new Position(-1,0,-1));
+
+        neighbourhood.add(new Position(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
+*/
+
+        neighbourhood.add(new Position(1,0,0));
+        neighbourhood.add(new Position(-1,0,0));
+        neighbourhood.add(new Position(0,0,1));
+        neighbourhood.add(new Position(0,0,-1));
+        neighbourhood.add(new Position(0,1,0));
+        neighbourhood.add(new Position(0,-1,0));
+
+        neighbourhood.add(new Position(2,0,0));
+        neighbourhood.add(new Position(-2,0,0));
+        neighbourhood.add(new Position(0,0,2));
+        neighbourhood.add(new Position(0,0,-2));
+        neighbourhood.add(new Position(0,2,0));
+        neighbourhood.add(new Position(0,-2,0));
+
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
-        WorldManager.getInstance().setRule(gameOfLife);
+        //WorldManager.getInstance().setRule(gameOfLife);
+
 
         Thread worldThread = new Thread(WorldManager.getInstance());
 
         // Generate
         try {
-            WorldGenerator.generate(0.1, 100, 1, 100);
+            WorldGenerator.generate(0.4, 50, 5, 5);
+            WorldGenerator.generate(0.4, 5, 50, 5);
         } catch (InvalidDensityException | InvalidDimensionException e) {
             e.printStackTrace();
         }

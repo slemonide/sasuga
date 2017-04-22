@@ -6,6 +6,7 @@ import server.exceptions.InvalidDimensionException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -40,33 +41,23 @@ public class WorldGenerator {
             throw new InvalidDimensionException();
         }
 
-        int numberOfCellsToBeAdded = (int) (cellDensity * x * y * z);
-
-        List<Position> possiblePositions = new ArrayList<Position>();
-
-        int j = 0;
-        while (j < x * y * z) {
-            int x0 = j % x - x/2;
-            int y0 = (j / x) % y - y/2;
-            int z0 = j / (x * y) - z/2;
-
-            possiblePositions.add(new Position(x0, y0, z0));
-            j++;
+        if (x * y * z == 0) {
+            return;
         }
-        /*
-        for (int x0 = x - x/2; x0 <= x/2; x0++) {
-            for (int y0 = y - y/2; y0 <= y/2; y0++) {
-                for (int z0 = z - z/2; z <= z/2; z0++) {
-                    possiblePositions.add(new Position(x0, y0, z0));
+
+        Random random = new Random();
+
+        for (int x0 = 0; x0 <= x; x0++) {
+            for (int y0 = 0; y0 <= y; y0++) {
+                for (int z0 = 0; z0 <= z; z0++) {
+                    if (random.nextInt(x * y * z) <= (x * y * z) * cellDensity) {
+                        WorldManager.getInstance().add(new Cell(new Position(
+                                x0 - x/2,
+                                y0 - y/2,
+                                z0 - z/2)));
+                    }
                 }
             }
-        }
-        */
-
-        Collections.shuffle(possiblePositions);
-
-        for (int i = 0; i < numberOfCellsToBeAdded; i++) {
-            WorldManager.getInstance().add(new Cell(possiblePositions.get(i)));
         }
     }
 }

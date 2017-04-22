@@ -1,4 +1,4 @@
-package server.ui;
+package toRemove.ui;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

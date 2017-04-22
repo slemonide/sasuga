@@ -26,8 +26,6 @@ public class RandomWalk implements Rule {
     private final int DIM = 12;
 
     public RandomWalk() {
-        WorldManager.getInstance().dim = DIM;
-
         random = new Random();
 
         cells = new HashSet<>();

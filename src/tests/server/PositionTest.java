@@ -1,4 +1,4 @@
-package server.tests;
+package tests.server;
 
 import org.junit.Test;
 import server.model.Position;

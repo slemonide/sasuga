@@ -1,4 +1,4 @@
-package server.ui;
+package toRemove.ui;
 
 import java.io.*;
 import java.net.*;

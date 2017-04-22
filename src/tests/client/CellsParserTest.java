@@ -1,4 +1,4 @@
-package client.tests;
+package tests.client;
 
 import client.parsers.CellsParser;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class CellsParserTest {
 
     @Test
     public void testOneCell() throws FileNotFoundException {
-        File testFile = new File("tests/client/tests/data/oneCell.json");
+        File testFile = new File("src/tests/client/data/oneCell.json");
         Scanner testData = new Scanner(testFile);
         testData.useDelimiter("$^");
 
@@ -44,7 +44,7 @@ public class CellsParserTest {
 
     @Test
     public void testSeveralCells() throws FileNotFoundException {
-        File testFile = new File("tests/client/tests/data/severalCells.json");
+        File testFile = new File("src/tests/client/data/severalCells.json");
         Scanner testData = new Scanner(testFile);
         testData.useDelimiter("$^");
 

@@ -1,7 +1,8 @@
-package server.ui;
+package toRemove.ui;
 
 import server.model.WorldManager;
 import server.rulesets.RandomWalk;
+import server.ui.ConsoleUI;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>, jacketsj <jacketsj@gmail.com>
@@ -13,7 +14,7 @@ import server.rulesets.RandomWalk;
 public class ServerAppRandomWalk {
     public static void main(String[] args) {
         System.out.print("Starting server... ");
-        WorldManager.getInstance().setRule(new RandomWalk());
+        //WorldManager.getInstance().setRule(new RandomWalk());
 
         Thread worldThread = new Thread(WorldManager.getInstance());
 

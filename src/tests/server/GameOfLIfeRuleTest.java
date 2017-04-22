@@ -1,4 +1,4 @@
-package server.tests;
+package tests.server;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class GameOfLIfeRuleTest {
 
         gameOfLife.setNeighbourhood(neighbourhood);
 
-        WorldManager.getInstance().setRule(gameOfLife);
+        //WorldManager.getInstance().setRule(gameOfLife);
     }
 
     @Test
