@@ -25,7 +25,6 @@ import jme3tools.optimize.GeometryBatchFactory;
 import server.model.Cell;
 import server.model.WorldManager;
 
-import java.io.IOException;
 import java.util.Set;
 
 public class VisualGUI extends SimpleApplication {

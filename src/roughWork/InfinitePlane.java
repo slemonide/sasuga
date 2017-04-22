@@ -7,10 +7,6 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
-import server.model.Cell;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class InfinitePlane extends SimpleApplication {
     public static void main(String[] args) {

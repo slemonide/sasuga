@@ -137,12 +137,13 @@ public class NeighbourhoodCellular implements ActiveRule {
     private Set<Cell> growAround(Cell cell) {
         Set<Cell> newCells = new HashSet<>();
 
+        /*
         Set<Cell> neighboursComplement = cell.getNeighboursComplement();
         for (Cell neighbourComplementElement : neighboursComplement) {
             if (neighbourComplementElement.getNeighbours().size() == upperCellBound) {
                 newCells.add(neighbourComplementElement);
             }
-        }
+        }*/
 
         return newCells;
     }
@@ -154,9 +155,10 @@ public class NeighbourhoodCellular implements ActiveRule {
     Set<Cell> die(Set<Cell> cells) {
         Set<Cell> toKill = new HashSet<>();
         for (Cell cell : cells) {
+            /*
             if (cell.getNeighbours().size() <= lowerCellBound || cell.getNeighbours().size() > upperCellBound) {
                 toKill.add(cell);
-            }
+            }*/
         }
         return toKill;
     }

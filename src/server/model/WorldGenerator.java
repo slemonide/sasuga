@@ -3,9 +3,6 @@ package server.model;
 import server.exceptions.InvalidDensityException;
 import server.exceptions.InvalidDimensionException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**

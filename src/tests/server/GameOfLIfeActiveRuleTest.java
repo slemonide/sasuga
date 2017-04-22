@@ -2,7 +2,6 @@ package tests.server;
 
 import org.junit.Before;
 import org.junit.Test;
-import server.model.Cell;
 import server.model.Position;
 import server.model.WorldManager;
 import server.rules.NeighbourhoodCellular;
@@ -62,20 +61,20 @@ public class GameOfLIfeActiveRuleTest {
 
     @Test
     public void testTickDieInOneTick() {
-        WorldManager.getInstance().add(new Cell(ORIGIN));
+        WorldManager.getInstance().add(new StaticCell(ORIGIN));
         assertEquals(0, WorldManager.getInstance().getGeneration());
         assertEquals(1, WorldManager.getInstance().getPopulationSize());
         WorldManager.getInstance().tick();
-        assertFalse(WorldManager.getInstance().getCells().contains(new Cell(ORIGIN)));
+        assertFalse(WorldManager.getInstance().getCells().contains(new StaticCell(ORIGIN)));
         assertEquals(1, WorldManager.getInstance().getGeneration());
         assertEquals(0, WorldManager.getInstance().getPopulationSize());
     }
 
     @Test
     public void testTickSimpleOscillator() {
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, -1)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, -1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 1)));
         /*
          * 0 1 0
          * 0 1 0
@@ -91,18 +90,18 @@ public class GameOfLIfeActiveRuleTest {
                  * 1 1 1
                  * 0 0 0
                  */
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 0, 0))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(1, 0, 0))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(-1, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(1, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(-1, 0, 0))));
             } else {
                 /*
                  * 0 1 0
                  * 0 1 0
                  * 0 1 0
                  */
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 0, -1))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 0, 0))));
-                assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 0, 1))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 0, -1))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 0, 0))));
+                assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 0, 1))));
             }
             assertEquals(3, WorldManager.getInstance().getPopulationSize());
         }
@@ -117,47 +116,47 @@ public class GameOfLIfeActiveRuleTest {
          * 3 | 0 0 0 0 0 0 1 0 0
          */
         // the square
-        WorldManager.getInstance().add(new Cell(new Position(1, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Position(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0,1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,2)));
 
         // the other thing
-        WorldManager.getInstance().add(new Cell(new Position(5, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Position(5, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Position(6, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Position(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Position(7, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(5, 0,1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(5, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(6, 0,1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(6, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,2)));
 
         assertEquals(9, WorldManager.getInstance().getPopulationSize());
         // the square
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(1, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(2, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(1, 0,2))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(2, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(1, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(2, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(1, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(2, 0,2))));
 
         // the other thing
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(5, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(5, 0,2))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(6, 0,1))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(6, 0,3))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(7, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(5, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(5, 0,2))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(6, 0,1))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(6, 0,3))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(7, 0,2))));
 
         for (int i = 0; i < MAX_TICKS; i++) {
             WorldManager.getInstance().tick();
             assertEquals(9, WorldManager.getInstance().getPopulationSize());
             // the square
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(1, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(2, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(1, 0,2))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(2, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(1, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(2, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(1, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(2, 0,2))));
 
             // the other thing
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(5, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(5, 0,2))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(6, 0,1))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(6, 0,3))));
-            assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(7, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(5, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(5, 0,2))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(6, 0,1))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(6, 0,3))));
+            assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(7, 0,2))));
         }
     }
 
@@ -174,15 +173,15 @@ public class GameOfLIfeActiveRuleTest {
          *
          */
         // the bottom left thing
-        WorldManager.getInstance().add(new Cell(new Position(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,3)));
 
         // other thing
-        WorldManager.getInstance().add(new Cell(new Position(7, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Position(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Position(7, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Position(8, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(6, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(8, 0,3)));
 
 
         for (int i = 1; i < 130; i++) {

@@ -56,24 +56,24 @@ public class ServerAppGameOfLifeRulesThirdTimeDimension {
 
 // glider
         /*
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 1)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 2)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 3)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0, 2)));
-        WorldManager.getInstance().add(new Cell(new Position(1, 0, 1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0, 2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0, 1)));
         */
 
 /*
         // the bottom left thing
-        WorldManager.getInstance().add(new Cell(new Position(1, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0,2)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,2)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0,3)));
 
         // other thing
-        WorldManager.getInstance().add(new Cell(new Position(7, 0,1)));
-        WorldManager.getInstance().add(new Cell(new Position(6, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Position(7, 0,3)));
-        WorldManager.getInstance().add(new Cell(new Position(8, 0,3)));*/
+        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(6, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(7, 0,3)));
+        WorldManager.getInstance().add(new StaticCell(new Position(8, 0,3)));*/
 
 
         //System.out.println(WorldManager.getInstance().getRule().getCells().size());

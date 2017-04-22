@@ -40,7 +40,7 @@ public class RandomWalk implements ActiveRule {
                     pos[i][j] = i * 10 + j * 2;
                 }
             }
-            currentCells.add(new Cell(new Position(pos[i])));
+            currentCells.add(new StaticCell(new Position(pos[i])));
         }
     }
 
@@ -51,7 +51,7 @@ public class RandomWalk implements ActiveRule {
         for (Cell cell : currentCells) {
             cells.add(cell);
 
-            Cell nextCell = new Cell(cell.getPosition().add(getRandomVector()));
+            Cell nextCell = new StaticCell(cell.getPosition().add(getRandomVector()));
 
             nextCells.add(nextCell);
         }

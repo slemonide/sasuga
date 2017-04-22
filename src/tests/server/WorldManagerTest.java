@@ -2,7 +2,6 @@ package tests.server;
 
 import org.junit.Before;
 import org.junit.Test;
-import server.model.Cell;
 import server.model.Position;
 import server.model.WorldManager;
 
@@ -35,11 +34,11 @@ public class WorldManagerTest {
 
     @Test
     public void testRemoveCell() {
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 1);
 
 
-        WorldManager.getInstance().remove(new Cell(new Position(0, 0, 0)));
+        WorldManager.getInstance().remove(new StaticCell(new Position(0, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 0);
     }
 
@@ -51,9 +50,9 @@ public class WorldManagerTest {
 
     @Test
     public void testSimpleDie() throws InterruptedException {
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 1);
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 0, 0))));
         Thread thread = new Thread(WorldManager.getInstance());
         thread.start();
         Thread.sleep(1000);
@@ -63,10 +62,10 @@ public class WorldManagerTest {
 
     @Test
     public void testHarderDie() throws InterruptedException {
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 1)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 10, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 10, 1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 10, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 10, 1)));
         assertEquals(WorldManager.getInstance().getCells().size(), 4);
         Thread thread = new Thread(WorldManager.getInstance());
         thread.start();
@@ -77,8 +76,8 @@ public class WorldManagerTest {
 
     @Test
     public void testDieTwoCellsOneCellAPart() {
-        WorldManager.getInstance().add(new Cell(new Position(-1, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(1, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(-1, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 2);
         WorldManager.getInstance().tick();
         assertEquals(0, WorldManager.getInstance().getCells().size());
@@ -86,8 +85,8 @@ public class WorldManagerTest {
 
     @Test
     public void testDieTwoCellsOneCellAPartThread() throws InterruptedException {
-        WorldManager.getInstance().add(new Cell(new Position(-1, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(1, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(-1, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(1, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 2);
         Thread thread = new Thread(WorldManager.getInstance());
         thread.start();
@@ -98,8 +97,8 @@ public class WorldManagerTest {
 
     @Test
     public void testDieTwoCellsFarApart() {
-        WorldManager.getInstance().add(new Cell(new Position(-2, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(2, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(-2, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(2, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 2);
         Thread thread = new Thread(WorldManager.getInstance());
         WorldManager.getInstance().tick();
@@ -108,8 +107,8 @@ public class WorldManagerTest {
 
     @Test
     public void testDieTwoCellsTwoApart() {
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(3, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(3, 0, 0)));
         assertEquals(WorldManager.getInstance().getCells().size(), 2);
         Thread thread = new Thread(WorldManager.getInstance());
         WorldManager.getInstance().tick();
@@ -118,15 +117,15 @@ public class WorldManagerTest {
 
     @Test
     public void testGrow() {
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, -1)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 0)));
-        WorldManager.getInstance().add(new Cell(new Position(0, 0, 1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, -1)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 0)));
+        WorldManager.getInstance().add(new StaticCell(new Position(0, 0, 1)));
         WorldManager.getInstance().tick();
         assertEquals(9, WorldManager.getInstance().getCells().size());
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 0, 0))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(1, 0, 0))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(-1, 0, 0))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, 1, 0))));
-        assertTrue(WorldManager.getInstance().getCells().contains(new Cell(new Position(0, -1, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(1, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(-1, 0, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, 1, 0))));
+        assertTrue(WorldManager.getInstance().getCells().contains(new StaticCell(new Position(0, -1, 0))));
     }
 }

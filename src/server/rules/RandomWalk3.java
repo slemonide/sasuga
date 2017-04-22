@@ -20,12 +20,12 @@ public class RandomWalk3 implements ActiveRule {
     public RandomWalk3() {
         cells = new HashSet<>();
         currentCells = new ArrayList<>();
-        currentCells.add(new Cell(new Position(0, 0, 0)));
-        currentCells.add(new Cell(new Position(0, 0, 0)));
-        currentCells.add(new Cell(new Position(0, 0, 0)));
-        currentCells.add(new Cell(new Position(0, 0, 0)));
-        currentCells.add(new Cell(new Position(0, 0, 0)));
-        currentCells.add(new Cell(new Position(0, 0, 0)));
+        currentCells.add(new StaticCell(new Position(0, 0, 0)));
+        currentCells.add(new StaticCell(new Position(0, 0, 0)));
+        currentCells.add(new StaticCell(new Position(0, 0, 0)));
+        currentCells.add(new StaticCell(new Position(0, 0, 0)));
+        currentCells.add(new StaticCell(new Position(0, 0, 0)));
+        currentCells.add(new StaticCell(new Position(0, 0, 0)));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class RandomWalk3 implements ActiveRule {
         for (Cell cell : currentCells) {
             cells.add(cell);
 
-            Cell nextCell = new Cell(cell.getPosition().add(getRandomVector()));
+            Cell nextCell = new StaticCell(cell.getPosition().add(getRandomVector()));
 
             nextCells.add(nextCell);
         }

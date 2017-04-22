@@ -97,7 +97,10 @@ public class WorldManager extends Observable implements Runnable {
 
     public void tick() {
         for (Cell cell : cellsMap.values()) {
-            cell.tick();
+            if (cell instanceof ActiveCell) {
+                ActiveCell currentCell = (ActiveCell) cell;
+                currentCell.tick();
+            }
         }
         generation++;
     }
