@@ -1,4 +1,4 @@
-package server.rulesets;
+package server.rules;
 
 import server.model.Cell;
 import server.model.Position;
@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * A ruleset for static cells that do nothing on tick()
  */
-public class Stable implements Rule {
+public class Stable implements ActiveRule {
     @Override
     public void tick() {
         // do nothing

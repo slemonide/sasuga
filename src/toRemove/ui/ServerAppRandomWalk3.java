@@ -1,7 +1,6 @@
 package toRemove.ui;
 
 import server.model.WorldManager;
-import server.rulesets.RandomWalk3;
 import server.ui.ConsoleUI;
 
 /**

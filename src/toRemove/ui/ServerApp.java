@@ -1,12 +1,6 @@
 package toRemove.ui;
 
-import server.exceptions.InvalidDensityException;
-import server.exceptions.InvalidDimensionException;
 import server.model.*;
-import server.rulesets.ThirdTimeDimension;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>

@@ -1,6 +1,6 @@
 package server.model;
 
-import server.rulesets.Rule;
+import server.rules.ActiveRule;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,11 +13,8 @@ import java.util.Set;
  * Represents an alive node.
  */
 public class Cell {
-    /**
-     * Position of this cell
-     */
     private Position position;
-    private Rule rule;
+    private ActiveRule rule;
 
     /**
      * Create a cell at the given position and with the "static" ruleset

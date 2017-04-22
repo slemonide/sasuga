@@ -1,8 +1,7 @@
-package server.rulesets;
+package server.rules;
 
 import server.model.Cell;
 import server.model.Position;
-import server.model.WorldManager;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -16,7 +15,7 @@ import java.util.Set;
  * A 3D random walk simulation
  */
 
-public class RandomWalk implements Rule {
+public class RandomWalk implements ActiveRule {
     private static final int NUMBER_OF_DIMENSIONS = 20;
     private Set<Cell> currentCells;
     private Set<Cell> cells;

@@ -5,7 +5,7 @@ import server.exceptions.InvalidDimensionException;
 import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
-import server.rulesets.NeighbourhoodCellular;
+import server.rules.NeighbourhoodCellular;
 import server.ui.ConsoleUI;
 
 import java.util.HashSet;

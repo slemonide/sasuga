@@ -1,4 +1,4 @@
-package server.rulesets;
+package server.rules;
 
 import server.model.Cell;
 import server.model.Position;
@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * Interface for all rule sets
  */
-public interface Rule {
+public interface ActiveRule {
 
     void tick();
 

@@ -1,7 +1,5 @@
 package server.model;
 
-import server.rulesets.Rule;
-
 import java.util.*;
 
 /**

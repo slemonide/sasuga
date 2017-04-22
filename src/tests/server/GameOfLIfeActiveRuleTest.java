@@ -5,7 +5,7 @@ import org.junit.Test;
 import server.model.Cell;
 import server.model.Position;
 import server.model.WorldManager;
-import server.rulesets.NeighbourhoodCellular;
+import server.rules.NeighbourhoodCellular;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  *
  * Test that the system works fine if configured with the Conway's Game Of Life rules
  */
-public class GameOfLIfeRuleTest {
+public class GameOfLIfeActiveRuleTest {
     private static final int MAX_TICKS = 100;
     private static final Position ORIGIN = new Position(0, 0, 0);
 

@@ -1,4 +1,4 @@
-package server.rulesets;
+package server.rules;
 
 import server.model.Cell;
 import server.model.Position;

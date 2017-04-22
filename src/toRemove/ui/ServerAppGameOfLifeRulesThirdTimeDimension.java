@@ -5,7 +5,7 @@ import server.exceptions.InvalidDimensionException;
 import server.model.Position;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
-import server.rulesets.ThirdTimeDimension;
+import server.rules.ThirdTimeDimension;
 import server.ui.ConsoleUI;
 
 import java.util.HashSet;

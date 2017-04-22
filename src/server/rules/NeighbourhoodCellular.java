@@ -1,4 +1,4 @@
-package server.rulesets;
+package server.rules;
 
 import server.model.Cell;
 import server.model.Position;
@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * Represents a cellular automata with configurable neighbourhood
  */
-public class NeighbourhoodCellular implements Rule {
+public class NeighbourhoodCellular implements ActiveRule {
     private Set<Position> neighbourhood;
     private int upperCellBound;
     private int lowerCellBound;

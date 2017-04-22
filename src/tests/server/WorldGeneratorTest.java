@@ -7,7 +7,6 @@ import org.junit.Test;
 import server.model.Cell;
 import server.model.WorldGenerator;
 import server.model.WorldManager;
-import server.rulesets.RandomWalk;
 
 import java.util.Set;
 

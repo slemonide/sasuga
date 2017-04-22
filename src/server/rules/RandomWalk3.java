@@ -1,4 +1,4 @@
-package server.rulesets;
+package server.rules;
 
 import server.model.Cell;
 import server.model.Position;
@@ -13,7 +13,7 @@ import java.util.*;
  * A 3D random walk simulation
  */
 
-public class RandomWalk3 implements Rule {
+public class RandomWalk3 implements ActiveRule {
     private List<Cell> currentCells; // two current cells can be at the same position
     private Set<Cell> cells;
 

@@ -5,7 +5,6 @@ import org.junit.Test;
 import server.model.Cell;
 import server.model.Position;
 import server.model.WorldManager;
-import server.rulesets.RandomWalk;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
