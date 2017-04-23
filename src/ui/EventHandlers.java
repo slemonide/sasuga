@@ -30,48 +30,75 @@ public class EventHandlers extends Observable {
     private ActionListener pauseActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             isPaused = !isPaused;
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener addCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             Position currentSelection = getCurrentSelection();
             World.getInstance().add(new RandomWalkCell(currentSelection));
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener removeCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             Position currentSelection = getCurrentSelection();
             World.getInstance().remove(currentSelection);
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener moveCursorUPActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             cursorPosition = getCurrentSelection().add(0, 1, 0);
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener moveCursorDOWNActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             cursorPosition = getCurrentSelection().add(0, -1, 0);
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener moveCursorPXActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             cursorPosition = getCurrentSelection().add(1, 0, 0);
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener moveCursorNXActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             cursorPosition = getCurrentSelection().add(-1, 0, 0);
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener moveCursorPZActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             cursorPosition = getCurrentSelection().add(0, 0, 1);
+
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener moveCursorNZActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             cursorPosition = getCurrentSelection().add(0, 0, -1);
+
+            setChanged();
+            notifyObservers();
         }
     };
 

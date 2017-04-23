@@ -31,7 +31,7 @@ public class VisualGUI extends SimpleApplication {
                 assetManager, inputManager, audioRenderer, guiViewPort);
         Nifty nifty = niftyDisplay.getNifty();
 
-        HUDController hudController = new HUDController();
+        HUDController hudController = new HUDController(eventHandlers);
 
         nifty.fromXml("assets/Interface/hud.xml", "hud", hudController);
         guiViewPort.addProcessor(niftyDisplay);

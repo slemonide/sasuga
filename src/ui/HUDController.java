@@ -2,9 +2,11 @@ package ui;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.Color;
 import model.Player;
 import model.World;
 
@@ -22,8 +24,11 @@ import java.util.Observer;
 public class HUDController implements ScreenController, Observer {
     private Nifty nifty;
     private Player player;
+    private EventHandlers eventHandlers;
 
-    HUDController() {}
+    HUDController(EventHandlers eventHandlers) {
+        this.eventHandlers = eventHandlers;
+    }
 
     @Override
     public void bind(@Nonnull Nifty nifty, @Nonnull Screen screen) {
@@ -55,9 +60,27 @@ public class HUDController implements ScreenController, Observer {
     }
 
     private void updatePause() {
+        if (eventHandlers.isPaused()) {
+            setPaused();
+        } else {
+            setUnPaused();
+        }
+    }
+
+    private void setPaused() {
         Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
-        pausePanel.getRenderer(TextRenderer.class)
-                .setText(getLabel("Generation", World.getInstance().getGeneration()));
+        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#0fff"));
+
+        Element pause = nifty.getCurrentScreen().findElementById("pause");
+        pause.getRenderer(TextRenderer.class).setColor(new Color("#f00f"));
+    }
+
+    private void setUnPaused() {
+        Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
+        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#0ff0"));
+
+        Element pause = nifty.getCurrentScreen().findElementById("pause");
+        pause.getRenderer(TextRenderer.class).setColor(new Color("#f000"));
     }
 
     private void updateGeneration() {
