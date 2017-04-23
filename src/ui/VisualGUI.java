@@ -19,7 +19,6 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
-import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
 import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
@@ -33,16 +32,11 @@ public class VisualGUI extends SimpleApplication {
     private Node cellsNode;
     private double delay;
 
-    private boolean isPaused = true;
+    private boolean isPaused = false;
     private Geometry floor;
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
-
-        AppSettings settings = new AppSettings(true);
-        settings.setStereo3D(false);
-        app.setSettings(settings);
-
         app.start();
     }
 
@@ -51,12 +45,15 @@ public class VisualGUI extends SimpleApplication {
         delay = 0;
         flyCam.setMoveSpeed(10);
 
+        initializeEnvironment();
+        initializeEventHandlers();
+    }
+
+    private void initializeEnvironment() {
         addSkySphere();
         addCells();
         addFloor();
-        updateFloor();
         addShadows();
-        addEventHandlers();
     }
 
     private void addSkySphere() {
@@ -64,7 +61,7 @@ public class VisualGUI extends SimpleApplication {
                 "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
     }
 
-    private void addEventHandlers() {
+    private void initializeEventHandlers() {
         inputManager.addMapping("PAUSE", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("PREVDIM", new KeyTrigger(KeyInput.KEY_MINUS));
         inputManager.addMapping("NEXTDIM", new KeyTrigger(KeyInput.KEY_EQUALS));
@@ -128,6 +125,8 @@ public class VisualGUI extends SimpleApplication {
         floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
         floor.setLocalTranslation(-1000, -SCALE/2, 1000);
         rootNode.attachChild(floor);
+
+        updateFloor();
     }
 
     @Override
@@ -158,11 +157,7 @@ public class VisualGUI extends SimpleApplication {
     };
 
     private void updateDelay(float tpf) {
-        delay += tpf;
-        if (delay <= MIN_DELAY) {
-            return;
-        }
-        delay = 0;
+        delay = (delay + tpf) % MIN_DELAY;
     }
 
     private void updateCells() {
@@ -170,6 +165,11 @@ public class VisualGUI extends SimpleApplication {
         addCells();
         GeometryBatchFactory.optimize(cellsNode);
         World.getInstance().tick();
+    }
+
+    @Override
+    public void destroy() {
+        World.getInstance().interrupt();
     }
 }
 

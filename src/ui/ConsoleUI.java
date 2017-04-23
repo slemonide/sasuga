@@ -29,13 +29,11 @@ public class ConsoleUI implements Observer {
     }
 
     public void update(Observable o, Object arg) {
-        if (arg.equals("tick")) {
-            System.out.print("Generation: " + World.getInstance().getGeneration());
-            System.out.print("    ");
-            System.out.print("Number of cells: " + World.getInstance().getPopulationSize());
-            System.out.print("    ");
-            System.out.print("Tick time: " + (double) World.getInstance().getTickTime() / 1000000000 + " s");
-            System.out.print("\n");
-        }
+        System.out.print("Generation: " + World.getInstance().getGeneration());
+        System.out.print("    ");
+        System.out.print("Number of cells: " + World.getInstance().getPopulationSize());
+        System.out.print("    ");
+        System.out.print("Tick time: " + (double) World.getInstance().getTickTime() / 1000000000 + " s");
+        System.out.print("\n");
     }
 }

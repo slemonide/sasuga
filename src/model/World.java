@@ -13,8 +13,9 @@ public class World extends Observable implements Runnable {
     private long tickTime;
     private int generation;
     private Map<Position, Cell> cellsMap;
-    private static World instance;
     private int population;
+    private Thread worldThread;
+    private static World instance;
 
     /**
      * Create a new empty world
@@ -24,6 +25,7 @@ public class World extends Observable implements Runnable {
         generation = 0;
         population = 0;
         cellsMap = new HashMap<>();
+        worldThread = new Thread(this);
     }
 
     /**
@@ -137,5 +139,19 @@ public class World extends Observable implements Runnable {
 
         setChanged();
         notifyObservers();
+    }
+
+    /**
+     * Starts the world thread
+     */
+    public void start() {
+        worldThread.start();
+    }
+
+    /**
+     * Interrupts the world thread
+     */
+    public void interrupt() {
+        worldThread.interrupt();
     }
 }
