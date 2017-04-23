@@ -10,7 +10,7 @@ import java.util.*;
  * Manages world
  */
 public class World extends Observable implements Runnable {
-    public static final double TICK_DELAY = 0.01; // in seconds
+    private static final double TICK_DELAY = 0.001; // in seconds
     private long tickTime;
     private int generation;
     private Map<Position, Cell> cellsMap;
@@ -25,7 +25,7 @@ public class World extends Observable implements Runnable {
         tickTime = 0;
         generation = 0;
         population = 0;
-        cellsMap = new HashMap<>();
+        cellsMap = Collections.synchronizedMap(new HashMap<>());
         worldThread = new Thread(this);
     }
 
@@ -46,7 +46,7 @@ public class World extends Observable implements Runnable {
     public void run() {
         long lastTime = System.currentTimeMillis();
         while (!Thread.currentThread().isInterrupted()) {
-            if ((System.currentTimeMillis() - lastTime) / 1000 > TICK_DELAY) {
+            if ((System.currentTimeMillis() - lastTime) > TICK_DELAY * 1000) {
                 tick();
                 generation++;
                 lastTime = System.currentTimeMillis();
@@ -157,9 +157,14 @@ public class World extends Observable implements Runnable {
      */
     public Set<Cell> getOldCells() {
         Set<Cell> oldCells = new HashSet<>();
-        oldCells.addAll(Collections.synchronizedCollection(Collections.synchronizedMap(cellsMap).values()));
 
-        return Collections.synchronizedSet(oldCells);
+        Set s = cellsMap.keySet();
+
+        synchronized (cellsMap) {
+            for (Object value : s) oldCells.add(cellsMap.get(value));
+        }
+
+        return oldCells;
     }
 
     /**
