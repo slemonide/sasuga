@@ -36,70 +36,70 @@
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
-                <panel id="cell_choice_panel" width="100%" height="20%" childLayout="vertical"
+                <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
                        backgroundColor="#44f8">
                     <panel id="cell_1" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_1"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_2" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_2"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_3" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_3"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_4" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_4"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_5" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_5"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_6" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_6"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_7" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_7"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_8" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_8"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_9" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_9"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="cell_10" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_10"
-                              font="assets/Interface/Fonts/Arial.fnt"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
-                <panel id="empty_panel" width="100%" height="70%" valign="center"/>
+                <panel id="empty_panel" width="100%" height="65%" valign="center"/>
             </panel>
         </layer>
     </screen>
