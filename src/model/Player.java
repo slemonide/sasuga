@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 /**
  *
  * @author      Danil Platonov <slemonide@gmail.com>, jacketsj <jacketsj@gmail.com>
@@ -10,7 +12,7 @@ package model;
  * and a 10-item inventory of cells (or nulls)
  */
 public class Player extends ActiveCell {
-    private static final int MIN_HUNGER_DELAY = 1; // in ticks
+    private static final int MIN_HUNGER_DELAY = 100 * World.TICKS_PER_SECOND; // in ticks
     private static Player instance;
     private int health;
     private int strength;
@@ -27,10 +29,12 @@ public class Player extends ActiveCell {
     private Player(Position position) {
         super(position);
 
-        health = 10;
-        strength = 20;
-        agility = 30;
-        hunger = 40;
+        Random random = new Random();
+
+        health = 10 + random.nextInt(91);
+        strength = 20 + random.nextInt(81);
+        agility = 30 + random.nextInt(71);
+        hunger = 40 + random.nextInt(61);
 
         inventory = new Cell[10];
     }
@@ -38,7 +42,16 @@ public class Player extends ActiveCell {
     @Override
     public void tick() {
         if (hungerDelay > MIN_HUNGER_DELAY) {
-            setHunger(getHunger() - 1);
+            setHunger(Math.max(getHunger() - 1, 0));
+            if (getHunger() < 30) {
+                setStrength(Math.max(getStrength() - (int) (3.0 / ((getHunger() + 1) * 0.1)), 0));
+            }
+            if (getHunger() < 20) {
+                setAgility(Math.max(getAgility() - (int) (1.0 / ((getHunger() + 1) * 0.1)), 0));
+            }
+            if (getHunger() < 5) {
+                setHealth(Math.max(getHealth() - (int) (1.0 / ((getHunger() + 1) * 0.1)), 0));
+            }
             hungerDelay = 0;
         }
         hungerDelay++;

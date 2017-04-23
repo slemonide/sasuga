@@ -8,7 +8,38 @@
     <useControls filename="nifty-default-controls.xml" />
     <screen id="hud" controller="ui.HUDController">
         <layer id="foreground" backgroundColor="#0000" childLayout="horizontal">
-            <panel id="game_window_panel" width="90%" height="100%" childLayout="vertical"/>
+            <panel width="15%" height="100%" childLayout="vertical">
+                <panel id="game_statistics_panel" width="100%" height="7%" childLayout="vertical"
+                       backgroundColor="#66f8">
+                    <panel id="generation_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Generation: 0"
+                              id="generation"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+
+                    <panel id="population_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Population: 0"
+                              id="population"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+
+
+                    <panel id="tick_time_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Tick time: 0.0213123 s"
+                              id="tick_time"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+                <panel width="100%" height="93%" childLayout="vertical"/>
+            </panel>
+
+            <panel id="game_window_panel" width="75%" height="100%" childLayout="vertical"/>
 
             <panel id="player_controls_panel" width="10%" height="100%" childLayout="vertical">
                 <panel id="player_stats_panel" width="100%" height="10%" childLayout="vertical"

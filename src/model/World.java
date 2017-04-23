@@ -1,5 +1,7 @@
 package model;
 
+import ui.HUDController;
+
 import java.util.*;
 
 /**
@@ -11,6 +13,7 @@ import java.util.*;
  */
 public class World extends Observable implements Runnable {
     private static final double TICK_DELAY = 0.001; // in seconds
+    public static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
     private int generation;
     private Map<Position, Cell> cellsMap;
@@ -48,7 +51,6 @@ public class World extends Observable implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             if ((System.currentTimeMillis() - lastTime) > TICK_DELAY * 1000) {
                 tick();
-                generation++;
                 lastTime = System.currentTimeMillis();
             }
         }

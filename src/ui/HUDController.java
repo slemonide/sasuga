@@ -6,6 +6,7 @@ import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import model.Player;
+import model.World;
 
 import javax.annotation.Nonnull;
 import java.util.Observable;
@@ -30,6 +31,7 @@ public class HUDController implements ScreenController, Observer {
         this.player = Player.getInstance();
 
         player.addObserver(this); // notice me, senpy
+        World.getInstance().addObserver(this);
 
         update(null, null);
     }
@@ -42,6 +44,10 @@ public class HUDController implements ScreenController, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        updateGeneration();
+        updatePopulation();
+        updateTickTime();
+
         updateHealth();
         updateStrength();
         updateAgility();
@@ -49,28 +55,56 @@ public class HUDController implements ScreenController, Observer {
         updateCells();
     }
 
+    private void updateGeneration() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("generation");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Generation", World.getInstance().getGeneration()));
+    }
+
+    private void updatePopulation() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("population");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Population", World.getInstance().getPopulationSize()));
+    }
+
+    private void updateTickTime() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("tick_time");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getSecondsLabel("Tick time", World.getInstance().getTickTime()));
+    }
+
     private void updateHealth() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("health");
-        niftyElement.getRenderer(TextRenderer.class).setText(getLabel("Health", player.getHealth()));
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getPercentageLabel("Health", player.getHealth()));
     }
 
     private void updateStrength() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("strength");
-        niftyElement.getRenderer(TextRenderer.class).setText(getLabel("Strength", player.getStrength()));
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getPercentageLabel("Strength", player.getStrength()));
     }
 
     private void updateAgility() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("agility");
-        niftyElement.getRenderer(TextRenderer.class).setText(getLabel("Agility", player.getAgility()));
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getPercentageLabel("Agility", player.getAgility()));
     }
 
     private void updateHunger() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("hunger");
-        niftyElement.getRenderer(TextRenderer.class).setText(getLabel("Hunger", player.getHunger()));
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getPercentageLabel("Hunger", player.getHunger()));
     }
 
     private String getLabel(String property, int value) {
+        return property + " " + value;
+    }
+    private String getPercentageLabel(String property, int value) {
         return property + " " + value + "%";
+    }
+    private String getSecondsLabel(String property, long value) {
+        return property + " " + value + " s";
     }
 
     private void updateCells() {
