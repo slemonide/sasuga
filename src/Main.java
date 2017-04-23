@@ -1,16 +1,20 @@
 import model.ClientManager;
 import model.World;
 import ui.ConsoleUI;
+import ui.VisualGUI;
 
 /**
- * Starts the server
+ * Starts the application
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.print("Starting server... ");
         initializeObservers();
         initializeThreads();
-        System.out.println("OK");
+        startGUI(args);
+    }
+
+    private static void startGUI(String[] args) {
+        VisualGUI.main(args);
     }
 
     private static void initializeThreads() {

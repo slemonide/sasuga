@@ -33,11 +33,6 @@ public class VisualGUI extends SimpleApplication {
     private Node cellsNode;
     private double delay;
 
-    //which dimensions are rendered
-    private static int xdim;
-    private static int ydim;
-    private static int zdim;
-
     private boolean isPaused = true;
     private Geometry floor;
 
@@ -47,10 +42,6 @@ public class VisualGUI extends SimpleApplication {
         AppSettings settings = new AppSettings(true);
         settings.setStereo3D(false);
         app.setSettings(settings);
-
-        xdim = 0;
-        ydim = 1;
-        zdim = 2;
 
         app.start();
     }
@@ -78,8 +69,6 @@ public class VisualGUI extends SimpleApplication {
         inputManager.addMapping("PREVDIM", new KeyTrigger(KeyInput.KEY_MINUS));
         inputManager.addMapping("NEXTDIM", new KeyTrigger(KeyInput.KEY_EQUALS));
         inputManager.addListener(pauseActionListener, "PAUSE");
-        inputManager.addListener(prevDimActionListener, "PREVDIM");
-        inputManager.addListener(nextDimActionListener, "NEXTDIM");
     }
 
     private void addCells() {
@@ -98,9 +87,9 @@ public class VisualGUI extends SimpleApplication {
             node.setMaterial(mat);
 
             node.setLocalTranslation(
-                    cell.getPosition().getComponent(xdim) * SCALE,
-                    cell.getPosition().getComponent(ydim) * SCALE,
-                    cell.getPosition().getComponent(zdim) * SCALE);
+                    cell.getPosition().getComponent(0) * SCALE,
+                    cell.getPosition().getComponent(1) * SCALE,
+                    cell.getPosition().getComponent(2) * SCALE);
 
             cellsNode.attachChild(node);
         }
@@ -154,7 +143,7 @@ public class VisualGUI extends SimpleApplication {
         float minimumY = 0; // should be at least at the sea level
 
         for (Cell cell : World.getInstance().getCells()) {
-            minimumY = Math.min(minimumY, cell.getPosition().getComponent(ydim) * SCALE);
+            minimumY = Math.min(minimumY, cell.getPosition().getComponent(1) * SCALE);
         }
 
         Vector3f floorTranslation = floor.getLocalTranslation();
@@ -165,32 +154,6 @@ public class VisualGUI extends SimpleApplication {
     private ActionListener pauseActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             isPaused = !isPaused;
-        }
-    };
-
-    private ActionListener prevDimActionListener = new ActionListener(){
-        public void onAction(String name, boolean pressed, float tpf){
-            if (pressed) {
-                int dim = 3;
-                xdim = (xdim - 1+dim) % dim;
-                ydim = (ydim - 1+dim) % dim;
-                zdim = (zdim - 1+dim) % dim;
-
-                updateCells();
-            }
-        }
-    };
-
-    private ActionListener nextDimActionListener = new ActionListener(){
-        public void onAction(String name, boolean pressed, float tpf){
-            if (pressed) {
-                int dim = 3;
-                xdim = (xdim + 1) % dim;
-                ydim = (ydim + 1) % dim;
-                zdim = (zdim + 1) % dim;
-
-                updateCells();
-            }
         }
     };
 
