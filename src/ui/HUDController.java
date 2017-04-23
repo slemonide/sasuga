@@ -22,9 +22,13 @@ import java.util.Observer;
  * Updates the in-game HUD
  */
 public class HUDController implements ScreenController, Observer {
+    private static final Color TRANSPARENT_COLOR = new Color("#0000");
     private Nifty nifty;
     private Player player;
     private EventHandlers eventHandlers;
+
+    private Color pausePanelColor;
+    private Color pauseTextColor;
 
     HUDController(EventHandlers eventHandlers) {
         this.eventHandlers = eventHandlers;
@@ -35,7 +39,17 @@ public class HUDController implements ScreenController, Observer {
         this.nifty = nifty;
         this.player = Player.getInstance();
 
+        readColorsFromTheNifty();
+
         update(null, null);
+    }
+
+    private void readColorsFromTheNifty() {
+        Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
+        pausePanelColor = pausePanel.getRenderer(PanelRenderer.class).getBackgroundColor();
+
+        Element pause = nifty.getCurrentScreen().findElementById("pause");
+        pauseTextColor = pause.getRenderer(TextRenderer.class).getColor();
     }
 
     @Override
@@ -69,18 +83,18 @@ public class HUDController implements ScreenController, Observer {
 
     private void setPaused() {
         Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
-        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#0fff"));
+        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(pausePanelColor);
 
         Element pause = nifty.getCurrentScreen().findElementById("pause");
-        pause.getRenderer(TextRenderer.class).setColor(new Color("#f00f"));
+        pause.getRenderer(TextRenderer.class).setColor(pauseTextColor);
     }
 
     private void setUnPaused() {
         Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
-        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(new Color("#0ff0"));
+        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(TRANSPARENT_COLOR);
 
         Element pause = nifty.getCurrentScreen().findElementById("pause");
-        pause.getRenderer(TextRenderer.class).setColor(new Color("#f000"));
+        pause.getRenderer(TextRenderer.class).setColor(TRANSPARENT_COLOR);
     }
 
     private void updateGeneration() {
