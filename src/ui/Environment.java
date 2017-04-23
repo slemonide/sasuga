@@ -126,7 +126,7 @@ class Environment {
     private void updateFloor() {
         float minimumY = 0; // should be at least at the sea level
 
-        for (Cell cell : World.getInstance().getCells()) {
+        for (Cell cell : World.getInstance().getOldCells()) {
             minimumY = Math.min(minimumY, cell.getPosition().getComponent(1) * SCALE);
         }
 
@@ -143,6 +143,5 @@ class Environment {
         getCellsNode().getChildren().clear();
         addCells();
         GeometryBatchFactory.optimize(getCellsNode());
-        World.getInstance().tick();
     }
 }

@@ -13,8 +13,9 @@ public abstract class ActiveCell extends Cell {
      *
      * @param position position of this node
      */
-    public ActiveCell(Position position) {
+    ActiveCell(Position position) {
         super(position);
+        setName("Active Cell");
     }
 
     /**

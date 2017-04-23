@@ -1,10 +1,9 @@
 package ui;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
-import jme3tools.optimize.GeometryBatchFactory;
-import model.Cell;
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.lessvoid.nifty.Nifty;
+import model.Player;
 import model.Position;
 import model.World;
 
@@ -24,6 +23,23 @@ public class VisualGUI extends SimpleApplication {
         eventHandlers.setCursorPosition(new Position());
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
+        initializeHUD();
+    }
+
+    private void initializeHUD() {
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+                assetManager, inputManager, audioRenderer, guiViewPort);
+        Nifty nifty = niftyDisplay.getNifty();
+
+        HUDController hudController = new HUDController(eventHandlers);
+
+        nifty.fromXml("assets/Interface/hud.xml", "hud", hudController);
+        guiViewPort.addProcessor(niftyDisplay);
+
+        // initialize observers
+        Player.getInstance().addObserver(hudController);
+        World.getInstance().addObserver(hudController);
+        eventHandlers.addObserver(hudController);
     }
 
     @Override

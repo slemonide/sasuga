@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.github.nifty-gui:nifty:1.4.2" type="repository">
+    <properties maven-id="com.github.nifty-gui:nifty:1.4.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/nifty-gui/nifty/1.4.2/nifty-1.4.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/2.0.2/jsr305-2.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

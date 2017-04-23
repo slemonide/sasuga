@@ -1,5 +1,7 @@
 package model;
 
+import ui.HUDController;
+
 import java.util.*;
 
 /**
@@ -10,21 +12,24 @@ import java.util.*;
  * Manages world
  */
 public class World extends Observable implements Runnable {
+    private static final double TICK_DELAY = 0.001; // in seconds
+    public static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
     private int generation;
     private Map<Position, Cell> cellsMap;
     private int population;
     private Thread worldThread;
     private static World instance;
+    private int growthRate;
 
     /**
      * Create a new empty world
      */
-    public World() {
+    private World() {
         tickTime = 0;
         generation = 0;
         population = 0;
-        cellsMap = new HashMap<>();
+        cellsMap = Collections.synchronizedMap(new HashMap<>());
         worldThread = new Thread(this);
     }
 
@@ -43,18 +48,21 @@ public class World extends Observable implements Runnable {
      * Start time by consequently running tick()'s on all the active cells
      */
     public void run() {
+        long lastTime = System.currentTimeMillis();
         while (!Thread.currentThread().isInterrupted()) {
-            tick();
-            generation++;
+            if ((System.currentTimeMillis() - lastTime) > TICK_DELAY * 1000) {
+                tick();
+                lastTime = System.currentTimeMillis();
+            }
         }
     }
 
     /**
      * Produce the time one tick takes
-     * @return time in nano seconds
+     * @return time in seconds
      */
-    public long getTickTime() {
-        return tickTime;
+    public double getTickTime() {
+        return (double) tickTime / 1000000000;
     }
 
     /**
@@ -86,6 +94,10 @@ public class World extends Observable implements Runnable {
      * @param cell cell to add
      */
     public void add(Cell cell) {
+        if (cellsMap.containsKey(cell.getPosition())) {
+            return; // can't replace what's placed
+        }
+
         cellsMap.put(cell.getPosition(), cell);
         population++;
         generation++;
@@ -138,6 +150,9 @@ public class World extends Observable implements Runnable {
         long endTime = System.nanoTime();
         tickTime = endTime - startTime;
 
+        // update growth rate
+        growthRate = cellsMap.size() - oldCells.size();
+
         setChanged();
         notifyObservers();
     }
@@ -148,9 +163,14 @@ public class World extends Observable implements Runnable {
      */
     public Set<Cell> getOldCells() {
         Set<Cell> oldCells = new HashSet<>();
-        oldCells.addAll(cellsMap.values());
 
-        return Collections.synchronizedSet(oldCells);
+        Set s = cellsMap.keySet();
+
+        synchronized (cellsMap) {
+            for (Object value : s) oldCells.add(cellsMap.get(value));
+        }
+
+        return oldCells;
     }
 
     /**
@@ -175,5 +195,9 @@ public class World extends Observable implements Runnable {
      */
     public void interrupt() {
         worldThread.interrupt();
+    }
+
+    public int getGrowthRate() {
+        return growthRate;
     }
 }

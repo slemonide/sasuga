@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="com.github.nifty-gui:nifty-style-black:1.4.2" type="repository">
+    <properties maven-id="com.github.nifty-gui:nifty-style-black:1.4.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/nifty-gui/nifty-style-black/1.4.2/nifty-style-black-1.4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
