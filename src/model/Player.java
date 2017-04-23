@@ -9,28 +9,52 @@ package model;
  * A player is a cell with health, strength, agility, hunger (in percents)
  * and a 10-item inventory of cells (or nulls)
  */
-public class Player extends Cell {
+public class Player extends ActiveCell {
+    private static final int MIN_HUNGER_DELAY = 1; // in ticks
+    private static Player instance;
     private int health;
     private int strength;
     private int agility;
     private int hunger;
     private Cell[] inventory;
+    private int hungerDelay;
 
     /**
      * Create a cell at the given position
      *
      * @param position position of this cell
      */
-    public Player(Position position) {
+    private Player(Position position) {
         super(position);
 
-        health = 100;
-        strength = 100;
-        agility = 100;
-        hunger = 100;
+        health = 10;
+        strength = 20;
+        agility = 30;
+        hunger = 40;
 
         inventory = new Cell[10];
     }
+
+    @Override
+    public void tick() {
+        if (hungerDelay > MIN_HUNGER_DELAY) {
+            setHunger(getHunger() - 1);
+            hungerDelay = 0;
+        }
+        hungerDelay++;
+    }
+
+    /**
+     * Singleton pattern
+     * @return the player
+     */
+    public static Player getInstance() {
+        if (instance == null){
+            instance = new Player(new Position());
+        }
+        return instance;
+    }
+
 
     public int getHealth() {
         return health;
@@ -88,5 +112,8 @@ public class Player extends Cell {
         if (index < inventory.length) {
             inventory[index] = value;
         }
+
+        setChanged();
+        notifyObservers();
     }
 }

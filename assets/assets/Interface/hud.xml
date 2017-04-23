@@ -15,24 +15,28 @@
                        backgroundColor="#00f8">
                     <panel id="health_panel" width="100%" height="25%" childLayout="horizontal">
                         <text text="Health: 100%"
+                              id="health"
                               font="assets/Interface/Fonts/Arial.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="strength_panel" width="100%" height="25%" childLayout="horizontal">
                         <text text="Strength: 100%"
+                              id="strength"
                               font="assets/Interface/Fonts/Arial.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="agility_panel" width="100%" height="25%" childLayout="horizontal">
                         <text text="Agility: 100%"
+                              id="agility"
                               font="assets/Interface/Fonts/Arial.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
                     </panel>
                     <panel id="hunger_panel" width="100%" height="25%" childLayout="horizontal">
                         <text text="Hunger: 100%"
+                              id="hunger"
                               font="assets/Interface/Fonts/Arial.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
