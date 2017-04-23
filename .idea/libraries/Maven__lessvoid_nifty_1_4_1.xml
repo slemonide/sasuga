@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Maven: lessvoid:nifty:1.4.1">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/lessvoid/nifty/1.4.1/nifty-1.4.1.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/lessvoid/nifty/1.4.1/nifty-1.4.1-javadoc.jar!/" />
     </JAVADOC>
