@@ -108,6 +108,15 @@ public class World extends Observable implements Runnable {
         notifyObservers();
     }
 
+    public void remove(Position currentSelection) {
+        cellsMap.remove(currentSelection);
+        population--;
+        generation++;
+
+        setChanged();
+        notifyObservers();
+    }
+
     /**
      * Update all active cells, update the tick time and notify the observers about the change
      */
