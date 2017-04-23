@@ -7,7 +7,9 @@ import model.Position;
 import model.RandomWalkCell;
 import model.World;
 
-public class EventHandlers {
+import java.util.Observable;
+
+public class EventHandlers extends Observable {
     private final VisualGUI visualGUI;
     private boolean isPaused = false;
 

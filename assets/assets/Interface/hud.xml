@@ -27,6 +27,13 @@
                               width="100%" height="100%"/>
                     </panel>
 
+                    <panel id="growth_rate_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Growth rate: 1 cells/tick"
+                              id="growth_rate"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
 
                     <panel id="tick_time_panel" width="100%" height="25%" childLayout="horizontal">
                         <text text="Tick time: 0.0213123 s"
@@ -137,7 +144,15 @@
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
-                <panel id="empty_panel" width="100%" height="65%" valign="center"/>
+                <panel id="empty_panel" width="100%" height="63%" valign="center"/>
+                <panel id="pause_panel" width="100%" height="2%" childLayout="center"
+                       backgroundColor="#0fff">
+                    <text text="PAUSED"
+                          id="pause"
+                          font="assets/Interface/Fonts/Arial.fnt"
+                          color="#f00f"
+                          width="100%" height="100%"/>
+                </panel>
             </panel>
         </layer>
     </screen>

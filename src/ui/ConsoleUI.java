@@ -33,7 +33,7 @@ public class ConsoleUI implements Observer {
         System.out.print("    ");
         System.out.print("Number of cells: " + World.getInstance().getPopulationSize());
         System.out.print("    ");
-        System.out.print("Tick time: " + (double) World.getInstance().getTickTime() / 1000000000 + " s");
+        System.out.print("Tick time: " + World.getInstance().getTickTime() + " s");
         System.out.print("\n");
     }
 }

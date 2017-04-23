@@ -30,9 +30,6 @@ public class HUDController implements ScreenController, Observer {
         this.nifty = nifty;
         this.player = Player.getInstance();
 
-        player.addObserver(this); // notice me, senpy
-        World.getInstance().addObserver(this);
-
         update(null, null);
     }
 
@@ -53,6 +50,14 @@ public class HUDController implements ScreenController, Observer {
         updateAgility();
         updateHunger();
         updateCells();
+
+        updatePause();
+    }
+
+    private void updatePause() {
+        Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
+        pausePanel.getRenderer(TextRenderer.class)
+                .setText(getLabel("Generation", World.getInstance().getGeneration()));
     }
 
     private void updateGeneration() {
@@ -98,13 +103,13 @@ public class HUDController implements ScreenController, Observer {
     }
 
     private String getLabel(String property, int value) {
-        return property + " " + value;
+        return property + ": " + value;
     }
     private String getPercentageLabel(String property, int value) {
-        return property + " " + value + "%";
+        return property + ": " + value + "%";
     }
-    private String getSecondsLabel(String property, long value) {
-        return property + " " + value + " s";
+    private String getSecondsLabel(String property, double value) {
+        return property + ": " + value + " s";
     }
 
     private void updateCells() {

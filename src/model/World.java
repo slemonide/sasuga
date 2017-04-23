@@ -58,10 +58,10 @@ public class World extends Observable implements Runnable {
 
     /**
      * Produce the time one tick takes
-     * @return time in nano seconds
+     * @return time in seconds
      */
-    public long getTickTime() {
-        return tickTime;
+    public double getTickTime() {
+        return (double) tickTime / 1000000000;
     }
 
     /**

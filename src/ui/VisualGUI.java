@@ -3,6 +3,7 @@ package ui;
 import com.jme3.app.SimpleApplication;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
+import model.Player;
 import model.Position;
 import model.World;
 
@@ -29,10 +30,16 @@ public class VisualGUI extends SimpleApplication {
         NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
                 assetManager, inputManager, audioRenderer, guiViewPort);
         Nifty nifty = niftyDisplay.getNifty();
-        nifty.fromXml("assets/Interface/hud.xml", "hud", new HUDController());
-        // nifty.fromXml("Interface/helloworld.xml", "start", new MySettingsScreen(data));
-        // attach the Nifty display to the gui view port as a processor
+
+        HUDController hudController = new HUDController();
+
+        nifty.fromXml("assets/Interface/hud.xml", "hud", hudController);
         guiViewPort.addProcessor(niftyDisplay);
+
+        // initialize observers
+        Player.getInstance().addObserver(hudController);
+        World.getInstance().addObserver(hudController);
+        eventHandlers.addObserver(hudController);
     }
 
     @Override
