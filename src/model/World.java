@@ -20,7 +20,7 @@ public class World extends Observable implements Runnable {
     /**
      * Create a new empty world
      */
-    public World() {
+    private World() {
         tickTime = 0;
         generation = 0;
         population = 0;

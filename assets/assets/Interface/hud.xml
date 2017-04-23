@@ -40,8 +40,9 @@
                 </panel>
                 <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
                        backgroundColor="#44f8">
-                    <panel id="cell_1" width="100%" height="10%" childLayout="horizontal">
+                    <panel width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_1"
+                              id="cell_1"
                               font="assets/Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
