@@ -68,6 +68,7 @@ public class HUDController implements ScreenController, Observer {
         updateGeneration();
         updatePopulation();
         updateTickTime();
+        updateGrowthRate();
 
         updateHealth();
         updateStrength();
@@ -121,6 +122,13 @@ public class HUDController implements ScreenController, Observer {
                 .setText(getSecondsLabel("Tick time", World.getInstance().getTickTime()));
     }
 
+    private void updateGrowthRate() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("growth_rate");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getGrowthRateLabel("Growth rate", World.getInstance().getGrowthRate()));
+    }
+
+
     private void updateHealth() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("health");
         niftyElement.getRenderer(TextRenderer.class)
@@ -153,6 +161,9 @@ public class HUDController implements ScreenController, Observer {
     }
     private String getSecondsLabel(String property, double value) {
         return property + ": " + value + " s";
+    }
+    private String getGrowthRateLabel(String property, int value) {
+        return property + ": " + value + " cells/sec";
     }
 
     private void updateCells() {

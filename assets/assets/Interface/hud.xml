@@ -80,6 +80,9 @@
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
+
+                <panel width="100%" height="1%" backgroundColor="#228b"/>
+
                 <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
                        backgroundColor="#44f8">
                     <panel width="100%" height="10%" childLayout="horizontal">
@@ -153,7 +156,7 @@
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
-                <panel id="empty_panel" width="100%" height="63%" valign="center"/>
+                <panel id="empty_panel" width="100%" height="62%" valign="center"/>
                 <panel id="pause_panel" width="100%" height="2%" childLayout="center"
                        backgroundColor="#0fff">
                     <text text="PAUSED"

@@ -20,6 +20,7 @@ public class World extends Observable implements Runnable {
     private int population;
     private Thread worldThread;
     private static World instance;
+    private int growthRate;
 
     /**
      * Create a new empty world
@@ -149,6 +150,9 @@ public class World extends Observable implements Runnable {
         long endTime = System.nanoTime();
         tickTime = endTime - startTime;
 
+        // update growth rate
+        growthRate = cellsMap.size() - oldCells.size();
+
         setChanged();
         notifyObservers();
     }
@@ -191,5 +195,9 @@ public class World extends Observable implements Runnable {
      */
     public void interrupt() {
         worldThread.interrupt();
+    }
+
+    public int getGrowthRate() {
+        return growthRate;
     }
 }
