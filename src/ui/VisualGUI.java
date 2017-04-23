@@ -1,10 +1,6 @@
 package ui;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.input.KeyInput;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.InputListener;
-import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -31,12 +27,11 @@ import java.util.Collection;
 public class VisualGUI extends SimpleApplication {
     private static final float SCALE = 0.2f;
     private static final double MIN_DELAY = 0.01;
+    private final EventHandlers eventHandlers = new EventHandlers(this);
     private Node cellsNode;
     private double delay;
 
-    private boolean isPaused = false;
     private Geometry floor;
-    private Position cursorPosition;
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
@@ -48,9 +43,9 @@ public class VisualGUI extends SimpleApplication {
         delay = 0;
         flyCam.setMoveSpeed(10);
 
-        cursorPosition = new Position();
+        eventHandlers.setCursorPosition(new Position());
         initializeEnvironment();
-        initializeEventHandlers();
+        eventHandlers.initializeEventHandlers();
     }
 
     private void initializeEnvironment() {
@@ -64,91 +59,6 @@ public class VisualGUI extends SimpleApplication {
         getRootNode().attachChild(SkyFactory.createSky(getAssetManager(),
                 "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
     }
-
-    private void initializeEventHandlers() {
-        inputManager.addMapping("PAUSE", new KeyTrigger(KeyInput.KEY_SPACE));
-        inputManager.addListener(pauseActionListener, "PAUSE");
-
-        inputManager.addMapping("ADD_CELL", new KeyTrigger(KeyInput.KEY_RETURN));
-        inputManager.addListener(addCellActionListener, "ADD_CELL");
-
-        inputManager.addMapping("REMOVE_CELL", new KeyTrigger(KeyInput.KEY_L));
-        inputManager.addListener(removeCellActionListener, "REMOVE_CELL");
-
-        inputManager.addMapping("UP", new KeyTrigger(KeyInput.KEY_Y));
-        inputManager.addListener(moveCursorUPActionListener, "UP");
-
-        inputManager.addMapping("DOWN", new KeyTrigger(KeyInput.KEY_G));
-        inputManager.addListener(moveCursorDOWNActionListener, "DOWN");
-
-        inputManager.addMapping("PX", new KeyTrigger(KeyInput.KEY_T));
-        inputManager.addListener(moveCursorPXActionListener, "PX");
-
-        inputManager.addMapping("NX", new KeyTrigger(KeyInput.KEY_F));
-        inputManager.addListener(moveCursorNXActionListener, "NX");
-
-        inputManager.addMapping("PZ", new KeyTrigger(KeyInput.KEY_U));
-        inputManager.addListener(moveCursorPZActionListener, "PZ");
-
-        inputManager.addMapping("NZ", new KeyTrigger(KeyInput.KEY_H));
-        inputManager.addListener(moveCursorNZActionListener, "NZ");
-    }
-
-    private ActionListener pauseActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            isPaused = !isPaused;
-        }
-    };
-
-    private ActionListener addCellActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Position currentSelection = getCurrentSelection();
-            World.getInstance().add(new Cell(currentSelection));
-        }
-    };
-
-    private ActionListener removeCellActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Position currentSelection = getCurrentSelection();
-            World.getInstance().remove(currentSelection);
-        }
-    };
-
-    private ActionListener moveCursorUPActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, 1, 0);
-        }
-    };
-
-    private ActionListener moveCursorDOWNActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, -1, 0);
-        }
-    };
-
-    private ActionListener moveCursorPXActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            cursorPosition = getCurrentSelection().add(1, 0, 0);
-        }
-    };
-
-    private ActionListener moveCursorNXActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            cursorPosition = getCurrentSelection().add(-1, 0, 0);
-        }
-    };
-
-    private ActionListener moveCursorPZActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, 0, 1);
-        }
-    };
-
-    private ActionListener moveCursorNZActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, 0, -1);
-        }
-    };
 
     private void addCells() {
         cellsNode = new Node();
@@ -213,7 +123,7 @@ public class VisualGUI extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        if (!isPaused) {
+        if (!eventHandlers.isPaused()) {
             updateDelay(tpf);
             updateCells();
             updateFloor();
@@ -249,14 +159,6 @@ public class VisualGUI extends SimpleApplication {
     @Override
     public void destroy() {
         World.getInstance().interrupt();
-    }
-
-    /**
-     * Produces currently selected cell position
-     * @return position
-     */
-    private Position getCurrentSelection() {
-        return cursorPosition;
     }
 }
 
