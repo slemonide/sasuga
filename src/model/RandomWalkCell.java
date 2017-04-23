@@ -20,6 +20,8 @@ public class RandomWalkCell extends ActiveCell {
      */
     public RandomWalkCell(Position position) {
         super(position);
+        setName("Random Walk Cell");
+
         currentEndPosition = position;
     }
 

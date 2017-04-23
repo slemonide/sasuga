@@ -20,6 +20,7 @@ public class Player extends ActiveCell {
     private int hunger;
     private Cell[] inventory;
     private int hungerDelay;
+    private int selectedInventorySlot;
 
     /**
      * Create a cell at the given position
@@ -28,6 +29,7 @@ public class Player extends ActiveCell {
      */
     private Player(Position position) {
         super(position);
+        setName("Player");
 
         Random random = new Random();
 
@@ -36,7 +38,10 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
+        selectedInventorySlot = random.nextInt(10) + 1;
         inventory = new Cell[10];
+        inventory[0] = new Cell(new Position());
+        inventory[1] = new RandomWalkCell(new Position());
     }
 
     @Override
@@ -125,6 +130,17 @@ public class Player extends ActiveCell {
         if (index < inventory.length) {
             inventory[index] = value;
         }
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public int getSelectedInventorySlot() {
+        return selectedInventorySlot;
+    }
+
+    public void setSelectedInventorySlot(Integer selectedInventorySlot) {
+        this.selectedInventorySlot = selectedInventorySlot;
 
         setChanged();
         notifyObservers();

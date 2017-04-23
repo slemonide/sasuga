@@ -29,6 +29,10 @@ public class HUDController implements ScreenController, Observer {
 
     private Color pausePanelColor;
     private Color pauseTextColor;
+    private Color selectedInventorySlotColor = new Color("#00f8");
+    private Color unselectedInventorySlotColor = TRANSPARENT_COLOR;
+
+    private int currentlySelectedInventorySlot;
 
     HUDController(EventHandlers eventHandlers) {
         this.eventHandlers = eventHandlers;
@@ -40,6 +44,7 @@ public class HUDController implements ScreenController, Observer {
         this.player = Player.getInstance();
 
         readColorsFromTheNifty();
+        currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
 
         update(null, null);
     }
@@ -69,6 +74,7 @@ public class HUDController implements ScreenController, Observer {
         updateAgility();
         updateHunger();
         updateCells();
+        updateSelectedInventorySlot();
 
         updatePause();
     }
@@ -150,6 +156,28 @@ public class HUDController implements ScreenController, Observer {
     }
 
     private void updateCells() {
+        Element niftyElement;
 
+        for (int i = 1; i < 11; i++) {
+            niftyElement = nifty.getCurrentScreen().findElementById("cell_" + i);
+
+            if (Player.getInstance().getInventoryItem(i - 1) != null) {
+                niftyElement.getRenderer(TextRenderer.class)
+                        .setText(Player.getInstance().getInventoryItem(i - 1).getName());
+            } else {
+                niftyElement.getRenderer(TextRenderer.class)
+                        .setText("...");
+            }
+        }
+    }
+
+    private void updateSelectedInventorySlot() {
+        Element unselectedSlot = nifty.getCurrentScreen().findElementById("cell_" + currentlySelectedInventorySlot);
+        unselectedSlot.getRenderer(PanelRenderer.class).setBackgroundColor(unselectedInventorySlotColor);
+
+        currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
+
+        Element selectedSlot = nifty.getCurrentScreen().findElementById("cell_" + currentlySelectedInventorySlot);
+        selectedSlot.getRenderer(PanelRenderer.class).setBackgroundColor(selectedInventorySlotColor);
     }
 }

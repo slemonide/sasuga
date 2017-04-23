@@ -3,6 +3,7 @@ package ui;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import model.Player;
 import model.Position;
 import model.RandomWalkCell;
 import model.World;
@@ -101,6 +102,11 @@ public class EventHandlers extends Observable {
             notifyObservers();
         }
     };
+    private ActionListener inventorySelectionListener = (name, pressed, tpf) -> {
+        if (pressed) {
+            Player.getInstance().setSelectedInventorySlot(Integer.valueOf(name));
+        }
+    };
 
     EventHandlers(VisualGUI visualGUI) {
         this.visualGUI = visualGUI;
@@ -133,6 +139,20 @@ public class EventHandlers extends Observable {
 
         visualGUI.getInputManager().addMapping("NZ", new KeyTrigger(KeyInput.KEY_H));
         visualGUI.getInputManager().addListener(moveCursorNZActionListener, "NZ");
+
+        // Inventory selection
+        visualGUI.getInputManager().addMapping("1", new KeyTrigger(KeyInput.KEY_1));
+        visualGUI.getInputManager().addMapping("2", new KeyTrigger(KeyInput.KEY_2));
+        visualGUI.getInputManager().addMapping("3", new KeyTrigger(KeyInput.KEY_3));
+        visualGUI.getInputManager().addMapping("4", new KeyTrigger(KeyInput.KEY_4));
+        visualGUI.getInputManager().addMapping("5", new KeyTrigger(KeyInput.KEY_5));
+        visualGUI.getInputManager().addMapping("6", new KeyTrigger(KeyInput.KEY_6));
+        visualGUI.getInputManager().addMapping("7", new KeyTrigger(KeyInput.KEY_7));
+        visualGUI.getInputManager().addMapping("8", new KeyTrigger(KeyInput.KEY_8));
+        visualGUI.getInputManager().addMapping("9", new KeyTrigger(KeyInput.KEY_9));
+        visualGUI.getInputManager().addMapping("10", new KeyTrigger(KeyInput.KEY_0));
+        visualGUI.getInputManager().addListener(inventorySelectionListener,
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
     }
 
     /**

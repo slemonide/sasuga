@@ -1,5 +1,6 @@
 package model;
 
+import javax.naming.Name;
 import java.util.Observable;
 
 /**
@@ -10,6 +11,7 @@ import java.util.Observable;
  * Represents a static cell that never changes on its own.
  */
 public class Cell extends Observable {
+    private String name = "Static Cell";
     protected Position position;
 
     /**
@@ -26,5 +28,13 @@ public class Cell extends Observable {
      */
     public Position getPosition() {
         return position;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    void setName(String name) {
+        this.name = name;
     }
 }

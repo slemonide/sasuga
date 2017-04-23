@@ -9,7 +9,7 @@ import ui.VisualGUI;
  */
 public class Main {
     public static void main(String[] args) {
-        World.getInstance().addObserver(ConsoleUI.getInstance());
+        //World.getInstance().addObserver(ConsoleUI.getInstance());
         World.getInstance().add(Player.getInstance());
         World.getInstance().start();
         VisualGUI.main(args);
