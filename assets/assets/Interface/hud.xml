@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd
+       http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+
+    <useStyles filename="nifty-default-styles.xml" />
+    <useControls filename="nifty-default-controls.xml" />
+    <screen id="hud" controller="ui.HUDController">
+        <layer id="foreground" backgroundColor="#0000" childLayout="horizontal">
+            <panel width="15%" height="100%" childLayout="vertical">
+                <panel id="game_statistics_panel" width="100%" height="7%" childLayout="vertical"
+                       backgroundColor="#66f8">
+                    <panel id="generation_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Generation: 0"
+                              id="generation"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+
+                    <panel id="population_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Population: 0"
+                              id="population"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+
+                    <panel id="growth_rate_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Growth rate: 1 cells/tick"
+                              id="growth_rate"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+
+                    <panel id="tick_time_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Tick time: 0.0213123 s"
+                              id="tick_time"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+                <panel width="100%" height="93%" childLayout="vertical"/>
+            </panel>
+
+            <panel id="game_window_panel" width="75%" height="100%" childLayout="vertical"/>
+
+            <panel id="player_controls_panel" width="10%" height="100%" childLayout="vertical">
+                <panel id="player_stats_panel" width="100%" height="10%" childLayout="vertical"
+                       backgroundColor="#00f8">
+                    <panel id="health_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Health: 100%"
+                              id="health"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="strength_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Strength: 100%"
+                              id="strength"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="agility_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Agility: 100%"
+                              id="agility"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="hunger_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Hunger: 100%"
+                              id="hunger"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+
+                <panel width="100%" height="1%" backgroundColor="#228b"/>
+
+                <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
+                       backgroundColor="#44f8">
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_1_panel"
+                              id="cell_1"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_2_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_2"
+                              id="cell_2"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_3_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_3"
+                              id="cell_3"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_4_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_4"
+                              id="cell_4"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_5_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_5"
+                              id="cell_5"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_6_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_6"
+                              id="cell_6"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_7_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_7"
+                              id="cell_7"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_8_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_8"
+                              id="cell_8"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_9_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_9"
+                              id="cell_9"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_10_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_10"
+                              id="cell_10"
+                              font="assets/Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+                <panel id="empty_panel" width="100%" height="62%" valign="center"/>
+                <panel id="pause_panel" width="100%" height="2%" childLayout="center"
+                       backgroundColor="#0fff">
+                    <text text="PAUSED"
+                          id="pause"
+                          font="assets/Interface/Fonts/Arial.fnt"
+                          color="#f00f"
+                          width="100%" height="100%"/>
+                </panel>
+            </panel>
+        </layer>
+    </screen>
+
+</nifty>
