@@ -111,7 +111,7 @@ public class EventHandlers {
      *
      * @return position
      */
-    Position getCurrentSelection() {
+    private Position getCurrentSelection() {
         return cursorPosition;
     }
 }

@@ -124,7 +124,7 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
-        Set<Cell> oldCells = getOldCells(cellsMap.values());
+        Set<Cell> oldCells = getOldCells();
 
         for (Cell cell : oldCells) {
             if (cell instanceof ActiveCell) {
@@ -144,14 +144,13 @@ public class World extends Observable implements Runnable {
 
     /**
      * Freezes old version of the world
-     * @param cells latest world
      * @return frozen old version of the world
      */
-    private Set<Cell> getOldCells(Collection<Cell> cells) {
+    public Set<Cell> getOldCells() {
         Set<Cell> oldCells = new HashSet<>();
-        oldCells.addAll(cells);
+        oldCells.addAll(cellsMap.values());
 
-        return oldCells;
+        return Collections.synchronizedSet(oldCells);
     }
 
     /**
