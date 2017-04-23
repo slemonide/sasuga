@@ -11,8 +11,8 @@ import java.util.Random;
  * Represents a random walk cell.
  */
 public class RandomWalkCell extends ActiveCell {
-    Position currentEndPosition;
-    Random random = new Random();
+    private Position currentEndPosition;
+    private Random random = new Random();
 
     /**
      * Create a cell at the given position
