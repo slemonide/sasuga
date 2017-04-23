@@ -124,7 +124,9 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
-        for (Cell cell : cellsMap.values()) {
+        Set<Cell> oldCells = getOldCells(cellsMap.values());
+
+        for (Cell cell : oldCells) {
             if (cell instanceof ActiveCell) {
                 ActiveCell currentCell = (ActiveCell) cell;
                 currentCell.tick();
@@ -138,6 +140,18 @@ public class World extends Observable implements Runnable {
 
         setChanged();
         notifyObservers();
+    }
+
+    /**
+     * Freezes old version of the world
+     * @param cells latest world
+     * @return frozen old version of the world
+     */
+    private Set<Cell> getOldCells(Collection<Cell> cells) {
+        Set<Cell> oldCells = new HashSet<>();
+        oldCells.addAll(cells);
+
+        return oldCells;
     }
 
     /**

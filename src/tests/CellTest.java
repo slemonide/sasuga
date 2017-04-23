@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Unit test for the Cell class
  */
-public class TestCell {
+public class CellTest {
     Cell testCell;
 
     @Before

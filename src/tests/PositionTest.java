@@ -22,7 +22,7 @@ public class PositionTest {
         assertEquals(12, position.getComponent(0));
         assertEquals(3, position.getComponent(1));
         assertEquals(2, position.getComponent(2));
-        assertEquals(3, position.getNonZeroComponents().size());
+        assertEquals(3, position.getActiveComponents().size());
         assertEquals(0, position.getComponent(100));
         assertEquals(0, position.getComponent(-200));
     }

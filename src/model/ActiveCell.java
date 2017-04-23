@@ -5,7 +5,7 @@ package model;
  * @version     0.1
  * @since       0.1
  *
- * Represents an active cell that can and does change on its own.
+ * Represents a cell that modify world.
  */
 public abstract class ActiveCell extends Cell {
     /**

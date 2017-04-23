@@ -47,7 +47,7 @@ public class Position {
     public Position add(Position anotherPosition) {
         Map<Integer, Integer> newCoordinates = components.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        for (Map.Entry<Integer, Integer> entry : anotherPosition.getNonZeroComponents().entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : anotherPosition.getActiveComponents().entrySet()) {
             Integer key = entry.getKey();
             Integer value = entry.getValue();
 
@@ -67,7 +67,11 @@ public class Position {
         return components.getOrDefault(index, 0);
     }
 
-    public Map<Integer, Integer> getNonZeroComponents() {
+    /**
+     * Gives components that are currently active
+     * @return active components
+     */
+    public Map<Integer, Integer> getActiveComponents() {
         return Collections.unmodifiableMap(components);
     }
 
