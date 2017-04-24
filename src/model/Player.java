@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class Player extends ActiveCell {
     private static final int MIN_HUNGER_DELAY = 100 * World.TICKS_PER_SECOND; // in ticks
+    private static final float ROTATION_SPEED = 0.0001f;
     private static Player instance;
     private int health;
     private int strength;
@@ -21,6 +22,7 @@ public class Player extends ActiveCell {
     private Cell[] inventory;
     private int hungerDelay;
     private int selectedInventorySlot;
+    private float rotation;
 
     /**
      * Create a cell at the given position
@@ -32,6 +34,8 @@ public class Player extends ActiveCell {
         setName("Player");
 
         Random random = new Random();
+
+        rotation = 0;
 
         health = 10 + random.nextInt(91);
         strength = 20 + random.nextInt(81);
@@ -144,5 +148,25 @@ public class Player extends ActiveCell {
 
         setChanged();
         notifyObservers();
+    }
+
+    public void rotateCounterClockWise() {
+        rotation += ROTATION_SPEED;
+        rotation = (float) (rotation % (Math.PI * 2));
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public void rotateClockWise() {
+        rotation -= ROTATION_SPEED;
+        rotation = (float) (rotation % (Math.PI * 2));
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public float getRotation() {
+        return rotation;
     }
 }

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: lessvoid:nifty-default-controls:1.4.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/lessvoid/nifty-default-controls/1.4.1/nifty-default-controls-1.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/lessvoid/nifty-default-controls/1.4.1/nifty-default-controls-1.4.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/lessvoid/nifty-default-controls/1.4.1/nifty-default-controls-1.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
