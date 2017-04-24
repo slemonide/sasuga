@@ -8,7 +8,7 @@
     <useControls filename="nifty-default-controls.xml" />
     <screen id="hud" controller="ui.HUDController">
         <layer id="foreground" backgroundColor="#0000" childLayout="horizontal">
-            <panel width="15%" height="100%" childLayout="vertical">
+            <panel width="30%" height="100%" childLayout="vertical">
                 <panel id="game_statistics_panel" width="100%" height="7%" childLayout="vertical"
                        backgroundColor="#66f8">
                     <panel id="generation_panel" width="100%" height="25%" childLayout="horizontal">
@@ -43,10 +43,47 @@
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
-                <panel width="100%" height="93%" childLayout="vertical"/>
+                <panel width="100%" height="10%" childLayout="vertical" backgroundColor="#f668">
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Left: (1, 2, 3)"
+                              id="left_direction"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Up: (-1, 2, 3)"
+                              id="up_direction"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Gaze: (1, 2, 3)"
+                              id="gaze_direction"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Rotation: 123"
+                              id="rotation"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Position: (1, 5, 21)"
+                              id="position"
+                              font="assets/Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+                <panel width="100%" height="83%" childLayout="vertical"/>
             </panel>
 
-            <panel id="game_window_panel" width="75%" height="100%" childLayout="vertical"/>
+            <panel id="game_window_panel" width="60%" height="100%" childLayout="vertical"/>
 
             <panel id="player_controls_panel" width="10%" height="100%" childLayout="vertical">
                 <panel id="player_stats_panel" width="100%" height="10%" childLayout="vertical"
@@ -84,7 +121,7 @@
                 <panel width="100%" height="1%" backgroundColor="#228b"/>
 
                 <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
-                       backgroundColor="#44f8">
+                       backgroundColor="#4b58">
                     <panel width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_1_panel"
                               id="cell_1"

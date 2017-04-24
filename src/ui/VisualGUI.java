@@ -14,8 +14,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class VisualGUI extends SimpleApplication implements Observer {
+    private static final float GAZE_CHANGE_DISTANCE = 0.1f;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
+    private Vector3f lastGaze;
+    private Vector3f up;
+    private Vector3f left;
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
@@ -39,7 +43,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
                 assetManager, inputManager, audioRenderer, guiViewPort);
         Nifty nifty = niftyDisplay.getNifty();
 
-        HUDController hudController = new HUDController(eventHandlers);
+        HUDController hudController = new HUDController(eventHandlers, cam);
 
         nifty.fromXml("assets/Interface/hud.xml", "hud", hudController);
         guiViewPort.addProcessor(niftyDisplay);
@@ -67,19 +71,24 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Vector3f direction = cam.getDirection();
-        Vector3f left = cam.getLeft();
+        rotateCamera();
+        rotateFloor();
+    }
 
-        Vector3f planeVectorX = left.normalize();
-        Vector3f planeVectorY = direction.cross(left).normalize();
+    private void rotateFloor() {
+        // stub
+    }
 
-        Vector3f spaceVector =
-                planeVectorX.mult((float) Math.sin(Player.getInstance().getRotation()))
-                .add(planeVectorY.mult((float) Math.cos(Player.getInstance().getRotation())));
+    private void rotateCamera() {
+        if (lastGaze == null || lastGaze.distance(cam.getDirection()) >= 0.01f) {
+            lastGaze = cam.getDirection();
+            up = cam.getUp();
+            left = cam.getLeft();
+        }
 
-        Quaternion rotation = new Quaternion();
-        rotation.lookAt(cam.getDirection(), spaceVector);
-        cam.setRotation(rotation);
+        cam.lookAtDirection(cam.getDirection(),
+                up.mult((float) Math.cos(Player.getInstance().getRotation()))
+                        .add(left.mult((float) Math.sin(Player.getInstance().getRotation()))));
     }
 }
 

@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Player extends ActiveCell {
     private static final int MIN_HUNGER_DELAY = 100 * World.TICKS_PER_SECOND; // in ticks
-    private static final float ROTATION_SPEED = 0.0001f;
+    private static final float ROTATION_SPEED = 0.01f;
     private static Player instance;
     private int health;
     private int strength;
