@@ -1,13 +1,19 @@
 package ui;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.math.Matrix3f;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
 import model.Position;
 import model.World;
 
-public class VisualGUI extends SimpleApplication {
+import java.util.Observable;
+import java.util.Observer;
+
+public class VisualGUI extends SimpleApplication implements Observer {
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
 
@@ -24,6 +30,8 @@ public class VisualGUI extends SimpleApplication {
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
         initializeHUD();
+
+        Player.getInstance().addObserver(this);
     }
 
     private void initializeHUD() {
@@ -55,6 +63,23 @@ public class VisualGUI extends SimpleApplication {
     @Override
     public void destroy() {
         World.getInstance().interrupt();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Vector3f direction = cam.getDirection();
+        Vector3f left = cam.getLeft();
+
+        Vector3f planeVectorX = left.normalize();
+        Vector3f planeVectorY = direction.cross(left).normalize();
+
+        Vector3f spaceVector =
+                planeVectorX.mult((float) Math.sin(Player.getInstance().getRotation()))
+                .add(planeVectorY.mult((float) Math.cos(Player.getInstance().getRotation())));
+
+        Quaternion rotation = new Quaternion();
+        rotation.lookAt(cam.getDirection(), spaceVector);
+        cam.setRotation(rotation);
     }
 }
 
