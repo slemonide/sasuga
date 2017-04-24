@@ -12,7 +12,7 @@ import model.World;
 import java.util.Observable;
 
 public class EventHandlers extends Observable {
-    private static final long ROTATION_DELAY = 40; // in ms
+    private static final long ROTATION_DELAY = 20; // in ms
     private final VisualGUI visualGUI;
     private boolean isPaused = false;
 

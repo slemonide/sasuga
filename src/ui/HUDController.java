@@ -1,5 +1,6 @@
 package ui;
 
+import com.jme3.renderer.Camera;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
@@ -33,9 +34,11 @@ public class HUDController implements ScreenController, Observer {
     private Color unselectedInventorySlotColor = TRANSPARENT_COLOR;
 
     private int currentlySelectedInventorySlot;
+    private Camera cam;
 
-    HUDController(EventHandlers eventHandlers) {
+    HUDController(EventHandlers eventHandlers, Camera cam) {
         this.eventHandlers = eventHandlers;
+        this.cam = cam;
     }
 
     @Override
@@ -69,6 +72,12 @@ public class HUDController implements ScreenController, Observer {
         updatePopulation();
         updateTickTime();
         updateGrowthRate();
+
+        updateLeft();
+        updateUp();
+        updateGaze();
+        updateRotation();
+        updatePosition();
 
         updateHealth();
         updateStrength();
@@ -128,6 +137,37 @@ public class HUDController implements ScreenController, Observer {
                 .setText(getGrowthRateLabel("Growth rate", World.getInstance().getGrowthRate()));
     }
 
+    private void updateLeft() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("left_direction");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Left", cam.getLeft()));
+    }
+
+    private void updateUp() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("up_direction");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Up", cam.getUp()));
+    }
+
+    private void updateGaze() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("gaze_direction");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Gaze", cam.getDirection()));
+    }
+
+    private void updateRotation() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("rotation");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Rotation", Player.getInstance().getRotation()));
+    }
+
+    private void updatePosition() {
+        Element niftyElement = nifty.getCurrentScreen().findElementById("position");
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(getLabel("Position", cam.getLocation()));
+    }
+
+
 
     private void updateHealth() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("health");
@@ -153,7 +193,7 @@ public class HUDController implements ScreenController, Observer {
                 .setText(getPercentageLabel("Hunger", player.getHunger()));
     }
 
-    private String getLabel(String property, int value) {
+    private String getLabel(String property, Object value) {
         return property + ": " + value;
     }
     private String getPercentageLabel(String property, int value) {
