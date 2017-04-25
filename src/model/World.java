@@ -200,4 +200,8 @@ public class World extends Observable implements Runnable {
     public int getGrowthRate() {
         return growthRate;
     }
+
+    public CellsMap getCellsMap() {
+        return cellsMap; // TODO: make unmodifiable
+    }
 }

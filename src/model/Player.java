@@ -59,7 +59,8 @@ public class Player extends ActiveCell {
         cursor = new Position();
 
         inventory = new Inventory(INVENTORY_SIZE);
-        inventory.setInventoryItem(1, new InventoryItem("Say Hi", () -> System.out.println("Hi")));
+        inventory.setInventoryItem(1, new InventoryItem("Say Hi",
+                () -> System.out.println("Hi")));
         inventory.setInventoryItem(2, new InventoryItem("Cell",
                 () ->  World.getInstance().add(new Cell(getCursor()))));
         inventory.setInventoryItem(3, new InventoryItem("Random Walk",

@@ -67,21 +67,21 @@ public class HUDController implements ScreenController, Observer {
     @Override
     public void update(Observable o, Object arg) {
         // I kept id and property separate for the sake of ease of localization
-        abstractUpdate("generation", "Generation", () -> World.getInstance().getGeneration());
-        abstractUpdate("population", "Population", () -> World.getInstance().getPopulationSize(), "cells");
-        abstractUpdate("tick_time", "Tick time", () -> World.getInstance().getTickTime(), "s");
-        abstractUpdate("growth_rate", "Growth rate", () -> World.getInstance().getGrowthRate(), "cells/tick");
+        abstractUpdate("generation", "Generation", World.getInstance().getGeneration());
+        abstractUpdate("population", "Population", World.getInstance().getPopulationSize(), "cells");
+        abstractUpdate("tick_time", "Tick time", World.getInstance().getTickTime(), "s");
+        abstractUpdate("growth_rate", "Growth rate", World.getInstance().getGrowthRate(), "cells/tick");
 
-        abstractUpdate("left_direction","Left", () -> cam.getLeft());
-        abstractUpdate("up_direction","Up", () -> cam.getUp());
-        abstractUpdate("gaze_direction","Gaze", () -> cam.getDirection());
-        abstractUpdate("rotation","Rotation", () -> Player.getInstance().getRotation());
-        abstractUpdate("position","Position", () -> cam.getLocation());
+        abstractUpdate("left_direction","Left", cam.getLeft());
+        abstractUpdate("up_direction","Up", cam.getUp());
+        abstractUpdate("gaze_direction","Gaze", cam.getDirection());
+        abstractUpdate("rotation","Rotation", Player.getInstance().getRotation());
+        abstractUpdate("position","Position", cam.getLocation());
 
-        abstractUpdate("health","Health", () -> Player.getInstance().getHealth(), "%");
-        abstractUpdate("strength","Strength", () -> Player.getInstance().getStrength(), "%");
-        abstractUpdate("agility","Agility", () -> Player.getInstance().getAgility(), "%");
-        abstractUpdate("hunger","Hunger", () -> Player.getInstance().getHunger(), "%");
+        abstractUpdate("health","Health", Player.getInstance().getHealth(), "%");
+        abstractUpdate("strength","Strength", Player.getInstance().getStrength(), "%");
+        abstractUpdate("agility","Agility", Player.getInstance().getAgility(), "%");
+        abstractUpdate("hunger","Hunger", Player.getInstance().getHunger(), "%");
         updateInventoryItems();
         updateSelectedInventorySlot();
 
@@ -89,17 +89,16 @@ public class HUDController implements ScreenController, Observer {
     }
 
     // 2nd degree helpers
-    public interface F { Object f(); }
     private void updateText(String id, String value) {
         Element niftyElement = nifty.getCurrentScreen().findElementById(id);
         niftyElement.getRenderer(TextRenderer.class)
                 .setText(value);
     }
-    private void abstractUpdate(String id, String property, F valueGetter, String units) {
-        updateText(id, getLabel(property, valueGetter.f(), units));
+    private void abstractUpdate(String id, String property, Object value, String units) {
+        updateText(id, getLabel(property, value, units));
     }
-    private void abstractUpdate(String id, String property, F valueGetter) {
-        abstractUpdate(id, property, valueGetter, "");
+    private void abstractUpdate(String id, String property, Object value) {
+        abstractUpdate(id, property, value, "");
     }
     private void updateBackgroundColor(String id, Color color) {
         Element pausePanel = nifty.getCurrentScreen().findElementById(id);

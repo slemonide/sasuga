@@ -90,4 +90,18 @@ public class Position {
     public int hashCode() {
         return components.hashCode();
     }
+
+    public Position subtract(Position otherPosition) {
+        return this.add(otherPosition.multiply(-1));
+    }
+
+    public Position multiply(int i) {
+        Map<Integer, Integer> nextMap = new HashMap<>();
+
+        for (Integer key : getActiveComponents().keySet()) {
+            nextMap.put(key, i * getComponent(key));
+        }
+
+        return new Position(nextMap);
+    }
 }
