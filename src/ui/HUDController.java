@@ -83,7 +83,7 @@ public class HUDController implements ScreenController, Observer {
         updateStrength();
         updateAgility();
         updateHunger();
-        updateCells();
+        updateInventoryItems();
         updateSelectedInventorySlot();
 
         updatePause();
@@ -206,7 +206,7 @@ public class HUDController implements ScreenController, Observer {
         return property + ": " + value + " cells/sec";
     }
 
-    private void updateCells() {
+    private void updateInventoryItems() {
         Element niftyElement;
 
         for (int i = 1; i < 11; i++) {
@@ -222,6 +222,12 @@ public class HUDController implements ScreenController, Observer {
         }
     }
 
+
+    /**
+     * Updates displayed selection in inventory window:
+     *
+     * Unhighlights all unselected slots, and highlights the selected slot.
+     */
     private void updateSelectedInventorySlot() {
         Element unselectedSlot = nifty.getCurrentScreen()
                 .findElementById("cell_" + currentlySelectedInventorySlot);
