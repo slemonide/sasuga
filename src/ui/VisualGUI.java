@@ -33,7 +33,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
         flyCam.setMoveSpeed(10);
 
-        eventHandlers.setCursorPosition(new Position());
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
         initializeHUD();

@@ -17,16 +17,6 @@ public class EventHandlers extends Observable {
         return isPaused;
     }
 
-    private Position cursorPosition;
-
-    public Position getCursorPosition() {
-        return cursorPosition;
-    }
-
-    void setCursorPosition(Position cursorPosition) {
-        this.cursorPosition = cursorPosition;
-    }
-
     private ActionListener pauseActionListener = (name, pressed, tpf) -> {
         if (pressed) {
             isPaused = !isPaused;
@@ -45,7 +35,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener removeCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            Position currentSelection = getCurrentSelection();
+            Position currentSelection = Player.getInstance().getCursor();
             World.getInstance().remove(currentSelection);
 
             setChanged();
@@ -54,7 +44,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener moveCursorUPActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, 1, 0);
+            Player.getInstance().moveCursor(new Position(0, 1, 0));
 
             setChanged();
             notifyObservers();
@@ -62,7 +52,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener moveCursorDOWNActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, -1, 0);
+            Player.getInstance().moveCursor(new Position(0, -1, 0));
 
             setChanged();
             notifyObservers();
@@ -70,7 +60,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener moveCursorPXActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            cursorPosition = getCurrentSelection().add(1, 0, 0);
+            Player.getInstance().moveCursor(new Position(1, 0, 0));
 
             setChanged();
             notifyObservers();
@@ -78,7 +68,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener moveCursorNXActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            cursorPosition = getCurrentSelection().add(-1, 0, 0);
+            Player.getInstance().moveCursor(new Position(-1, 0, 0));
 
             setChanged();
             notifyObservers();
@@ -86,7 +76,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener moveCursorPZActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, 0, 1);
+            Player.getInstance().moveCursor(new Position(0, 0, 1));
 
             setChanged();
             notifyObservers();
@@ -94,7 +84,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener moveCursorNZActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            cursorPosition = getCurrentSelection().add(0, 0, -1);
+            Player.getInstance().moveCursor(new Position(0, 0, -1));
 
             setChanged();
             notifyObservers();
@@ -173,14 +163,5 @@ public class EventHandlers extends Observable {
 
         visualGUI.getInputManager().addMapping("Rotate CW", new KeyTrigger(KeyInput.KEY_RSHIFT));
         visualGUI.getInputManager().addListener(rotateCWActionListener, "Rotate CW");
-    }
-
-    /**
-     * Produces currently selected cell position
-     *
-     * @return position
-     */
-    private Position getCurrentSelection() {
-        return cursorPosition;
     }
 }

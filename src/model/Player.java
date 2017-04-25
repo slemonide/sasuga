@@ -36,6 +36,7 @@ public class Player extends ActiveCell {
     private Inventory inventory;
     private int hungerDelay;
     private float rotation;
+    private Position cursor;
 
     /**
      * Create a cell at the given position with randomly chosen stats
@@ -55,8 +56,14 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
+        cursor = new Position();
+
         inventory = new Inventory(INVENTORY_SIZE);
         inventory.setInventoryItem(1, new InventoryItem("Say Hi", () -> System.out.println("Hi")));
+        inventory.setInventoryItem(2, new InventoryItem("Cell",
+                () ->  World.getInstance().add(new Cell(getCursor()))));
+        inventory.setInventoryItem(3, new InventoryItem("Random Walk",
+                () ->  World.getInstance().add(new RandomWalkCell(getCursor()))));
 
         hasValidState();
     }
@@ -210,6 +217,11 @@ public class Player extends ActiveCell {
         return rotation;
     }
 
+    public void moveCursor(Position delta) {
+        cursor = cursor.add(delta);
+    }
+
+
     /**
      * @param value percentage
      * @return true if 0 <= percentage <= 100, false otherwise
@@ -230,5 +242,9 @@ public class Player extends ActiveCell {
         assert hungerDelay >= 0;
         //assert selectedInventorySlot < inventory.length;
         assert (0 <= rotation && rotation <= 2 * Math.PI);
+    }
+
+    public Position getCursor() {
+        return cursor;
     }
 }
