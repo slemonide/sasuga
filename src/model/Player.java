@@ -108,15 +108,12 @@ public class Player extends ActiveCell {
                 }
             }
             hungerDelay = 0;
-        }
-        hungerDelay++;
-        }else {
+        }else{
             hungerDelay++;
         }
-    }
 
-        hasValidState();
-    }
+        hasValidState();}
+
 
     public int getHealth() {
         return health;
