@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * @version     0.1
  * @since       0.1
  *
- * A geometrical vector
+ * A position
  */
 public class Position {
     static final Position DEFAULT = new Position();

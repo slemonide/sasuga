@@ -7,7 +7,7 @@ import java.util.Observable;
  * @version     0.1
  * @since       0.1
  *
- * Represents a cell that, by default never changes on its own.
+ * Represents a cell with position and name.
  */
 public class Cell extends Observable {
     private String name = "Static Cell";

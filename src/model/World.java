@@ -16,7 +16,7 @@ public class World extends Observable implements Runnable {
     static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
     private int generation;
-    private Map<Position, Cell> cellsMap;
+    private CellsMap cellsMap;
     private int population;
     private Thread worldThread;
     private static World instance;
@@ -29,7 +29,7 @@ public class World extends Observable implements Runnable {
         tickTime = 0;
         generation = 0;
         population = 0;
-        cellsMap = Collections.synchronizedMap(new HashMap<>());
+        cellsMap = new CellsMap();
         worldThread = new Thread(this);
     }
 
