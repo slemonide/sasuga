@@ -1,6 +1,9 @@
 package model;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -27,9 +30,22 @@ public class RandomWalkCell extends ActiveCell {
 
     @Override
     public void tick() {
+        // do nothing
+    }
+
+    @Override
+    public Collection<? extends Cell> tickToAdd() {
         updatePosition();
 
-        World.getInstance().add(new Cell(currentEndPosition));
+        Set<Cell> nextCells = new HashSet<>();
+        nextCells.add(new Cell(currentEndPosition));
+
+        return nextCells;
+    }
+
+    @Override
+    public Collection<? extends Position> tickToRemove() {
+        return null;
     }
 
     private void updatePosition() {

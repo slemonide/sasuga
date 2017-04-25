@@ -137,14 +137,27 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
-        Set<Cell> oldCells = getOldCells();
+        Set<Cell> toAdd = new HashSet<>();
+        Set<Position> toRemove = new HashSet<>();
 
-        for (Cell cell : oldCells) {
-            if (cell instanceof ActiveCell) {
-                ActiveCell currentCell = (ActiveCell) cell;
-                currentCell.tick();
+        for (ActiveCell cell : cellsMap.activeCellsValues()) {
+            Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
+            Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
+
+            if (toAddFromThisCell != null) {
+                toAdd.addAll(cell.tickToAdd());
             }
+
+            if (toRemoveFromThisCell != null) {
+                toRemove.addAll(cell.tickToRemove());
+            }
+
+            cell.tick();
         }
+
+        cellsMap.addAll(toAdd);
+        cellsMap.removeAll(toRemove);
+        population += toAdd.size() - toRemove.size();
         generation++;
 
         // tickTime measurement
@@ -152,7 +165,7 @@ public class World extends Observable implements Runnable {
         tickTime = endTime - startTime;
 
         // update growth rate
-        growthRate = cellsMap.size() - oldCells.size();
+        growthRate = toAdd.size() - toRemove.size();
 
         setChanged();
         notifyObservers();

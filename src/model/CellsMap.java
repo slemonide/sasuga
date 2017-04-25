@@ -14,7 +14,7 @@ import java.util.function.BiConsumer;
  */
 public class CellsMap implements Map<Position, Cell> {
     Map<Position, Cell> staticCells;
-    Map<Position, Cell> activeCells;
+    Map<Position, ActiveCell> activeCells;
 
     public CellsMap() {
         staticCells = Collections.synchronizedMap(new HashMap<>());
@@ -51,7 +51,7 @@ public class CellsMap implements Map<Position, Cell> {
         Cell previousValue = get(key);
 
         if (value instanceof ActiveCell) {
-            activeCells.put(key, value);
+            activeCells.put(key, (ActiveCell) value);
         } else {
             staticCells.put(key, value);
         }
@@ -108,9 +108,18 @@ public class CellsMap implements Map<Position, Cell> {
     public Set<Entry<Position, Cell>> entrySet() {
         Set<Entry<Position, Cell>> entrySet = new HashSet<>();
         entrySet.addAll(staticCells.entrySet());
-        entrySet.addAll(activeCells.entrySet());
+
+        for (Position position : activeCells.keySet()) {
+            entrySet.add(new AbstractMap.SimpleEntry<>(position, activeCells.get(position)));
+        }
 
         return entrySet;
+    }
+
+    public void removeAll(Set<Position> toRemove) {
+        for (Position position : toRemove) {
+            remove(position);
+        }
     }
 
     public Set<Position> activeCellsKeySet() {
@@ -119,5 +128,15 @@ public class CellsMap implements Map<Position, Cell> {
 
     public Set<Position> staticCellsKeySet() {
         return staticCells.keySet();
+    }
+
+    public Collection<ActiveCell> activeCellsValues() {
+        return activeCells.values();
+    }
+
+    public void addAll(Set<Cell> cells) {
+        for (Cell cell : cells) {
+            put(cell.getPosition(), cell);
+        }
     }
 }

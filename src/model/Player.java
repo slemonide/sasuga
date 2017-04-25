@@ -1,6 +1,9 @@
 package model;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
@@ -112,7 +115,18 @@ public class Player extends ActiveCell {
             hungerDelay++;
         }
 
-        hasValidState();}
+        hasValidState();
+    }
+
+    @Override
+    public Collection<? extends Cell> tickToAdd() {
+        return null;
+    }
+
+    @Override
+    public Collection<? extends Position> tickToRemove() {
+        return null;
+    }
 
 
     public int getHealth() {
