@@ -50,10 +50,8 @@ public class RandomWalkCell extends ActiveCell {
                 return new Position(0, -1, 0);
             case 4:
                 return new Position(0, 0, 1);
-            case 5:
-                return new Position(0, 0, -1);
             default:
-                return null;
+                return new Position(0, 0, -1);
         }
     }
 }
