@@ -4,10 +4,7 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
-import model.Player;
-import model.Position;
-import model.RandomWalkCell;
-import model.World;
+import model.*;
 
 import java.util.Observable;
 
@@ -40,11 +37,14 @@ public class EventHandlers extends Observable {
     };
     private ActionListener addCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            Position currentSelection = getCurrentSelection();
-            World.getInstance().add(new RandomWalkCell(currentSelection));
+            if (Player.getInstance().getSelectedItem() != null) {
+                Position currentSelection = getCurrentSelection();
+                Cell cellToAdd = Player.getInstance().getSelectedItem().getCell(currentSelection);
+                World.getInstance().add(cellToAdd);
 
-            setChanged();
-            notifyObservers();
+                setChanged();
+                notifyObservers();
+            }
         }
     };
     private ActionListener removeCellActionListener = (name, pressed, tpf) -> {

@@ -12,14 +12,14 @@ import java.util.Random;
  * and a 10-item inventory of cells (or nulls)
  */
 public class Player extends ActiveCell {
-    private static final int MIN_HUNGER_DELAY = 100 * World.TICKS_PER_SECOND; // in ticks
+    private static final int MIN_HUNGER_DELAY = World.TICKS_PER_SECOND; // in ticks
     private static final float ROTATION_SPEED = 0.01f;
     private static Player instance;
     private int health;
     private int strength;
     private int agility;
     private int hunger;
-    private Cell[] inventory;
+    private Cells[] inventory;
     private int hungerDelay;
     private int selectedInventorySlot;
     private float rotation;
@@ -43,9 +43,12 @@ public class Player extends ActiveCell {
         hunger = 40 + random.nextInt(61);
 
         selectedInventorySlot = random.nextInt(10) + 1;
-        inventory = new Cell[10];
-        inventory[0] = new Cell(new Position());
-        inventory[1] = new RandomWalkCell(new Position());
+        inventory = new Cells[10];
+        inventory[0] = Cells.STATIC;
+        inventory[1] = Cells.RANDOM_WALK;
+        inventory[2] = Cells.RANDOM_WALK;
+        inventory[3] = Cells.RANDOM_WALK;
+        inventory[4] = Cells.STATIC;
     }
 
     @Override
@@ -122,7 +125,7 @@ public class Player extends ActiveCell {
         notifyObservers();
     }
 
-    public Cell getInventoryItem(int index) {
+    public Cells getInventoryItem(int index) {
         if (index < inventory.length) {
             return inventory[index];
         } else {
@@ -130,7 +133,7 @@ public class Player extends ActiveCell {
         }
     }
 
-    public void setInventoryItem(int index, Cell value) {
+    public void setInventoryItem(int index, Cells value) {
         if (index < inventory.length) {
             inventory[index] = value;
         }
@@ -168,5 +171,9 @@ public class Player extends ActiveCell {
 
     public float getRotation() {
         return rotation;
+    }
+
+    public Cells getSelectedItem() {
+        return getInventoryItem(getSelectedInventorySlot());
     }
 }

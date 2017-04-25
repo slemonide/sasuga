@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  * A geometrical vector
  */
 public class Position {
+    static final Position DEFAULT = new Position();
     /**
      * components
      */

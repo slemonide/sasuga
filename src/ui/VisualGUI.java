@@ -14,7 +14,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final float GAZE_CHANGE_DISTANCE = 0.1f;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
     private Vector3f lastGaze;
@@ -28,6 +27,10 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     @Override
     public void simpleInitApp() {
+        setDisplayStatView(false);
+        setDisplayFps(false);
+        getFlyByCamera().setEnabled(false);
+
         flyCam.setMoveSpeed(10);
 
         eventHandlers.setCursorPosition(new Position());
@@ -85,7 +88,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
             up = cam.getUp();
             left = cam.getLeft();
         }
-
+        
         cam.lookAtDirection(cam.getDirection(),
                 up.mult((float) Math.cos(Player.getInstance().getRotation()))
                         .add(left.mult((float) Math.sin(Player.getInstance().getRotation()))));

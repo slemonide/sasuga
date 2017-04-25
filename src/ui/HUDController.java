@@ -223,12 +223,14 @@ public class HUDController implements ScreenController, Observer {
     }
 
     private void updateSelectedInventorySlot() {
-        Element unselectedSlot = nifty.getCurrentScreen().findElementById("cell_" + currentlySelectedInventorySlot);
+        Element unselectedSlot = nifty.getCurrentScreen()
+                .findElementById("cell_" + currentlySelectedInventorySlot);
         unselectedSlot.getRenderer(PanelRenderer.class).setBackgroundColor(unselectedInventorySlotColor);
 
         currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
 
-        Element selectedSlot = nifty.getCurrentScreen().findElementById("cell_" + currentlySelectedInventorySlot);
+        Element selectedSlot = nifty.getCurrentScreen()
+                .findElementById("cell_" + currentlySelectedInventorySlot);
         selectedSlot.getRenderer(PanelRenderer.class).setBackgroundColor(selectedInventorySlotColor);
     }
 }
