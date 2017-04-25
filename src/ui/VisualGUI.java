@@ -29,7 +29,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
     public void simpleInitApp() {
         setDisplayStatView(false);
         setDisplayFps(false);
-        getFlyByCamera().setEnabled(false);
+        //getFlyByCamera().setEnabled(false);
 
         flyCam.setMoveSpeed(10);
 

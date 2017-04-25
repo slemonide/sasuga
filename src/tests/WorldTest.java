@@ -17,6 +17,8 @@ import static org.junit.Assert.assertTrue;
  * Test for World
  */
 public class WorldTest {
+    private static final double DELTA = 0.01;
+
     @Before
     public void runBefore() {
         World.getInstance().reset();
@@ -28,7 +30,7 @@ public class WorldTest {
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getGeneration(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
-        assertEquals(World.getInstance().getTickTime(), 0);
+        assertEquals(World.getInstance().getTickTime(), 0, DELTA);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -42,12 +44,12 @@ public class WorldTest {
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);
-        assertEquals(World.getInstance().getTickTime(), 0);
+        assertEquals(World.getInstance().getTickTime(), 0, DELTA);
 
         World.getInstance().remove(new Cell(new Position(0, 0, 0)));
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
         assertEquals(World.getInstance().getGeneration(), 2);
-        assertEquals(World.getInstance().getTickTime(), 0);
+        assertEquals(World.getInstance().getTickTime(), 0, DELTA);
     }
 }
