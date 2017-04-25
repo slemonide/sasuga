@@ -98,8 +98,12 @@ public class CellsMap implements Map<Position, Cell> {
     @Override
     public Collection<Cell> values() {
         Collection<Cell> valueSet = new HashSet<>();
-        valueSet.addAll(staticCells.values());
-        valueSet.addAll(activeCells.values());
+        synchronized (staticCells) {
+            valueSet.addAll(staticCells.values());
+        }
+        synchronized (activeCells) {
+            valueSet.addAll(activeCells.values());
+        }
 
         return valueSet;
     }

@@ -174,22 +174,6 @@ public class World extends Observable implements Runnable {
     }
 
     /**
-     * Freezes old version of the world
-     * @return frozen old version of the world
-     */
-    public Set<Cell> getOldCells() {
-        Set<Cell> oldCells = new HashSet<>();
-
-        Set s = cellsMap.keySet();
-
-        synchronized (cellsMap) {
-            for (Object value : s) oldCells.add(cellsMap.get(value));
-        }
-
-        return oldCells;
-    }
-
-    /**
      * Reset the world and notify the observers about the change
      */
     public void reset() {

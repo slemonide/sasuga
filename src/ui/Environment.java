@@ -62,7 +62,7 @@ class Environment {
         visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         visualGUI.getRootNode().attachChild(cellsNode);
 
-        Collection<Cell> cells = World.getInstance().getOldCells();
+        Collection<Cell> cells = World.getInstance().getCells();
         for (Cell cell : cells) {
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Spatial node = new Geometry("Box", b);
@@ -126,7 +126,7 @@ class Environment {
     private void updateFloor() {
         float minimumY = 0; // should be at least at the sea level
 
-        for (Cell cell : World.getInstance().getOldCells()) {
+        for (Cell cell : World.getInstance().getCells()) {
             minimumY = Math.min(minimumY, cell.getPosition().getComponent(1) * SCALE);
         }
 

@@ -1,6 +1,5 @@
 package ui;
 
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
@@ -25,14 +24,13 @@ import java.util.Observer;
  */
 public class HUDController implements ScreenController, Observer {
     private static final Color TRANSPARENT_COLOR = new Color("#0000");
+    private static final Color SELECTION_COLOR = new Color("#00f8");
+    private static final String EMPTY_INVENTORY_SLOT_VALUE = "...";
     private Nifty nifty;
-    private Player player;
     private EventHandlers eventHandlers;
 
     private Color pausePanelColor;
     private Color pauseTextColor;
-    private Color selectedInventorySlotColor = new Color("#00f8");
-    private Color unselectedInventorySlotColor = TRANSPARENT_COLOR;
 
     private int currentlySelectedInventorySlot;
     private Camera cam;
@@ -45,7 +43,6 @@ public class HUDController implements ScreenController, Observer {
     @Override
     public void bind(@Nonnull Nifty nifty, @Nonnull Screen screen) {
         this.nifty = nifty;
-        this.player = Player.getInstance();
 
         readColorsFromTheNifty();
         currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
@@ -69,27 +66,54 @@ public class HUDController implements ScreenController, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        updateGeneration();
-        updatePopulation();
-        updateTickTime();
-        updateGrowthRate();
+        // I kept id and property separate for the sake of ease of localization
+        abstractUpdate("generation", "Generation", () -> World.getInstance().getGeneration());
+        abstractUpdate("population", "Population", () -> World.getInstance().getPopulationSize(), "cells");
+        abstractUpdate("tick_time", "Tick time", () -> World.getInstance().getTickTime(), "s");
+        abstractUpdate("growth_rate", "Growth rate", () -> World.getInstance().getGrowthRate(), "cells/tick");
 
-        updateLeft();
-        updateUp();
-        updateGaze();
-        updateRotation();
-        updatePosition();
+        abstractUpdate("left_direction","Left", () -> cam.getLeft());
+        abstractUpdate("up_direction","Up", () -> cam.getUp());
+        abstractUpdate("gaze_direction","Gaze", () -> cam.getDirection());
+        abstractUpdate("rotation","Rotation", () -> Player.getInstance().getRotation());
+        abstractUpdate("position","Position", () -> cam.getLocation());
 
-        updateHealth();
-        updateStrength();
-        updateAgility();
-        updateHunger();
+        abstractUpdate("health","Health", () -> Player.getInstance().getHealth(), "%");
+        abstractUpdate("strength","Strength", () -> Player.getInstance().getStrength(), "%");
+        abstractUpdate("agility","Agility", () -> Player.getInstance().getAgility(), "%");
+        abstractUpdate("hunger","Hunger", () -> Player.getInstance().getHunger(), "%");
         updateInventoryItems();
         updateSelectedInventorySlot();
 
         updatePause();
     }
 
+    // 2nd degree helpers
+    public interface F { Object f(); }
+    private void updateText(String id, String value) {
+        Element niftyElement = nifty.getCurrentScreen().findElementById(id);
+        niftyElement.getRenderer(TextRenderer.class)
+                .setText(value);
+    }
+    private void abstractUpdate(String id, String property, F valueGetter, String units) {
+        updateText(id, getLabel(property, valueGetter.f(), units));
+    }
+    private void abstractUpdate(String id, String property, F valueGetter) {
+        abstractUpdate(id, property, valueGetter, "");
+    }
+    private void updateBackgroundColor(String id, Color color) {
+        Element pausePanel = nifty.getCurrentScreen().findElementById(id);
+        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(color);
+    }
+    private void updateColor(String id, Color color) {
+        Element pause = nifty.getCurrentScreen().findElementById(id);
+        pause.getRenderer(TextRenderer.class).setColor(color);
+    }
+    private String getLabel(String property, Object value, String units) {
+        return property + ": " + value + " " + units;
+    }
+
+    // 1st degree helpers
     private void updatePause() {
         if (eventHandlers.isPaused()) {
             setPaused();
@@ -99,139 +123,33 @@ public class HUDController implements ScreenController, Observer {
     }
 
     private void setPaused() {
-        Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
-        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(pausePanelColor);
-
-        Element pause = nifty.getCurrentScreen().findElementById("pause");
-        pause.getRenderer(TextRenderer.class).setColor(pauseTextColor);
+        updateBackgroundColor("pause_panel", pausePanelColor);
+        updateColor("pause", pauseTextColor);
     }
 
     private void setUnPaused() {
-        Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
-        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(TRANSPARENT_COLOR);
-
-        Element pause = nifty.getCurrentScreen().findElementById("pause");
-        pause.getRenderer(TextRenderer.class).setColor(TRANSPARENT_COLOR);
-    }
-
-    private void updateGeneration() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("generation");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Generation", World.getInstance().getGeneration()));
-    }
-
-    private void updatePopulation() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("population");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Population", World.getInstance().getPopulationSize(), "cells"));
-    }
-
-    private void updateTickTime() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("tick_time");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Tick time", World.getInstance().getTickTime(), "s"));
-    }
-
-    private void updateGrowthRate() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("growth_rate");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Growth rate", World.getInstance().getGrowthRate(), "cells/tick"));
-    }
-
-    private void updateLeft() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("left_direction");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Left", cam.getLeft()));
-    }
-
-    private void updateUp() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("up_direction");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Up", cam.getUp()));
-    }
-
-    private void updateGaze() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("gaze_direction");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Gaze", cam.getDirection()));
-    }
-
-    private void updateRotation() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("rotation");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Rotation", Player.getInstance().getRotation()));
-    }
-
-    private void updatePosition() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("position");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Position", cam.getLocation()));
-    }
-
-
-
-    private void updateHealth() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("health");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Health", player.getHealth(), "%"));
-    }
-
-    private void updateStrength() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("strength");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Strength", player.getStrength(), "%"));
-    }
-
-    private void updateAgility() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("agility");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Agility", player.getAgility(), "%"));
-    }
-
-    private void updateHunger() {
-        Element niftyElement = nifty.getCurrentScreen().findElementById("hunger");
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Hunger", player.getHunger(), "%"));
-    }
-
-    private String getLabel(String property, Object value, String units) {
-        return property + ": " + value + " " + units;
-    }
-    private String getLabel(String property, Object value) {
-        return property + ": " + value;
+        updateBackgroundColor("pause_panel", TRANSPARENT_COLOR);
+        updateColor("pause", TRANSPARENT_COLOR);
     }
 
     private void updateInventoryItems() {
-        Element niftyElement;
-
         for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-            niftyElement = nifty.getCurrentScreen().findElementById("cell_" + i);
-
             if (Player.getInstance().getInventoryItem(i) != null) {
-                niftyElement.getRenderer(TextRenderer.class)
-                        .setText(Player.getInstance().getInventoryItem(i).getName());
+                updateText("cell_" + i, Player.getInstance().getInventoryItem(i).getName());
             } else {
-                niftyElement.getRenderer(TextRenderer.class)
-                        .setText("...");
+                updateText("cell_" + i, EMPTY_INVENTORY_SLOT_VALUE);
             }
         }
     }
 
-
     /**
      * Updates displayed selection in inventory window:
      *
-     * Unhighlights all unselected slots, and highlights the selected slot.
+     * Highlights the selected slot.
      */
     private void updateSelectedInventorySlot() {
-        Element unselectedSlot = nifty.getCurrentScreen()
-                .findElementById("cell_" + currentlySelectedInventorySlot);
-        unselectedSlot.getRenderer(PanelRenderer.class).setBackgroundColor(unselectedInventorySlotColor);
-
+        updateBackgroundColor("cell_" + currentlySelectedInventorySlot, TRANSPARENT_COLOR);
         currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
-
-        Element selectedSlot = nifty.getCurrentScreen()
-                .findElementById("cell_" + currentlySelectedInventorySlot);
-        selectedSlot.getRenderer(PanelRenderer.class).setBackgroundColor(selectedInventorySlotColor);
+        updateBackgroundColor("cell_" + currentlySelectedInventorySlot, SELECTION_COLOR);
     }
 }
