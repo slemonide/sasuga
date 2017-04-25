@@ -37,14 +37,10 @@ public class EventHandlers extends Observable {
     };
     private ActionListener addCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            if (Player.getInstance().getSelectedItem() != null) {
-                Position currentSelection = getCurrentSelection();
-                Cell cellToAdd = Player.getInstance().getSelectedItem().getCell(currentSelection);
-                World.getInstance().add(cellToAdd);
+            Player.getInstance().getInventory().getSelectedItem().use();
 
-                setChanged();
-                notifyObservers();
-            }
+            setChanged();
+            notifyObservers();
         }
     };
     private ActionListener removeCellActionListener = (name, pressed, tpf) -> {
@@ -106,7 +102,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener inventorySelectionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            Player.getInstance().setSelectedInventorySlot(Integer.valueOf(name));
+            Player.getInstance().getInventory().setSelectedSlot(Integer.valueOf(name));
         }
     };
     private AnalogListener rotateCCWActionListener = (name, value, tpf) -> {

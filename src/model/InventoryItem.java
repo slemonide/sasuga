@@ -27,6 +27,8 @@ public class InventoryItem {
      * Execute the assigned action
      */
     public void use() {
-        action.f();
+        if (action != null) {
+            action.f();
+        }
     }
 }

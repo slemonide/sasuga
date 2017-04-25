@@ -45,7 +45,7 @@ public class HUDController implements ScreenController, Observer {
         this.nifty = nifty;
 
         readColorsFromTheNifty();
-        currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
+        currentlySelectedInventorySlot = Player.getInstance().getInventory().getSelectedSlot();
 
         update(null, null);
     }
@@ -134,8 +134,8 @@ public class HUDController implements ScreenController, Observer {
 
     private void updateInventoryItems() {
         for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-            if (Player.getInstance().getInventoryItem(i) != null) {
-                updateText("cell_" + i, Player.getInstance().getInventoryItem(i).getName());
+            if (Player.getInstance().getInventory().getInventoryItem(i) != null) {
+                updateText("cell_" + i, Player.getInstance().getInventory().getInventoryItem(i).getName());
             } else {
                 updateText("cell_" + i, EMPTY_INVENTORY_SLOT_VALUE);
             }
@@ -149,7 +149,7 @@ public class HUDController implements ScreenController, Observer {
      */
     private void updateSelectedInventorySlot() {
         updateBackgroundColor("cell_" + currentlySelectedInventorySlot, TRANSPARENT_COLOR);
-        currentlySelectedInventorySlot = Player.getInstance().getSelectedInventorySlot();
+        currentlySelectedInventorySlot = Player.getInstance().getInventory().getSelectedSlot();
         updateBackgroundColor("cell_" + currentlySelectedInventorySlot, SELECTION_COLOR);
     }
 }

@@ -16,9 +16,9 @@ public class Inventory {
      * Create a new inventory of the given size and 0 as the selected slot.
      * Also fills all slots with the default item
      */
-    public Inventory(int size) throws Exception {
+    public Inventory(int size) throws RuntimeException {
         if (size < 0) {
-            throw new Exception("Inventory size must be nonnegative");
+            throw new RuntimeException("Inventory size must be nonnegative");
         }
 
         this.size = size;

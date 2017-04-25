@@ -33,9 +33,8 @@ public class Player extends ActiveCell {
     private int strength;
     private int agility;
     private int hunger;
-    private Cells[] inventory;
+    private Inventory inventory;
     private int hungerDelay;
-    private int selectedInventorySlot;
     private float rotation;
 
     /**
@@ -56,13 +55,8 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
-        selectedInventorySlot = random.nextInt(10);
-        inventory = new Cells[INVENTORY_SIZE];
-        inventory[0] = Cells.STATIC;
-        inventory[1] = Cells.RANDOM_WALK;
-        inventory[2] = Cells.RANDOM_WALK;
-        inventory[3] = Cells.RANDOM_WALK;
-        inventory[4] = Cells.STATIC;
+        inventory = new Inventory(INVENTORY_SIZE);
+        inventory.setInventoryItem(1, new InventoryItem("Say Hi", () -> System.out.println("Hi")));
 
         hasValidState();
     }
@@ -190,34 +184,8 @@ public class Player extends ActiveCell {
         notifyObservers();
     }
 
-    public Cells getInventoryItem(int index) {
-        if (index < inventory.length) {
-            return inventory[index];
-        } else {
-            return null;
-        }
-    }
-
-    public void setInventoryItem(int index, Cells value) {
-        if (index < inventory.length) {
-            inventory[index] = value;
-        }
-
-        hasValidState();
-        setChanged();
-        notifyObservers();
-    }
-
-    public int getSelectedInventorySlot() {
-        return selectedInventorySlot;
-    }
-
-    public void setSelectedInventorySlot(Integer selectedInventorySlot) {
-        this.selectedInventorySlot = selectedInventorySlot % INVENTORY_SIZE;
-
-        hasValidState();
-        setChanged();
-        notifyObservers();
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void rotateCounterClockWise() {
@@ -242,10 +210,6 @@ public class Player extends ActiveCell {
         return rotation;
     }
 
-    public Cells getSelectedItem() {
-        return getInventoryItem(getSelectedInventorySlot());
-    }
-
     /**
      * @param value percentage
      * @return true if 0 <= percentage <= 100, false otherwise
@@ -262,9 +226,9 @@ public class Player extends ActiveCell {
         assert validPercentage(strength);
         assert validPercentage(agility);
         assert validPercentage(hunger);
-        assert inventory.length == INVENTORY_SIZE;
+        //assert inventory.length == INVENTORY_SIZE;
         assert hungerDelay >= 0;
-        assert selectedInventorySlot < inventory.length;
+        //assert selectedInventorySlot < inventory.length;
         assert (0 <= rotation && rotation <= 2 * Math.PI);
     }
 }
