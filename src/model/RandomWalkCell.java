@@ -13,7 +13,6 @@ import java.util.Set;
  * Represents a random walk cell.
  */
 public class RandomWalkCell extends ActiveCell {
-    private Position currentEndPosition;
     private Random random = new Random();
 
     /**
@@ -24,8 +23,6 @@ public class RandomWalkCell extends ActiveCell {
     public RandomWalkCell(Position position) {
         super(position);
         setName("Random Walk Cell");
-
-        currentEndPosition = position;
     }
 
     @Override
@@ -35,26 +32,22 @@ public class RandomWalkCell extends ActiveCell {
 
     @Override
     public Collection<? extends Cell> tickToAdd() {
-        updatePosition();
-
         Set<Cell> nextCells = new HashSet<>();
-        nextCells.add(new Cell(currentEndPosition));
+        nextCells.add(new Cell(position));
+        nextCells.add(new RandomWalkCell(position.add(nextPosition())));
 
         return nextCells;
     }
 
     @Override
     public Collection<? extends Position> tickToRemove() {
-        return null;
+        Set<Position> toRemove = new HashSet<>();
+        toRemove.add(position);
+
+        return toRemove;
     }
 
-    private void updatePosition() {
-        Position randomPosition = generateRandomPosition();
-
-        this.currentEndPosition = currentEndPosition.add(randomPosition);
-    }
-
-    private Position generateRandomPosition() {
+    private Position nextPosition() {
         switch (random.nextInt(6)) {
             case 0:
                 return new Position(1, 0, 0);

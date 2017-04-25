@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * invariant
  *      0 <= health, strength, agility, hunger <= 100
- *      inventory.length == 10
+ *      inventory.length == INVENTORY_SIZE
  *      hungerDelay >= 0
  *      selectedInventorySlot < inventory.length
  *      0 <= rotation <= 2 * Math.PI
@@ -27,6 +27,7 @@ public class Player extends ActiveCell {
     private static final int AGILITY_REDUCTION_THRESHOLD = 20;
     private static final int HEALTH_REDUCTION_THRESHOLD = 5;
     private static final float ROTATION_SPEED = 0.01f;
+    private static final int INVENTORY_SIZE = 10;
     private static Player instance;
     private int health;
     private int strength;
@@ -55,8 +56,8 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
-        selectedInventorySlot = random.nextInt(10) + 1;
-        inventory = new Cells[10];
+        selectedInventorySlot = random.nextInt(10);
+        inventory = new Cells[INVENTORY_SIZE];
         inventory[0] = Cells.STATIC;
         inventory[1] = Cells.RANDOM_WALK;
         inventory[2] = Cells.RANDOM_WALK;
@@ -212,7 +213,7 @@ public class Player extends ActiveCell {
     }
 
     public void setSelectedInventorySlot(Integer selectedInventorySlot) {
-        this.selectedInventorySlot = selectedInventorySlot;
+        this.selectedInventorySlot = selectedInventorySlot % INVENTORY_SIZE;
 
         hasValidState();
         setChanged();
@@ -257,13 +258,13 @@ public class Player extends ActiveCell {
      * Check invariant.
     */
     private void hasValidState() {
-        assert   ((validPercentage(health)
-                && validPercentage(strength)
-                && validPercentage(agility)
-                && validPercentage(hunger))
-        && (inventory.length == 10)
-        && (hungerDelay >= 0)
-        && (selectedInventorySlot < inventory.length)
-        && (0 <= rotation && rotation <= 2 * Math.PI));
+        assert validPercentage(health);
+        assert validPercentage(strength);
+        assert validPercentage(agility);
+        assert validPercentage(hunger);
+        assert inventory.length == INVENTORY_SIZE;
+        assert hungerDelay >= 0;
+        assert selectedInventorySlot < inventory.length;
+        assert (0 <= rotation && rotation <= 2 * Math.PI);
     }
 }

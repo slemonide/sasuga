@@ -155,17 +155,19 @@ public class World extends Observable implements Runnable {
             cell.tick();
         }
 
-        cellsMap.addAll(toAdd);
-        cellsMap.removeAll(toRemove);
-        population += toAdd.size() - toRemove.size();
-        generation++;
+        // update growth rate
+        growthRate = toAdd.size() - toRemove.size();
+        // if there's no change, don't update the generation counter
+        if (growthRate != 0) {
+            cellsMap.removeAll(toRemove);
+            cellsMap.addAll(toAdd);
+            population += growthRate;
+            generation++;
+        }
 
         // tickTime measurement
         long endTime = System.nanoTime();
         tickTime = endTime - startTime;
-
-        // update growth rate
-        growthRate = toAdd.size() - toRemove.size();
 
         setChanged();
         notifyObservers();
