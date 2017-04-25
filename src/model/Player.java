@@ -56,7 +56,8 @@ public class Player extends ActiveCell {
 
 
     /**
-     * Hunger tick lowers player's stats, if below certain thresholds individual to each stat
+     * Hunger tick lowers player's hunger by one, and
+     * lowers player's stats, if below certain thresholds individual to each stat
      * Counts MIN_HUNGER_DELAY world ticks between each hunger tick
      */
     @Override
