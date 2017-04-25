@@ -8,10 +8,10 @@ import model.Position;
 import static org.junit.Assert.*;
 
 /**
- * Unit test for the Cell class
+ * Unit tests for the Cell class
  */
 public class CellTest {
-    Cell testCell;
+    private Cell testCell;
 
     @Before
     public void runBefore() {
@@ -20,7 +20,14 @@ public class CellTest {
 
     @Test
     public void testConstructor() {
-        assertEquals(new Position(1, 2), testCell.getPosition());
+        assertEquals(new Position(1, 2),
+                testCell.getPosition());
+    }
+
+    @Test
+    public void testSetName() {
+        testCell.setName("Rem");
+        assertEquals("Rem", testCell.getName());
     }
 
 }

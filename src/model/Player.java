@@ -10,6 +10,13 @@ import java.util.Random;
  *
  * A player is a cell with health, strength, agility, hunger (in percents)
  * and a 10-item inventory of cells (or nulls)
+ *
+ * invariant
+ *      0 <= health, strength, agility, hunger <= 100
+ *      inventory.length == 10
+ *      hungerDelay >= 0
+ *      selectedInventorySlot < inventory.length
+ *      0 <= rotation <= 2 * Math.PI
  */
 public class Player extends ActiveCell {
     private static final int MIN_HUNGER_DELAY = World.TICKS_PER_SECOND; // in ticks
@@ -49,6 +56,8 @@ public class Player extends ActiveCell {
         inventory[2] = Cells.RANDOM_WALK;
         inventory[3] = Cells.RANDOM_WALK;
         inventory[4] = Cells.STATIC;
+
+        hasValidState();
     }
 
     @Override
@@ -67,6 +76,8 @@ public class Player extends ActiveCell {
             hungerDelay = 0;
         }
         hungerDelay++;
+
+        hasValidState();
     }
 
     /**
@@ -98,29 +109,45 @@ public class Player extends ActiveCell {
     }
 
     public void setHealth(int health) {
+        if (!validPercentage(health)) {
+            return;
+        }
         this.health = health;
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
 
     public void setStrength(int strength) {
+        if (!validPercentage(health)) {
+            return;
+        }
         this.strength = strength;
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
 
     public void setAgility(int agility) {
+        if (!validPercentage(health)) {
+            return;
+        }
         this.agility = agility;
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
 
     public void setHunger(int hunger) {
+        if (!validPercentage(health)) {
+            return;
+        }
         this.hunger = hunger;
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
@@ -138,6 +165,7 @@ public class Player extends ActiveCell {
             inventory[index] = value;
         }
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
@@ -149,6 +177,7 @@ public class Player extends ActiveCell {
     public void setSelectedInventorySlot(Integer selectedInventorySlot) {
         this.selectedInventorySlot = selectedInventorySlot;
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
@@ -157,6 +186,7 @@ public class Player extends ActiveCell {
         rotation += ROTATION_SPEED;
         rotation = (float) (rotation % (Math.PI * 2));
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
@@ -165,6 +195,7 @@ public class Player extends ActiveCell {
         rotation -= ROTATION_SPEED;
         rotation = (float) (rotation % (Math.PI * 2));
 
+        hasValidState();
         setChanged();
         notifyObservers();
     }
@@ -175,5 +206,26 @@ public class Player extends ActiveCell {
 
     public Cells getSelectedItem() {
         return getInventoryItem(getSelectedInventorySlot());
+    }
+
+    /**
+     * @param value percentage
+     * @return true if 0 <= percentage <= 100, false otherwise
+     */
+    private boolean validPercentage(int value) {
+        return (0 <= value && value <= 100);
+    }
+    /*
+     * Check invariant.
+    */
+    private void hasValidState() {
+        assert   ((validPercentage(health)
+                && validPercentage(strength)
+                && validPercentage(agility)
+                && validPercentage(hunger))
+        && (inventory.length == 10)
+        && (hungerDelay >= 0)
+        && (selectedInventorySlot < inventory.length)
+        && (0 <= rotation && rotation <= 2 * Math.PI));
     }
 }
