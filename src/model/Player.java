@@ -32,7 +32,7 @@ public class Player extends ActiveCell {
     private float rotation;
 
     /**
-     * Create a cell at the given position
+     * Create a cell at the given position with randomly chosen stats
      *
      * @param position position of this cell
      */
@@ -60,6 +60,24 @@ public class Player extends ActiveCell {
         hasValidState();
     }
 
+    /**
+     * Singleton pattern
+     * @return the player
+     */
+    public static Player getInstance() {
+        if (instance == null){
+            instance = new Player(new Position());
+        }
+        return instance;
+    }
+
+    /**
+     * Reset the player to the original state
+     */
+    public void reset() {
+        instance = new Player(new Position());
+    }
+
     @Override
     public void tick() {
         if (hungerDelay > MIN_HUNGER_DELAY) {
@@ -79,18 +97,6 @@ public class Player extends ActiveCell {
 
         hasValidState();
     }
-
-    /**
-     * Singleton pattern
-     * @return the player
-     */
-    public static Player getInstance() {
-        if (instance == null){
-            instance = new Player(new Position());
-        }
-        return instance;
-    }
-
 
     public int getHealth() {
         return health;
@@ -215,6 +221,7 @@ public class Player extends ActiveCell {
     private boolean validPercentage(int value) {
         return (0 <= value && value <= 100);
     }
+
     /*
      * Check invariant.
     */
