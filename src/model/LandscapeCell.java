@@ -6,13 +6,9 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * @author      Danil Platonov <slemonide@gmail.com>
- * @version     0.1
- * @since       0.1
- *
- * Represents a random walk cell.
+ * Generates landscape
  */
-public class RandomWalkCell extends ActiveCell {
+public class LandscapeCell extends ActiveCell {
     private Random random = new Random();
 
     /**
@@ -20,21 +16,20 @@ public class RandomWalkCell extends ActiveCell {
      *
      * @param position position of this node
      */
-    public RandomWalkCell(Position position) {
+    LandscapeCell(Position position) {
         super(position);
-        setName("Random Walk Cell");
     }
 
     @Override
     public void tick() {
-        // do nothing
+
     }
 
     @Override
     public Collection<? extends Cell> tickToAdd() {
         Set<Cell> nextCells = new HashSet<>();
         nextCells.add(new Cell(position));
-        nextCells.add(new RandomWalkCell(position.add(nextPosition())));
+        nextCells.add(new LandscapeCell(position.add(nextPosition())));
 
         return nextCells;
     }
@@ -47,17 +42,17 @@ public class RandomWalkCell extends ActiveCell {
     private Position nextPosition() {
         switch (random.nextInt(6)) {
             case 0:
-                return new Position(1, 0, 0);
+                return new Position(1, 0);
             case 1:
-                return new Position(-1, 0, 0);
+                return new Position(-1, 0);
             case 2:
-                return new Position(0, 1, 0);
+                return new Position(1, 1);
             case 3:
-                return new Position(0, -1, 0);
+                return new Position(-1, 1);
             case 4:
-                return new Position(0, 0, 1);
+                return new Position(1, -1);
             default:
-                return new Position(0, 0, -1);
+                return new Position(-1, -1);
         }
     }
 }

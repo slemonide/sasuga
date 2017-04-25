@@ -50,6 +50,9 @@ public class CellsMap implements Map<Position, Cell> {
     public Cell put(Position key, Cell value) {
         Cell previousValue = get(key);
 
+        // need this to avoid collisions between the maps
+        remove(key);
+
         if (value instanceof ActiveCell) {
             activeCells.put(key, (ActiveCell) value);
         } else {
