@@ -20,6 +20,9 @@ import java.util.Random;
  */
 public class Player extends ActiveCell {
     private static final int MIN_HUNGER_DELAY = World.TICKS_PER_SECOND; // in ticks
+    private static final int STRENGTH_REDUCTION_THRESHOLD = 30;
+    private static final int AGILITY_REDUCTION_THRESHOLD = 20;
+    private static final int HEALTH_REDUCTION_THRESHOLD = 5;
     private static final float ROTATION_SPEED = 0.01f;
     private static Player instance;
     private int health;
@@ -78,25 +81,39 @@ public class Player extends ActiveCell {
         instance = new Player(new Position());
     }
 
+
+    /**
+     * Hunger tick lowers player's hunger by one, and
+     * lowers player's stats, if below certain thresholds individual to each stat
+     * Counts MIN_HUNGER_DELAY world ticks between each hunger tick
+     */
     @Override
     public void tick() {
         if (hungerDelay > MIN_HUNGER_DELAY) {
-            setHunger(Math.max(getHunger() - 1, 0));
-            if (getHunger() < 30) {
-                setStrength(Math.max(getStrength() - (int) (3.0 / ((getHunger() + 1) * 0.1)), 0));
-            }
-            if (getHunger() < 20) {
-                setAgility(Math.max(getAgility() - (int) (1.0 / ((getHunger() + 1) * 0.1)), 0));
-            }
-            if (getHunger() < 5) {
-                setHealth(Math.max(getHealth() - (int) (1.0 / ((getHunger() + 1) * 0.1)), 0));
+            int hunger = getHunger();
+            setHunger(Math.max(hunger - 1, 0));
+
+            //Reduce strength
+            if (hunger < STRENGTH_REDUCTION_THRESHOLD) {
+                setStrength(Math.max(getStrength() - (int) (3.0 / ((hunger + 1) * 0.1)), 0));
+
+                //Reduce agility
+                if (hunger < AGILITY_REDUCTION_THRESHOLD) {
+                    setAgility(Math.max(getAgility() - (int) (1.0 / ((hunger + 1) * 0.1)), 0));
+
+                    //Reduce health
+                    if (hunger < HEALTH_REDUCTION_THRESHOLD) {
+                        setHealth(Math.max(getHealth() - (int) (1.0 / ((hunger + 1) * 0.1)), 0));
+                    }
+                }
             }
             hungerDelay = 0;
+        }else{
+            hungerDelay++;
         }
-        hungerDelay++;
 
-        hasValidState();
-    }
+        hasValidState();}
+
 
     public int getHealth() {
         return health;
