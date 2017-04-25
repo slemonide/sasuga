@@ -1,5 +1,6 @@
 package ui;
 
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
@@ -122,19 +123,19 @@ public class HUDController implements ScreenController, Observer {
     private void updatePopulation() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("population");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getLabel("Population", World.getInstance().getPopulationSize()));
+                .setText(getLabel("Population", World.getInstance().getPopulationSize(), "cells"));
     }
 
     private void updateTickTime() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("tick_time");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getSecondsLabel("Tick time", World.getInstance().getTickTime()));
+                .setText(getLabel("Tick time", World.getInstance().getTickTime(), "s"));
     }
 
     private void updateGrowthRate() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("growth_rate");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getGrowthRateLabel("Growth rate", World.getInstance().getGrowthRate()));
+                .setText(getLabel("Growth rate", World.getInstance().getGrowthRate(), "cells/tick"));
     }
 
     private void updateLeft() {
@@ -172,49 +173,43 @@ public class HUDController implements ScreenController, Observer {
     private void updateHealth() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("health");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getPercentageLabel("Health", player.getHealth()));
+                .setText(getLabel("Health", player.getHealth(), "%"));
     }
 
     private void updateStrength() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("strength");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getPercentageLabel("Strength", player.getStrength()));
+                .setText(getLabel("Strength", player.getStrength(), "%"));
     }
 
     private void updateAgility() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("agility");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getPercentageLabel("Agility", player.getAgility()));
+                .setText(getLabel("Agility", player.getAgility(), "%"));
     }
 
     private void updateHunger() {
         Element niftyElement = nifty.getCurrentScreen().findElementById("hunger");
         niftyElement.getRenderer(TextRenderer.class)
-                .setText(getPercentageLabel("Hunger", player.getHunger()));
+                .setText(getLabel("Hunger", player.getHunger(), "%"));
     }
 
+    private String getLabel(String property, Object value, String units) {
+        return property + ": " + value + " " + units;
+    }
     private String getLabel(String property, Object value) {
         return property + ": " + value;
-    }
-    private String getPercentageLabel(String property, int value) {
-        return property + ": " + value + "%";
-    }
-    private String getSecondsLabel(String property, double value) {
-        return property + ": " + value + " s";
-    }
-    private String getGrowthRateLabel(String property, int value) {
-        return property + ": " + value + " cells/sec";
     }
 
     private void updateInventoryItems() {
         Element niftyElement;
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
             niftyElement = nifty.getCurrentScreen().findElementById("cell_" + i);
 
-            if (Player.getInstance().getInventoryItem(i - 1) != null) {
+            if (Player.getInstance().getInventoryItem(i) != null) {
                 niftyElement.getRenderer(TextRenderer.class)
-                        .setText(Player.getInstance().getInventoryItem(i - 1).getName());
+                        .setText(Player.getInstance().getInventoryItem(i).getName());
             } else {
                 niftyElement.getRenderer(TextRenderer.class)
                         .setText("...");

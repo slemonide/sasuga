@@ -27,7 +27,7 @@ public class Player extends ActiveCell {
     private static final int AGILITY_REDUCTION_THRESHOLD = 20;
     private static final int HEALTH_REDUCTION_THRESHOLD = 5;
     private static final float ROTATION_SPEED = 0.01f;
-    private static final int INVENTORY_SIZE = 10;
+    public static final int INVENTORY_SIZE = 10;
     private static Player instance;
     private int health;
     private int strength;
