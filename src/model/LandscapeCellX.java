@@ -28,7 +28,7 @@ public class LandscapeCellX extends ActiveCell {
     @Override
     public Collection<? extends Cell> tickToAdd() {
         Set<Cell> nextCells = new HashSet<>();
-        nextCells.add(new LandscapeCellZ(position));
+        nextCells.add(new LandscapeCellTransistor(position));
         nextCells.add(new LandscapeCellX(position.add(nextPosition())));
 
         return nextCells;

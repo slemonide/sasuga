@@ -42,15 +42,15 @@ public class LandscapeCellZ extends ActiveCell {
     private Position nextPosition() {
         switch (random.nextInt(6)) {
             case 0:
-                return new Position(0, 1, 1);
-            case 1:
-                return new Position(0, -1, 1);
-            case 2:
                 return new Position(0, 0, 1);
-            case 3:
+            case 1:
                 return new Position(0, 0, -1);
-            case 4:
+            case 2:
+                return new Position(0, 1, 1);
+            case 3:
                 return new Position(0, 1, -1);
+            case 4:
+                return new Position(0, -1, 1);
             default:
                 return new Position(0, -1, -1);
         }

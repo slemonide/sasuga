@@ -145,11 +145,11 @@ public class World extends Observable implements Runnable {
             Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
             if (toAddFromThisCell != null) {
-                toAdd.addAll(cell.tickToAdd());
+                toAdd.addAll(toAddFromThisCell);
             }
 
             if (toRemoveFromThisCell != null) {
-                toRemove.addAll(cell.tickToRemove());
+                toRemove.addAll(toRemoveFromThisCell);
             }
 
             cell.tick();
