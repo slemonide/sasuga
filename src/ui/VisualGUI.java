@@ -58,7 +58,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
     /** A centred plus sign to help the player aim.
      * Credit: jMonkeyEngine tutorials*/
     protected void initCrossHairs() {
-        setDisplayStatView(false);
         guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
         BitmapText ch = new BitmapText(guiFont, false);
         ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
