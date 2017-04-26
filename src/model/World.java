@@ -10,7 +10,7 @@ import java.util.*;
  * Manages world
  */
 public class World extends Observable implements Runnable {
-    private static final double TICK_DELAY = 0.001; // in seconds
+    private static final double TICK_DELAY = 0.1; // in seconds
     static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
     private int generation;
@@ -20,6 +20,8 @@ public class World extends Observable implements Runnable {
     private Thread worldThread;
     private static World instance;
     private int growthRate;
+    private Set<Cell> toAdd;
+    private Set<Position> toRemove;
 
     /**
      * Create a new empty world
@@ -30,6 +32,9 @@ public class World extends Observable implements Runnable {
         population = 0;
         cellsMap = new CellsMap();
         worldThread = new Thread(this);
+
+        toAdd = new HashSet<>();
+        toRemove = new HashSet<>();
     }
 
     /**
@@ -94,12 +99,7 @@ public class World extends Observable implements Runnable {
      * @param cell cell to add
      */
     public void add(Cell cell) {
-        cellsMap.put(cell.getPosition(), cell);
-        population++;
-        generation++;
-
-        setChanged();
-        notifyObservers();
+        toAdd.add(cell);
     }
 
     /**
@@ -108,21 +108,11 @@ public class World extends Observable implements Runnable {
      * @param cell cell to remove
      */
     public void remove(Cell cell) {
-        cellsMap.remove(cell.getPosition());
-        population--;
-        generation++;
-
-        setChanged();
-        notifyObservers();
+        toRemove.add(cell.getPosition());
     }
 
     public void remove(Position currentSelection) {
-        cellsMap.remove(currentSelection);
-        population--;
-        generation++;
-
-        setChanged();
-        notifyObservers();
+        toRemove.add(currentSelection);
     }
 
     /**
@@ -132,24 +122,18 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
-        Set<Cell> toAdd = new HashSet<>();
-        Set<Position> toRemove = new HashSet<>();
+        for (ActiveCell cell : cellsMap.activeCellsValues()) {
+            Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
+            Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
-        synchronized (cellsMap.activeCellsValues()) {
-            for (ActiveCell cell : cellsMap.activeCellsValues()) {
-                Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
-                Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
-
-                if (toAddFromThisCell != null) {
-                    toAdd.addAll(toAddFromThisCell);
-                }
-
-                if (toRemoveFromThisCell != null) {
-                    toRemove.addAll(toRemoveFromThisCell);
-                }
-
-                cell.tick();
+            if (toAddFromThisCell != null) {
+                toAdd.addAll(toAddFromThisCell);
             }
+             if (toRemoveFromThisCell != null) {
+                 toRemove.addAll(toRemoveFromThisCell);
+             }
+
+            cell.tick();
         }
 
         // update cursor location
@@ -165,6 +149,10 @@ public class World extends Observable implements Runnable {
             population += growthRate;
             generation++;
         }
+
+        // reset toAdd and toRemove
+        toAdd.clear();
+        toRemove.clear();
 
         // tickTime measurement
         long endTime = System.nanoTime();
@@ -200,5 +188,9 @@ public class World extends Observable implements Runnable {
 
     public int getGrowthRate() {
         return growthRate;
+    }
+
+    public CellsMap getCellsMap() {
+        return cellsMap;
     }
 }
