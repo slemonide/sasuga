@@ -6,6 +6,8 @@ import model.Cell;
 import model.Position;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -27,12 +29,15 @@ public class ElectronHead extends ActiveCell {
 
     @Override
     public void tick() {
-
+        // do nothing
     }
 
     @Override
     public Collection<? extends Cell> tickToAdd() {
-        return null;
+        Set<Cell> toAdd = new HashSet<>();
+        toAdd.add(new ElectronTail(position));
+
+        return toAdd;
     }
 
     @Override
