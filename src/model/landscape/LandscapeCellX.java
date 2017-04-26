@@ -1,4 +1,8 @@
-package model;
+package model.landscape;
+
+import model.ActiveCell;
+import model.Cell;
+import model.Position;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,7 +12,7 @@ import java.util.Set;
 /**
  * Generates landscape
  */
-public class LandscapeCell extends ActiveCell {
+public class LandscapeCellX extends ActiveCell {
     private Random random = new Random();
 
     /**
@@ -16,7 +20,7 @@ public class LandscapeCell extends ActiveCell {
      *
      * @param position position of this node
      */
-    LandscapeCell(Position position) {
+    public LandscapeCellX(Position position) {
         super(position);
     }
 
@@ -28,8 +32,8 @@ public class LandscapeCell extends ActiveCell {
     @Override
     public Collection<? extends Cell> tickToAdd() {
         Set<Cell> nextCells = new HashSet<>();
-        nextCells.add(new Cell(position));
-        nextCells.add(new LandscapeCell(position.add(nextPosition())));
+        nextCells.add(new LandscapeCellTransistor(position));
+        nextCells.add(new LandscapeCellX(position.add(nextPosition())));
 
         return nextCells;
     }

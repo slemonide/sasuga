@@ -1,5 +1,9 @@
 package model;
 
+import model.landscape.LandscapeCell;
+import model.landscape.LandscapeCellX;
+import model.landscape.LandscapeCellZ;
+
 import java.util.Collection;
 import java.util.Random;
 

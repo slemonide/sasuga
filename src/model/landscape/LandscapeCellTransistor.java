@@ -1,4 +1,8 @@
-package model;
+package model.landscape;
+
+import model.ActiveCell;
+import model.Cell;
+import model.Position;
 
 import java.util.Collection;
 import java.util.HashSet;
