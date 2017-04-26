@@ -67,6 +67,10 @@ public class Player extends ActiveCell {
                 () ->  World.getInstance().add(new RandomWalkCell(getCursor()))));
         inventory.setInventoryItem(4, new InventoryItem("Landscape",
                 () ->  World.getInstance().add(new LandscapeCell(getCursor()))));
+        inventory.setInventoryItem(5, new InventoryItem("Landscape X",
+                () ->  World.getInstance().add(new LandscapeCellX(getCursor()))));
+        inventory.setInventoryItem(6, new InventoryItem("Landscape Z",
+                () ->  World.getInstance().add(new LandscapeCellZ(getCursor()))));
 
         hasValidState();
     }

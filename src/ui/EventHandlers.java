@@ -111,6 +111,11 @@ public class EventHandlers extends Observable {
         }
         Player.getInstance().rotateClockWise();
     };
+    private AnalogListener resetActionListener = (name, value, tpf) -> {
+        World.getInstance().interrupt();
+        World.getInstance().reset();
+        World.getInstance().start();
+    };
 
     EventHandlers(VisualGUI visualGUI) {
         this.visualGUI = visualGUI;
@@ -163,5 +168,8 @@ public class EventHandlers extends Observable {
 
         visualGUI.getInputManager().addMapping("Rotate CW", new KeyTrigger(KeyInput.KEY_RSHIFT));
         visualGUI.getInputManager().addListener(rotateCWActionListener, "Rotate CW");
+
+        visualGUI.getInputManager().addMapping("Reset", new KeyTrigger(KeyInput.KEY_R));
+        visualGUI.getInputManager().addListener(resetActionListener, "Reset");
     }
 }
