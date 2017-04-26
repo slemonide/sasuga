@@ -58,6 +58,16 @@
             <version>${jme3.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.jmonkeyengine</groupId>
+            <artifactId>jme3-bullet</artifactId>
+            <version>${jme3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jmonkeyengine</groupId>
+            <artifactId>jme3-bullet-native</artifactId>
+            <version>${jme3.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>

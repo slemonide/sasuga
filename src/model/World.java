@@ -136,7 +136,7 @@ public class World extends Observable implements Runnable {
         Set<Cell> toAdd = new HashSet<>();
         Set<Position> toRemove = new HashSet<>();
 
-        synchronized (cellsMap) {
+        synchronized (cellsMap.activeCellsValues()) {
             for (ActiveCell cell : cellsMap.activeCellsValues()) {
                 Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
                 Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
