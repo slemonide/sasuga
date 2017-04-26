@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LandscapeCellTransistor extends ActiveCell {
-    private static final int TICK_DELAY = 10;
+    private static final int TICK_DELAY = 500;
     private int delay;
     /**
      * Create a cell at the given position
