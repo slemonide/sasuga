@@ -68,7 +68,13 @@ class Environment {
             Spatial node = new Geometry("Box", b);
             node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
-            Material mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
+            Material mat;
+            if (cell.getColor() == null) {
+                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
+            } else {
+                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+                mat.setColor("Color", cell.getColor());
+            }
             node.setMaterial(mat);
 
             node.setLocalTranslation(

@@ -3,6 +3,9 @@ package model;
 import model.landscape.LandscapeCell;
 import model.landscape.LandscapeCellX;
 import model.landscape.LandscapeCellZ;
+import model.wireworld.Conductor;
+import model.wireworld.ElectronHead;
+import model.wireworld.ElectronTail;
 
 import java.util.Collection;
 import java.util.Random;
@@ -73,6 +76,12 @@ public class Player extends ActiveCell {
                 () ->  World.getInstance().add(new LandscapeCellX(getCursor()))));
         inventory.setInventoryItem(6, new InventoryItem("Landscape Z",
                 () ->  World.getInstance().add(new LandscapeCellZ(getCursor()))));
+        inventory.setInventoryItem(7, new InventoryItem("Wireworld Wire",
+                () ->  World.getInstance().add(new Conductor(getCursor()))));
+        inventory.setInventoryItem(8, new InventoryItem("Electron Head",
+                () ->  World.getInstance().add(new ElectronHead(getCursor()))));
+        inventory.setInventoryItem(9, new InventoryItem("Electron Tail",
+                () ->  World.getInstance().add(new ElectronTail(getCursor()))));
 
         hasValidState();
     }

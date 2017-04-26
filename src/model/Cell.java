@@ -1,5 +1,7 @@
 package model;
 
+import com.jme3.math.ColorRGBA;
+
 import java.util.Observable;
 
 /**
@@ -12,6 +14,7 @@ import java.util.Observable;
 public class Cell extends Observable {
     private String name = "Static Cell";
     protected Position position;
+    protected ColorRGBA color;
 
     /**
      * Create a cell at the given position
@@ -35,5 +38,9 @@ public class Cell extends Observable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ColorRGBA getColor() {
+        return color;
     }
 }
