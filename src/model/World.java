@@ -95,10 +95,6 @@ public class World extends Observable implements Runnable {
      * @param cell cell to add
      */
     public void add(Cell cell) {
-        if (cellsMap.containsKey(cell.getPosition())) {
-            return; // can't replace what's placed
-        }
-
         cellsMap.put(cell.getPosition(), cell);
         population++;
         generation++;
@@ -140,19 +136,21 @@ public class World extends Observable implements Runnable {
         Set<Cell> toAdd = new HashSet<>();
         Set<Position> toRemove = new HashSet<>();
 
-        for (ActiveCell cell : cellsMap.activeCellsValues()) {
-            Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
-            Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
+        synchronized (cellsMap) {
+            for (ActiveCell cell : cellsMap.activeCellsValues()) {
+                Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
+                Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
-            if (toAddFromThisCell != null) {
-                toAdd.addAll(toAddFromThisCell);
+                if (toAddFromThisCell != null) {
+                    toAdd.addAll(toAddFromThisCell);
+                }
+
+                if (toRemoveFromThisCell != null) {
+                    toRemove.addAll(toRemoveFromThisCell);
+                }
+
+                cell.tick();
             }
-
-            if (toRemoveFromThisCell != null) {
-                toRemove.addAll(toRemoveFromThisCell);
-            }
-
-            cell.tick();
         }
 
         // update growth rate
@@ -199,9 +197,5 @@ public class World extends Observable implements Runnable {
 
     public int getGrowthRate() {
         return growthRate;
-    }
-
-    public CellsMap getCellsMap() {
-        return cellsMap; // TODO: make unmodifiable
     }
 }
