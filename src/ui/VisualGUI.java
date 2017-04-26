@@ -1,19 +1,11 @@
 package ui;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
-import com.jme3.bullet.collision.shapes.CollisionShape;
-import com.jme3.bullet.control.CharacterControl;
-import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.util.CollisionShapeFactory;
-import com.jme3.math.Matrix3f;
-import com.jme3.math.Quaternion;
+import com.jme3.font.BitmapText;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
-import model.Position;
 import model.World;
 
 import java.util.Observable;
@@ -42,6 +34,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
         initializeHUD();
+        initCrossHairs();
 
         Player.getInstance().addObserver(this);
     }
@@ -60,6 +53,19 @@ public class VisualGUI extends SimpleApplication implements Observer {
         Player.getInstance().addObserver(hudController);
         World.getInstance().addObserver(hudController);
         eventHandlers.addObserver(hudController);
+    }
+
+    /** A centred plus sign to help the player aim.
+     * Credit: jMonkeyEngine tutorials*/
+    protected void initCrossHairs() {
+        setDisplayStatView(false);
+        guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+        BitmapText ch = new BitmapText(guiFont, false);
+        ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+        ch.setText("+"); // crosshairs
+        ch.setLocalTranslation( // center
+                settings.getWidth() / 2 - ch.getLineWidth()/2, settings.getHeight() / 2 + ch.getLineHeight()/2, 0);
+        guiNode.attachChild(ch);
     }
 
     @Override

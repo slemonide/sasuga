@@ -1,7 +1,5 @@
 package model;
 
-import ui.HUDController;
-
 import java.util.*;
 
 /**
@@ -17,6 +15,7 @@ public class World extends Observable implements Runnable {
     private long tickTime;
     private int generation;
     private CellsMap cellsMap;
+    private Cursor cursor;
     private int population;
     private Thread worldThread;
     private static World instance;
@@ -152,6 +151,10 @@ public class World extends Observable implements Runnable {
                 cell.tick();
             }
         }
+
+        // update cursor location
+        // NOTE: if too costly, move to GUI and use only on camera movement
+       // cursor.tick();
 
         // update growth rate
         growthRate = toAdd.size() - toRemove.size();
