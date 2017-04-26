@@ -1,9 +1,7 @@
 package model;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 /**
  *
@@ -237,7 +235,7 @@ public class Player extends ActiveCell {
         return (0 <= value && value <= 100);
     }
 
-    /*
+    /**
      * Check invariant.
     */
     private void hasValidState() {

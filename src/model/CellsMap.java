@@ -1,9 +1,6 @@
 package model;
 
-import javafx.geometry.Pos;
-
 import java.util.*;
-import java.util.function.BiConsumer;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -33,12 +30,12 @@ public class CellsMap implements Map<Position, Cell> {
 
     @Override
     public boolean containsKey(Object key) {
-        return (staticCells.containsKey(key) && activeCells.containsKey(key));
+        return (staticCells.containsKey(key) || activeCells.containsKey(key));
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return (staticCells.containsValue(value) && activeCells.containsValue(value));
+        return (staticCells.containsValue(value) || activeCells.containsValue(value));
     }
 
     @Override
