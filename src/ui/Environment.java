@@ -25,7 +25,7 @@ import java.util.Collection;
 class Environment {
     private final VisualGUI visualGUI;
     private Node cellsNode;
-    private static final float SCALE = 0.2f;
+    public static final float SCALE = 0.2f;
     private static final double MIN_DELAY = 0.01;
     private float delay;
 

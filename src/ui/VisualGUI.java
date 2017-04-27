@@ -2,8 +2,14 @@ package ui;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
+import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
 import model.World;
@@ -17,6 +23,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
     private Vector3f lastGaze;
     private Vector3f up;
     private Vector3f left;
+    private Spatial cursor;
 
     public static void main(String[] args) {
         VisualGUI app = new VisualGUI();
@@ -35,6 +42,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         eventHandlers.initializeEventHandlers();
         initializeHUD();
         initCrossHairs();
+        initCursor();
 
         Player.getInstance().addObserver(this);
     }
@@ -67,11 +75,38 @@ public class VisualGUI extends SimpleApplication implements Observer {
         guiNode.attachChild(ch);
     }
 
+    private void initCursor() {
+        Sphere sphere = new Sphere(8, 8, 0.125f);
+        //Box box = new Box(0.1f, 0.1f, 0.1f);
+        cursor = new Geometry("Sphere", sphere);
+        Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
+        cursor.setMaterial(mat);
+
+        cursor.setLocalTranslation(
+                Player.getInstance().getCursor().getComponent(0) * Environment.SCALE,
+                Player.getInstance().getCursor().getComponent(1) * Environment.SCALE,
+                Player.getInstance().getCursor().getComponent(2) * Environment.SCALE);
+
+        rootNode.attachChild(cursor);
+    }
+
+
     @Override
     public void simpleUpdate(float tpf) {
         if (!eventHandlers.isPaused()) {
             environment.update(tpf);
         }
+
+        updateCursor();
+        rotateCamera();
+        rotateFloor();
+    }
+
+    private void updateCursor() {
+        cursor.setLocalTranslation(
+                Player.getInstance().getCursor().getComponent(0) * Environment.SCALE,
+                Player.getInstance().getCursor().getComponent(1) * Environment.SCALE,
+                Player.getInstance().getCursor().getComponent(2) * Environment.SCALE);
     }
 
     /**
@@ -84,8 +119,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        rotateCamera();
-        rotateFloor();
     }
 
     private void rotateFloor() {

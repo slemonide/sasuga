@@ -139,8 +139,10 @@ public class CellsMap implements Map<Position, Cell> {
     }
 
     public void addAll(Set<Cell> cells) {
-        for (Cell cell : cells) {
-            put(cell.getPosition(), cell);
+        synchronized (cells) {
+            for (Cell cell : cells) {
+                put(cell.getPosition(), cell);
+            }
         }
     }
 }
