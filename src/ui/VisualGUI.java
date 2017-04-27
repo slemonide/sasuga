@@ -97,8 +97,8 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
 
         updateCursor();
-        rotateCamera();
-        rotateFloor();
+        //rotateCamera();
+        //rotateFloor();
     }
 
     private void updateCursor() {
