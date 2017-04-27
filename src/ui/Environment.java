@@ -9,6 +9,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
@@ -23,11 +24,15 @@ import model.World;
 import java.util.Collection;
 
 class Environment {
-    private final VisualGUI visualGUI;
-    private Node cellsNode;
     public static final float SCALE = 0.2f;
     private static final double MIN_DELAY = 0.01;
+    private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);;
+    private static final float FLOOR_SIZE = 5000;
+    private final VisualGUI visualGUI;
+    private Node cellsNode;
     private float delay;
+    private Material mat;
+    private Box box;
 
     private Node getCellsNode() {
         return cellsNode;
@@ -62,30 +67,7 @@ class Environment {
         visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         visualGUI.getRootNode().attachChild(cellsNode);
 
-        Collection<Cell> cells = World.getInstance().getCells();
-        for (Cell cell : cells) {
-            Box b = new Box(0.1f, 0.1f, 0.1f);
-            Spatial node = new Geometry("Box", b);
-            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-
-            Material mat;
-            if (cell.getColor() == null) {
-                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
-            } else {
-                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-                mat.setColor("Color", cell.getColor());
-            }
-            node.setMaterial(mat);
-
-            node.setLocalTranslation(
-                    cell.getPosition().getComponent(0) * SCALE,
-                    cell.getPosition().getComponent(1) * SCALE,
-                    cell.getPosition().getComponent(2) * SCALE);
-
-            cellsNode.attachChild(node);
-        }
-
-        GeometryBatchFactory.optimize(cellsNode);
+        updateCells();
     }
 
     private void addShadows() {
@@ -109,7 +91,7 @@ class Environment {
     }
 
     private void addFloor() {
-        floor = new Geometry("Box", new Quad(2000, 2000));
+        floor = new Geometry("Box", new Quad(FLOOR_SIZE, FLOOR_SIZE));
         Material unshaded = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
@@ -117,7 +99,7 @@ class Environment {
 
         Quaternion q = new Quaternion();
         floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
-        floor.setLocalTranslation(-1000, -SCALE / 2, 1000);
+        floor.setLocalTranslation(-FLOOR_SIZE, -SCALE / 2, FLOOR_SIZE);
         visualGUI.getRootNode().attachChild(floor);
 
         updateFloor();
@@ -147,7 +129,30 @@ class Environment {
 
     private void updateCells() {
         getCellsNode().getChildren().clear();
-        addCells();
+        Collection<Cell> cells = World.getInstance().getCells();
+        for (Cell cell : cells) {
+            Spatial node = new Geometry("Box", BOX);
+            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+            if (mat == null) {
+                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
+            }
+            /*
+            if (cell.getColor() == null) {
+                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
+            } else {
+                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+                mat.setColor("Color", cell.getColor());
+            }*/
+            node.setMaterial(mat);
+
+            node.setLocalTranslation(
+                    cell.getPosition().getComponent(0) * SCALE,
+                    cell.getPosition().getComponent(1) * SCALE,
+                    cell.getPosition().getComponent(2) * SCALE);
+
+            cellsNode.attachChild(node);
+        }
         GeometryBatchFactory.optimize(getCellsNode());
     }
 }
