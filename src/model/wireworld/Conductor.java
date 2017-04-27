@@ -18,7 +18,7 @@ import java.util.Vector;
  *
  * A wireworld conductor
  */
-public class Conductor extends ActiveCell {
+public class Conductor extends Wireworld {
     /**
      * Create a cell at the given position
      *

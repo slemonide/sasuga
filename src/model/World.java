@@ -10,10 +10,11 @@ import java.util.*;
  * Manages world
  */
 public class World extends Observable implements Runnable {
-    private static final double TICK_DELAY = 0.1; // in seconds
-    static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
+    private static final double TICK_DELAY = 0.0001; // in seconds
+    public static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
     private int generation;
+    private int tickDelayNumber;
     private CellsMap cellsMap;
     private Cursor cursor;
     private int population;
@@ -30,6 +31,7 @@ public class World extends Observable implements Runnable {
         tickTime = 0;
         generation = 0;
         population = 0;
+        tickDelayNumber = 0;
         cellsMap = new CellsMap();
         worldThread = new Thread(this);
 
@@ -126,18 +128,21 @@ public class World extends Observable implements Runnable {
         Set<Position> tickToRemove = new HashSet<>();
 
         for (ActiveCell cell : cellsMap.activeCellsValues()) {
-            Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
-            Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
+            if (cell.delay == 0 || tickDelayNumber % cell.delay == 0) {
+                Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
+                Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
-            if (toAddFromThisCell != null) {
-                tickToAdd.addAll(toAddFromThisCell);
+                if (toAddFromThisCell != null) {
+                    tickToAdd.addAll(toAddFromThisCell);
+                }
+                if (toRemoveFromThisCell != null) {
+                    tickToRemove.addAll(toRemoveFromThisCell);
+                }
+
+                cell.tick();
             }
-             if (toRemoveFromThisCell != null) {
-                 tickToRemove.addAll(toRemoveFromThisCell);
-             }
-
-            cell.tick();
         }
+        tickDelayNumber++;
 
         tickToAdd.addAll(toAdd);
         tickToRemove.addAll(toRemove);

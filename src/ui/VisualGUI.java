@@ -77,7 +77,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     private void initCursor() {
         Sphere sphere = new Sphere(8, 8, 0.125f);
-        //Box box = new Box(0.1f, 0.1f, 0.1f);
         cursor = new Geometry("Sphere", sphere);
         Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
         cursor.setMaterial(mat);

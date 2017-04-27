@@ -12,6 +12,10 @@ import java.util.Set;
  */
 public abstract class ActiveCell extends Cell {
     /**
+     * Delay in ticks between a given cell updates
+     */
+    protected int delay;
+    /**
      * Create a cell at the given position
      *
      * @param position position of this node
@@ -19,6 +23,7 @@ public abstract class ActiveCell extends Cell {
     public ActiveCell(Position position) {
         super(position);
         setName("Active Cell");
+        delay = 0;
     }
 
     /**

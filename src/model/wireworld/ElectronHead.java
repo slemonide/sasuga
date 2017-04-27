@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * A wireworld electron head
  */
-public class ElectronHead extends ActiveCell {
+public class ElectronHead extends Wireworld {
     /**
      * Create a cell at the given position
      *

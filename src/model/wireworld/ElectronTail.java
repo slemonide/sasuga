@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * A wireworld electron tail
  */
-public class ElectronTail extends ActiveCell {
+public class ElectronTail extends Wireworld {
     /**
      * Create a cell at the given position
      *
