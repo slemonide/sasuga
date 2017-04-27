@@ -122,30 +122,36 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
+        Set<Cell> tickToAdd = new HashSet<>();
+        Set<Position> tickToRemove = new HashSet<>();
+
         for (ActiveCell cell : cellsMap.activeCellsValues()) {
             Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
             Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
             if (toAddFromThisCell != null) {
-                toAdd.addAll(toAddFromThisCell);
+                tickToAdd.addAll(toAddFromThisCell);
             }
              if (toRemoveFromThisCell != null) {
-                 toRemove.addAll(toRemoveFromThisCell);
+                 tickToRemove.addAll(toRemoveFromThisCell);
              }
 
             cell.tick();
         }
+
+        tickToAdd.addAll(toAdd);
+        tickToRemove.addAll(toRemove);
 
         // update cursor location
         // NOTE: if too costly, move to GUI and use only on camera movement
        // cursor.tick();
 
         // update growth rate
-        growthRate = toAdd.size() - toRemove.size();
+        growthRate = tickToAdd.size() - tickToRemove.size();
         // if there's no change, don't update the generation counter
         if (growthRate != 0) {
-            cellsMap.removeAll(toRemove);
-            cellsMap.addAll(toAdd);
+            cellsMap.removeAll(tickToRemove);
+            cellsMap.addAll(tickToAdd);
             population += growthRate;
             generation++;
         }
