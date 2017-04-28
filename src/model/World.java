@@ -124,19 +124,16 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
-        Set<Cell> tickToAdd = new HashSet<>();
-        Set<Position> tickToRemove = new HashSet<>();
-
         for (ActiveCell cell : cellsMap.activeCellsValues()) {
             if (cell.delay == 0 || tickDelayNumber % cell.delay == 0) {
                 Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
                 Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
                 if (toAddFromThisCell != null) {
-                    tickToAdd.addAll(toAddFromThisCell);
+                    toAdd.addAll(toAddFromThisCell);
                 }
                 if (toRemoveFromThisCell != null) {
-                    tickToRemove.addAll(toRemoveFromThisCell);
+                    toRemove.addAll(toRemoveFromThisCell);
                 }
 
                 cell.tick();
@@ -144,33 +141,30 @@ public class World extends Observable implements Runnable {
         }
         tickDelayNumber++;
 
-        tickToAdd.addAll(toAdd);
-        tickToRemove.addAll(toRemove);
-
         // update cursor location
         // NOTE: if too costly, move to GUI and use only on camera movement
        // cursor.tick();
 
         // update growth rate
-        growthRate = tickToAdd.size() - tickToRemove.size();
+        growthRate = toAdd.size() - toRemove.size();
         // if there's no change, don't update the generation counter
-        if (growthRate != 0) {
-            cellsMap.removeAll(tickToRemove);
-            cellsMap.addAll(tickToAdd);
+        if (!(toAdd.isEmpty() && toRemove.isEmpty())) {
+            cellsMap.removeAll(toRemove);
+            cellsMap.addAll(toAdd);
             population += growthRate;
             generation++;
+
+            setChanged();
+            notifyObservers();
+
+            // tickTime measurement
+            long endTime = System.nanoTime();
+            tickTime = endTime - startTime;
+
+            // reset toAdd and toRemove
+            toAdd.clear();
+            toRemove.clear();
         }
-
-        // reset toAdd and toRemove
-        toAdd.clear();
-        toRemove.clear();
-
-        // tickTime measurement
-        long endTime = System.nanoTime();
-        tickTime = endTime - startTime;
-
-        setChanged();
-        notifyObservers();
     }
 
     /**
@@ -203,5 +197,13 @@ public class World extends Observable implements Runnable {
 
     public CellsMap getCellsMap() {
         return cellsMap;
+    }
+
+    public Set<Cell> getToAdd() {
+        return toAdd;
+    }
+
+    public Set<Position> getToRemove() {
+        return toRemove;
     }
 }

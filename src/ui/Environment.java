@@ -20,20 +20,23 @@ import com.jme3.util.SkyFactory;
 import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
 import model.MaterialManager;
+import model.Position;
 import model.World;
 
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
-class Environment {
+class Environment implements Observer {
     public static final float SCALE = 0.2f;
-    private static final double MIN_DELAY = 0.01;
     private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);;
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;
-    private float delay;
     private Material mat;
-    private Box box;
+    private Map<Position, Spatial> voxelMap;
+    private Set<Cell> toAdd;
+    private Set<Position> toRemove;
+    private boolean updatingCells;
 
     private Node getCellsNode() {
         return cellsNode;
@@ -46,8 +49,14 @@ class Environment {
     }
 
     Environment(VisualGUI visualGUI) {
-        delay = 0;
         this.visualGUI = visualGUI;
+
+        voxelMap = new HashMap<>();
+        toAdd = new HashSet<>();
+        toRemove = new HashSet<>();
+        updatingCells = false;
+
+        World.getInstance().addObserver(this);
     }
 
     void initializeEnvironment() {
@@ -100,14 +109,13 @@ class Environment {
 
         Quaternion q = new Quaternion();
         floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
-        floor.setLocalTranslation(-FLOOR_SIZE, -SCALE / 2, FLOOR_SIZE);
+        floor.setLocalTranslation(-FLOOR_SIZE / 2, -SCALE / 2, FLOOR_SIZE / 2);
         visualGUI.getRootNode().attachChild(floor);
 
         updateFloor();
     }
 
     void update(float tpf) {
-        updateDelay(tpf);
         updateCells();
         updateFloor();
     }
@@ -124,24 +132,16 @@ class Environment {
         getFloor().setLocalTranslation(nextFloorTranslation);
     }
 
-    private void updateDelay(float tpf) {
-        delay = (float) ((delay + tpf) % MIN_DELAY);
-    }
-
     private void updateCells() {
-        getCellsNode().getChildren().clear();
-        Collection<Cell> cells = World.getInstance().getCells();
-        for (Cell cell : cells) {
+        updatingCells = true;
+        for (Cell cell : toAdd) {
             Spatial node = new Geometry("Box", BOX);
             node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
             if (cell.getColor() == null) {
                 mat = MaterialManager.getInstance().getDefaultMaterial(visualGUI.getAssetManager());
-                //new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
             } else {
                 mat = MaterialManager.getInstance().getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
-                //mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-                //mat.setColor("Color", cell.getColor());
             }
             node.setMaterial(mat);
 
@@ -152,6 +152,21 @@ class Environment {
 
             cellsNode.attachChild(node);
         }
+
+        toAdd.clear();
+        toRemove.clear();
+        updatingCells = false;
         GeometryBatchFactory.optimize(getCellsNode());
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        // this could cause problems
+        boolean notDone = true;
+        while (!updatingCells && notDone) {
+            toAdd.addAll(World.getInstance().getToAdd());
+            toRemove.addAll(World.getInstance().getToRemove());
+            notDone = false;
+        }
     }
 }
