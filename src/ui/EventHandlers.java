@@ -115,9 +115,7 @@ public class EventHandlers extends Observable {
         Player.getInstance().rotateClockWise();
     };
     private AnalogListener resetActionListener = (name, value, tpf) -> {
-        World.getInstance().interrupt();
         World.getInstance().reset();
-        World.getInstance().start();
     };
 
     EventHandlers(VisualGUI visualGUI) {

@@ -37,7 +37,7 @@ public class MaterialManager {
     /**
      * @return material made of "Common/MatDefs/Misc/ShowNormals.j3md"
      */
-    public Material getDefaultMaterial(AssetManager assetManager) {
+    private Material getDefaultMaterial(AssetManager assetManager) {
         if (defaultMaterial == null) {
             defaultMaterial = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");;
         }
@@ -49,6 +49,10 @@ public class MaterialManager {
      * @return colored material made of "Common/MatDefs/Misc/Unshaded.j3md"
      */
     public Material getColoredMaterial(AssetManager assetManager, ColorRGBA color) {
+        if (color == null) {
+            return getDefaultMaterial(assetManager);
+        }
+
         if (!coloredMaterials.containsKey(color)) {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             mat.setColor("Color", color);

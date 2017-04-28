@@ -32,7 +32,6 @@ class Environment implements Observer {
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;
-    private Material mat;
     private Map<Position, Spatial> voxelMap;
     private Set<Cell> toAdd;
     private Set<Position> toRemove;
@@ -135,28 +134,43 @@ class Environment implements Observer {
     private void updateCells() {
         updatingCells = true;
         for (Cell cell : toAdd) {
-            Spatial node = new Geometry("Box", BOX);
-            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+            Position position = cell.getPosition();
 
-            if (cell.getColor() == null) {
-                mat = MaterialManager.getInstance().getDefaultMaterial(visualGUI.getAssetManager());
-            } else {
-                mat = MaterialManager.getInstance().getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
-            }
-            node.setMaterial(mat);
+            removeSpatial(position);
+            addSpatial(cell, position);
+        }
 
-            node.setLocalTranslation(
-                    cell.getPosition().getComponent(0) * SCALE,
-                    cell.getPosition().getComponent(1) * SCALE,
-                    cell.getPosition().getComponent(2) * SCALE);
-
-            cellsNode.attachChild(node);
+        for (Position position : toRemove) {
+            removeSpatial(position);
         }
 
         toAdd.clear();
         toRemove.clear();
         updatingCells = false;
-        GeometryBatchFactory.optimize(getCellsNode());
+    }
+
+    private void addSpatial(Cell cell, Position position) {
+        Spatial node = new Geometry("Box", BOX);
+        node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+        Material material = MaterialManager.getInstance().getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+        node.setMaterial(material);
+
+        node.setLocalTranslation(
+                position.getComponent(0) * SCALE,
+                position.getComponent(1) * SCALE,
+                position.getComponent(2) * SCALE);
+
+        cellsNode.attachChild(node);
+        voxelMap.put(position, node);
+    }
+
+    private void removeSpatial(Position position) {
+        Spatial spatialToRemove = voxelMap.get(position);
+
+        if (spatialToRemove != null) {
+            cellsNode.detachChild(spatialToRemove);
+        }
     }
 
     @Override
