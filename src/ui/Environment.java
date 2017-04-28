@@ -132,57 +132,27 @@ class Environment implements Observer {
     }
 
     private void updateCells() {
-        updatingCells = true;
-        for (Cell cell : toAdd) {
-            Position position = cell.getPosition();
+        getCellsNode().getChildren().clear();
+        Collection<Cell> cells = World.getInstance().getCells();
+        for (Cell cell : cells) {
+            Spatial node = new Geometry("Box", BOX);
+            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
-            removeSpatial(position);
-            addSpatial(cell, position);
+            Material material = MaterialManager.getInstance()
+                    .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+            node.setMaterial(material);
+
+            node.setLocalTranslation(
+                    cell.getPosition().getComponent(0) * SCALE,
+                    cell.getPosition().getComponent(1) * SCALE,
+                    cell.getPosition().getComponent(2) * SCALE);
+
+            cellsNode.attachChild(node);
         }
-
-        for (Position position : toRemove) {
-            removeSpatial(position);
-        }
-
-        toAdd.clear();
-        toRemove.clear();
-        updatingCells = false;
-    }
-
-    private void addSpatial(Cell cell, Position position) {
-        Spatial node = new Geometry("Box", BOX);
-        node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-
-        Material material = MaterialManager.getInstance().getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
-        node.setMaterial(material);
-
-        node.setLocalTranslation(
-                position.getComponent(0) * SCALE,
-                position.getComponent(1) * SCALE,
-                position.getComponent(2) * SCALE);
-
-        cellsNode.attachChild(node);
-        voxelMap.put(position, node);
-    }
-
-    private void removeSpatial(Position position) {
-        Spatial spatialToRemove = voxelMap.get(position);
-
-        if (spatialToRemove != null) {
-            cellsNode.detachChild(spatialToRemove);
-        }
+        GeometryBatchFactory.optimize(getCellsNode());
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        // this could cause problems
-        boolean done = false;
-        while (!done) {
-            if (!updatingCells) {
-                toAdd.addAll(World.getInstance().getToAdd());
-                toRemove.addAll(World.getInstance().getToRemove());
-                done = true;
-            }
-        }
     }
 }

@@ -92,8 +92,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
 
         updateCursor();
-        //rotateCamera();
-        //rotateFloor();
     }
 
     private void updateCursor() {
@@ -113,22 +111,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-    }
-
-    private void rotateFloor() {
-        // stub
-    }
-
-    private void rotateCamera() {
-        if (lastGaze == null || lastGaze.distance(cam.getDirection()) >= 0.01f) {
-            lastGaze = cam.getDirection();
-            up = cam.getUp();
-            left = cam.getLeft();
-        }
-        
-        cam.lookAtDirection(cam.getDirection(),
-                up.mult((float) Math.cos(Player.getInstance().getRotation()))
-                        .add(left.mult((float) Math.sin(Player.getInstance().getRotation()))));
     }
 }
 
