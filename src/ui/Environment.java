@@ -19,6 +19,7 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
 import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
+import model.MaterialManager;
 import model.World;
 
 import java.util.Collection;
@@ -135,10 +136,12 @@ class Environment {
             node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
             if (cell.getColor() == null) {
-                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
+                mat = MaterialManager.getInstance().getDefaultMaterial(visualGUI.getAssetManager());
+                //new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
             } else {
-                mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-                mat.setColor("Color", cell.getColor());
+                mat = MaterialManager.getInstance().getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+                //mat = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+                //mat.setColor("Color", cell.getColor());
             }
             node.setMaterial(mat);
 
