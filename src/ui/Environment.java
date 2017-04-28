@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
 
 class Environment implements Observer {
     public static final float SCALE = 0.2f;
-    private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);;
+    private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;
     private Map<Position, Spatial> voxelMap;
-    private Set<Cell> toAdd;
-    private Set<Position> toRemove;
+    private Queue<Cell> toAdd;
+    private Queue<Position> toRemove;
     private boolean updatingCells;
 
     private Node getCellsNode() {
@@ -51,8 +51,8 @@ class Environment implements Observer {
         this.visualGUI = visualGUI;
 
         voxelMap = new HashMap<>();
-        toAdd = new HashSet<>();
-        toRemove = new HashSet<>();
+        toAdd = new LinkedList<>();
+        toRemove = new LinkedList<>();
         updatingCells = false;
 
         World.getInstance().addObserver(this);
@@ -132,27 +132,53 @@ class Environment implements Observer {
     }
 
     private void updateCells() {
-        getCellsNode().getChildren().clear();
-        Collection<Cell> cells = World.getInstance().getCells();
-        for (Cell cell : cells) {
-            Spatial node = new Geometry("Box", BOX);
-            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        //getCellsNode().getChildren().clear();
+        //Collection<Cell> cells = World.getInstance().getCells();
+        while (!toAdd.isEmpty()) {
+            Cell cell = toAdd.remove();
 
-            Material material = MaterialManager.getInstance()
-                    .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
-            node.setMaterial(material);
-
-            node.setLocalTranslation(
-                    cell.getPosition().getComponent(0) * SCALE,
-                    cell.getPosition().getComponent(1) * SCALE,
-                    cell.getPosition().getComponent(2) * SCALE);
-
-            cellsNode.attachChild(node);
+            removeSpatial(cell.getPosition());
+            addSpatial(cell);
         }
-        GeometryBatchFactory.optimize(getCellsNode());
+
+        while (!toRemove.isEmpty()) {
+            Position position = toRemove.remove();
+
+            removeSpatial(position);
+        }
+    }
+
+    private void addSpatial(Cell cell) {
+        Spatial node = new Geometry("Box", BOX);
+        node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+        Material material = MaterialManager.getInstance()
+                .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+        node.setMaterial(material);
+
+        node.setLocalTranslation(
+                cell.getPosition().getComponent(0) * SCALE,
+                cell.getPosition().getComponent(1) * SCALE,
+                cell.getPosition().getComponent(2) * SCALE);
+
+        cellsNode.attachChild(node);
+        voxelMap.put(cell.getPosition(), node);
+    }
+
+    private void removeSpatial(Position position) {
+        if (voxelMap.containsKey(position)) {
+            cellsNode.detachChild(voxelMap.get(position));
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
+        // NOTE: addAll won't work here
+        for (Cell cell : World.getInstance().getToAdd()) {
+            toAdd.add(cell);
+        }
+        for (Position position : World.getInstance().getToRemove()) {
+            toRemove.add(position);
+        }
     }
 }
