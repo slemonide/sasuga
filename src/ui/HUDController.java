@@ -38,6 +38,10 @@ public class HUDController implements ScreenController, Observer {
     HUDController(EventHandlers eventHandlers, Camera cam) {
         this.eventHandlers = eventHandlers;
         this.cam = cam;
+
+        Player.getInstance().addObserver(this);
+        World.getInstance().addObserver(this);
+        eventHandlers.addObserver(this);
     }
 
     @Override

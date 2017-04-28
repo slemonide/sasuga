@@ -56,11 +56,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
         nifty.fromXml("assets/Interface/hud.xml", "hud", hudController);
         guiViewPort.addProcessor(niftyDisplay);
-
-        // initialize observers
-        Player.getInstance().addObserver(hudController);
-        World.getInstance().addObserver(hudController);
-        eventHandlers.addObserver(hudController);
     }
 
     /** A centred plus sign to help the player aim.

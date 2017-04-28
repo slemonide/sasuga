@@ -162,11 +162,13 @@ class Environment implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         // this could cause problems
-        boolean notDone = true;
-        while (!updatingCells && notDone) {
-            toAdd.addAll(World.getInstance().getToAdd());
-            toRemove.addAll(World.getInstance().getToRemove());
-            notDone = false;
+        boolean done = false;
+        while (!done) {
+            if (!updatingCells) {
+                toAdd.addAll(World.getInstance().getToAdd());
+                toRemove.addAll(World.getInstance().getToRemove());
+                done = true;
+            }
         }
     }
 }

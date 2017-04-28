@@ -93,6 +93,9 @@ public class EventHandlers extends Observable {
     private ActionListener inventorySelectionListener = (name, pressed, tpf) -> {
         if (pressed) {
             Player.getInstance().getInventory().setSelectedSlot(Integer.valueOf(name));
+
+            setChanged();
+            notifyObservers();
         }
     };
     private AnalogListener rotateCCWActionListener = (name, value, tpf) -> {
