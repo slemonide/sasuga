@@ -130,21 +130,17 @@ class Environment implements Observer {
     }
 
     private void updateCells() {
-        while (!toAdd.isEmpty()) {
-            if (toAdd.peek() != null) {
-                Cell cell = toAdd.remove();
+        while (toAdd.peek() != null) {
+            Cell cell = toAdd.remove();
 
-                removeSpatial(cell.getPosition());
-                addSpatial(cell);
-            }
+            removeSpatial(cell.getPosition());
+            addSpatial(cell);
         }
 
-        while (!toRemove.isEmpty()) {
-            if (toRemove.peek() != null) {
-                Position position = toRemove.remove();
+        while (toRemove.peek() != null) {
+            Position position = toRemove.remove();
 
-                removeSpatial(position);
-            }
+            removeSpatial(position);
         }
     }
 
