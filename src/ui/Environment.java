@@ -33,11 +33,6 @@ class Environment implements Observer {
     private Map<Position, Spatial> voxelMap;
     private Queue<Cell> toAdd;
     private Queue<Position> toRemove;
-    private boolean updatingCells;
-
-    private Node getCellsNode() {
-        return cellsNode;
-    }
 
     private Geometry floor;
 
@@ -51,7 +46,6 @@ class Environment implements Observer {
         voxelMap = new HashMap<>();
         toAdd = new LinkedList<>();
         toRemove = new LinkedList<>();
-        updatingCells = false;
 
         World.getInstance().addObserver(this);
     }
