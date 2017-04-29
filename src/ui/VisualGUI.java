@@ -3,12 +3,10 @@ package ui;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
-import com.jme3.material.RenderState;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Sphere;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
@@ -54,7 +52,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
         HUDController hudController = new HUDController(eventHandlers, cam);
 
-        nifty.fromXml("assets/Interface/hud.xml", "hud", hudController);
+        nifty.fromXml("Interface/hud.xml", "hud", hudController);
         guiViewPort.addProcessor(niftyDisplay);
     }
 

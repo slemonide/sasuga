@@ -17,14 +17,12 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
-import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
 import model.MaterialManager;
 import model.Position;
 import model.World;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Environment implements Observer {
     public static final float SCALE = 0.2f;
@@ -67,7 +65,7 @@ class Environment implements Observer {
 
     private void addSkySphere() {
         visualGUI.getRootNode().attachChild(SkyFactory.createSky(visualGUI.getAssetManager(),
-                "assets/Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
+                "Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
     }
 
     private void addCells() {
