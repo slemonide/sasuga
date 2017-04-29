@@ -130,8 +130,6 @@ class Environment implements Observer {
     }
 
     private void updateCells() {
-        //getCellsNode().getChildren().clear();
-        //Collection<Cell> cells = World.getInstance().getCells();
         while (!toAdd.isEmpty()) {
             Cell cell = toAdd.remove();
 
