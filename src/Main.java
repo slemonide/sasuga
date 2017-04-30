@@ -1,7 +1,4 @@
-import model.Player;
-import model.Position;
-import model.RandomWalkCell;
-import model.World;
+import model.*;
 import ui.ConsoleUI;
 import ui.HUDController;
 import ui.VisualGUI;
@@ -10,9 +7,19 @@ import ui.VisualGUI;
  * Starts the application
  */
 public class Main {
+    private static final int SIZE = 20;
+
     public static void main(String[] args) {
         //World.getInstance().addObserver(ConsoleUI.getInstance());
         //World.getInstance().add(new RandomWalkCell(new Position()));
+        for (int x=0; x < SIZE; x++) {
+            for (int y=0; y < SIZE; y++) {
+                for (int z=0; z < SIZE; z++) {
+                    World.getInstance().add(new Cell(new Position(x,y,z)));
+                }
+            }
+        }
+
         World.getInstance().start();
         VisualGUI.main(args);
     }

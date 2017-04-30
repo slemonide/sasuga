@@ -68,6 +68,10 @@ class Environment implements Observer {
         visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         visualGUI.getRootNode().attachChild(cellsNode);
 
+        for (Cell cell : World.getInstance().getCells()) {
+            addSpatial(cell);
+        }
+
         updateCells();
     }
 
