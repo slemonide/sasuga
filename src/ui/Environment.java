@@ -139,20 +139,29 @@ class Environment implements Observer {
     }
 
     private void addSpatial(Cell cell) {
-        Spatial node = new Geometry("Box", BOX);
-        node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        if (voxelMap.containsKey(cell.getPosition().add(-1,0,0))) {
+            Spatial neighbour = voxelMap.get(cell.getPosition().add(-1,0,0));
 
-        Material material = MaterialManager.getInstance()
-                .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
-        node.setMaterial(material);
+            //neighbour.scale(1 + 1 / neighbour.getWorldScale().x, 1, 1);
+            Vector3f translation = neighbour.getLocalTranslation();
+            translation.add(1, 0,0);
+            neighbour.setLocalTranslation(translation);
 
-        node.setLocalTranslation(
-                cell.getPosition().getComponent(0) * SCALE,
-                cell.getPosition().getComponent(1) * SCALE,
-                cell.getPosition().getComponent(2) * SCALE);
+            voxelMap.put(cell.getPosition(), neighbour);
+        } else {
 
-        cellsNode.attachChild(node);
-        voxelMap.put(cell.getPosition(), node);
+            Spatial node = new Geometry("Box", BOX);
+            node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+            Material material = MaterialManager.getInstance()
+                    .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+            node.setMaterial(material);
+
+            node.setLocalTranslation(Coordinates.positionToVector(cell.getPosition()));
+
+            cellsNode.attachChild(node);
+            voxelMap.put(cell.getPosition(), node);
+        }
     }
 
     private void removeSpatial(Position position) {
