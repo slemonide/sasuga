@@ -17,6 +17,7 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
+import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
 import model.MaterialManager;
 import model.Position;
@@ -131,7 +132,6 @@ class Environment implements Observer {
         while (toAdd.peek() != null) {
             Cell cell = toAdd.remove();
 
-            removeSpatial(cell.getPosition());
             addSpatial(cell);
         }
 
@@ -143,6 +143,8 @@ class Environment implements Observer {
     }
 
     private void addSpatial(Cell cell) {
+        removeSpatial(cell.getPosition());
+
         Spatial node = new Geometry("Box", BOX);
         node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
