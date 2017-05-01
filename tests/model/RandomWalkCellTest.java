@@ -1,4 +1,4 @@
-package tests;
+package tests.model;
 
 import model.Position;
 import model.RandomWalkCell;
