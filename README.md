@@ -14,3 +14,7 @@ Run `src/Main.java`.
 * L - remove cell
 * SPACE BAR - pause rendering
 * R - restart the game
+
+## Current Progress
+* It runs.
+* Estimated V0.1 release date - May 10th.
