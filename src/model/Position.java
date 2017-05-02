@@ -1,5 +1,9 @@
 package model;
 
+import com.jme3.math.Vector3f;
+
+import static ui.Environment.SCALE;
+
 /**
  *
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -47,6 +51,17 @@ public final class Position {
 
     public Position add(Position anotherVector) {
         return new Position(this.x + anotherVector.x, this.y + anotherVector.y, this.z + anotherVector.z);
+    }
+
+    /**
+     * @return a vector representation of position in VisualGUI coordinates
+     */
+    public Vector3f getUIVector() {
+        return this.multiply(SCALE);
+    }
+
+    private Vector3f multiply(float scale) {
+        return new Vector3f(scale * x, scale * y, scale * z);
     }
 
     @Override

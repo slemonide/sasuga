@@ -25,7 +25,7 @@ import model.World;
 
 import java.util.*;
 
-class Environment implements Observer {
+public class Environment implements Observer {
     public static final float SCALE = 0.2f;
     private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);
     private static final float FLOOR_SIZE = 5000;
@@ -152,7 +152,7 @@ class Environment implements Observer {
                 .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
         node.setMaterial(material);
 
-        node.setLocalTranslation(Coordinates.positionToVector(cell.getPosition()));
+        node.setLocalTranslation(cell.getPosition().getUIVector());
 
         cellsNode.attachChild(node);
         voxelMap.put(cell.getPosition(), node);

@@ -101,7 +101,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void updateCursor() {
-        cursor.setLocalTranslation(Coordinates.positionToVector(Player.getInstance().getCursor()));
+        cursor.setLocalTranslation(Player.getInstance().getCursor().getUIVector());
     }
 
     /**
