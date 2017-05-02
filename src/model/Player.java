@@ -61,7 +61,7 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
-        cursor = new Position();
+        cursor = new Position(0,0,0);
 
         inventory = new Inventory(INVENTORY_SIZE);
         inventory.setInventoryItem(1, new InventoryItem("Say Hi",
@@ -92,7 +92,7 @@ public class Player extends ActiveCell {
      */
     public static Player getInstance() {
         if (instance == null){
-            instance = new Player(new Position());
+            instance = new Player(new Position(0,0,0));
         }
         return instance;
     }
@@ -101,7 +101,7 @@ public class Player extends ActiveCell {
      * Reset the player to the original state
      */
     public void reset() {
-        instance = new Player(new Position());
+        instance = new Player(new Position(0,0,0));
     }
 
 

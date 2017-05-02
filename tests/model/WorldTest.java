@@ -71,14 +71,14 @@ public class WorldTest {
 
     @Test
     public void testGrowthRate() {
-        World.getInstance().add(new Cell(new Position()));
+        World.getInstance().add(new Cell(new Position(0,0,0)));
         World.getInstance().start();
         assertEquals(0, World.getInstance().getGrowthRate());
 
         World.getInstance().interrupt();
         World.getInstance().reset();
 
-        World.getInstance().add(new RandomWalkCell(new Position()));
+        World.getInstance().add(new RandomWalkCell(new Position(0,0,0)));
         World.getInstance().tick();
         assertEquals(1, World.getInstance().getGrowthRate());
 

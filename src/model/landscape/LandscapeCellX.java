@@ -46,17 +46,17 @@ public class LandscapeCellX extends ActiveCell {
     private Position nextPosition() {
         switch (random.nextInt(6)) {
             case 0:
-                return new Position(1, 0);
+                return new Position(1, 0, 0);
             case 1:
-                return new Position(-1, 0);
+                return new Position(-1, 0, 0);
             case 2:
-                return new Position(1, 1);
+                return new Position(1, 1, 0);
             case 3:
-                return new Position(-1, 1);
+                return new Position(-1, 1, 0);
             case 4:
-                return new Position(1, -1);
+                return new Position(1, -1, 0);
             default:
-                return new Position(-1, -1);
+                return new Position(-1, -1, 0);
         }
     }
 }

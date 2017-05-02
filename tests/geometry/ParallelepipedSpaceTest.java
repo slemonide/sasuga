@@ -20,13 +20,14 @@ public class ParallelepipedSpaceTest {
 
     @Test
     public void testConstructor() {
-        //assertTrue(testNode.getChildren().isEmpty());
+        assertTrue(testSpace.isEmpty());
+        assertEquals(0, testSpace.size());
     }
 /*
     @Test
     public void testSimpleAdd() {
         testSpace.add(new Position());
-        assertEquals(1, testNode.getChildren().size());
+        assertEquals(1, testSpace.size());
         assertEquals(new Geometry("Box", new Box(,SCALE/2,SCALE/2)),
                 (Geometry) testNode.getChild(0));
         assertEquals(new Vector3f(0,0,0), testNode.getChild(0).getLocalTranslation());
@@ -98,6 +99,5 @@ public class ParallelepipedSpaceTest {
         assertEquals(new Geometry("Box", new Box(SCALE,SCALE,SCALE)),
                 (Geometry) testNode.getChild(0));
         assertEquals(new Vector3f(0.5f,0.5f,0.5f), testNode.getChild(0).getLocalTranslation());
-    }
-    */
+    }*/
 }

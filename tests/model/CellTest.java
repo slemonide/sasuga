@@ -13,12 +13,12 @@ public class CellTest {
 
     @Before
     public void runBefore() {
-        testCell = new Cell(new Position(1, 2));
+        testCell = new Cell(new Position(1, 2, 0));
     }
 
     @Test
     public void testConstructor() {
-        assertEquals(new Position(1, 2),
+        assertEquals(new Position(1, 2, 0),
                 testCell.getPosition());
     }
 

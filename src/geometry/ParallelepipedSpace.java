@@ -39,4 +39,12 @@ public class ParallelepipedSpace {
         }
         return null;
     }
+
+    public int size() {
+        return parallelepipeds.size();
+    }
+
+    public boolean isEmpty() {
+        return parallelepipeds.isEmpty();
+    }
 }

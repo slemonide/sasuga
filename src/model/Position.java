@@ -1,79 +1,52 @@
 package model;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 /**
  *
- * @author      Danil Platonov <slemonide@gmail.com>, jacketsj <jacketsj@gmail.com>
+ * @author      Danil Platonov <slemonide@gmail.com>
  * @version     0.1
  * @since       0.1
  *
- * A position
+ * A three-dimensional position
  */
-public class Position {
-    static final Position DEFAULT = new Position();
+public final class Position {
     /**
-     * components
+     * x component
      */
-    private Map<Integer, Integer> components;
+    public final int x;
+    /**
+     * y component
+     */
+    public final int y;
+    /**
+     * z component
+     */
+    public final int z;
 
     /**
      * Creates a vector with the given coordinates
-     * @param coordinates coordinates of the given vector
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param z z coordinate
      */
-    public Position(int... coordinates) {
-        components = new HashMap<>();
-
-        for (int i = 0; i < coordinates.length; ++i) {
-            components.put(i, coordinates[i]);
-        }
-    }
-
-    public Position(Map<Integer, Integer> coordinates) {
-        // Make a private copy of the given coordinates
-        components = coordinates.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public Position(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     /**
      * Create a vector by adding given components to the components of this vector
-     * @param coordinates coordinates of the given vector
+     * @param x change in the x coordinate
+     * @param y change in the y coordinate
+     * @param z change in the z coordinate
      * @return the sum of this vector and given vector
      */
-    public Position add(int... coordinates) {
-        Position givenPosition = new Position(coordinates);
-        return this.add(givenPosition);
+    public Position add(int x, int y, int z) {
+        return new Position(this.x + x, this.y + y, this.z + z);
     }
 
-    public Position add(Position anotherPosition) {
-        Map<Integer, Integer> newCoordinates = components.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-        for (Map.Entry<Integer, Integer> entry : anotherPosition.getActiveComponents().entrySet()) {
-            Integer key = entry.getKey();
-            Integer value = entry.getValue();
-
-            newCoordinates.put(key, value + this.getComponent(key));
-        }
-
-        return new Position(newCoordinates);
-    }
-
-    /**
-     * Produce the requested component of this vector
-     * If index < 0, throws InvalidIndexException
-     * @param index index of the component, >= 0
-     * @return vector's component
-     */
-    public int getComponent(int index) {
-        return components.getOrDefault(index, 0);
-    }
-
-    /**
-     * Gives components that are currently active
-     * @return active components
-     */
-    public Map<Integer, Integer> getActiveComponents() {
-        return Collections.unmodifiableMap(components);
+    public Position add(Position anotherVector) {
+        return new Position(this.x + anotherVector.x, this.y + anotherVector.y, this.z + anotherVector.z);
     }
 
     @Override
@@ -81,27 +54,24 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Position position = (Position) o;
+        Position vector3 = (Position) o;
 
-        return components.equals(position.components);
+        return x == vector3.x && y == vector3.y && z == vector3.z;
     }
 
     @Override
     public int hashCode() {
-        return components.hashCode();
+        int result = x;
+        result = 31 * result + y;
+        result = 31 * result + z;
+        return result;
     }
 
-    public Position subtract(Position otherPosition) {
-        return this.add(otherPosition.multiply(-1));
+    public Position subtract(Position position) {
+        return this.add(position.inverse());
     }
 
-    public Position multiply(int i) {
-        Map<Integer, Integer> nextMap = new HashMap<>();
-
-        for (Integer key : getActiveComponents().keySet()) {
-            nextMap.put(key, i * getComponent(key));
-        }
-
-        return new Position(nextMap);
+    private Position inverse() {
+        return new Position(-x, -y, -z);
     }
 }

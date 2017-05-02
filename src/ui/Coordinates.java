@@ -11,8 +11,8 @@ import static ui.Environment.SCALE;
 public class Coordinates {
     public static Vector3f positionToVector(Position position) {
         return new Vector3f(
-                position.getComponent(0) * SCALE,
-                position.getComponent(1) * SCALE,
-                position.getComponent(2) * SCALE);
+                position.x * SCALE,
+                position.y * SCALE,
+                position.z * SCALE);
     }
 }

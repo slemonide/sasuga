@@ -120,7 +120,7 @@ class Environment implements Observer {
         float minimumY = 0; // should be at least at the sea level
 
         for (Cell cell : World.getInstance().getCells()) {
-            minimumY = Math.min(minimumY, cell.getPosition().getComponent(1) * SCALE);
+            minimumY = Math.min(minimumY, cell.getPosition().y * SCALE);
         }
 
         Vector3f floorTranslation = getFloor().getLocalTranslation();

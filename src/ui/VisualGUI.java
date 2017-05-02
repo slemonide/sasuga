@@ -83,9 +83,9 @@ public class VisualGUI extends SimpleApplication implements Observer {
         cursor.setMaterial(mat);
 
         cursor.setLocalTranslation(
-                Player.getInstance().getCursor().getComponent(0) * Environment.SCALE,
-                Player.getInstance().getCursor().getComponent(1) * Environment.SCALE,
-                Player.getInstance().getCursor().getComponent(2) * Environment.SCALE);
+                Player.getInstance().getCursor().x * Environment.SCALE,
+                Player.getInstance().getCursor().y * Environment.SCALE,
+                Player.getInstance().getCursor().z * Environment.SCALE);
 
         rootNode.attachChild(cursor);
     }

@@ -19,29 +19,26 @@ public class PositionTest {
     @Test
     public void testConstructor() {
         Position position = new Position(12, 3, 2);
-        assertEquals(12, position.getComponent(0));
-        assertEquals(3, position.getComponent(1));
-        assertEquals(2, position.getComponent(2));
-        assertEquals(3, position.getActiveComponents().size());
-        assertEquals(0, position.getComponent(100));
-        assertEquals(0, position.getComponent(-200));
+        assertEquals(12, position.x);
+        assertEquals(3, position.y);
+        assertEquals(2, position.z);
     }
 
     @Test
     public void testAdd() {
-        Position position = new Position(1, 2);
-        assertEquals(new Position(1, 2), position.add());
-        assertEquals(new Position(2, 2), position.add(1));
-        assertEquals(new Position(0, 3), position.add(-1, 1));
+        Position position = new Position(1, 2, 0);
+        assertEquals(new Position(1, 2, 0), position.add(0,0,0));
+        assertEquals(new Position(2, 2, 0), position.add(1,0,0));
+        assertEquals(new Position(0, 3, 0), position.add(-1, 1,0));
         assertEquals(new Position(4, 4, 1), position.add(3, 2, 1));
     }
 
     @Test
     public void testAddVector() {
-        Position position = new Position(1, 2);
-        assertEquals(new Position(1, 2), position.add(new Position()));
-        assertEquals(new Position(2, 2), position.add(new Position(1)));
-        assertEquals(new Position(0, 3), position.add(new Position(-1, 1)));
+        Position position = new Position(1, 2,0);
+        assertEquals(new Position(1, 2, 0), position.add(new Position(0,0,0)));
+        assertEquals(new Position(2, 2, 0), position.add(new Position(1,0,0)));
+        assertEquals(new Position(0, 3, 0), position.add(new Position(-1, 1,0)));
         assertEquals(new Position(4, 4, 1), position.add(new Position(3, 2, 1)));
     }
 
@@ -49,9 +46,9 @@ public class PositionTest {
     public void testHashCode() {
         Set<Position> positionSet = new HashSet<>();
 
-        positionSet.add(new Position(1, 1));
-        positionSet.add(new Position(1, 2, 4, 9));
+        positionSet.add(new Position(1, 1,0));
+        positionSet.add(new Position(1, 2,9));
 
-        assertTrue(positionSet.contains(new Position(1, 1)));
+        assertTrue(positionSet.contains(new Position(1, 1, 0)));
     }
 }
