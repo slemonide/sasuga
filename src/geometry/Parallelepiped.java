@@ -51,8 +51,8 @@ public final class Parallelepiped {
 
 
     public boolean contains(Position position) {
-        return ((xSize - xSize/2 < position.x) && (position.x < xSize/2) &&
-                (ySize - ySize/2 < position.y) && (position.y < ySize/2) &&
-                (zSize - zSize/2 < position.z) && (position.z < zSize/2));
+        return ((xSize/2 - xSize <= position.x) && (position.x <= xSize/2) &&
+                (ySize/2 - ySize <= position.y) && (position.y <= ySize/2) &&
+                (zSize/2 - zSize <= position.z) && (position.z <= zSize/2));
     }
 }
