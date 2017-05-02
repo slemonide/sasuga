@@ -44,26 +44,26 @@ public class ParallelepipedSpaceTest {
         testSpace.add(new Position(1,0,0));
         testSpace.add(new Position(0,0,0));
         assertEquals(1, testSpace.size());
-        assertEquals(1, testSpace.size());
-        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0))));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                2,1,1)));
     }
 
     @Test
     public void testAddTwoY() {
         testSpace.add(new Position(0,1,0));
         testSpace.add(new Position(0,0,0));
+        assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
                 1,2,1)));
     }
-/*
+
     @Test
     public void testAddTwoZ() {
         testSpace.add(new Position(0,0,1));
         testSpace.add(new Position(0,0,0));
-        assertEquals(1, testNode.getChildren().size());
-        assertEquals(new Geometry("Box", new Box(SCALE/2,SCALE/2,SCALE)),
-                (Geometry) testNode.getChild(0));
-        assertEquals(new Vector3f(0,0,0.5f), testNode.getChild(0).getLocalTranslation());
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                1,1,2)));
     }
 
     @Test
@@ -71,13 +71,10 @@ public class ParallelepipedSpaceTest {
         testSpace.add(new Position(1,0,0));
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(100,0,0));
-        assertEquals(2, testNode.getChildren().size());
-        assertEquals(new Geometry("Box", new Box(SCALE,SCALE/2,SCALE/2)),
-                (Geometry) testNode.getChild(0));
-        assertEquals(new Vector3f(0.5f,0,0), testNode.getChild(0).getLocalTranslation());
-        assertEquals(new Geometry("Box", new Box(SCALE/2,SCALE/2,SCALE/2)),
-                (Geometry) testNode.getChild(1));
-        assertEquals(new Vector3f(100,0,0), testNode.getChild(1).getLocalTranslation());
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                2,1,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(100,0,0))));
     }
 
     @Test
@@ -90,9 +87,8 @@ public class ParallelepipedSpaceTest {
         testSpace.add(new Position(0,0,1));
         testSpace.add(new Position(1,1,1));
         testSpace.add(new Position(0,1,1));
-        assertEquals(1, testNode.getChildren().size());
-        assertEquals(new Geometry("Box", new Box(SCALE,SCALE,SCALE)),
-                (Geometry) testNode.getChild(0));
-        assertEquals(new Vector3f(0.5f,0.5f,0.5f), testNode.getChild(0).getLocalTranslation());
-    }*/
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                2,2,2)));
+    }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import com.jme3.math.Vector3f;
+import geometry.Dimension;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -103,5 +104,16 @@ public final class Position {
     @Contract(pure = true)
     private Position inverse() {
         return new Position(-x, -y, -z);
+    }
+
+    public Position set(Dimension dimension, int value) {
+        switch (dimension) {
+            case X:
+                return new Position(value, y, z);
+            case Y:
+                return new Position(x, value, z);
+            default:
+                return new Position(x, y, value);
+        }
     }
 }

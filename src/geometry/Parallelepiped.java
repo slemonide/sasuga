@@ -36,18 +36,15 @@ public final class Parallelepiped {
     }
 
     @Contract(pure = true)
-    public int getXSize() {
-        return xSize;
-    }
-
-    @Contract(pure = true)
-    public int getYSize() {
-        return ySize;
-    }
-
-    @Contract(pure = true)
-    public int getZSize() {
-        return zSize;
+    public int getSize(Dimension dimension) {
+        switch (dimension) {
+            case X:
+                return xSize;
+            case Y:
+                return ySize;
+            default:
+                return zSize;
+        }
     }
 
     @Contract(pure = true)
@@ -55,5 +52,39 @@ public final class Parallelepiped {
         return ((xSize/2 - xSize + 1 + center.x <= position.x) && (position.x <= xSize/2 + center.x) &&
                 (ySize/2 - ySize + 1 + center.y <= position.y) && (position.y <= ySize/2 + center.y) &&
                 (zSize/2 - zSize + 1 + center.z <= position.z) && (position.z <= zSize/2 + center.z));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Parallelepiped that = (Parallelepiped) o;
+
+        return xSize == that.xSize && ySize == that.ySize && zSize == that.zSize && center.equals(that.center);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = center.hashCode();
+        result = 31 * result + xSize;
+        result = 31 * result + ySize;
+        result = 31 * result + zSize;
+        return result;
+    }
+
+    public Parallelepiped setCenter(Position center) {
+        return new Parallelepiped(center, xSize, ySize, zSize);
+    }
+
+    public Parallelepiped setSize(Dimension dimension, int size) {
+        switch (dimension) {
+            case X:
+                return new Parallelepiped(center, size, ySize, zSize);
+            case Y:
+                return new Parallelepiped(center, xSize, size, zSize);
+            default:
+                return new Parallelepiped(center, xSize, ySize, size);
+        }
     }
 }

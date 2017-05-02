@@ -3,6 +3,9 @@ package geometry;
 import model.Position;
 import org.junit.Test;
 
+import static geometry.Dimension.X;
+import static geometry.Dimension.Y;
+import static geometry.Dimension.Z;
 import static org.junit.Assert.*;
 
 public class ParallelepipedTest {
@@ -10,9 +13,9 @@ public class ParallelepipedTest {
     public void testConstructor() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
         assertEquals(new Position(0,0,0), parallelepiped.getCenter());
-        assertEquals(1, parallelepiped.getXSize());
-        assertEquals(1, parallelepiped.getYSize());
-        assertEquals(1, parallelepiped.getZSize());
+        assertEquals(1, parallelepiped.getSize(X));
+        assertEquals(1, parallelepiped.getSize(Y));
+        assertEquals(1, parallelepiped.getSize(Z));
 
         assertTrue(parallelepiped.contains(new Position(0,0,0)));
     }
@@ -21,9 +24,9 @@ public class ParallelepipedTest {
     public void testConstructorHard() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 10, 20, 30);
         assertEquals(new Position(0,0,0), parallelepiped.getCenter());
-        assertEquals(10, parallelepiped.getXSize());
-        assertEquals(20, parallelepiped.getYSize());
-        assertEquals(30, parallelepiped.getZSize());
+        assertEquals(10, parallelepiped.getSize(X));
+        assertEquals(20, parallelepiped.getSize(Y));
+        assertEquals(30, parallelepiped.getSize(Z));
 
         // TRUE cases
 
@@ -78,9 +81,9 @@ public class ParallelepipedTest {
     public void testTwoX() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 2, 1, 1);
         assertEquals(new Position(0,0,0), parallelepiped.getCenter());
-        assertEquals(2, parallelepiped.getXSize());
-        assertEquals(1, parallelepiped.getYSize());
-        assertEquals(1, parallelepiped.getZSize());
+        assertEquals(2, parallelepiped.getSize(X));
+        assertEquals(1, parallelepiped.getSize(Y));
+        assertEquals(1, parallelepiped.getSize(Z));
 
         assertTrue(parallelepiped.contains(new Position(0,0,0)));
         assertTrue(parallelepiped.contains(new Position(1,0,0)));
@@ -92,9 +95,9 @@ public class ParallelepipedTest {
     public void testTwoY() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 2, 1);
         assertEquals(new Position(0,0,0), parallelepiped.getCenter());
-        assertEquals(1, parallelepiped.getXSize());
-        assertEquals(2, parallelepiped.getYSize());
-        assertEquals(1, parallelepiped.getZSize());
+        assertEquals(1, parallelepiped.getSize(X));
+        assertEquals(2, parallelepiped.getSize(Y));
+        assertEquals(1, parallelepiped.getSize(Z));
 
         assertTrue(parallelepiped.contains(new Position(0,0,0)));
         assertTrue(parallelepiped.contains(new Position(0,1,0)));
@@ -111,9 +114,9 @@ public class ParallelepipedTest {
     public void testTwoZ() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 1, 2);
         assertEquals(new Position(0,0,0), parallelepiped.getCenter());
-        assertEquals(1, parallelepiped.getXSize());
-        assertEquals(1, parallelepiped.getYSize());
-        assertEquals(2, parallelepiped.getZSize());
+        assertEquals(1, parallelepiped.getSize(X));
+        assertEquals(1, parallelepiped.getSize(Y));
+        assertEquals(2, parallelepiped.getSize(Z));
 
         assertTrue(parallelepiped.contains(new Position(0,0,0)));
         assertTrue(parallelepiped.contains(new Position(0,0,1)));
@@ -125,9 +128,9 @@ public class ParallelepipedTest {
     public void testNonZeroPosition() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(10,20,30), 1, 1, 2);
         assertEquals(new Position(10,20,30), parallelepiped.getCenter());
-        assertEquals(1, parallelepiped.getXSize());
-        assertEquals(1, parallelepiped.getYSize());
-        assertEquals(2, parallelepiped.getZSize());
+        assertEquals(1, parallelepiped.getSize(X));
+        assertEquals(1, parallelepiped.getSize(Y));
+        assertEquals(2, parallelepiped.getSize(Z));
 
         assertTrue(parallelepiped.contains(new Position(10,20,30)));
         assertTrue(parallelepiped.contains(new Position(10,20,31)));
