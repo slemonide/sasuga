@@ -1,6 +1,8 @@
 package model;
 
 import com.jme3.math.Vector3f;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import static ui.Environment.SCALE;
 
@@ -45,10 +47,14 @@ public final class Position {
      * @param z change in the z coordinate
      * @return the sum of this vector and given vector
      */
+    @NotNull
+    @Contract(pure = true)
     public Position add(int x, int y, int z) {
         return new Position(this.x + x, this.y + y, this.z + z);
     }
 
+    @NotNull
+    @Contract(pure = true)
     public Position add(Position anotherVector) {
         return new Position(this.x + anotherVector.x, this.y + anotherVector.y, this.z + anotherVector.z);
     }
@@ -56,10 +62,14 @@ public final class Position {
     /**
      * @return a vector representation of position in VisualGUI coordinates
      */
+    @NotNull
+    @Contract(pure = true)
     public Vector3f getUIVector() {
         return this.multiply(SCALE);
     }
 
+    @NotNull
+    @Contract(pure = true)
     private Vector3f multiply(float scale) {
         return new Vector3f(scale * x, scale * y, scale * z);
     }
@@ -74,6 +84,7 @@ public final class Position {
         return x == vector3.x && y == vector3.y && z == vector3.z;
     }
 
+    @Contract(pure = true)
     @Override
     public int hashCode() {
         int result = x;
@@ -82,10 +93,14 @@ public final class Position {
         return result;
     }
 
+    @NotNull
+    @Contract(pure = true)
     public Position subtract(Position position) {
         return this.add(position.inverse());
     }
 
+    @NotNull
+    @Contract(pure = true)
     private Position inverse() {
         return new Position(-x, -y, -z);
     }
