@@ -2,8 +2,6 @@ package model;
 
 import org.junit.Before;
 import org.junit.Test;
-import model.Cell;
-import model.Position;
 
 import static org.junit.Assert.*;
 
