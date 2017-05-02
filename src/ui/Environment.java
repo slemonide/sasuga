@@ -17,8 +17,7 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
-import geometry.Parallelepiped;
-import geometry.ParallelepipedSpace;
+import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
 import model.MaterialManager;
 import model.Position;
@@ -26,11 +25,13 @@ import model.World;
 
 import java.util.*;
 
-public class Environment implements Observer {
-    public  static final float SCALE = 0.2f;
+class Environment implements Observer {
+    public static final float SCALE = 0.2f;
+    private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
-    private ParallelepipedSpace voxelSpace;
+    private Node cellsNode;
+    private Map<Position, Spatial> voxelMap;
     private Queue<Cell> toAdd;
     private Queue<Position> toRemove;
 
@@ -43,6 +44,7 @@ public class Environment implements Observer {
     Environment(VisualGUI visualGUI) {
         this.visualGUI = visualGUI;
 
+        voxelMap = new HashMap<>();
         toAdd = new LinkedList<>();
         toRemove = new LinkedList<>();
 
@@ -62,15 +64,13 @@ public class Environment implements Observer {
     }
 
     private void addCells() {
-        Node cellsNode = new Node();
+        cellsNode = new Node();
         cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         visualGUI.getRootNode().attachChild(cellsNode);
 
-        voxelSpace = new ParallelepipedSpace(cellsNode);
-
         for (Cell cell : World.getInstance().getCells()) {
-            voxelSpace.add(cell);
+            addSpatial(cell);
         }
 
         updateCells();
@@ -97,7 +97,7 @@ public class Environment implements Observer {
     }
 
     private void addFloor() {
-        floor = new Geometry("Floor", new Quad(FLOOR_SIZE, FLOOR_SIZE));
+        floor = new Geometry("Box", new Quad(FLOOR_SIZE, FLOOR_SIZE));
         Material unshaded = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
@@ -132,13 +132,35 @@ public class Environment implements Observer {
         while (toAdd.peek() != null) {
             Cell cell = toAdd.remove();
 
-            voxelSpace.add(cell);
+            addSpatial(cell);
         }
 
         while (toRemove.peek() != null) {
             Position position = toRemove.remove();
 
-            voxelSpace.remove(position);
+            removeSpatial(position);
+        }
+    }
+
+    private void addSpatial(Cell cell) {
+        removeSpatial(cell.getPosition());
+
+        Spatial node = new Geometry("Box", BOX);
+        node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+        Material material = MaterialManager.getInstance()
+                .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+        node.setMaterial(material);
+
+        node.setLocalTranslation(Coordinates.positionToVector(cell.getPosition()));
+
+        cellsNode.attachChild(node);
+        voxelMap.put(cell.getPosition(), node);
+    }
+
+    private void removeSpatial(Position position) {
+        if (voxelMap.containsKey(position)) {
+            cellsNode.detachChild(voxelMap.get(position));
         }
     }
 
