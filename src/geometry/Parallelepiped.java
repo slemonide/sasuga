@@ -50,11 +50,10 @@ public final class Parallelepiped {
         return zSize;
     }
 
-
     @Contract(pure = true)
     public boolean contains(Position position) {
-        return ((xSize/2 - xSize <= position.x) && (position.x <= xSize/2) &&
-                (ySize/2 - ySize <= position.y) && (position.y <= ySize/2) &&
-                (zSize/2 - zSize <= position.z) && (position.z <= zSize/2));
+        return ((xSize/2 - xSize + 1 + center.x <= position.x) && (position.x <= xSize/2 + center.x) &&
+                (ySize/2 - ySize + 1 + center.y <= position.y) && (position.y <= ySize/2 + center.y) &&
+                (zSize/2 - zSize + 1 + center.z <= position.z) && (position.z <= zSize/2 + center.z));
     }
 }

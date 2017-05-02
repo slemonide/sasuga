@@ -23,44 +23,39 @@ public class ParallelepipedSpaceTest {
         assertTrue(testSpace.isEmpty());
         assertEquals(0, testSpace.size());
     }
-/*
+
     @Test
     public void testSimpleAdd() {
-        testSpace.add(new Position());
+        testSpace.add(new Position(0,0,0));
         assertEquals(1, testSpace.size());
-        assertEquals(new Geometry("Box", new Box(,SCALE/2,SCALE/2)),
-                (Geometry) testNode.getChild(0));
-        assertEquals(new Vector3f(0,0,0), testNode.getChild(0).getLocalTranslation());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0))));
     }
 
     @Test
     public void testAddTwice() {
-        testSpace.add(new Position());
-        testSpace.add(new Position());
-        assertEquals(1, testNode.getChildren().size());
-        assertEquals(new Vector3f(0,0,0), testNode.getChild(0).getLocalTranslation());
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,0,0));
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0))));
     }
 
     @Test
     public void testAddTwoX() {
         testSpace.add(new Position(1,0,0));
         testSpace.add(new Position(0,0,0));
-        assertEquals(1, testNode.getChildren().size());
-        assertEquals(new Geometry("Box", new Box(SCALE,SCALE/2,SCALE/2)),
-                (Geometry) testNode.getChild(0));
-        assertEquals(new Vector3f(0.5f,0,0), testNode.getChild(0).getLocalTranslation());
+        assertEquals(1, testSpace.size());
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0))));
     }
 
     @Test
     public void testAddTwoY() {
         testSpace.add(new Position(0,1,0));
         testSpace.add(new Position(0,0,0));
-        assertEquals(1, testNode.getChildren().size());
-        assertEquals(new Geometry("Box", new Box(SCALE/2,SCALE,SCALE/2)),
-                (Geometry) testNode.getChild(0));
-        assertEquals(new Vector3f(0,0.5f,0), testNode.getChild(0).getLocalTranslation());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                1,2,1)));
     }
-
+/*
     @Test
     public void testAddTwoZ() {
         testSpace.add(new Position(0,0,1));

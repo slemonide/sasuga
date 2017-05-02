@@ -40,6 +40,10 @@ public class ParallelepipedSpace {
         return null;
     }
 
+    public Set<Parallelepiped> getParallelepipeds() {
+        return parallelepipeds;
+    }
+
     public int size() {
         return parallelepipeds.size();
     }
