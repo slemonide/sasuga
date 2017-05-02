@@ -1,10 +1,7 @@
 package geometry;
 
-import exceptions.GeometryMismatch;
 import model.Position;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.jetbrains.annotations.Contract;
 
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
@@ -33,23 +30,28 @@ public final class Parallelepiped {
         this.zSize = zSize;
     }
 
+    @Contract(pure = true)
     public Position getCenter() {
         return center;
     }
 
+    @Contract(pure = true)
     public int getXSize() {
         return xSize;
     }
 
+    @Contract(pure = true)
     public int getYSize() {
         return ySize;
     }
 
+    @Contract(pure = true)
     public int getZSize() {
         return zSize;
     }
 
 
+    @Contract(pure = true)
     public boolean contains(Position position) {
         return ((xSize/2 - xSize <= position.x) && (position.x <= xSize/2) &&
                 (ySize/2 - ySize <= position.y) && (position.y <= ySize/2) &&
