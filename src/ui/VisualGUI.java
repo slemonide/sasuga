@@ -3,7 +3,6 @@ package ui;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
-import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
@@ -16,15 +15,21 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class VisualGUI extends SimpleApplication implements Observer {
+    private static VisualGUI app;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
-    private Vector3f lastGaze;
-    private Vector3f up;
-    private Vector3f left;
     private Spatial cursor;
 
+    /**
+     * Singleton pattern
+     * @return the current active app of the world
+     */
+    public static VisualGUI getInstance() {
+        return app;
+    }
+
     public static void main(String[] args) {
-        VisualGUI app = new VisualGUI();
+        app = new VisualGUI();
         app.start();
     }
 

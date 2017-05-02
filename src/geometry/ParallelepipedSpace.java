@@ -1,11 +1,20 @@
 package geometry;
 
+import com.jme3.material.Material;
+import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
 import model.Cell;
+import model.MaterialManager;
 import model.Position;
+import ui.Coordinates;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static ui.Environment.SCALE;
 
 /**
  * Represents a set of Parallelepiped instances
@@ -23,27 +32,21 @@ public class ParallelepipedSpace {
         parallelepipeds = new HashSet<>();
     }
 
-    private void rebuildSpatials() {
-        // TODO: implement
-    }
-
     public void add(Cell cell) {
-        Position position = cell.getPosition();
+        Spatial voxel = new Geometry("Box", new Box(SCALE/2,SCALE,SCALE/2)));
+        voxel.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
-        remove(position);
-        parallelepipeds.add(new Parallelepiped(position));
+        Material material = MaterialManager.getInstance()
+                .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+        voxel.setMaterial(material);
 
-        rebuildSpatials();
+        voxel.setLocalTranslation(Coordinates.positionToVector(cell.getPosition()));
+
+        node.attachChild(voxel);
+        voxelMap.put(cell.getPosition(), voxel);
     }
 
     public void remove(Position position) {
-        Parallelepiped toRemove = get(position);
-        if (toRemove != null) {
-            parallelepipeds.remove(toRemove);
-            node.detachChild(toRemove.getSpatial());
-
-            rebuildSpatials();
-        }
     }
 
     /**

@@ -26,8 +26,8 @@ import model.World;
 
 import java.util.*;
 
-class Environment implements Observer {
-    public static final float SCALE = 0.2f;
+public class Environment implements Observer {
+    public  static final float SCALE = 0.2f;
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private ParallelepipedSpace voxelSpace;
@@ -97,7 +97,7 @@ class Environment implements Observer {
     }
 
     private void addFloor() {
-        floor = new Geometry("Box", new Quad(FLOOR_SIZE, FLOOR_SIZE));
+        floor = new Geometry("Floor", new Quad(FLOOR_SIZE, FLOOR_SIZE));
         Material unshaded = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
