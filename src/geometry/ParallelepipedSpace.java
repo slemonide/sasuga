@@ -10,6 +10,7 @@ import model.Cell;
 import model.MaterialManager;
 import model.Position;
 import ui.Coordinates;
+import ui.VisualGUI;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,17 +34,16 @@ public class ParallelepipedSpace {
     }
 
     public void add(Cell cell) {
-        Spatial voxel = new Geometry("Box", new Box(SCALE/2,SCALE,SCALE/2)));
+        Spatial voxel = new Geometry("Box", new Box(SCALE/2,SCALE/2,SCALE/2));
         voxel.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
-        Material material = MaterialManager.getInstance()
-                .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
-        voxel.setMaterial(material);
+        Material material = new Material(VisualGUI.getInstance().getAssetManager(),
+                "Common/MatDefs/Misc/ShowNormals.j3md");
 
         voxel.setLocalTranslation(Coordinates.positionToVector(cell.getPosition()));
 
         node.attachChild(voxel);
-        voxelMap.put(cell.getPosition(), voxel);
+        parallelepipeds.add(new Parallelepiped(cell.getPosition()));
     }
 
     public void remove(Position position) {

@@ -25,6 +25,9 @@ public class VisualGUI extends SimpleApplication implements Observer {
      * @return the current active app of the world
      */
     public static VisualGUI getInstance() {
+        if (app == null){
+            app = new VisualGUI();
+        }
         return app;
     }
 
