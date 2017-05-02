@@ -116,4 +116,15 @@ public final class Position {
                 return new Position(x, y, value);
         }
     }
+
+    public int get(Dimension dimension) {
+        switch (dimension) {
+            case X:
+                return x;
+            case Y:
+                return y;
+            default:
+                return z;
+        }
+    }
 }

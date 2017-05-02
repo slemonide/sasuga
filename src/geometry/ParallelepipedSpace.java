@@ -28,20 +28,33 @@ public class ParallelepipedSpace {
     public void add(Position position) {
         remove(position);
 
-        Parallelepiped neighbour;
-        if (contains(position.add(-1,0,0))) {
-            neighbour = get(position.add(-1, 0, 0));
-            if (neighbour.getSize(Y) == 1 && neighbour.getSize(Z) == 1) {
-                parallelepipeds.remove(neighbour);
+        boolean done = false;
+        for (Dimension dimension : Dimension.values()) {
+            for (Position deltaPosition : dimension.getDirections()) {
+                if (contains(position.add(deltaPosition))) {
+                    Parallelepiped neighbour = get(position.add(deltaPosition));
+                    if (neighbour.getSize(dimension.getComplements()[0]) == 1
+                            && neighbour.getSize(dimension.getComplements()[1]) == 1) {
+                        parallelepipeds.remove(neighbour);
 
-                int newCenterX = (neighbour.getCenter().x * neighbour.getSize(X) + position.x) / (neighbour.getSize(X) + 1);
-                Position newCenter = neighbour.getCenter().set(X, newCenterX);
+                        int newCenterX = (neighbour.getCenter().get(dimension)
+                                * neighbour.getSize(dimension)
+                                + position.get(dimension)) / (neighbour.getSize(dimension) + 1);
+                        Position newCenter = neighbour.getCenter().set(dimension, newCenterX);
 
-                Parallelepiped newParallelepiped = neighbour.setCenter(newCenter).setSize(X, neighbour.getSize(X) + 1);
+                        Parallelepiped newParallelepiped = neighbour
+                                .setCenter(newCenter).setSize(dimension, neighbour.getSize(dimension) + 1);
 
-                parallelepipeds.add(newParallelepiped);
+                        parallelepipeds.add(newParallelepiped);
+
+                        done = true;
+                        break;
+                    }
+                }
             }
-        } else {
+        }
+
+        if (!done) {
             parallelepipeds.add(new Parallelepiped(position));
         }
     }
