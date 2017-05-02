@@ -100,6 +100,11 @@ public class ParallelepipedTest {
         assertTrue(parallelepiped.contains(new Position(0,1,0)));
         assertFalse(parallelepiped.contains(new Position(0,2,0)));
         assertFalse(parallelepiped.contains(new Position(0,-1,0)));
+
+        assertFalse(parallelepiped.contains(new Position(1,0,0)));
+        assertFalse(parallelepiped.contains(new Position(-1,1,0)));
+        assertFalse(parallelepiped.contains(new Position(0,0,1)));
+        assertFalse(parallelepiped.contains(new Position(0,1,-1)));
     }
 
     @Test
