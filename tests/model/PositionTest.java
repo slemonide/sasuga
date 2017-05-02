@@ -1,4 +1,4 @@
-package tests.model;
+package model;
 
 import org.junit.Test;
 import model.Position;

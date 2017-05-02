@@ -10,8 +10,8 @@ import java.util.Set;
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
  */
-public class Parallelepiped {
-    private Set<Position> positions;
+public final class Parallelepiped {
+    private final Set<Position> positions;
 
     /**
      * Creates a unit parallelepiped centered at the given position
@@ -23,8 +23,8 @@ public class Parallelepiped {
     }
 
     /**
-     * Merge this parallelepiped with another parallelepiped
-     * @return this parallelepiped
+     * Merge this parallelepiped with another parallelepiped into a new parallelepiped
+     * @return merged parallelepiped
      * @throws GeometryMismatch if parallelepipeds don't make a parallelepiped when merged
      */
     public Parallelepiped merge(Parallelepiped otherParallelepiped) throws GeometryMismatch {

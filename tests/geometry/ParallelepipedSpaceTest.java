@@ -1,4 +1,4 @@
-package tests.geometry;
+package geometry;
 
 /**
  *
