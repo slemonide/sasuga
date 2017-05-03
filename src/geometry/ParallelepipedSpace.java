@@ -6,6 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import static geometry.Dimension.X;
+import static geometry.Dimension.Y;
+import static geometry.Dimension.Z;
+
 /**
  * Represents a set of Parallelepiped instances
  * For each parallelepiped, there is a spatial in the assigned node
@@ -92,7 +96,46 @@ public class ParallelepipedSpace {
 
             parallelepipeds.remove(toSplit);
             if (toSplit.getVolume() != 1) {
-                // stub
+                Set<Parallelepiped> toAdd = new HashSet<>();
+
+                if (position.z > toSplit.getCorner().z) {
+                    toAdd.add(toSplit.setSize(Z, position.z - toSplit.getCorner().z));
+                }
+
+                if (position.z < toSplit.getCorner().z + toSplit.getSize(Z) - 1) {
+                    toAdd.add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - position.z)
+                    .setCorner(toSplit.getCorner().set(Z, position.z + 1)));
+                }
+
+                if (position.y > toSplit.getCorner().y) {
+                    toAdd.add(toSplit.setSize(Z, 1)
+                            .setSize(Y, position.y - toSplit.getCorner().y)
+                    .setCorner(toSplit.getCorner().set(Z, position.z)));
+                }
+
+                if (position.y < toSplit.getCorner().y + toSplit.getSize(Y) - 1) {
+                    toAdd.add(toSplit.setSize(Z, 1)
+                    .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - position.y)
+                    .setCorner(toSplit.getCorner().set(Z, position.z).set(Y, position.y + 1)));
+                }
+
+                if (position.x > toSplit.getCorner().x) {
+                    toAdd.add(toSplit.setSize(Z, 1).setSize(Y, 1)
+                    .setSize(X, position.x - toSplit.getCorner().x)
+                    .setCorner(toSplit.getCorner().set(Z, position.z)
+                    .set(Y, position.y)));
+                }
+
+                if (position.x < toSplit.getCorner().x + toSplit.getSize(X) - 1) {
+                    toAdd.add(toSplit.setSize(Z, 1).setSize(Y, 1)
+                    .setSize(X, toSplit.getCorner().x + toSplit.getSize(X) - position.x)
+                            .setCorner(toSplit.getCorner().set(Z, position.z)
+                                    .set(Y, position.y).set(X, position.x + 1)));
+                }
+
+                for (Parallelepiped parallelepiped : toAdd) {
+                    add(parallelepiped);
+                }
             }
         }
     }
