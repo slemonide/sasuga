@@ -1,5 +1,6 @@
 package geometry;
 
+import com.jme3.math.Vector3f;
 import model.Position;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -97,5 +98,12 @@ public final class Parallelepiped {
         }
 
         return volumeSoFar;
+    }
+
+    public Vector3f getWorldVector3f() {
+        return new Vector3f(
+                corner.x + xSize / 2f,
+                corner.y + ySize / 2f,
+                corner.z + zSize / 2f);
     }
 }

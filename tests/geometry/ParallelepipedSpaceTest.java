@@ -345,6 +345,29 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
+    public void testRemoveSliceThroughCube() {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    testSpace.add(new Position(x, y, z));
+                }
+            }
+        }
+
+        for (int x = 0; x < 3; x++) {
+            for (int z = 0; z < 3; z++) {
+                testSpace.add(new Position(x, 1, z));
+            }
+        }
+
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                3, 1, 3)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,2,0),
+                3, 1, 3)));
+    }
+
+    @Test
     public void testRemoveSliceThroughBigParallelepiped() {
         buildParallelepiped();
         for (int x = 0; x < MAX_POSITIONS_X; x++) {

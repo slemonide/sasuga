@@ -1,5 +1,6 @@
 package geometry;
 
+import com.jme3.math.Vector3f;
 import model.Position;
 import org.junit.Test;
 
@@ -136,5 +137,24 @@ public class ParallelepipedTest {
         assertTrue(parallelepiped.contains(new Position(10,20,31)));
         assertFalse(parallelepiped.contains(new Position(10,20,32)));
         assertFalse(parallelepiped.contains(new Position(10,20,29)));
+    }
+
+    @Test
+    public void testGetWorldVector3f() {
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+
+        assertEquals(new Vector3f(0.5f,0.5f,0.5f), parallelepiped.getWorldVector3f());
+
+        parallelepiped = new Parallelepiped(new Position(10, 11, 12));
+        assertEquals(new Vector3f(10.5f,11.5f,12.5f), parallelepiped.getWorldVector3f());
+
+        parallelepiped = new Parallelepiped(new Position(-10, -11, -12));
+        assertEquals(new Vector3f(0.5f - 10,0.5f - 11,0.5f - 12), parallelepiped.getWorldVector3f());
+
+        parallelepiped = new Parallelepiped(new Position(0, 0, 0), 2, 1, 1);
+        assertEquals(new Vector3f(1f,0.5f,0.5f), parallelepiped.getWorldVector3f());
+
+        parallelepiped = new Parallelepiped(new Position(0, 0, 0), 20, 10, 30);
+        assertEquals(new Vector3f(10f,5f,15f), parallelepiped.getWorldVector3f());
     }
 }
