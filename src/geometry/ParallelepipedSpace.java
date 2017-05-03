@@ -103,7 +103,7 @@ public class ParallelepipedSpace {
                 }
 
                 if (position.z < toSplit.getCorner().z + toSplit.getSize(Z) - 1) {
-                    toAdd.add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - position.z)
+                    toAdd.add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - 1 - position.z)
                     .setCorner(toSplit.getCorner().set(Z, position.z + 1)));
                 }
 
@@ -115,7 +115,7 @@ public class ParallelepipedSpace {
 
                 if (position.y < toSplit.getCorner().y + toSplit.getSize(Y) - 1) {
                     toAdd.add(toSplit.setSize(Z, 1)
-                    .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - position.y)
+                    .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - 1 - position.y)
                     .setCorner(toSplit.getCorner().set(Z, position.z).set(Y, position.y + 1)));
                 }
 
@@ -128,7 +128,7 @@ public class ParallelepipedSpace {
 
                 if (position.x < toSplit.getCorner().x + toSplit.getSize(X) - 1) {
                     toAdd.add(toSplit.setSize(Z, 1).setSize(Y, 1)
-                    .setSize(X, toSplit.getCorner().x + toSplit.getSize(X) - position.x)
+                    .setSize(X, toSplit.getCorner().x + toSplit.getSize(X) - 1 - position.x)
                             .setCorner(toSplit.getCorner().set(Z, position.z)
                                     .set(Y, position.y).set(X, position.x + 1)));
                 }

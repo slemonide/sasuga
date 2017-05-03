@@ -288,6 +288,63 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
+    public void testRemoveSliceThroughEightRowX() {
+        testSpace.add(new Position(1,0,0));
+        testSpace.add(new Position(2,0,0));
+        testSpace.add(new Position(3,0,0));
+        testSpace.add(new Position(4,0,0));
+        testSpace.add(new Position(5,0,0));
+        testSpace.add(new Position(6,0,0));
+        testSpace.add(new Position(7,0,0));
+        testSpace.add(new Position(8,0,0));
+
+        testSpace.remove(new Position(4,0,0));
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(1,0,0),
+                3,1,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(5,0,0),
+                4,1,1)));
+    }
+
+    @Test
+    public void testRemoveSliceThroughEightRowY() {
+        testSpace.add(new Position(0,1,0));
+        testSpace.add(new Position(0,2,0));
+        testSpace.add(new Position(0,3,0));
+        testSpace.add(new Position(0,4,0));
+        testSpace.add(new Position(0,5,0));
+        testSpace.add(new Position(0,6,0));
+        testSpace.add(new Position(0,7,0));
+        testSpace.add(new Position(0,8,0));
+
+        testSpace.remove(new Position(0,4,0));
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,0),
+                1,3,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,5,0),
+                1,4,1)));
+    }
+
+    @Test
+    public void testRemoveSliceThroughEightRowZ() {
+        testSpace.add(new Position(0,0,1));
+        testSpace.add(new Position(0,0,2));
+        testSpace.add(new Position(0,0,3));
+        testSpace.add(new Position(0,0,4));
+        testSpace.add(new Position(0,0,5));
+        testSpace.add(new Position(0,0,6));
+        testSpace.add(new Position(0,0,7));
+        testSpace.add(new Position(0,0,8));
+
+        testSpace.remove(new Position(0,0,4));
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,1),
+                1,1,3)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,5),
+                1,1,4)));
+    }
+
+    @Test
     public void testRemoveSliceThroughBigParallelepiped() {
         buildParallelepiped();
         for (int x = 0; x < MAX_POSITIONS_X; x++) {
@@ -300,7 +357,7 @@ public class ParallelepipedSpaceTest {
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0, 0, 0),
                 MAX_POSITIONS_X,
                 MAX_POSITIONS_Y,
-                MAX_POSITIONS_Z/2 - 1)));
+                MAX_POSITIONS_Z/2)));
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(
                 0,
                 0,
