@@ -7,11 +7,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ParallelepipedSpaceTest {
-    private static final int MAX_POSITIONS = 2000;
+    private static final int MAX_POSITIONS = 8;
     private static final int MAX_POSITIONS_X = 10;
     private static final int MAX_POSITIONS_Y = 20;
     private static final int MAX_POSITIONS_Z = 17;
-    private static final int MAX_POSITIONS_CUBE = 91;
+    private static final int MAX_POSITIONS_CUBE = 17;
     private ParallelepipedSpace testSpace;
 
     @Before
@@ -152,12 +152,29 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
+    public void testAddEightRow() {
+        testSpace.add(new Position(0,0,1));
+        testSpace.add(new Position(0,0,2));
+        testSpace.add(new Position(0,0,3));
+        testSpace.add(new Position(0,0,4));
+        testSpace.add(new Position(0,0,5));
+        testSpace.add(new Position(0,0,6));
+        testSpace.add(new Position(0,0,7));
+        testSpace.add(new Position(0,0,8));
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,4),
+                1,1,8)));
+    }
+
+    @Test
     public void testAddManyRow() {
         for (int i = 0; i < MAX_POSITIONS; i++) {
             testSpace.add(new Position(i, 0, 0));
         }
         assertEquals(1, testSpace.size());
-        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,MAX_POSITIONS/2 - 1,0),
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(
+                MAX_POSITIONS / 2 - 1,
+                0,0),
                 MAX_POSITIONS,1,1)));
     }
 

@@ -1,15 +1,10 @@
 package geometry;
 
-import com.jme3.scene.Node;
 import model.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static geometry.Dimension.X;
-import static geometry.Dimension.Y;
-import static geometry.Dimension.Z;
 
 /**
  * Represents a set of Parallelepiped instances
@@ -33,9 +28,9 @@ public class ParallelepipedSpace {
         Parallelepiped newParallelepiped = null;
         for (Dimension dimension : Dimension.values()) {
             for (Position deltaPosition : dimension.getDirections()) {
-                if (contains(parallelepiped.getCenter()
+                if (contains(parallelepiped.getCorner()
                         .add(deltaPosition.scale(parallelepiped.getSize(dimension)/2 + 1)))) {
-                    Parallelepiped neighbour = get(parallelepiped.getCenter()
+                    Parallelepiped neighbour = get(parallelepiped.getCorner()
                             .add(deltaPosition.scale(parallelepiped.getSize(dimension)/2 + 1)));
                     if (neighbour.getSize(dimension.getComplements()[0])
                             == parallelepiped.getSize(dimension.getComplements()[0])
@@ -43,15 +38,15 @@ public class ParallelepipedSpace {
                             == parallelepiped.getSize(dimension.getComplements()[1])) {
                         parallelepipeds.remove(neighbour);
 
-                        int newCenterComponent = (neighbour.getCenter().get(dimension)
+                        int newCenterComponent = (neighbour.getCorner().get(dimension)
                                 * neighbour.getSize(dimension)
                                 + (neighbour.getSize(dimension) + 1) % 2
-                                + parallelepiped.getCenter().get(dimension) * parallelepiped.getSize(dimension))
+                                + parallelepiped.getCorner().get(dimension) * parallelepiped.getSize(dimension))
                                 / (neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
-                        Position newCenter = neighbour.getCenter().set(dimension, newCenterComponent);
+                        Position newCenter = neighbour.getCorner().set(dimension, newCenterComponent);
 
                         newParallelepiped = neighbour
-                                .setCenter(newCenter).setSize(dimension,
+                                .setCorner(newCenter).setSize(dimension,
                                         neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
                         break;
                     }

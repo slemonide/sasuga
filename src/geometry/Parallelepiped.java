@@ -7,32 +7,32 @@ import org.jetbrains.annotations.Contract;
  * Represents a right-angled parallelepiped with integer-valued side lengths
  */
 public final class Parallelepiped {
-    private final Position center;
+    private final Position corner;
     private final int xSize;
     private final int ySize;
     private final int zSize;
 
     /**
-     * Creates a unit parallelepiped centered at the given position
-     * @param center center position of the parallelepiped
+     * Creates a unit parallelepiped cornered at the given position
+     * @param corner corner position of the parallelepiped
      */
-    public Parallelepiped(Position center) {
-        this.center = center;
+    public Parallelepiped(Position corner) {
+        this.corner = corner;
         this.xSize = 1;
         this.ySize = 1;
         this.zSize = 1;
     }
 
-    public Parallelepiped(Position center, int xSize, int ySize, int zSize) {
-        this.center = center;
+    public Parallelepiped(Position corner, int xSize, int ySize, int zSize) {
+        this.corner = corner;
         this.xSize = xSize;
         this.ySize = ySize;
         this.zSize = zSize;
     }
 
     @Contract(pure = true)
-    public Position getCenter() {
-        return center;
+    public Position getCorner() {
+        return corner;
     }
 
     @Contract(pure = true)
@@ -49,9 +49,9 @@ public final class Parallelepiped {
 
     @Contract(pure = true)
     public boolean contains(Position position) {
-        return ((xSize/2 - xSize + 1 + center.x <= position.x) && (position.x <= xSize/2 + center.x) &&
-                (ySize/2 - ySize + 1 + center.y <= position.y) && (position.y <= ySize/2 + center.y) &&
-                (zSize/2 - zSize + 1 + center.z <= position.z) && (position.z <= zSize/2 + center.z));
+        return ((corner.x <= position.x) && (position.x < corner.x + xSize) &&
+                (corner.y <= position.y) && (position.y < corner.y + ySize) &&
+                (corner.z <= position.z) && (position.z < corner.z + zSize));
     }
 
     @Override
@@ -61,30 +61,30 @@ public final class Parallelepiped {
 
         Parallelepiped that = (Parallelepiped) o;
 
-        return xSize == that.xSize && ySize == that.ySize && zSize == that.zSize && center.equals(that.center);
+        return xSize == that.xSize && ySize == that.ySize && zSize == that.zSize && corner.equals(that.corner);
     }
 
     @Override
     public int hashCode() {
-        int result = center.hashCode();
+        int result = corner.hashCode();
         result = 31 * result + xSize;
         result = 31 * result + ySize;
         result = 31 * result + zSize;
         return result;
     }
 
-    public Parallelepiped setCenter(Position center) {
-        return new Parallelepiped(center, xSize, ySize, zSize);
+    public Parallelepiped setCorner(Position corner) {
+        return new Parallelepiped(corner, xSize, ySize, zSize);
     }
 
     public Parallelepiped setSize(Dimension dimension, int size) {
         switch (dimension) {
             case X:
-                return new Parallelepiped(center, size, ySize, zSize);
+                return new Parallelepiped(corner, size, ySize, zSize);
             case Y:
-                return new Parallelepiped(center, xSize, size, zSize);
+                return new Parallelepiped(corner, xSize, size, zSize);
             default:
-                return new Parallelepiped(center, xSize, ySize, size);
+                return new Parallelepiped(corner, xSize, ySize, size);
         }
     }
 }

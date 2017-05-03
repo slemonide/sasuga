@@ -190,8 +190,8 @@
                               width="100%" height="100%"/>
                     </panel>
                 </panel>
-                <panel id="empty_panel" width="100%" height="62%" valign="center"/>
-                <panel id="pause_panel" width="100%" height="2%" childLayout="center"
+                <panel id="empty_panel" width="100%" height="62%" valign="corner"/>
+                <panel id="pause_panel" width="100%" height="2%" childLayout="corner"
                        backgroundColor="#0fff">
                     <text text="PAUSED"
                           id="pause"

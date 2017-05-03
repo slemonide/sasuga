@@ -12,7 +12,7 @@ public class ParallelepipedTest {
     @Test
     public void testConstructor() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
-        assertEquals(new Position(0,0,0), parallelepiped.getCenter());
+        assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
         assertEquals(1, parallelepiped.getSize(Z));
@@ -22,8 +22,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testConstructorHard() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 10, 20, 30);
-        assertEquals(new Position(0,0,0), parallelepiped.getCenter());
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(-4,-9,-14), 10, 20, 30);
+        assertEquals(new Position(-4,-9,-14), parallelepiped.getCorner());
         assertEquals(10, parallelepiped.getSize(X));
         assertEquals(20, parallelepiped.getSize(Y));
         assertEquals(30, parallelepiped.getSize(Z));
@@ -69,7 +69,7 @@ public class ParallelepipedTest {
         assertFalse(parallelepiped.contains(new Position(6, -11, 16)));
 
         assertFalse(parallelepiped.contains(new Position(0,-11,16)));
-        assertFalse(parallelepiped.contains(new Position(6,  0,15)));
+        assertFalse(parallelepiped.contains(new Position(6,  0,-15)));
         assertFalse(parallelepiped.contains(new Position(5,-12, 0)));
 
         assertFalse(parallelepiped.contains(new Position(0,0,16)));
@@ -80,7 +80,7 @@ public class ParallelepipedTest {
     @Test
     public void testTwoX() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 2, 1, 1);
-        assertEquals(new Position(0,0,0), parallelepiped.getCenter());
+        assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(2, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
         assertEquals(1, parallelepiped.getSize(Z));
@@ -94,7 +94,7 @@ public class ParallelepipedTest {
     @Test
     public void testTwoY() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 2, 1);
-        assertEquals(new Position(0,0,0), parallelepiped.getCenter());
+        assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(2, parallelepiped.getSize(Y));
         assertEquals(1, parallelepiped.getSize(Z));
@@ -113,7 +113,7 @@ public class ParallelepipedTest {
     @Test
     public void testTwoZ() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 1, 2);
-        assertEquals(new Position(0,0,0), parallelepiped.getCenter());
+        assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
         assertEquals(2, parallelepiped.getSize(Z));
@@ -127,7 +127,7 @@ public class ParallelepipedTest {
     @Test
     public void testNonZeroPosition() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(10,20,30), 1, 1, 2);
-        assertEquals(new Position(10,20,30), parallelepiped.getCenter());
+        assertEquals(new Position(10,20,30), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
         assertEquals(2, parallelepiped.getSize(Z));
