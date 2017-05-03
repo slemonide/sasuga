@@ -45,6 +45,7 @@ public class ParallelepipedSpace {
 
                         int newCenterComponent = (neighbour.getCenter().get(dimension)
                                 * neighbour.getSize(dimension)
+                                + (neighbour.getSize(dimension) + 1) % 2
                                 + parallelepiped.getCenter().get(dimension) * parallelepiped.getSize(dimension))
                                 / (neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
                         Position newCenter = neighbour.getCenter().set(dimension, newCenterComponent);
