@@ -88,4 +88,14 @@ public final class Parallelepiped {
                 return new Parallelepiped(corner, xSize, ySize, size);
         }
     }
+
+    public int getVolume() {
+        int volumeSoFar = 1;
+
+        for (Dimension dimension : Dimension.values()) {
+            volumeSoFar *= getSize(dimension);
+        }
+
+        return volumeSoFar;
+    }
 }

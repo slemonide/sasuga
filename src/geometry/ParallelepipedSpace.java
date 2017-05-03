@@ -86,6 +86,15 @@ public class ParallelepipedSpace {
     }
 
     public void remove(Position position) {
+        if (contains(position)) {
+            Parallelepiped toSplit = get(position);
+            assert toSplit != null;
+
+            parallelepipeds.remove(toSplit);
+            if (toSplit.getVolume() != 1) {
+                // stub
+            }
+        }
     }
 
     /**

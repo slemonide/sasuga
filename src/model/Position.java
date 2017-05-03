@@ -19,6 +19,7 @@ public final class Position {
     public static final Position X = new Position(1, 0, 0);
     public static final Position Y = new Position(0, 1, 0);
     public static final Position Z = new Position(0, 0, 1);
+    public static final Position ORIGIN = new Position(0, 0, 0);
     /**
      * x component
      */
