@@ -6,25 +6,18 @@ import model.Position;
  * Represents the dimensions of a 3D space
  */
 public enum Dimension {
-    X, Y, Z;
+    X (Position.X),
+    Y (Position.Y),
+    Z (Position.Z);
 
-    public Position[] getDirections() {
-        Position[] directions = new Position[2];
-        switch (this) {
-            case X:
-                directions[0] = new Position(1,0,0);
-                directions[1] = new Position(-1,0,0);
-                break;
-            case Y:
-                directions[0] = new Position(0,1,0);
-                directions[1] = new Position(0,-1,0);
-                break;
-            default:
-                directions[0] = new Position(0,0,1);
-                directions[1] = new Position(0,0,-1);
-        }
+    private final Position unitVector;
 
-        return directions;
+    Dimension(Position unitVector) {
+        this.unitVector = unitVector;
+    }
+
+    public Position getUnitVector() {
+        return unitVector;
     }
 
     public Dimension[] getComplements() {

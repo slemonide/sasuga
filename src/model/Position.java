@@ -16,6 +16,9 @@ import static ui.Environment.SCALE;
  * A three-dimensional position
  */
 public final class Position {
+    public static final Position X = new Position(1, 0, 0);
+    public static final Position Y = new Position(0, 1, 0);
+    public static final Position Z = new Position(0, 0, 1);
     /**
      * x component
      */
@@ -102,7 +105,7 @@ public final class Position {
 
     @NotNull
     @Contract(pure = true)
-    private Position inverse() {
+    public Position inverse() {
         return new Position(-x, -y, -z);
     }
 

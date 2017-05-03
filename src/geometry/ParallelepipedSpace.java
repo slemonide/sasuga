@@ -27,31 +27,48 @@ public class ParallelepipedSpace {
     private void add(@NotNull Parallelepiped parallelepiped) {
         Parallelepiped newParallelepiped = null;
         for (Dimension dimension : Dimension.values()) {
-            for (Position deltaPosition : dimension.getDirections()) {
+
+            Position unitVector = dimension.getUnitVector();
+            if (contains(parallelepiped.getCorner()
+                    .add(unitVector.scale(parallelepiped.getSize(dimension))))) {
+                Parallelepiped neighbour = get(parallelepiped.getCorner()
+                        .add(unitVector.scale(parallelepiped.getSize(dimension))));
+                assert neighbour != null;
+                if (neighbour.getSize(dimension.getComplements()[0])
+                        == parallelepiped.getSize(dimension.getComplements()[0])
+                        && neighbour.getSize(dimension.getComplements()[1])
+                        == parallelepiped.getSize(dimension.getComplements()[1])) {
+                    parallelepipeds.remove(neighbour);
+
+                    Position newCorner = parallelepiped.getCorner();
+
+                    newParallelepiped = neighbour
+                            .setCorner(newCorner).setSize(dimension,
+                                    neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
+                }
+            }
+
+            if (newParallelepiped == null) {
                 if (contains(parallelepiped.getCorner()
-                        .add(deltaPosition.scale(parallelepiped.getSize(dimension)/2 + 1)))) {
+                        .add(unitVector.inverse()))) {
                     Parallelepiped neighbour = get(parallelepiped.getCorner()
-                            .add(deltaPosition.scale(parallelepiped.getSize(dimension)/2 + 1)));
+                            .add(unitVector.inverse()));
+                    assert neighbour != null;
                     if (neighbour.getSize(dimension.getComplements()[0])
                             == parallelepiped.getSize(dimension.getComplements()[0])
                             && neighbour.getSize(dimension.getComplements()[1])
                             == parallelepiped.getSize(dimension.getComplements()[1])) {
                         parallelepipeds.remove(neighbour);
 
-                        int newCenterComponent = (neighbour.getCorner().get(dimension)
-                                * neighbour.getSize(dimension)
-                                + (neighbour.getSize(dimension) + 1) % 2
-                                + parallelepiped.getCorner().get(dimension) * parallelepiped.getSize(dimension))
-                                / (neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
-                        Position newCenter = neighbour.getCorner().set(dimension, newCenterComponent);
+                        Position newCorner = neighbour.getCorner();
 
                         newParallelepiped = neighbour
-                                .setCorner(newCenter).setSize(dimension,
+                                .setCorner(newCorner).setSize(dimension,
                                         neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
-                        break;
                     }
                 }
             }
+
             if (newParallelepiped != null) {
                 break;
             }

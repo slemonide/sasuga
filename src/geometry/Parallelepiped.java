@@ -2,6 +2,7 @@ package geometry;
 
 import model.Position;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
