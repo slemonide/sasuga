@@ -132,6 +132,29 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
+    public void testAddThreeRow() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+        testSpace.add(new Position(0,2,0));
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,0),
+                1,3,1)));
+    }
+
+    @Test
+    public void testAddFourRow() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+        testSpace.add(new Position(0,2,0));
+        testSpace.add(new Position(0,3,0));
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,2,0),
+                1,4,1)));
+    }
+
+    @Test
     public void testAddManyRow() {
         for (int i = 0; i < MAX_POSITIONS; i++) {
             testSpace.add(new Position(i, 0, 0));

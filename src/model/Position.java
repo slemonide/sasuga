@@ -127,4 +127,8 @@ public final class Position {
                 return z;
         }
     }
+
+    public Position scale(int factor) {
+        return new Position(factor * x, factor * y, factor * z);
+    }
 }
