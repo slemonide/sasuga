@@ -16,12 +16,16 @@ import static geometry.Dimension.Z;
  */
 public class ParallelepipedSpace {
     private Set<Parallelepiped> parallelepipeds;
+    private Set<Parallelepiped> toAdd;
+    private Set<Parallelepiped> toRemove;
 
     /**
      * Create an empty parallelepiped space associated with the given Node
      */
     public ParallelepipedSpace() {
         parallelepipeds = new HashSet<>();
+        toAdd = new HashSet<>();
+        toRemove = new HashSet<>();
     }
 
     public void add(Position position) {
@@ -43,6 +47,7 @@ public class ParallelepipedSpace {
                         && neighbour.getSize(dimension.getComplements()[1])
                         == parallelepiped.getSize(dimension.getComplements()[1])) {
                     parallelepipeds.remove(neighbour);
+                    toRemove.add(neighbour);
 
                     Position newCorner = parallelepiped.getCorner();
 
@@ -63,6 +68,7 @@ public class ParallelepipedSpace {
                             && neighbour.getSize(dimension.getComplements()[1])
                             == parallelepiped.getSize(dimension.getComplements()[1])) {
                         parallelepipeds.remove(neighbour);
+                        toRemove.add(neighbour);
 
                         Position newCorner = neighbour.getCorner();
 
@@ -80,6 +86,7 @@ public class ParallelepipedSpace {
 
         if (newParallelepiped == null) {
             parallelepipeds.add(parallelepiped);
+            toAdd.add(parallelepiped);
         } else {
             add(newParallelepiped);
         }
@@ -95,6 +102,7 @@ public class ParallelepipedSpace {
             assert toSplit != null;
 
             parallelepipeds.remove(toSplit);
+            toRemove.add(toSplit);
             if (toSplit.getVolume() != 1) {
                 Set<Parallelepiped> toAdd = new HashSet<>();
 
@@ -163,5 +171,25 @@ public class ParallelepipedSpace {
 
     public boolean isEmpty() {
         return parallelepipeds.isEmpty();
+    }
+
+    /**
+     * @return set of parallelepipeds added since last modification
+     */
+    public Set<Parallelepiped> getToAdd() {
+        Set<Parallelepiped> toReturn = toAdd;
+        toAdd = new HashSet<>();
+
+        return toReturn;
+    }
+
+    /**
+     * @return set of parallelepipeds removed since last modification
+     */
+    public Set<Parallelepiped> getToRemove() {
+        Set<Parallelepiped> toReturn = toRemove;
+        toRemove = new HashSet<>();
+
+        return toReturn;
     }
 }
