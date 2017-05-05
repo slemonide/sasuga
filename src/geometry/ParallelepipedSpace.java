@@ -3,6 +3,7 @@ package geometry;
 import model.Position;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,14 +17,16 @@ import static geometry.Dimension.Z;
  */
 public class ParallelepipedSpace {
     private Set<Parallelepiped> parallelepipeds;
-    private Set<Parallelepiped> lastSeenParallelepipedsSet;
+    private Set<Parallelepiped> lastSeenParallelepipedsSetToAdd;
+    private Set<Parallelepiped> lastSeenParallelepipedsSetToRemove;
 
     /**
      * Create an empty parallelepiped space associated with the given Node
      */
     public ParallelepipedSpace() {
         parallelepipeds = new HashSet<>();
-        lastSeenParallelepipedsSet = new HashSet<>();
+        lastSeenParallelepipedsSetToAdd = new HashSet<>();
+        lastSeenParallelepipedsSetToRemove = new HashSet<>();
     }
 
     public void add(Position position) {
@@ -156,7 +159,7 @@ public class ParallelepipedSpace {
     }
 
     public Set<Parallelepiped> getParallelepipeds() {
-        return parallelepipeds;
+        return Collections.unmodifiableSet(parallelepipeds);
     }
 
     public int size() {
@@ -168,20 +171,27 @@ public class ParallelepipedSpace {
     }
 
     /**
-     * @return set of parallelepipeds added since last modification
+     * @return set of parallelepipeds added since last invocation of getToAdd()
      */
     public Set<Parallelepiped> getToAdd() {
         Set<Parallelepiped> toAdd = new HashSet<>();
-
+        toAdd.addAll(parallelepipeds);
+        toAdd.removeAll(lastSeenParallelepipedsSetToAdd);
+        lastSeenParallelepipedsSetToAdd.clear();
+        lastSeenParallelepipedsSetToAdd.addAll(parallelepipeds);
 
         return toAdd;
     }
 
     /**
-     * @return set of parallelepipeds removed since last modification
+     * @return set of parallelepipeds removed since last invocation of getToRemove()
      */
     public Set<Parallelepiped> getToRemove() {
         Set<Parallelepiped> toRemove = new HashSet<>();
+        toRemove.addAll(lastSeenParallelepipedsSetToRemove);
+        toRemove.removeAll(parallelepipeds);
+        lastSeenParallelepipedsSetToRemove.clear();
+        lastSeenParallelepipedsSetToRemove.addAll(parallelepipeds);
 
         return toRemove;
     }
