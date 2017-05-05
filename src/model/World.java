@@ -171,7 +171,7 @@ public class World extends Observable implements Runnable {
      * Reset the world and notify the observers about the change
      */
     public void reset() {
-        toRemove.addAll(cellsMap.keySet());
+        instance = new World();
 
         setChanged();
         notifyObservers();

@@ -7,6 +7,9 @@ import model.Cell;
 import model.Position;
 import model.World;
 
+import java.util.Collection;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -42,12 +45,15 @@ public class WorldTest {
     @Test
     public void testRemoveCell() {
         World.getInstance().add(new Cell(new Position(0, 0, 0)));
+        World.getInstance().tick();
+        assertEquals(World.getInstance().getCellsMap().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);
         assertEquals(World.getInstance().getTickTime(), 0, DELTA);
 
         World.getInstance().remove(new Cell(new Position(0, 0, 0)));
+        World.getInstance().tick();
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
         assertEquals(World.getInstance().getGeneration(), 2);
@@ -57,12 +63,15 @@ public class WorldTest {
     @Test
     public void testRemoveCellPosition() {
         World.getInstance().add(new Cell(new Position(0, 0, 0)));
+        World.getInstance().tick();
+        assertEquals(World.getInstance().getCellsMap().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);
         assertEquals(World.getInstance().getTickTime(), 0, DELTA);
 
         World.getInstance().remove(new Position(0, 0, 0));
+        World.getInstance().tick();
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
         assertEquals(World.getInstance().getGeneration(), 2);

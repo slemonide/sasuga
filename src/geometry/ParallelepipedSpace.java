@@ -30,6 +30,7 @@ public class ParallelepipedSpace {
     }
 
     public void add(Position position) {
+        remove(position);
         add(new Parallelepiped(position));
     }
 

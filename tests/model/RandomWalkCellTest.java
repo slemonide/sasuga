@@ -16,6 +16,7 @@ public class RandomWalkCellTest {
         World.getInstance().reset();
 
         World.getInstance().add(new RandomWalkCell(new Position(0,0,0)));
+        World.getInstance().tick();
     }
 
     @Test

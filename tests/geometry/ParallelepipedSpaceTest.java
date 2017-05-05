@@ -47,6 +47,27 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
+    public void testAddCubeTwice() {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    testSpace.add(new Position(x, y, z));
+                }
+            }
+        }
+
+        for (int x = 0; x < 3; x++) {
+            for (int z = 0; z < 3; z++) {
+                testSpace.add(new Position(x, 1, z));
+            }
+        }
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                3, 3, 3)));
+    }
+
+    @Test
     public void testAddTwoX() {
         testSpace.add(new Position(1,0,0));
         testSpace.add(new Position(0,0,0));
@@ -364,7 +385,7 @@ public class ParallelepipedSpaceTest {
 
         for (int x = 0; x < 3; x++) {
             for (int z = 0; z < 3; z++) {
-                testSpace.add(new Position(x, 1, z));
+                testSpace.remove(new Position(x, 1, z));
             }
         }
 
