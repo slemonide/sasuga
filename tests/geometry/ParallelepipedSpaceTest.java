@@ -22,6 +22,8 @@ public class ParallelepipedSpaceTest {
     @Test
     public void testConstructor() {
         assertTrue(testSpace.isEmpty());
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertTrue(testSpace.getToAdd().isEmpty());
         assertEquals(0, testSpace.size());
     }
 
@@ -180,6 +182,13 @@ public class ParallelepipedSpaceTest {
 
     @Test
     public void testAddCube() {
+        buildUnitCube();
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                2,2,2)));
+    }
+
+    private void buildUnitCube() {
         testSpace.add(new Position(1,0,0));
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(1,1,0));
@@ -188,9 +197,6 @@ public class ParallelepipedSpaceTest {
         testSpace.add(new Position(0,0,1));
         testSpace.add(new Position(1,1,1));
         testSpace.add(new Position(0,1,1));
-        assertEquals(1, testSpace.size());
-        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
-                2,2,2)));
     }
 
     @Test
@@ -388,5 +394,109 @@ public class ParallelepipedSpaceTest {
                 MAX_POSITIONS_X,
                 MAX_POSITIONS_Y,
                 MAX_POSITIONS_Z/2)));
+    }
+
+    // toAdd
+
+    @Test
+    public void testToAddSimple() {
+        testSpace.add(new Position(0,0,0));
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0))));
+    }
+
+    @Test
+    public void testToAddTwo() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0), 1, 2, 1)));
+    }
+
+    @Test
+    public void testToAddThree() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+        testSpace.add(new Position(0,2,0));
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0), 1, 3, 1)));
+    }
+
+    @Test
+    public void testToAddMany() {
+        for (int i = 0; i < MAX_POSITIONS; i++) {
+            testSpace.add(new Position(0, i, 0));
+        }
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0),
+                1, MAX_POSITIONS, 1)));
+    }
+
+    @Test
+    public void testToAddCube() {
+        buildUnitCube();
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0),
+                2, 2, 2)));
+    }
+
+    // toRemove
+
+    @Test
+    public void testToRemoveEmpty() {
+        testSpace.remove(new Position(0,0,0));
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertTrue(testSpace.getToAdd().isEmpty());
+    }
+
+    @Test
+    public void testToRemoveNoChange() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.remove(new Position(0,0,0));
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertTrue(testSpace.getToAdd().isEmpty());
+    }
+
+    @Test
+    public void testToRemoveOne() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+        testSpace.remove(new Position(0,0,0));
+        assertTrue(testSpace.getToRemove().isEmpty());
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,1,0))));
+    }
+
+    @Test
+    public void testToRemoveAnotherOne() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0), 1, 2, 1)));
+        testSpace.remove(new Position(0,0,0));
+        assertEquals(1, testSpace.getToRemove().size());
+        assertTrue(testSpace.getToRemove().contains(new Parallelepiped(new Position(0,0,0), 1, 2, 1)));
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0))));
+    }
+
+    @Test
+    public void testToRemoveThree() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(1,0,0));
+        testSpace.add(new Position(2,0,0));
+        assertEquals(1, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0), 3, 1, 1)));
+        testSpace.remove(new Position(1,0,0));
+        assertEquals(1, testSpace.getToRemove().size());
+        assertTrue(testSpace.getToRemove().contains(new Parallelepiped(new Position(0,0,0), 3, 1, 1)));
+        assertEquals(2, testSpace.getToAdd().size());
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(0,0,0))));
+        assertTrue(testSpace.getToAdd().contains(new Parallelepiped(new Position(2,0,0))));
     }
 }
