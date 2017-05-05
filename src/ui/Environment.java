@@ -193,7 +193,7 @@ public class Environment implements Observer {
     }
 
     private void removeSpatial(Position position) {
-        parallelepipedSpace.add(position);
+        parallelepipedSpace.remove(position);
 
         updateSpatials();
     }
