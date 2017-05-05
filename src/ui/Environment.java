@@ -151,6 +151,8 @@ public class Environment implements Observer {
     }
 
     private void addSpatial(Cell cell) {
+        removeSpatial(cell.getPosition());
+
         parallelepipedSpace.add(cell.getPosition());
 
         updateSpatials();

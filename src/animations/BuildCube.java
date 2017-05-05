@@ -9,11 +9,16 @@ import model.World;
  */
 public class BuildCube implements Runnable {
 
-    private static final int SIZE = 20;
-    private static final long DELAY = 100; // in ms
+    private static final int SIZE = 100;
+    private static final long DELAY = 50; // in ms
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (int x=0; x < SIZE; x++) {
             for (int y=0; y < SIZE; y++) {
                 for (int z=0; z < SIZE; z++) {
