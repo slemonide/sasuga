@@ -19,7 +19,6 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
-import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
 import model.MaterialManager;
 import model.Position;
@@ -27,7 +26,7 @@ import model.World;
 
 import java.util.*;
 
-import static config.Options.SCALE;
+import static config.Options.*;
 import static geometry.Dimension.X;
 import static geometry.Dimension.Y;
 import static geometry.Dimension.Z;
@@ -59,10 +58,17 @@ public class Environment implements Observer {
     }
 
     void initializeEnvironment() {
-        addSkySphere();
+        if (ENABLE_SKY_SPHERE) {
+            addSkySphere();
+        }
+        if (ENABLE_FLOOR) {
+            addFloor();
+        }
+        if (ENABLE_SHADOWS) {
+            addShadows();
+        }
+
         addCells();
-        addFloor();
-        addShadows();
     }
 
     private void addSkySphere() {
@@ -115,8 +121,11 @@ public class Environment implements Observer {
     }
 
     void update(float tpf) {
+        if (ENABLE_FLOOR) {
+            updateFloor();
+        }
+
         updateCells();
-        updateFloor();
     }
 
     private void updateFloor() {
