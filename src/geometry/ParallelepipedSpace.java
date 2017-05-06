@@ -42,42 +42,27 @@ public class ParallelepipedSpace {
         for (Dimension dimension : Dimension.values()) {
 
             Position unitVector = dimension.getUnitVector();
-            if (contains(parallelepiped.getCorner()
-                    .add(unitVector.scale(parallelepiped.getSize(dimension))))) {
-                Parallelepiped neighbour = get(parallelepiped.getCorner()
-                        .add(unitVector.scale(parallelepiped.getSize(dimension))));
-                assert neighbour != null;
-                if (neighbour.getSize(dimension.getComplements()[0])
-                        == parallelepiped.getSize(dimension.getComplements()[0])
-                        && neighbour.getSize(dimension.getComplements()[1])
-                        == parallelepiped.getSize(dimension.getComplements()[1])) {
-                    parallelepipeds.remove(neighbour);
+            Parallelepiped neighbour = get(parallelepiped.getCorner()
+                    .add(unitVector.scale(parallelepiped.getSize(dimension))));
+            if (neighbour != null) {
 
+                if (parallelepipedsFit(parallelepiped, dimension, neighbour)) {
                     Position newCorner = parallelepiped.getCorner();
 
-                    newParallelepiped = neighbour
-                            .setCorner(newCorner).setSize(dimension,
-                                    neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
+                    newParallelepiped = getParallelepiped(parallelepiped, dimension, neighbour, newCorner);
                 }
             }
 
             if (newParallelepiped == null) {
-                if (contains(parallelepiped.getCorner()
-                        .add(unitVector.inverse()))) {
-                    Parallelepiped neighbour = get(parallelepiped.getCorner()
-                            .add(unitVector.inverse()));
-                    assert neighbour != null;
-                    if (neighbour.getSize(dimension.getComplements()[0])
-                            == parallelepiped.getSize(dimension.getComplements()[0])
-                            && neighbour.getSize(dimension.getComplements()[1])
-                            == parallelepiped.getSize(dimension.getComplements()[1])) {
-                        parallelepipeds.remove(neighbour);
 
+                neighbour = get(parallelepiped.getCorner()
+                        .add(unitVector.inverse()));
+                if (neighbour != null) {
+
+                    if (parallelepipedsFit(parallelepiped, dimension, neighbour)) {
                         Position newCorner = neighbour.getCorner();
 
-                        newParallelepiped = neighbour
-                                .setCorner(newCorner).setSize(dimension,
-                                        neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
+                        newParallelepiped = getParallelepiped(parallelepiped, dimension, neighbour, newCorner);
                     }
                 }
             }
@@ -92,6 +77,24 @@ public class ParallelepipedSpace {
         } else {
             add(newParallelepiped);
         }
+    }
+
+    @NotNull
+    private Parallelepiped getParallelepiped(@NotNull Parallelepiped parallelepiped, Dimension dimension, Parallelepiped neighbour, Position newCorner) {
+        Parallelepiped newParallelepiped;
+        parallelepipeds.remove(neighbour);
+
+        newParallelepiped = neighbour
+                .setCorner(newCorner).setSize(dimension,
+                        neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
+        return newParallelepiped;
+    }
+
+    private boolean parallelepipedsFit(@NotNull Parallelepiped parallelepiped, Dimension dimension, Parallelepiped neighbour) {
+        return neighbour.getSize(dimension.getComplements()[0])
+                == parallelepiped.getSize(dimension.getComplements()[0])
+                && neighbour.getSize(dimension.getComplements()[1])
+                == parallelepiped.getSize(dimension.getComplements()[1]);
     }
 
     private boolean contains(@NotNull Position position) {
