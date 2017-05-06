@@ -196,4 +196,14 @@ public class ParallelepipedSpace {
 
         return toRemove;
     }
+
+    public int getVolume() {
+        int volumeSoFar = 0;
+
+        for (Parallelepiped parallelepiped : parallelepipeds) {
+            volumeSoFar += parallelepiped.getVolume();
+        }
+
+        return volumeSoFar;
+    }
 }

@@ -10,7 +10,6 @@ public class Options {
     public static final boolean ENABLE_SHADOWS = true;
     public static final boolean ENABLE_FLOOR = true;
 
-
     public static final float SCALE = 0.2f;
     public static final float CURSOR_DISTANCE = 20 * SCALE;
 }

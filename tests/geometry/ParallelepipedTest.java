@@ -4,6 +4,10 @@ import com.jme3.math.Vector3f;
 import model.Position;
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
 import static geometry.Dimension.X;
 import static geometry.Dimension.Y;
 import static geometry.Dimension.Z;
@@ -156,5 +160,64 @@ public class ParallelepipedTest {
 
         parallelepiped = new Parallelepiped(new Position(0, 0, 0), 20, 10, 30);
         assertEquals(new Vector3f(10f - 0.5f,5f - 0.5f,15f - 0.5f), parallelepiped.getWorldVector3f());
+    }
+
+    @Test
+    public void testGetVolume() {
+        assertEquals(1,
+                new Parallelepiped(new Position(0,0,0)).getVolume());
+        assertEquals(2,
+                new Parallelepiped(new Position(0,0,0), 1, 2, 1).getVolume());
+        assertEquals(10 * 4 * 7,
+                new Parallelepiped(new Position(0,0,0), 10, 4, 7).getVolume());
+    }
+
+    @Test
+    public void testEquals() {
+        assertEquals(new Parallelepiped(new Position(0,0,0)),
+                new Parallelepiped(new Position(0,0,0)));
+        assertNotEquals(new Parallelepiped(new Position(1,0,0)),
+                new Parallelepiped(new Position(0,0,0)));
+
+        assertEquals(new Parallelepiped(new Position(0,3,0)),
+                new Parallelepiped(new Position(0,3,0)));
+        assertNotEquals(new Parallelepiped(new Position(0,3,0)),
+                new Parallelepiped(new Position(0,3,4)));
+
+        assertEquals(new Parallelepiped(new Position(0,3,0), 3, 4, 1),
+                new Parallelepiped(new Position(0,3,0), 3, 4, 1));
+        assertNotEquals(new Parallelepiped(new Position(0,3,0), 3, 4, 1),
+                new Parallelepiped(new Position(0,3,0), 4, 4, 1));
+    }
+
+    @Test
+    public void testHashCode() {
+        Set<Parallelepiped> set = new HashSet<>();
+
+        set.add(new Parallelepiped(new Position(0,0,0)));
+        set.add(new Parallelepiped(new Position(0,0,1)));
+
+        assertTrue(set.contains(new Parallelepiped(new Position(0,0,0))));
+    }
+
+    @Test
+    public void testSetCorner() {
+        Parallelepiped testParallelepiped = new Parallelepiped(new Position(0,0,0));
+
+        testParallelepiped = testParallelepiped.setCorner(new Position(-1,-2,3));
+        assertEquals(new Position(-1,-2,3), testParallelepiped.getCorner());
+    }
+
+    @Test
+    public void testSetSize() {
+        Parallelepiped testParallelepiped = new Parallelepiped(new Position(0,0,0));
+        Random random = new Random();
+
+        for (Dimension dimension : Dimension.values()) {
+            int size = Math.abs(random.nextInt());
+
+            testParallelepiped = testParallelepiped.setSize(dimension, size);
+            assertEquals(size, testParallelepiped.getSize(dimension));
+        }
     }
 }

@@ -1,9 +1,12 @@
 package geometry;
 
 import model.Position;
+import model.RandomWalkCell;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -14,6 +17,7 @@ public class ParallelepipedSpaceTest {
     private static final int MAX_POSITIONS_Y = 20;
     private static final int MAX_POSITIONS_Z = 17;
     private static final int MAX_POSITIONS_CUBE = 17;
+    private static final int MAX_STEPS_RANDOMWALK = 10000;
     private ParallelepipedSpace testSpace;
 
     @Before
@@ -565,5 +569,20 @@ public class ParallelepipedSpaceTest {
         assertEquals(0, testSpace.getToRemove().size());
         testSpace.remove(new Position(1,0,0));
         assertEquals(1, testSpace.getToRemove().size());
+    }
+
+    @Test
+    public void randomWalkTest() {
+        Position currentPosition = new Position(0,0,0);
+
+        Set<Position> positions = new HashSet<>();
+        for (int i = 0; i < MAX_STEPS_RANDOMWALK; i++) {
+            positions.add(currentPosition);
+            testSpace.add(currentPosition);
+
+            assertEquals(positions.size(), testSpace.getVolume());
+
+            currentPosition = currentPosition.add(RandomWalkCell.nextPosition());
+        }
     }
 }

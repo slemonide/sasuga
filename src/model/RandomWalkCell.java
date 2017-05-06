@@ -13,7 +13,7 @@ import java.util.Set;
  * Represents a random walk cell.
  */
 public class RandomWalkCell extends ActiveCell {
-    private Random random = new Random();
+    private static Random random = new Random();
 
     /**
      * Create a cell at the given position
@@ -44,7 +44,7 @@ public class RandomWalkCell extends ActiveCell {
         return null;
     }
 
-    private Position nextPosition() {
+    public static Position nextPosition() {
         switch (random.nextInt(6)) {
             case 0:
                 return new Position(1, 0, 0);

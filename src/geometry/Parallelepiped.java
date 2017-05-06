@@ -66,6 +66,7 @@ public final class Parallelepiped {
         return xSize == that.xSize && ySize == that.ySize && zSize == that.zSize && corner.equals(that.corner);
     }
 
+    @Contract(pure = true)
     @Override
     public int hashCode() {
         int result = corner.hashCode();
@@ -75,10 +76,12 @@ public final class Parallelepiped {
         return result;
     }
 
+    @NotNull
     public Parallelepiped setCorner(Position corner) {
         return new Parallelepiped(corner, xSize, ySize, zSize);
     }
 
+    @NotNull
     public Parallelepiped setSize(Dimension dimension, int size) {
         switch (dimension) {
             case X:
@@ -100,6 +103,7 @@ public final class Parallelepiped {
         return volumeSoFar;
     }
 
+    @NotNull
     public Vector3f getWorldVector3f() {
         return new Vector3f(
                 corner.x + (xSize - 1) / 2f,
