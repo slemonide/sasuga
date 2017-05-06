@@ -39,7 +39,7 @@ public class MaterialManager {
      */
     private Material getDefaultMaterial(AssetManager assetManager) {
         if (defaultMaterial == null) {
-            defaultMaterial = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");;
+            defaultMaterial = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
         }
         return defaultMaterial;
     }

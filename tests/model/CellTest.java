@@ -1,9 +1,7 @@
-package tests;
+package model;
 
 import org.junit.Before;
 import org.junit.Test;
-import model.Cell;
-import model.Position;
 
 import static org.junit.Assert.*;
 
@@ -15,12 +13,12 @@ public class CellTest {
 
     @Before
     public void runBefore() {
-        testCell = new Cell(new Position(1, 2));
+        testCell = new Cell(new Position(1, 2, 0));
     }
 
     @Test
     public void testConstructor() {
-        assertEquals(new Position(1, 2),
+        assertEquals(new Position(1, 2, 0),
                 testCell.getPosition());
     }
 

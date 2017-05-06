@@ -1,4 +1,4 @@
-package tests;
+package model;
 
 import model.Inventory;
 import model.InventoryItem;

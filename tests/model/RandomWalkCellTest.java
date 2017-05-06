@@ -1,4 +1,4 @@
-package tests;
+package model;
 
 import model.Position;
 import model.RandomWalkCell;
@@ -15,7 +15,8 @@ public class RandomWalkCellTest {
     public void runBefore() {
         World.getInstance().reset();
 
-        World.getInstance().add(new RandomWalkCell(new Position()));
+        World.getInstance().add(new RandomWalkCell(new Position(0,0,0)));
+        World.getInstance().tick();
     }
 
     @Test

@@ -1,4 +1,4 @@
-package tests;
+package model;
 
 import model.RandomWalkCell;
 import org.junit.Before;
@@ -6,6 +6,9 @@ import org.junit.Test;
 import model.Cell;
 import model.Position;
 import model.World;
+
+import java.util.Collection;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -42,12 +45,15 @@ public class WorldTest {
     @Test
     public void testRemoveCell() {
         World.getInstance().add(new Cell(new Position(0, 0, 0)));
+        World.getInstance().tick();
+        assertEquals(World.getInstance().getCellsMap().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);
         assertEquals(World.getInstance().getTickTime(), 0, DELTA);
 
         World.getInstance().remove(new Cell(new Position(0, 0, 0)));
+        World.getInstance().tick();
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
         assertEquals(World.getInstance().getGeneration(), 2);
@@ -57,12 +63,15 @@ public class WorldTest {
     @Test
     public void testRemoveCellPosition() {
         World.getInstance().add(new Cell(new Position(0, 0, 0)));
+        World.getInstance().tick();
+        assertEquals(World.getInstance().getCellsMap().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);
         assertEquals(World.getInstance().getTickTime(), 0, DELTA);
 
         World.getInstance().remove(new Position(0, 0, 0));
+        World.getInstance().tick();
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
         assertEquals(World.getInstance().getGeneration(), 2);
@@ -71,14 +80,14 @@ public class WorldTest {
 
     @Test
     public void testGrowthRate() {
-        World.getInstance().add(new Cell(new Position()));
+        World.getInstance().add(new Cell(new Position(0,0,0)));
         World.getInstance().start();
         assertEquals(0, World.getInstance().getGrowthRate());
 
         World.getInstance().interrupt();
         World.getInstance().reset();
 
-        World.getInstance().add(new RandomWalkCell(new Position()));
+        World.getInstance().add(new RandomWalkCell(new Position(0,0,0)));
         World.getInstance().tick();
         assertEquals(1, World.getInstance().getGrowthRate());
 
@@ -111,5 +120,47 @@ public class WorldTest {
         worldThread.interrupt();
         assertTrue(World.getInstance().getGeneration() > 1);
         assertTrue(World.getInstance().getPopulationSize() > 3);
+    }
+
+    @Test
+    public void testGetToBasic() {
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        assertTrue(World.getInstance().getToAdd().isEmpty());
+    }
+
+    @Test
+    public void testGetToAddBasic() {
+        World.getInstance().add(new Cell(new Position(1,2,3)));
+        World.getInstance().tick();
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        Set<Cell> toAdd = World.getInstance().getToAdd();
+        assertEquals(1, toAdd.size());
+        assertTrue(toAdd.contains(new Cell(new Position(1,2,3))));
+    }
+
+    @Test
+    public void testGetToNoChange() {
+        World.getInstance().add(new Cell(new Position(0,0,0)));
+        World.getInstance().remove(new Position(0,0,0));
+        World.getInstance().tick();
+
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        Set<Cell> toAdd = World.getInstance().getToAdd();
+
+        assertTrue(World.getInstance().getToAdd().isEmpty());
+    }
+
+    @Test
+    public void testGetToRemoveBasic() {
+        World.getInstance().add(new Cell(new Position(-1,-2,-3)));
+        World.getInstance().tick();
+        assertEquals(1, World.getInstance().getToAdd().size());
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        World.getInstance().remove(new Position(-1,-2,-3));
+        World.getInstance().tick();
+        assertTrue(World.getInstance().getToAdd().isEmpty());
+        Set<Position> toRemove = World.getInstance().getToRemove();
+        assertEquals(1, toRemove.size());
+        assertTrue(toRemove.contains(new Position(-1,-2,-3)));
     }
 }

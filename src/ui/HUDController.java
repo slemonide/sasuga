@@ -3,6 +3,7 @@ package ui;
 import com.jme3.renderer.Camera;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.ElementRenderer;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
@@ -12,6 +13,7 @@ import model.Player;
 import model.World;
 
 import javax.annotation.Nonnull;
+import javax.xml.soap.Text;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -55,6 +57,10 @@ public class HUDController implements ScreenController, Observer {
     }
 
     private void readColorsFromTheNifty() {
+        if (nifty == null) {
+            return;
+        }
+
         Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
         pausePanelColor = pausePanel.getRenderer(PanelRenderer.class).getBackgroundColor();
 
@@ -94,6 +100,10 @@ public class HUDController implements ScreenController, Observer {
 
     // 2nd degree helpers
     private void updateText(String id, String value) {
+        if (nifty == null) {
+            return;
+        }
+
         Element niftyElement = nifty.getCurrentScreen().findElementById(id);
         niftyElement.getRenderer(TextRenderer.class)
                 .setText(value);
@@ -105,10 +115,18 @@ public class HUDController implements ScreenController, Observer {
         abstractUpdate(id, property, value, "");
     }
     private void updateBackgroundColor(String id, Color color) {
+        if (nifty == null) {
+            return;
+        }
+
         Element pausePanel = nifty.getCurrentScreen().findElementById(id);
         pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(color);
     }
     private void updateColor(String id, Color color) {
+        if (nifty == null) {
+            return;
+        }
+
         Element pause = nifty.getCurrentScreen().findElementById(id);
         pause.getRenderer(TextRenderer.class).setColor(color);
     }

@@ -17,6 +17,8 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
+import geometry.Parallelepiped;
+import geometry.ParallelepipedSpace;
 import jme3tools.optimize.GeometryBatchFactory;
 import model.Cell;
 import model.MaterialManager;
@@ -25,13 +27,18 @@ import model.World;
 
 import java.util.*;
 
-class Environment implements Observer {
+import static geometry.Dimension.X;
+import static geometry.Dimension.Y;
+import static geometry.Dimension.Z;
+
+public class Environment implements Observer {
     public static final float SCALE = 0.2f;
     private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;
-    private Map<Position, Spatial> voxelMap;
+    private Map<Parallelepiped, Spatial> voxelMap;
+    private ParallelepipedSpace parallelepipedSpace;
     private Queue<Cell> toAdd;
     private Queue<Position> toRemove;
 
@@ -45,6 +52,7 @@ class Environment implements Observer {
         this.visualGUI = visualGUI;
 
         voxelMap = new HashMap<>();
+        parallelepipedSpace = new ParallelepipedSpace();
         toAdd = new LinkedList<>();
         toRemove = new LinkedList<>();
 
@@ -69,11 +77,7 @@ class Environment implements Observer {
         visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         visualGUI.getRootNode().attachChild(cellsNode);
 
-        for (Cell cell : World.getInstance().getCells()) {
-            addSpatial(cell);
-        }
-
-        updateCells();
+        toAdd.addAll(World.getInstance().getCells());
     }
 
     private void addShadows() {
@@ -120,7 +124,7 @@ class Environment implements Observer {
         float minimumY = 0; // should be at least at the sea level
 
         for (Cell cell : World.getInstance().getCells()) {
-            minimumY = Math.min(minimumY, cell.getPosition().getComponent(1) * SCALE);
+            minimumY = Math.min(minimumY, cell.getPosition().y * SCALE);
         }
 
         Vector3f floorTranslation = getFloor().getLocalTranslation();
@@ -145,23 +149,51 @@ class Environment implements Observer {
     private void addSpatial(Cell cell) {
         removeSpatial(cell.getPosition());
 
-        Spatial node = new Geometry("Box", BOX);
+        parallelepipedSpace.add(cell.getPosition());
+
+        updateSpatials();
+    }
+
+    private void updateSpatials() {
+        for (Parallelepiped parallelepiped : parallelepipedSpace.getToRemove()) {
+            remove(parallelepiped);
+        }
+
+        for (Parallelepiped parallelepiped : parallelepipedSpace.getToAdd()) {
+            add(parallelepiped);
+        }
+    }
+
+    private void add(Parallelepiped parallelepiped) {
+        Mesh box = new Box(
+                parallelepiped.getSize(X) * SCALE/2,
+                parallelepiped.getSize(Y) * SCALE/2,
+                parallelepiped.getSize(Z) * SCALE/2);
+
+        Spatial node = new Geometry("Box", box);
         node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 
         Material material = MaterialManager.getInstance()
-                .getColoredMaterial(visualGUI.getAssetManager(), cell.getColor());
+                .getColoredMaterial(visualGUI.getAssetManager(), null);
         node.setMaterial(material);
 
-        node.setLocalTranslation(Coordinates.positionToVector(cell.getPosition()));
+        node.setLocalTranslation(parallelepiped.getWorldVector3f().mult(SCALE));
 
         cellsNode.attachChild(node);
-        voxelMap.put(cell.getPosition(), node);
+        voxelMap.put(parallelepiped, node);
+    }
+
+    private void remove(Parallelepiped parallelepiped) {
+        assert voxelMap.containsKey(parallelepiped);
+
+        cellsNode.detachChild(voxelMap.get(parallelepiped));
+        voxelMap.remove(parallelepiped);
     }
 
     private void removeSpatial(Position position) {
-        if (voxelMap.containsKey(position)) {
-            cellsNode.detachChild(voxelMap.get(position));
-        }
+        parallelepipedSpace.remove(position);
+
+        updateSpatials();
     }
 
     @Override

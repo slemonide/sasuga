@@ -7,10 +7,12 @@
       <w>jlife</w>
       <w>multiclient</w>
       <w>nonnegative</w>
+      <w>parallelepipeds</w>
       <w>randomwalk</w>
       <w>ruleset</w>
       <w>senpy</w>
       <w>shadowmap</w>
+      <w>spatials</w>
       <w>voxel</w>
       <w>wireworld</w>
     </words>
