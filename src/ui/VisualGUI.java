@@ -6,6 +6,7 @@ import com.jme3.material.Material;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.shape.Sphere;
 import config.Options;
 import de.lessvoid.nifty.Nifty;
@@ -14,6 +15,8 @@ import model.World;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import static ui.Environment.SCALE;
 
 public class VisualGUI extends SimpleApplication implements Observer {
     private static VisualGUI app;
@@ -82,15 +85,19 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void initCursor() {
-        Sphere sphere = new Sphere(8, 8, 0.125f);
-        cursor = new Geometry("Sphere", sphere);
+        //Sphere sphere = new Sphere(8, 8, 0.125f);
+        WireBox cursorBox = new WireBox(
+                SCALE/2 * 1.01f,
+                SCALE/2 * 1.01f,
+                SCALE/2 * 1.01f);
+        cursor = new Geometry("Cursor", cursorBox);
         Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
         cursor.setMaterial(mat);
 
         cursor.setLocalTranslation(
-                Player.getInstance().getCursor().x * Environment.SCALE,
-                Player.getInstance().getCursor().y * Environment.SCALE,
-                Player.getInstance().getCursor().z * Environment.SCALE);
+                Player.getInstance().getCursor().x * SCALE,
+                Player.getInstance().getCursor().y * SCALE,
+                Player.getInstance().getCursor().z * SCALE);
 
         rootNode.attachChild(cursor);
     }
