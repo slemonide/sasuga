@@ -121,4 +121,46 @@ public class WorldTest {
         assertTrue(World.getInstance().getGeneration() > 1);
         assertTrue(World.getInstance().getPopulationSize() > 3);
     }
+
+    @Test
+    public void testGetToBasic() {
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        assertTrue(World.getInstance().getToAdd().isEmpty());
+    }
+
+    @Test
+    public void testGetToAddBasic() {
+        World.getInstance().add(new Cell(new Position(1,2,3)));
+        World.getInstance().tick();
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        Set<Cell> toAdd = World.getInstance().getToAdd();
+        assertEquals(1, toAdd.size());
+        assertTrue(toAdd.contains(new Cell(new Position(1,2,3))));
+    }
+
+    @Test
+    public void testGetToNoChange() {
+        World.getInstance().add(new Cell(new Position(0,0,0)));
+        World.getInstance().remove(new Position(0,0,0));
+        World.getInstance().tick();
+
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        Set<Cell> toAdd = World.getInstance().getToAdd();
+
+        assertTrue(World.getInstance().getToAdd().isEmpty());
+    }
+
+    @Test
+    public void testGetToRemoveBasic() {
+        World.getInstance().add(new Cell(new Position(-1,-2,-3)));
+        World.getInstance().tick();
+        assertEquals(1, World.getInstance().getToAdd().size());
+        assertTrue(World.getInstance().getToRemove().isEmpty());
+        World.getInstance().remove(new Position(-1,-2,-3));
+        World.getInstance().tick();
+        assertTrue(World.getInstance().getToAdd().isEmpty());
+        Set<Position> toRemove = World.getInstance().getToRemove();
+        assertEquals(1, toRemove.size());
+        assertTrue(toRemove.contains(new Position(-1,-2,-3)));
+    }
 }

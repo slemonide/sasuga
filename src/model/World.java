@@ -1,5 +1,7 @@
 package model;
 
+import geometry.Parallelepiped;
+
 import java.util.*;
 
 /**
@@ -16,13 +18,14 @@ public class World extends Observable implements Runnable {
     private int generation;
     private int tickDelayNumber;
     private CellsMap cellsMap;
-    private Cursor cursor;
     private int population;
     private Thread worldThread;
     private static World instance;
     private int growthRate;
     private Set<Cell> toAdd;
     private Set<Position> toRemove;
+    private Set<Cell> lastSeenCellsSetToAdd;
+    private Set<Position> lastSeenPositionSetToRemove;
 
     /**
      * Create a new empty world
@@ -34,6 +37,9 @@ public class World extends Observable implements Runnable {
         tickDelayNumber = 0;
         cellsMap = new CellsMap();
         worldThread = new Thread(this);
+
+        lastSeenCellsSetToAdd = new HashSet<>();
+        lastSeenPositionSetToRemove = new HashSet<>();
 
         toAdd = new HashSet<>();
         toRemove = new HashSet<>();
@@ -109,11 +115,23 @@ public class World extends Observable implements Runnable {
      * and notify the observers about the change
      * @param cell cell to remove
      */
-    public void remove(Cell cell) {
+    void remove(Cell cell) {
         toRemove.add(cell.getPosition());
     }
 
     public void remove(Position currentSelection) {
+        Cell cellToRemove = null;
+        for (Cell cell : toAdd) {
+            if (cell.position.equals(currentSelection)) {
+                cellToRemove = cell;
+                break;
+            }
+        }
+
+        if (cellToRemove != null) {
+            toAdd.remove(cellToRemove);
+        }
+
         toRemove.add(currentSelection);
     }
 
@@ -199,11 +217,30 @@ public class World extends Observable implements Runnable {
         return cellsMap;
     }
 
+    /**
+     * @return set of cells removed since last invocation of getToRemove()
+     */
     public Set<Cell> getToAdd() {
+        Set<Cell> toAdd = new HashSet<>();
+        toAdd.addAll(getCells());
+        toAdd.removeAll(lastSeenCellsSetToAdd);
+
+        lastSeenCellsSetToAdd.clear();
+        lastSeenCellsSetToAdd.addAll(getCells());
+
         return toAdd;
     }
 
+    /**
+     * @return set of cells added since last invocation of getToAdd()
+     */
     public Set<Position> getToRemove() {
+        Set<Position> toRemove = new HashSet<>();
+        toRemove.addAll(lastSeenPositionSetToRemove);
+        toRemove.removeAll(cellsMap.keySet());
+        lastSeenPositionSetToRemove.clear();
+        lastSeenPositionSetToRemove.addAll(cellsMap.keySet());
+
         return toRemove;
     }
 }
