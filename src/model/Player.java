@@ -53,6 +53,9 @@ public class Player extends ActiveCell {
         super(position);
         setName("Player");
 
+        selectedBlock = position;
+        selectedBlockFace = position;
+
         Random random = new Random();
 
         rotation = 0;
@@ -66,21 +69,21 @@ public class Player extends ActiveCell {
         inventory.setInventoryItem(1, new InventoryItem("Say Hi",
                 () -> System.out.println("Hi")));
         inventory.setInventoryItem(2, new InventoryItem("Cell",
-                () ->  World.getInstance().add(new Cell(getSelectedBlock()))));
+                () ->  World.getInstance().add(new Cell(getSelectedBlockFace()))));
         inventory.setInventoryItem(3, new InventoryItem("Random Walk",
-                () ->  World.getInstance().add(new RandomWalkCell(getSelectedBlock()))));
+                () ->  World.getInstance().add(new RandomWalkCell(getSelectedBlockFace()))));
         inventory.setInventoryItem(4, new InventoryItem("Landscape",
-                () ->  World.getInstance().add(new LandscapeCell(getSelectedBlock()))));
+                () ->  World.getInstance().add(new LandscapeCell(getSelectedBlockFace()))));
         inventory.setInventoryItem(5, new InventoryItem("Landscape X",
-                () ->  World.getInstance().add(new LandscapeCellX(getSelectedBlock()))));
+                () ->  World.getInstance().add(new LandscapeCellX(getSelectedBlockFace()))));
         inventory.setInventoryItem(6, new InventoryItem("Landscape Z",
-                () ->  World.getInstance().add(new LandscapeCellZ(getSelectedBlock()))));
+                () ->  World.getInstance().add(new LandscapeCellZ(getSelectedBlockFace()))));
         inventory.setInventoryItem(7, new InventoryItem("Wireworld Wire",
-                () ->  World.getInstance().add(new Conductor(getSelectedBlock()))));
+                () ->  World.getInstance().add(new Conductor(getSelectedBlockFace()))));
         inventory.setInventoryItem(8, new InventoryItem("Electron Head",
-                () ->  World.getInstance().add(new ElectronHead(getSelectedBlock()))));
+                () ->  World.getInstance().add(new ElectronHead(getSelectedBlockFace()))));
         inventory.setInventoryItem(9, new InventoryItem("Electron Tail",
-                () ->  World.getInstance().add(new ElectronTail(getSelectedBlock()))));
+                () ->  World.getInstance().add(new ElectronTail(getSelectedBlockFace()))));
 
         hasValidState();
     }
