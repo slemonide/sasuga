@@ -214,4 +214,12 @@ public class Environment implements Observer {
             toRemove.add(position);
         }
     }
+
+    public int getNumberOfParallelepipeds() {
+        return parallelepipedSpace.size();
+    }
+
+    public int getVolumeOfParallelepipeds() {
+        return parallelepipedSpace.getVolume();
+    }
 }

@@ -6,6 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import static geometry.Dimension.X;
 import static geometry.Dimension.Y;
@@ -24,7 +27,7 @@ public class ParallelepipedSpace {
      * Create an empty parallelepiped space associated with the given Node
      */
     public ParallelepipedSpace() {
-        parallelepipeds = new HashSet<>();
+        parallelepipeds = new CopyOnWriteArraySet<>();  //= new HashSet<>();
         lastSeenParallelepipedsSetToAdd = new HashSet<>();
         lastSeenParallelepipedsSetToRemove = new HashSet<>();
     }

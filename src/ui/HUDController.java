@@ -81,6 +81,10 @@ public class HUDController implements ScreenController, Observer {
         abstractUpdate("population", "Population", World.getInstance().getPopulationSize(), "cells");
         abstractUpdate("tick_time", "Tick time", World.getInstance().getTickTime(), "s");
         abstractUpdate("growth_rate", "Growth rate", World.getInstance().getGrowthRate(), "cells/tick");
+        abstractUpdate("number_of_parallelepipeds", "Parallelepipeds",
+                VisualGUI.getInstance().getNumberOfParallelepipeds());
+        abstractUpdate("total_volume_of_parallelepipeds", "Volume",
+                VisualGUI.getInstance().getVolumeOfParallelepipeds(), "m^3");
 
         abstractUpdate("left_direction","Left", cam.getLeft());
         abstractUpdate("up_direction","Up", cam.getUp());

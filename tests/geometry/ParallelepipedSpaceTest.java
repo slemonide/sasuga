@@ -17,7 +17,9 @@ public class ParallelepipedSpaceTest {
     private static final int MAX_POSITIONS_Y = 20;
     private static final int MAX_POSITIONS_Z = 17;
     private static final int MAX_POSITIONS_CUBE = 17;
-    private static final int MAX_STEPS_RANDOMWALK = 10000;
+    private static final int MAX_STEPS_RANDOMWALK = 100;
+    private static final int MAX_POSITIONS_RANDOM_FILL = 1217;
+    private static final int RANDOM_FILL_RADIUS = 20;
     private ParallelepipedSpace testSpace;
 
     @Before
@@ -572,7 +574,74 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
-    public void randomWalkTest() {
+    public void testGetVolumeBasic() {
+        testSpace.add(new Position(0,0,0));
+
+        assertEquals(1, testSpace.getVolume());
+    }
+
+    @Test
+    public void testGetVolumeDouble() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,0,0));
+
+        assertEquals(1, testSpace.getVolume());
+    }
+
+    @Test
+    public void testGetVolumeThree() {
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(1,0,0));
+        testSpace.add(new Position(0,1,0));
+
+        assertEquals(3, testSpace.getVolume());
+    }
+
+    @Test
+    public void testGetVolumeHard() {
+        buildParallelepiped();
+
+        assertEquals(MAX_POSITIONS_X * MAX_POSITIONS_Y * MAX_POSITIONS_Z, testSpace.getVolume());
+    }
+
+    @Test
+    public void testGetVolumeRandomFill() {
+        Random random = new Random();
+
+        Set<Position> positions = new HashSet<>();
+        for (int i = 0; i < MAX_POSITIONS_RANDOM_FILL; i++) {
+            Position position = new Position(
+                    random.nextInt(),
+                    random.nextInt(),
+                    random.nextInt());
+
+            positions.add(position);
+            testSpace.add(position);
+
+            assertEquals(positions.size(), testSpace.getVolume());
+        }
+    }
+
+    @Test
+    public void testGetVolumeRandomFillConfined() {
+        Random random = new Random();
+
+        Set<Position> positions = new HashSet<>();
+        for (int i = 0; i < MAX_POSITIONS_RANDOM_FILL; i++) {
+            Position position = new Position(
+                    random.nextInt(RANDOM_FILL_RADIUS),
+                    random.nextInt(RANDOM_FILL_RADIUS),
+                    random.nextInt(RANDOM_FILL_RADIUS));
+
+            positions.add(position);
+            testSpace.add(position);
+
+            assertEquals(positions.size(), testSpace.getVolume());
+        }
+    }
+
+    @Test
+    public void testGetVolumeRandomWalk() {
         Position currentPosition = new Position(0,0,0);
 
         Set<Position> positions = new HashSet<>();

@@ -151,5 +151,13 @@ public class VisualGUI extends SimpleApplication implements Observer {
     @Override
     public void update(Observable o, Object arg) {
     }
+
+    public int getNumberOfParallelepipeds() {
+        return environment.getNumberOfParallelepipeds();
+    }
+
+    public int getVolumeOfParallelepipeds() {
+        return environment.getVolumeOfParallelepipeds();
+    }
 }
 
