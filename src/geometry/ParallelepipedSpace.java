@@ -24,7 +24,7 @@ public class ParallelepipedSpace {
     private Set<Parallelepiped> lastSeenParallelepipedsSetToRemove;
 
     /**
-     * Create an empty parallelepiped space associated with the given Node
+     * Create an empty parallelepiped space
      */
     public ParallelepipedSpace() {
         parallelepipeds = new CopyOnWriteArraySet<>();  //= new HashSet<>();
