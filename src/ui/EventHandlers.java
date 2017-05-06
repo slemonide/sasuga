@@ -42,54 +42,6 @@ public class EventHandlers extends Observable {
             notifyObservers();
         }
     };
-    private ActionListener moveCursorUPActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Player.getInstance().moveCursor(new Position(0, 1, 0));
-
-            setChanged();
-            notifyObservers();
-        }
-    };
-    private ActionListener moveCursorDOWNActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Player.getInstance().moveCursor(new Position(0, -1, 0));
-
-            setChanged();
-            notifyObservers();
-        }
-    };
-    private ActionListener moveCursorPXActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Player.getInstance().moveCursor(new Position(1, 0, 0));
-
-            setChanged();
-            notifyObservers();
-        }
-    };
-    private ActionListener moveCursorNXActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Player.getInstance().moveCursor(new Position(-1, 0, 0));
-
-            setChanged();
-            notifyObservers();
-        }
-    };
-    private ActionListener moveCursorPZActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Player.getInstance().moveCursor(new Position(0, 0, 1));
-
-            setChanged();
-            notifyObservers();
-        }
-    };
-    private ActionListener moveCursorNZActionListener = (name, pressed, tpf) -> {
-        if (pressed) {
-            Player.getInstance().moveCursor(new Position(0, 0, -1));
-
-            setChanged();
-            notifyObservers();
-        }
-    };
     private ActionListener inventorySelectionListener = (name, pressed, tpf) -> {
         if (pressed) {
             Player.getInstance().getInventory().setSelectedSlot(Integer.valueOf(name));
@@ -131,24 +83,6 @@ public class EventHandlers extends Observable {
 
         visualGUI.getInputManager().addMapping("REMOVE_CELL", new KeyTrigger(KeyInput.KEY_L));
         visualGUI.getInputManager().addListener(removeCellActionListener, "REMOVE_CELL");
-
-        visualGUI.getInputManager().addMapping("UP", new KeyTrigger(KeyInput.KEY_Y));
-        visualGUI.getInputManager().addListener(moveCursorUPActionListener, "UP");
-
-        visualGUI.getInputManager().addMapping("DOWN", new KeyTrigger(KeyInput.KEY_G));
-        visualGUI.getInputManager().addListener(moveCursorDOWNActionListener, "DOWN");
-
-        visualGUI.getInputManager().addMapping("PX", new KeyTrigger(KeyInput.KEY_T));
-        visualGUI.getInputManager().addListener(moveCursorPXActionListener, "PX");
-
-        visualGUI.getInputManager().addMapping("NX", new KeyTrigger(KeyInput.KEY_F));
-        visualGUI.getInputManager().addListener(moveCursorNXActionListener, "NX");
-
-        visualGUI.getInputManager().addMapping("PZ", new KeyTrigger(KeyInput.KEY_U));
-        visualGUI.getInputManager().addListener(moveCursorPZActionListener, "PZ");
-
-        visualGUI.getInputManager().addMapping("NZ", new KeyTrigger(KeyInput.KEY_H));
-        visualGUI.getInputManager().addListener(moveCursorNZActionListener, "NZ");
 
         // Inventory selection
         visualGUI.getInputManager().addMapping("1", new KeyTrigger(KeyInput.KEY_1));

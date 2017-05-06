@@ -3,14 +3,15 @@ package ui;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.WireBox;
-import com.jme3.scene.shape.Sphere;
 import config.Options;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
+import model.Position;
 import model.World;
 
 import java.util.Observable;
@@ -19,6 +20,7 @@ import java.util.Observer;
 import static ui.Environment.SCALE;
 
 public class VisualGUI extends SimpleApplication implements Observer {
+    private static final float CURSOR_DISTANCE = 20 * SCALE;
     private static VisualGUI app;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
@@ -113,6 +115,11 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void updateCursor() {
+        Vector3f UICursorPosition = cam.getLocation().add(cam.getDirection().mult(CURSOR_DISTANCE));
+        Position cursorPosition = Position.fromUIVector(UICursorPosition);
+
+        Player.getInstance().setCursor(cursorPosition);
+
         cursor.setLocalTranslation(Player.getInstance().getCursor().getUIVector());
     }
 

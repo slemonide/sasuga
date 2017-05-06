@@ -265,4 +265,8 @@ public class Player extends ActiveCell {
     public Position getCursor() {
         return cursor;
     }
+
+    public void setCursor(Position cursor) {
+        this.cursor = cursor;
+    }
 }

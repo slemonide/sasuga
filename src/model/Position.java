@@ -135,4 +135,11 @@ public final class Position {
     public Position scale(int factor) {
         return new Position(factor * x, factor * y, factor * z);
     }
+
+    public static Position fromUIVector(Vector3f vector) {
+        return new Position(
+                (int) (vector.x / SCALE + 0.5),
+                (int) (vector.y / SCALE + 0.5),
+                (int) (vector.z / SCALE + 0.5));
+    }
 }

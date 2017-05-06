@@ -33,7 +33,6 @@ import static geometry.Dimension.Z;
 
 public class Environment implements Observer {
     public static final float SCALE = 0.2f;
-    private static final Mesh BOX = new Box(SCALE/2, SCALE/2, SCALE/2);
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;
