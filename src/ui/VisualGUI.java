@@ -7,6 +7,7 @@ import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Sphere;
+import config.Options;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
 import model.World;
@@ -46,8 +47,12 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
-        initializeHUD();
-        initCrossHairs();
+        if (Options.ENABLE_HUD) {
+            initializeHUD();
+        }
+        if (Options.ENABLE_CROSS_HAIR) {
+            initCrossHairs();
+        }
         initCursor();
 
         Player.getInstance().addObserver(this);
