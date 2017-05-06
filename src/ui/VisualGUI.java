@@ -3,7 +3,6 @@ package ui;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
-import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
@@ -97,9 +96,9 @@ public class VisualGUI extends SimpleApplication implements Observer {
         cursor.setMaterial(mat);
 
         cursor.setLocalTranslation(
-                Player.getInstance().getCursor().x * SCALE,
-                Player.getInstance().getCursor().y * SCALE,
-                Player.getInstance().getCursor().z * SCALE);
+                Player.getInstance().getSelectedBlock().x * SCALE,
+                Player.getInstance().getSelectedBlock().y * SCALE,
+                Player.getInstance().getSelectedBlock().z * SCALE);
 
         rootNode.attachChild(cursor);
     }
@@ -115,12 +114,28 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void updateCursor() {
-        Vector3f UICursorPosition = cam.getLocation().add(cam.getDirection().mult(CURSOR_DISTANCE));
-        Position cursorPosition = Position.fromUIVector(UICursorPosition);
+        Position currentPosition = Position.fromUIVector(cam.getLocation()
+                .add(cam.getDirection().mult(CURSOR_DISTANCE)));
+        Position nextPosition = Position.fromUIVector(cam.getLocation()
+                .add(cam.getDirection().mult(CURSOR_DISTANCE)));
 
-        Player.getInstance().setCursor(cursorPosition);
+        int cellsToCheck = (int) (CURSOR_DISTANCE / SCALE);
+        for (int i = 0; i < cellsToCheck; i++) {
+            currentPosition = Position.fromUIVector(cam.getLocation()
+                    .add(cam.getDirection().mult(i * SCALE)));
+            nextPosition = Position.fromUIVector(cam.getLocation()
+                    .add(cam.getDirection().mult((i + 1) * SCALE)));
 
-        cursor.setLocalTranslation(Player.getInstance().getCursor().getUIVector());
+            if (World.getInstance().containsCellAt(nextPosition)) {
+                break;
+            }
+            nextPosition = currentPosition;
+        }
+
+        Player.getInstance().setSelectedBlock(nextPosition);
+        Player.getInstance().setSelectedBlockFace(currentPosition);
+
+        cursor.setLocalTranslation(Player.getInstance().getSelectedBlock().getUIVector());
     }
 
     /**

@@ -35,7 +35,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener removeCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            Position currentSelection = Player.getInstance().getCursor();
+            Position currentSelection = Player.getInstance().getSelectedBlock();
             World.getInstance().remove(currentSelection);
 
             setChanged();
@@ -65,9 +65,6 @@ public class EventHandlers extends Observable {
             e.printStackTrace();
         }
         Player.getInstance().rotateClockWise();
-    };
-    private AnalogListener resetActionListener = (name, value, tpf) -> {
-        World.getInstance().reset();
     };
 
     EventHandlers(VisualGUI visualGUI) {
@@ -103,8 +100,5 @@ public class EventHandlers extends Observable {
 
         visualGUI.getInputManager().addMapping("Rotate CW", new KeyTrigger(KeyInput.KEY_RSHIFT));
         visualGUI.getInputManager().addListener(rotateCWActionListener, "Rotate CW");
-
-        visualGUI.getInputManager().addMapping("Reset", new KeyTrigger(KeyInput.KEY_R));
-        visualGUI.getInputManager().addListener(resetActionListener, "Reset");
     }
 }

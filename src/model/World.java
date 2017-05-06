@@ -243,4 +243,8 @@ public class World extends Observable implements Runnable {
 
         return toRemove;
     }
+
+    public boolean containsCellAt(Position position) {
+        return cellsMap.containsKey(position);
+    }
 }

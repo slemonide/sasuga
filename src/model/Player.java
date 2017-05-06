@@ -41,7 +41,8 @@ public class Player extends ActiveCell {
     private Inventory inventory;
     private int hungerDelay;
     private float rotation;
-    private Position cursor;
+    private Position selectedBlock;
+    private Position selectedBlockFace;
 
     /**
      * Create a cell at the given position with randomly chosen stats
@@ -61,27 +62,25 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
-        cursor = new Position(0,0,0);
-
         inventory = new Inventory(INVENTORY_SIZE);
         inventory.setInventoryItem(1, new InventoryItem("Say Hi",
                 () -> System.out.println("Hi")));
         inventory.setInventoryItem(2, new InventoryItem("Cell",
-                () ->  World.getInstance().add(new Cell(getCursor()))));
+                () ->  World.getInstance().add(new Cell(getSelectedBlock()))));
         inventory.setInventoryItem(3, new InventoryItem("Random Walk",
-                () ->  World.getInstance().add(new RandomWalkCell(getCursor()))));
+                () ->  World.getInstance().add(new RandomWalkCell(getSelectedBlock()))));
         inventory.setInventoryItem(4, new InventoryItem("Landscape",
-                () ->  World.getInstance().add(new LandscapeCell(getCursor()))));
+                () ->  World.getInstance().add(new LandscapeCell(getSelectedBlock()))));
         inventory.setInventoryItem(5, new InventoryItem("Landscape X",
-                () ->  World.getInstance().add(new LandscapeCellX(getCursor()))));
+                () ->  World.getInstance().add(new LandscapeCellX(getSelectedBlock()))));
         inventory.setInventoryItem(6, new InventoryItem("Landscape Z",
-                () ->  World.getInstance().add(new LandscapeCellZ(getCursor()))));
+                () ->  World.getInstance().add(new LandscapeCellZ(getSelectedBlock()))));
         inventory.setInventoryItem(7, new InventoryItem("Wireworld Wire",
-                () ->  World.getInstance().add(new Conductor(getCursor()))));
+                () ->  World.getInstance().add(new Conductor(getSelectedBlock()))));
         inventory.setInventoryItem(8, new InventoryItem("Electron Head",
-                () ->  World.getInstance().add(new ElectronHead(getCursor()))));
+                () ->  World.getInstance().add(new ElectronHead(getSelectedBlock()))));
         inventory.setInventoryItem(9, new InventoryItem("Electron Tail",
-                () ->  World.getInstance().add(new ElectronTail(getCursor()))));
+                () ->  World.getInstance().add(new ElectronTail(getSelectedBlock()))));
 
         hasValidState();
     }
@@ -235,11 +234,6 @@ public class Player extends ActiveCell {
         return rotation;
     }
 
-    public void moveCursor(Position delta) {
-        cursor = cursor.add(delta);
-    }
-
-
     /**
      * @param value percentage
      * @return true if 0 <= percentage <= 100, false otherwise
@@ -262,11 +256,18 @@ public class Player extends ActiveCell {
         assert (0 <= rotation && rotation <= 2 * Math.PI);
     }
 
-    public Position getCursor() {
-        return cursor;
+    public Position getSelectedBlock() {
+        return selectedBlock;
+    }
+    public Position getSelectedBlockFace() {
+        return selectedBlockFace;
     }
 
-    public void setCursor(Position cursor) {
-        this.cursor = cursor;
+    public void setSelectedBlock(Position selectedBlock) {
+        this.selectedBlock = selectedBlock;
+    }
+
+    public void setSelectedBlockFace(Position selectedBlockFace) {
+        this.selectedBlockFace = selectedBlockFace;
     }
 }
