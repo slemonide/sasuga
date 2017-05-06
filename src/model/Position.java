@@ -5,7 +5,7 @@ import geometry.Dimension;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import static ui.Environment.SCALE;
+import static config.Options.SCALE;
 
 /**
  *

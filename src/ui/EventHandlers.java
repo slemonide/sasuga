@@ -1,9 +1,11 @@
 package ui;
 
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import model.*;
 
 import java.util.Observable;
@@ -76,9 +78,13 @@ public class EventHandlers extends Observable {
         visualGUI.getInputManager().addListener(pauseActionListener, "PAUSE");
 
         visualGUI.getInputManager().addMapping("ADD_CELL", new KeyTrigger(KeyInput.KEY_RETURN));
+        visualGUI.getInputManager().addMapping("ADD_CELL",
+                new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
         visualGUI.getInputManager().addListener(addCellActionListener, "ADD_CELL");
 
         visualGUI.getInputManager().addMapping("REMOVE_CELL", new KeyTrigger(KeyInput.KEY_L));
+        visualGUI.getInputManager().addMapping("REMOVE_CELL",
+                new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         visualGUI.getInputManager().addListener(removeCellActionListener, "REMOVE_CELL");
 
         // Inventory selection

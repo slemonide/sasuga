@@ -27,12 +27,12 @@ import model.World;
 
 import java.util.*;
 
+import static config.Options.SCALE;
 import static geometry.Dimension.X;
 import static geometry.Dimension.Y;
 import static geometry.Dimension.Z;
 
 public class Environment implements Observer {
-    public static final float SCALE = 0.2f;
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;

@@ -16,10 +16,10 @@ import model.World;
 import java.util.Observable;
 import java.util.Observer;
 
-import static ui.Environment.SCALE;
+import static config.Options.CURSOR_DISTANCE;
+import static config.Options.SCALE;
 
 public class VisualGUI extends SimpleApplication implements Observer {
-    private static final float CURSOR_DISTANCE = 20 * SCALE;
     private static VisualGUI app;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
@@ -75,7 +75,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     /** A centred plus sign to help the player aim.
      * Credit: jMonkeyEngine tutorials*/
-    protected void initCrossHairs() {
+    private void initCrossHairs() {
         guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
         BitmapText ch = new BitmapText(guiFont, false);
         ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);

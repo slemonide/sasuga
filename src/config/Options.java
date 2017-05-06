@@ -5,5 +5,9 @@ package config;
  */
 public class Options {
     public static final boolean ENABLE_HUD = true;
-    public static final boolean ENABLE_CROSS_HAIR = false;
+    public static final boolean ENABLE_CROSS_HAIR = true;
+
+
+    public static final float SCALE = 0.2f;
+    public static final float CURSOR_DISTANCE = 20 * SCALE;
 }
