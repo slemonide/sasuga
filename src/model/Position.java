@@ -1,11 +1,10 @@
 package model;
 
 import com.jme3.math.Vector3f;
+import config.Options;
 import geometry.Dimension;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-
-import static config.Options.SCALE;
 
 /**
  *
@@ -20,6 +19,7 @@ public final class Position {
     public static final Position Y = new Position(0, 1, 0);
     public static final Position Z = new Position(0, 0, 1);
     public static final Position ORIGIN = new Position(0, 0, 0);
+    private static final float SCALE = Options.getInstance().getFloat("SCALE");
     /**
      * x component
      */

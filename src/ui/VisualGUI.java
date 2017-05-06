@@ -17,10 +17,9 @@ import model.World;
 import java.util.Observable;
 import java.util.Observer;
 
-import static config.Options.CURSOR_DISTANCE;
-import static config.Options.SCALE;
-
 public class VisualGUI extends SimpleApplication implements Observer {
+    private static final float SCALE = Options.getInstance().getFloat("SCALE");
+    private static final int CURSOR_DISTANCE = Options.getInstance().getInt("CURSOR_DISTANCE");;
     private static VisualGUI app;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
@@ -52,10 +51,10 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
-        if (Options.ENABLE_HUD) {
+        if (Options.getInstance().getBoolean("ENABLE_HUD")) {
             initializeHUD();
         }
-        if (Options.ENABLE_CROSS_HAIR) {
+        if (Options.getInstance().getBoolean("ENABLE_CROSS_HAIR")) {
             initCrossHairs();
         }
         initCursor();
@@ -117,11 +116,11 @@ public class VisualGUI extends SimpleApplication implements Observer {
 
     private void updateCursor() {
         Position currentPosition = Position.fromUIVector(cam.getLocation()
-                .add(cam.getDirection().mult(CURSOR_DISTANCE)));
+                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE)));
         Position nextPosition = Position.fromUIVector(cam.getLocation()
-                .add(cam.getDirection().mult(CURSOR_DISTANCE)));
+                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE)));
 
-        int cellsToCheck = (int) (CURSOR_DISTANCE / SCALE);
+        int cellsToCheck = (int) (CURSOR_DISTANCE);
         for (int i = 0; i < cellsToCheck; i++) {
             currentPosition = Position.fromUIVector(cam.getLocation()
                     .add(cam.getDirection().mult(i * SCALE)));

@@ -17,6 +17,7 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.util.SkyFactory;
+import config.Options;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
 import model.Cell;
@@ -32,6 +33,7 @@ import static geometry.Dimension.Y;
 import static geometry.Dimension.Z;
 
 public class Environment implements Observer {
+    private static final float SCALE = Options.getInstance().getFloat("SCALE");
     private static final float FLOOR_SIZE = 5000;
     private final VisualGUI visualGUI;
     private Node cellsNode;
@@ -58,13 +60,13 @@ public class Environment implements Observer {
     }
 
     void initializeEnvironment() {
-        if (ENABLE_SKY_SPHERE) {
+        if (Options.getInstance().getBoolean("ENABLE_SKY_SPHERE")) {
             addSkySphere();
         }
-        if (ENABLE_FLOOR) {
+        if (Options.getInstance().getBoolean("ENABLE_FLOOR")) {
             addFloor();
         }
-        if (ENABLE_SHADOWS) {
+        if (Options.getInstance().getBoolean("ENABLE_SHADOWS")) {
             addShadows();
         }
 
@@ -121,7 +123,7 @@ public class Environment implements Observer {
     }
 
     void update(float tpf) {
-        if (ENABLE_FLOOR) {
+        if (Options.getInstance().getBoolean("ENABLE_FLOOR")) {
             updateFloor();
         }
 

@@ -19,7 +19,7 @@ public class ParallelepipedSpaceTest {
     private static final int MAX_POSITIONS_CUBE = 17;
     private static final int MAX_STEPS_RANDOMWALK = 100;
     private static final int MAX_POSITIONS_RANDOM_FILL = 1217;
-    private static final int RANDOM_FILL_RADIUS = 20;
+    private static final int RANDOM_FILL_RADIUS = 100;
     private ParallelepipedSpace testSpace;
 
     @Before
