@@ -3,6 +3,7 @@ package ui;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
@@ -92,8 +93,9 @@ public class VisualGUI extends SimpleApplication implements Observer {
                 SCALE/2 * 1.01f,
                 SCALE/2 * 1.01f);
         cursor = new Geometry("Cursor", cursorBox);
-        Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/ShowNormals.j3md");
-        cursor.setMaterial(mat);
+        Material unshaded = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        unshaded.setColor("Color", ColorRGBA.Brown);
+        cursor.setMaterial(unshaded);
 
         cursor.setLocalTranslation(
                 Player.getInstance().getSelectedBlock().x * SCALE,
