@@ -21,7 +21,24 @@ public class SetObserverTest {
 
     @Test
     public void testConstructor() {
-        // TODO: finish
+        assertTrue(testSet.isEmpty());
+        Difference<Collection<Integer>> difference = testSetObserver.getDifference();
+
+        assertTrue(difference.getAdded().isEmpty());
+        assertTrue(difference.getRemoved().isEmpty());
+    }
+
+    @Test
+    public void testConstructorHard() {
+        testSet.add(1);
+        testSet.add(2);
+        testSetObserver = new SetObserver<>(testSet);
+
+        assertEquals(2, testSet.size());
+        Difference<Collection<Integer>> difference = testSetObserver.getDifference();
+
+        assertTrue(difference.getAdded().isEmpty());
+        assertTrue(difference.getRemoved().isEmpty());
     }
 
     @Test
