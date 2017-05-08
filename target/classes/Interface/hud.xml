@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd
+       http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+
+    <useStyles filename="nifty-default-styles.xml" />
+    <useControls filename="nifty-default-controls.xml" />
+    <screen id="hud" controller="ui.HUDController">
+        <layer id="foreground" backgroundColor="#0000" childLayout="horizontal">
+            <panel width="30%" height="100%" childLayout="vertical">
+                <panel id="game_statistics_panel" width="100%" height="15%" childLayout="vertical"
+                       backgroundColor="#66f8">
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="Generation: 0"
+                              id="generation"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="Population: 0"
+                              id="population"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="Growth rate: 1 cells/tick"
+                              id="growth_rate"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="Tick time: 0.0213123 s"
+                              id="tick_time"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="Parallelepipeds: 10"
+                              id="number_of_parallelepipeds"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="Volume: 1 m^3"
+                              id="total_volume_of_parallelepipeds"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                    </panel>
+                </panel>
+                <panel width="100%" height="10%" childLayout="vertical" backgroundColor="#f668">
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Left: (1, 2, 3)"
+                              id="left_direction"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Up: (-1, 2, 3)"
+                              id="up_direction"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Gaze: (1, 2, 3)"
+                              id="gaze_direction"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Rotation: 123"
+                              id="rotation"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="20%" childLayout="horizontal">
+                        <text text="Position: (1, 5, 21)"
+                              id="position"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="77883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+                <panel width="100%" height="75%" childLayout="vertical"/>
+            </panel>
+
+            <panel id="game_window_panel" width="60%" height="100%" childLayout="vertical"/>
+
+            <panel id="player_controls_panel" width="10%" height="100%" childLayout="vertical">
+                <panel id="player_stats_panel" width="100%" height="10%" childLayout="vertical"
+                       backgroundColor="#00f8">
+                    <panel id="health_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Health: 100%"
+                              id="health"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="strength_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Strength: 100%"
+                              id="strength"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="agility_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Agility: 100%"
+                              id="agility"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="hunger_panel" width="100%" height="25%" childLayout="horizontal">
+                        <text text="Hunger: 100%"
+                              id="hunger"
+                              font="Interface/Fonts/Arial.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+
+                <panel width="100%" height="1%" backgroundColor="#228b"/>
+
+                <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
+                       backgroundColor="#4b58">
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_1_panel"
+                              id="cell_1"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_2_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_2"
+                              id="cell_2"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_3_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_3"
+                              id="cell_3"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_4_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_4"
+                              id="cell_4"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_5_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_5"
+                              id="cell_5"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_6_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_6"
+                              id="cell_6"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_7_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_7"
+                              id="cell_7"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_8_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_8"
+                              id="cell_8"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel id="cell_9_panel" width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_9"
+                              id="cell_9"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_0_panel"
+                              id="cell_0"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                </panel>
+                <panel id="empty_panel" width="100%" height="62%" valign="corner"/>
+                <panel id="pause_panel" width="100%" height="2%" childLayout="corner"
+                       backgroundColor="#0fff">
+                    <text text="PAUSED"
+                          id="pause"
+                          font="Interface/Fonts/Arial.fnt"
+                          color="#f00f"
+                          width="100%" height="100%"/>
+                </panel>
+            </panel>
+        </layer>
+    </screen>
+
+</nifty>
