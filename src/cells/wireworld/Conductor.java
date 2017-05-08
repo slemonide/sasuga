@@ -1,7 +1,6 @@
-package model.wireworld;
+package cells.wireworld;
 
 import com.jme3.math.ColorRGBA;
-import model.ActiveCell;
 import model.Cell;
 import model.Position;
 import model.World;
@@ -9,7 +8,6 @@ import model.World;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>

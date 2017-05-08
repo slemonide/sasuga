@@ -1,4 +1,4 @@
-package model.landscape;
+package cells.landscape;
 
 import model.ActiveCell;
 import model.Cell;

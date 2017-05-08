@@ -1,7 +1,6 @@
-package model.wireworld;
+package cells.wireworld;
 
 import com.jme3.math.ColorRGBA;
-import model.ActiveCell;
 import model.Cell;
 import model.Position;
 

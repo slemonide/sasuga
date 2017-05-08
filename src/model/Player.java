@@ -1,11 +1,11 @@
 package model;
 
-import model.landscape.LandscapeCell;
-import model.landscape.LandscapeCellX;
-import model.landscape.LandscapeCellZ;
-import model.wireworld.Conductor;
-import model.wireworld.ElectronHead;
-import model.wireworld.ElectronTail;
+import cells.landscape.LandscapeCell;
+import cells.landscape.LandscapeCellX;
+import cells.landscape.LandscapeCellZ;
+import cells.wireworld.Conductor;
+import cells.wireworld.ElectronHead;
+import cells.wireworld.ElectronTail;
 
 import java.util.Collection;
 import java.util.Random;

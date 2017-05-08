@@ -1,4 +1,4 @@
-package model.wireworld;
+package cells.wireworld;
 
 import model.ActiveCell;
 import model.Position;

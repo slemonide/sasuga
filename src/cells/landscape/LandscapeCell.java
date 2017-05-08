@@ -1,4 +1,4 @@
-package model.landscape;
+package cells.landscape;
 
 import model.ActiveCell;
 import model.Cell;
@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Generates landscape
  */
-public class LandscapeCellZ extends ActiveCell {
+public class LandscapeCell extends ActiveCell {
     private Random random = new Random();
 
     /**
@@ -20,7 +20,7 @@ public class LandscapeCellZ extends ActiveCell {
      *
      * @param position position of this node
      */
-    public LandscapeCellZ(Position position) {
+    public LandscapeCell(Position position) {
         super(position);
     }
 
@@ -33,7 +33,7 @@ public class LandscapeCellZ extends ActiveCell {
     public Collection<? extends Cell> tickToAdd() {
         Set<Cell> nextCells = new HashSet<>();
         nextCells.add(new Cell(position));
-        nextCells.add(new LandscapeCellZ(position.add(nextPosition())));
+        nextCells.add(new LandscapeCell(position.add(nextPosition())));
 
         return nextCells;
     }
@@ -46,17 +46,17 @@ public class LandscapeCellZ extends ActiveCell {
     private Position nextPosition() {
         switch (random.nextInt(6)) {
             case 0:
-                return new Position(0, 0, 1);
+                return new Position(1, 0, 0);
             case 1:
-                return new Position(0, 0, -1);
+                return new Position(-1, 0, 0);
             case 2:
-                return new Position(0, 1, 1);
+                return new Position(1, 1, 0);
             case 3:
-                return new Position(0, 1, -1);
+                return new Position(-1, 1, 0);
             case 4:
-                return new Position(0, -1, 1);
+                return new Position(1, -1, 0);
             default:
-                return new Position(0, -1, -1);
+                return new Position(-1, -1, 0);
         }
     }
 }
