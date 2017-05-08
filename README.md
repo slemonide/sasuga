@@ -20,7 +20,7 @@ Run `src/Main.java`.
 ## Documentation
 * [Wiki](https://github.com/slemonide/sasuga/wiki)
 * [javadoc](https://slemonide.github.io/sasuga/)
-* [another javadoc](../docs/index.html)
+* [another javadoc](docs/index.html)
 
 
 ## Q/A
