@@ -24,6 +24,8 @@ import model.Cell;
 import model.MaterialManager;
 import model.Position;
 import model.World;
+import util.Difference;
+import util.SetObserver;
 
 import java.util.*;
 
@@ -39,6 +41,7 @@ public class Environment implements Observer {
     private Node cellsNode;
     private Map<Parallelepiped, Spatial> voxelMap;
     private ParallelepipedSpace parallelepipedSpace;
+    private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
     private Queue<Cell> toAdd;
     private Queue<Position> toRemove;
 
@@ -53,6 +56,7 @@ public class Environment implements Observer {
 
         voxelMap = new HashMap<>();
         parallelepipedSpace = new ParallelepipedSpace();
+        parallelepipedSpaceObserver = new SetObserver<>(parallelepipedSpace.getParallelepipeds());
         toAdd = new LinkedList<>();
         toRemove = new LinkedList<>();
 
@@ -165,11 +169,13 @@ public class Environment implements Observer {
     }
 
     private void updateSpatials() {
-        for (Parallelepiped parallelepiped : parallelepipedSpace.getToRemove()) {
+        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+
+        for (Parallelepiped parallelepiped : difference.getRemoved()) {
             remove(parallelepiped);
         }
 
-        for (Parallelepiped parallelepiped : parallelepipedSpace.getToAdd()) {
+        for (Parallelepiped parallelepiped : difference.getAdded()) {
             add(parallelepiped);
         }
     }

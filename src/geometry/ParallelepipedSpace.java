@@ -20,16 +20,12 @@ import static geometry.Dimension.Z;
  */
 public class ParallelepipedSpace {
     private Set<Parallelepiped> parallelepipeds;
-    private Set<Parallelepiped> lastSeenParallelepipedsSetToAdd;
-    private Set<Parallelepiped> lastSeenParallelepipedsSetToRemove;
 
     /**
      * Create an empty parallelepiped space
      */
     public ParallelepipedSpace() {
         parallelepipeds = new CopyOnWriteArraySet<>();  //= new HashSet<>();
-        lastSeenParallelepipedsSetToAdd = new HashSet<>();
-        lastSeenParallelepipedsSetToRemove = new HashSet<>();
     }
 
     public void add(Position position) {
@@ -175,32 +171,6 @@ public class ParallelepipedSpace {
 
     public boolean isEmpty() {
         return parallelepipeds.isEmpty();
-    }
-
-    /**
-     * @return set of parallelepipeds added since last invocation of getToAdd()
-     */
-    public Set<Parallelepiped> getToAdd() {
-        Set<Parallelepiped> toAdd = new HashSet<>();
-        toAdd.addAll(parallelepipeds);
-        toAdd.removeAll(lastSeenParallelepipedsSetToAdd);
-        lastSeenParallelepipedsSetToAdd.clear();
-        lastSeenParallelepipedsSetToAdd.addAll(parallelepipeds);
-
-        return toAdd;
-    }
-
-    /**
-     * @return set of parallelepipeds removed since last invocation of getToRemove()
-     */
-    public Set<Parallelepiped> getToRemove() {
-        Set<Parallelepiped> toRemove = new HashSet<>();
-        toRemove.addAll(lastSeenParallelepipedsSetToRemove);
-        toRemove.removeAll(parallelepipeds);
-        lastSeenParallelepipedsSetToRemove.clear();
-        lastSeenParallelepipedsSetToRemove.addAll(parallelepipeds);
-
-        return toRemove;
     }
 
     public int getVolume() {

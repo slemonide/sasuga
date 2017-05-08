@@ -5,17 +5,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Helps calculating changes of observed sets
+ * Helps calculating changes of observed sets of E
  */
 public class SetObserver<E> implements CollectionObserver<E> {
-    private Set<E> observedSet;
-    private Set<E> lastSeenSet;
+    private Set<E> currentSet;
+    private Set<E> oldSet;
 
-    public SetObserver(Set<E> observedSet) {
-        this.observedSet = observedSet;
+    public SetObserver(Set<E> currentSet) {
+        this.currentSet = currentSet;
 
-        lastSeenSet = new HashSet<>();
-        lastSeenSet.addAll(observedSet);
+        oldSet = new HashSet<>();
+        oldSet.addAll(currentSet);
     }
 
     @Override
@@ -23,11 +23,14 @@ public class SetObserver<E> implements CollectionObserver<E> {
         Set<E> added = new HashSet<>();
         Set<E> removed = new HashSet<>();
 
-        added.addAll(observedSet);
-        added.removeAll(lastSeenSet);
+        added.addAll(currentSet);
+        added.removeAll(oldSet);
 
-        removed.addAll(lastSeenSet);
-        removed.removeAll(observedSet);
+        removed.addAll(oldSet);
+        removed.removeAll(currentSet);
+
+        oldSet.clear();
+        oldSet.addAll(currentSet);
 
         return new Difference<>(added, removed);
     }
