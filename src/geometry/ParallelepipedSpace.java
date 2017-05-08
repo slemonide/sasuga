@@ -4,10 +4,7 @@ import model.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static geometry.Dimension.X;
@@ -104,47 +101,60 @@ public class ParallelepipedSpace {
 
             parallelepipeds.remove(toSplit);
             if (toSplit.getVolume() != 1) {
-                Set<Parallelepiped> toAdd = new HashSet<>();
-
-                if (position.z > toSplit.getCorner().z) {
-                    toAdd.add(toSplit.setSize(Z, position.z - toSplit.getCorner().z));
-                }
-
-                if (position.z < toSplit.getCorner().z + toSplit.getSize(Z) - 1) {
-                    toAdd.add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - 1 - position.z)
-                    .setCorner(toSplit.getCorner().set(Z, position.z + 1)));
-                }
-
-                if (position.y > toSplit.getCorner().y) {
-                    toAdd.add(toSplit.setSize(Z, 1)
-                            .setSize(Y, position.y - toSplit.getCorner().y)
-                    .setCorner(toSplit.getCorner().set(Z, position.z)));
-                }
-
-                if (position.y < toSplit.getCorner().y + toSplit.getSize(Y) - 1) {
-                    toAdd.add(toSplit.setSize(Z, 1)
-                    .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - 1 - position.y)
-                    .setCorner(toSplit.getCorner().set(Z, position.z).set(Y, position.y + 1)));
-                }
-
-                if (position.x > toSplit.getCorner().x) {
-                    toAdd.add(toSplit.setSize(Z, 1).setSize(Y, 1)
-                    .setSize(X, position.x - toSplit.getCorner().x)
-                    .setCorner(toSplit.getCorner().set(Z, position.z)
-                    .set(Y, position.y)));
-                }
-
-                if (position.x < toSplit.getCorner().x + toSplit.getSize(X) - 1) {
-                    toAdd.add(toSplit.setSize(Z, 1).setSize(Y, 1)
-                    .setSize(X, toSplit.getCorner().x + toSplit.getSize(X) - 1 - position.x)
-                            .setCorner(toSplit.getCorner().set(Z, position.z)
-                                    .set(Y, position.y).set(X, position.x + 1)));
-                }
-
-                for (Parallelepiped parallelepiped : toAdd) {
-                    add(parallelepiped);
-                }
+                addBottom(position, toSplit);
+                addTop(position, toSplit);
+                addRight(position, toSplit);
+                addLeft(position, toSplit);
+                addFront(position, toSplit);
+                addBack(position, toSplit);
             }
+        }
+    }
+
+    private void addBack(Position position, Parallelepiped toSplit) {
+        if (position.x < toSplit.getCorner().x + toSplit.getSize(X) - 1) {
+            add(toSplit.setSize(Z, 1).setSize(Y, 1)
+            .setSize(X, toSplit.getCorner().x + toSplit.getSize(X) - 1 - position.x)
+                    .setCorner(toSplit.getCorner().set(Z, position.z)
+                            .set(Y, position.y).set(X, position.x + 1)));
+        }
+    }
+
+    private void addFront(Position position, Parallelepiped toSplit) {
+        if (position.x > toSplit.getCorner().x) {
+            add(toSplit.setSize(Z, 1).setSize(Y, 1)
+            .setSize(X, position.x - toSplit.getCorner().x)
+            .setCorner(toSplit.getCorner().set(Z, position.z)
+            .set(Y, position.y)));
+        }
+    }
+
+    private void addLeft(Position position, Parallelepiped toSplit) {
+        if (position.y < toSplit.getCorner().y + toSplit.getSize(Y) - 1) {
+            add(toSplit.setSize(Z, 1)
+            .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - 1 - position.y)
+            .setCorner(toSplit.getCorner().set(Z, position.z).set(Y, position.y + 1)));
+        }
+    }
+
+    private void addRight(Position position, Parallelepiped toSplit) {
+        if (position.y > toSplit.getCorner().y) {
+            add(toSplit.setSize(Z, 1)
+                    .setSize(Y, position.y - toSplit.getCorner().y)
+            .setCorner(toSplit.getCorner().set(Z, position.z)));
+        }
+    }
+
+    private void addTop(Position position, Parallelepiped toSplit) {
+        if (position.z < toSplit.getCorner().z + toSplit.getSize(Z) - 1) {
+            add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - 1 - position.z)
+            .setCorner(toSplit.getCorner().set(Z, position.z + 1)));
+        }
+    }
+
+    private void addBottom(Position position, Parallelepiped toSplit) {
+        if (position.z > toSplit.getCorner().z) {
+            add(toSplit.setSize(Z, position.z - toSplit.getCorner().z));
         }
     }
 
