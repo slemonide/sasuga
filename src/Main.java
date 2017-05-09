@@ -22,11 +22,11 @@ public class Main {
             }
         }*/
 
-        //Thread buildCubeAnimation = new Thread(new BuildCube());
-        //buildCubeAnimation.start();
+        Thread buildCubeAnimation = new Thread(new BuildCube());
+        buildCubeAnimation.start();
 
-        Thread randomLandscape = new Thread(new RandomLandscape());
-        randomLandscape.start();
+        //Thread randomLandscape = new Thread(new RandomLandscape());
+        //randomLandscape.start();
 
         World.getInstance().start();
         VisualGUI.main(args);

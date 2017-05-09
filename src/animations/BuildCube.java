@@ -9,7 +9,7 @@ import model.World;
  */
 public class BuildCube implements Runnable {
 
-    private static final int SIZE = 20;
+    private static final int SIZE = 10;
     private static final long DELAY = 50; // in ms
 
     @Override

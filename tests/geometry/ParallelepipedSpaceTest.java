@@ -432,6 +432,112 @@ public class ParallelepipedSpaceTest {
                 MAX_POSITIONS_Z/2)));
     }
 
+
+
+    @Test
+    public void testRemoveCutBottomAddTop() {
+        buildParallelepiped();
+        cutParallelepipedBottom();
+
+        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.getRemoved().size());
+        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
+        assertEquals(1, difference.getAdded().size());
+        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,1),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,1),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
+    }
+
+    @Test
+    public void testRemoveAddBottom() {
+        buildParallelepiped();
+        cutParallelepipedTop();
+
+        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.getRemoved().size());
+        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
+        assertEquals(1, difference.getAdded().size());
+        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
+    }
+
+    @Test
+    public void testRemoveAddRight() {
+        buildParallelepiped();
+        cutParallelepipedLeft();
+
+        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.getRemoved().size());
+        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
+        assertEquals(1, difference.getAdded().size());
+        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
+    }
+
+    @Test
+    public void testRemoveAddLeft() {
+        buildParallelepiped();
+        cutParallelepipedRight();
+
+        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.getRemoved().size());
+        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
+        assertEquals(1, difference.getAdded().size());
+        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,1,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,0),
+                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
+    }
+
+    private void cutParallelepipedRight() {
+        for (int x = 0; x < MAX_POSITIONS_X; x++) {
+            for (int z = 0; z < MAX_POSITIONS_Z; z++) {
+                testSpace.add(new Position(x, 0, z));
+            }
+        }
+    }
+
+    private void cutParallelepipedLeft() {
+        for (int x = 0; x < MAX_POSITIONS_X; x++) {
+            for (int z = 0; z < MAX_POSITIONS_Z; z++) {
+                testSpace.add(new Position(x, MAX_POSITIONS_Y - 1, z));
+            }
+        }
+    }
+
+    private void cutParallelepipedTop() {
+        for (int x = 0; x < MAX_POSITIONS_X; x++) {
+            for (int y = 0; y < MAX_POSITIONS_Y; y++) {
+                testSpace.add(new Position(x, y, MAX_POSITIONS_Z - 1));
+            }
+        }
+    }
+
+    private void cutParallelepipedBottom() {
+        for (int x = 0; x < MAX_POSITIONS_X; x++) {
+            for (int y = 0; y < MAX_POSITIONS_Y; y++) {
+                testSpace.add(new Position(x, y, 0));
+            }
+        }
+    }
+
     // toAdd
 
     @Test
@@ -694,108 +800,74 @@ public class ParallelepipedSpaceTest {
         }
     }
 
-    // Implementation-dependent tests (nope)
+    // Implementation-dependent tests
 
     @Test
-    public void testRemoveAddTop() {
-        buildParallelepiped();
-        cutParallelepipedBottom();
-
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,1),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
-
+    public void testRemoveCenterOfAnOddCube() {
+        buildCube(3);
         assertEquals(1, testSpace.size());
+        assertEquals(3 * 3 * 3, testSpace.getVolume());
+
+        // remove center
+        testSpace.remove(new Position(1,1,1));
+
+        assertEquals(6, testSpace.getParallelepipeds().size());
+
+        // Z-axis
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                3,3,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,2),
+                3,3,1)));
+
+        // Y-axis
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,1),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
+                3,1,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,2,1),
+                3,1,1)));
+
+        // X-axis
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,1),
+                1,1,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(2,1,1),
+                1,1,1)));
     }
 
     @Test
-    public void testRemoveAddBottom() {
-        buildParallelepiped();
-        cutParallelepipedTop();
-
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
-
+    public void testRemoveCenterOfAnEvenCube() {
+        buildCube(4);
         assertEquals(1, testSpace.size());
+        assertEquals(4 * 4 * 4, testSpace.getVolume());
+
+        // remove center
+        testSpace.remove(new Position(1,1,1));
+
+        assertEquals(6, testSpace.getParallelepipeds().size());
+
+        // Z-axis
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z - 1)));
+                4,4,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,2),
+                4,4,2)));
+
+        // Y-axis
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,1),
+                4,1,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,2,1),
+                4,2,1)));
+
+        // X-axis
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,1),
+                1,1,1)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(2,1,1),
+                2,1,1)));
     }
 
-    @Test
-    public void testRemoveAddRight() {
-        buildParallelepiped();
-        cutParallelepipedLeft();
-
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
-
-        assertEquals(1, testSpace.size());
-        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
-    }
-
-    @Test
-    public void testRemoveAddLeft() {
-        buildParallelepiped();
-        cutParallelepipedRight();
-
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y, MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,1,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
-
-        assertEquals(1, testSpace.size());
-        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,0),
-                MAX_POSITIONS_X, MAX_POSITIONS_Y - 1, MAX_POSITIONS_Z)));
-    }
-
-    private void cutParallelepipedRight() {
-        for (int x = 0; x < MAX_POSITIONS_X; x++) {
-            for (int z = 0; z < MAX_POSITIONS_Z; z++) {
-                testSpace.add(new Position(x, 0, z));
-            }
-        }
-    }
-
-    private void cutParallelepipedLeft() {
-        for (int x = 0; x < MAX_POSITIONS_X; x++) {
-            for (int z = 0; z < MAX_POSITIONS_Z; z++) {
-                testSpace.add(new Position(x, MAX_POSITIONS_Y - 1, z));
-            }
-        }
-    }
-
-    private void cutParallelepipedTop() {
-        for (int x = 0; x < MAX_POSITIONS_X; x++) {
-            for (int y = 0; y < MAX_POSITIONS_Y; y++) {
-                testSpace.add(new Position(x, y, MAX_POSITIONS_Z - 1));
-            }
-        }
-    }
-
-    private void cutParallelepipedBottom() {
-        for (int x = 0; x < MAX_POSITIONS_X; x++) {
-            for (int y = 0; y < MAX_POSITIONS_Y; y++) {
-                testSpace.add(new Position(x, y, 0));
+    private void buildCube(int size) {
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                for (int z = 0; z < size; z++) {
+                    testSpace.add(new Position(x, y, z));
+                }
             }
         }
     }
