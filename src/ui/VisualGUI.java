@@ -4,10 +4,12 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.debug.WireBox;
+import com.jme3.scene.shape.Sphere;
 import config.Options;
 import de.lessvoid.nifty.Nifty;
 import model.Player;
@@ -20,10 +22,12 @@ import java.util.Observer;
 public class VisualGUI extends SimpleApplication implements Observer {
     private static final float SCALE = Options.getInstance().getFloat("SCALE");
     private static final int CURSOR_DISTANCE = Options.getInstance().getInt("CURSOR_DISTANCE");;
+    private static final int CURSOR_SAMPLE_RATE = 2;
     private static VisualGUI app;
     private final EventHandlers eventHandlers = new EventHandlers(this);
     private final Environment environment = new Environment(this);
     private Spatial cursor;
+    private Spatial cursorDebug;
 
     /**
      * Singleton pattern
@@ -57,9 +61,28 @@ public class VisualGUI extends SimpleApplication implements Observer {
         if (Options.getInstance().getBoolean("ENABLE_CROSS_HAIR")) {
             initCrossHairs();
         }
+        if (Options.getInstance().getBoolean("ENABLE_CURSOR_DEBUG")) {
+            initCursorDebug();
+        }
+
         initCursor();
 
         Player.getInstance().addObserver(this);
+    }
+
+    private void initCursorDebug() {
+        Sphere cursorSphere = new Sphere(8, 8, SCALE / 10);
+        cursorDebug = new Geometry("Cursor", cursorSphere);
+        Material unshaded = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        unshaded.setColor("Color", ColorRGBA.Black);
+        cursorDebug.setMaterial(unshaded);
+
+        cursorDebug.setLocalTranslation(
+                Player.getInstance().getSelectedBlock().x * SCALE,
+                Player.getInstance().getSelectedBlock().y * SCALE,
+                Player.getInstance().getSelectedBlock().z * SCALE);
+
+        rootNode.attachChild(cursorDebug);
     }
 
     private void initializeHUD() {
@@ -86,7 +109,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void initCursor() {
-        //Sphere sphere = new Sphere(8, 8, 0.125f);
         WireBox cursorBox = new WireBox(
                 SCALE/2 * 1.01f,
                 SCALE/2 * 1.01f,
@@ -112,6 +134,10 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
 
         updateCursor();
+
+        if (Options.getInstance().getBoolean("ENABLE_CURSOR_DEBUG")) {
+            updateCursorDebug();
+        }
     }
 
     private void updateCursor() {
@@ -120,12 +146,11 @@ public class VisualGUI extends SimpleApplication implements Observer {
         Position nextPosition = Position.fromUIVector(cam.getLocation()
                 .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE)));
 
-        int cellsToCheck = (int) (CURSOR_DISTANCE);
-        for (int i = 0; i < cellsToCheck; i++) {
+        for (int i = 0; i < CURSOR_DISTANCE * CURSOR_SAMPLE_RATE; i++) {
             currentPosition = Position.fromUIVector(cam.getLocation()
-                    .add(cam.getDirection().mult(i * SCALE)));
+                    .add(cam.getDirection().mult((float) i / CURSOR_SAMPLE_RATE * SCALE)));
             nextPosition = Position.fromUIVector(cam.getLocation()
-                    .add(cam.getDirection().mult((i + 1) * SCALE)));
+                    .add(cam.getDirection().mult((float) (i + 1) / CURSOR_SAMPLE_RATE * SCALE)));
 
             if (World.getInstance().containsCellAt(nextPosition)) {
                 break;
@@ -137,6 +162,13 @@ public class VisualGUI extends SimpleApplication implements Observer {
         Player.getInstance().setSelectedBlockFace(currentPosition);
 
         cursor.setLocalTranslation(Player.getInstance().getSelectedBlock().getUIVector());
+    }
+
+    private void updateCursorDebug() {
+        Vector3f currentPosition = cam.getLocation()
+                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE));
+
+        cursorDebug.setLocalTranslation(currentPosition);
     }
 
     /**
