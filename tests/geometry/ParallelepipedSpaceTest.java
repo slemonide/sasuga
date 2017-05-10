@@ -437,6 +437,7 @@ public class ParallelepipedSpaceTest {
     @Test
     public void testRemoveCutBottomAddTop() {
         buildParallelepiped();
+        parallelepipedSpaceObserver.getDifference();
         cutParallelepipedBottom();
 
         Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
@@ -455,6 +456,7 @@ public class ParallelepipedSpaceTest {
     @Test
     public void testRemoveAddBottom() {
         buildParallelepiped();
+        parallelepipedSpaceObserver.getDifference();
         cutParallelepipedTop();
 
         Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
@@ -473,6 +475,7 @@ public class ParallelepipedSpaceTest {
     @Test
     public void testRemoveAddRight() {
         buildParallelepiped();
+        parallelepipedSpaceObserver.getDifference();
         cutParallelepipedLeft();
 
         Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
@@ -491,6 +494,7 @@ public class ParallelepipedSpaceTest {
     @Test
     public void testRemoveAddLeft() {
         buildParallelepiped();
+        parallelepipedSpaceObserver.getDifference();
         cutParallelepipedRight();
 
         Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
@@ -509,7 +513,7 @@ public class ParallelepipedSpaceTest {
     private void cutParallelepipedRight() {
         for (int x = 0; x < MAX_POSITIONS_X; x++) {
             for (int z = 0; z < MAX_POSITIONS_Z; z++) {
-                testSpace.add(new Position(x, 0, z));
+                testSpace.remove(new Position(x, 0, z));
             }
         }
     }
@@ -517,7 +521,7 @@ public class ParallelepipedSpaceTest {
     private void cutParallelepipedLeft() {
         for (int x = 0; x < MAX_POSITIONS_X; x++) {
             for (int z = 0; z < MAX_POSITIONS_Z; z++) {
-                testSpace.add(new Position(x, MAX_POSITIONS_Y - 1, z));
+                testSpace.remove(new Position(x, MAX_POSITIONS_Y - 1, z));
             }
         }
     }
@@ -525,7 +529,7 @@ public class ParallelepipedSpaceTest {
     private void cutParallelepipedTop() {
         for (int x = 0; x < MAX_POSITIONS_X; x++) {
             for (int y = 0; y < MAX_POSITIONS_Y; y++) {
-                testSpace.add(new Position(x, y, MAX_POSITIONS_Z - 1));
+                testSpace.remove(new Position(x, y, MAX_POSITIONS_Z - 1));
             }
         }
     }
@@ -533,7 +537,7 @@ public class ParallelepipedSpaceTest {
     private void cutParallelepipedBottom() {
         for (int x = 0; x < MAX_POSITIONS_X; x++) {
             for (int y = 0; y < MAX_POSITIONS_Y; y++) {
-                testSpace.add(new Position(x, y, 0));
+                testSpace.remove(new Position(x, y, 0));
             }
         }
     }

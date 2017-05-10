@@ -1,3 +1,4 @@
+import animations.BuildBoxCutTop;
 import animations.BuildCube;
 import animations.RandomLandscape;
 import model.*;
@@ -27,6 +28,9 @@ public class Main {
 
         //Thread randomLandscape = new Thread(new RandomLandscape());
         //randomLandscape.start();
+
+        Thread buildBoxAnimation = new Thread(new BuildBoxCutTop());
+        buildBoxAnimation.start();
 
         World.getInstance().start();
         VisualGUI.main(args);

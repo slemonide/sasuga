@@ -51,7 +51,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         //setDisplayFps(false);
         //getFlyByCamera().setEnabled(false);
 
-        //flyCam.setMoveSpeed(10);
+        flyCam.setMoveSpeed(Options.getInstance().getInt("MOVE_SPEED"));
 
         environment.initializeEnvironment();
         eventHandlers.initializeEventHandlers();
@@ -134,10 +134,16 @@ public class VisualGUI extends SimpleApplication implements Observer {
         }
 
         updateCursor();
-
         if (Options.getInstance().getBoolean("ENABLE_CURSOR_DEBUG")) {
             updateCursorDebug();
         }
+    }
+
+    private void updateCursorDebug() {
+        Vector3f currentPosition = cam.getLocation()
+                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE));
+
+        cursorDebug.setLocalTranslation(currentPosition);
     }
 
     private void updateCursor() {
@@ -162,13 +168,6 @@ public class VisualGUI extends SimpleApplication implements Observer {
         Player.getInstance().setSelectedBlockFace(currentPosition);
 
         cursor.setLocalTranslation(Player.getInstance().getSelectedBlock().getUIVector());
-    }
-
-    private void updateCursorDebug() {
-        Vector3f currentPosition = cam.getLocation()
-                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE));
-
-        cursorDebug.setLocalTranslation(currentPosition);
     }
 
     /**
