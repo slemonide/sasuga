@@ -220,4 +220,87 @@ public class ParallelepipedTest {
             assertEquals(size, testParallelepiped.getSize(dimension));
         }
     }
+
+    // Intersects
+
+    @Test
+    public void testIntersectsNoIntersect() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 3, 10);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(9, 5, 1), 2, 2, 11);
+
+        assertFalse(parallelepipedA.intersects(parallelepipedB));
+        assertFalse(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsCornerIntersect() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 4, 10);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 10), 2, 2, 3);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsSideIntersect() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0, 0, 0), 5, 4, 10);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 10), 2, 2, 30);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsFullyInside() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 10, 11, 12);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(2, 2, 2), 2, 2, 3);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsPartialSideIntersect() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 7, 4, 1);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(5, 1,0), 7, 2, 1);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsExactMatch() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 2, 2, 3);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 2, 2, 3);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsTShapeA() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 1, 5, 9);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 1, 9, 5);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsTShapeB() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 1, 9);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 9, 1, 5);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    @Test
+    public void testIntersectsTShapeC() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 9, 5, 1);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 5, 9, 1);
+
+        assertTrue(parallelepipedA.intersects(parallelepipedB));
+        assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
 }

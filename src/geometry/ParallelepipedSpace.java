@@ -12,8 +12,10 @@ import static geometry.Dimension.Y;
 import static geometry.Dimension.Z;
 
 /**
- * Represents a set of Parallelepiped instances
- * For each parallelepiped, there is a spatial in the assigned node
+ * Represents a set of parallelepipeds
+ *
+ * invariant
+ *   no parallelepipeds contain the same block twice
  */
 public class ParallelepipedSpace {
     private Set<Parallelepiped> parallelepipeds;
@@ -28,6 +30,8 @@ public class ParallelepipedSpace {
     public void add(Position position) {
         remove(position);
         add(new Parallelepiped(position));
+
+        hasValidState();
     }
 
     private void add(@NotNull Parallelepiped parallelepiped) {
@@ -191,5 +195,18 @@ public class ParallelepipedSpace {
         }
 
         return volumeSoFar;
+    }
+
+    /**
+     * Check invariant
+     */
+    private void hasValidState() {
+        for (Parallelepiped parallelepiped1 : parallelepipeds) {
+            for (Parallelepiped parallelepiped2 : parallelepipeds) {
+                if (parallelepiped1 != parallelepiped2) {
+                    assert (!parallelepiped1.intersects(parallelepiped2));
+                }
+            }
+        }
     }
 }

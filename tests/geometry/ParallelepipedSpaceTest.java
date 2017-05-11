@@ -21,8 +21,8 @@ public class ParallelepipedSpaceTest {
     private static final int MAX_POSITIONS_Z = 17;
     private static final int MAX_POSITIONS_CUBE = 17;
     private static final int MAX_STEPS_RANDOMWALK = 1000;
-    private static final int MAX_POSITIONS_RANDOM_FILL = 2217;
-    private static final int RANDOM_FILL_RADIUS = 50;
+    private static final int MAX_POSITIONS_RANDOM_FILL = 1000;
+    private static final int RANDOM_FILL_RADIUS = 9;
     private ParallelepipedSpace testSpace;
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
 
@@ -266,6 +266,17 @@ public class ParallelepipedSpaceTest {
                     testSpace.add(new Position(x, y, z));
                 }
             }
+        }
+    }
+
+    @Test
+    public void testAddSetProperty() {
+        Set<Position> testSet = new HashSet<>();
+        for (int i = 0; i < MAX_POSITIONS; i++) {
+            testSpace.add(new Position(0,0,0));
+            testSet.add(new Position(0,0,0));
+
+            assertEquals(testSpace.getVolume(), testSet.size());
         }
     }
 

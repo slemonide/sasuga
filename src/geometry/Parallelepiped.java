@@ -110,4 +110,25 @@ public final class Parallelepiped {
                 corner.y + (ySize - 1) / 2f,
                 corner.z + (zSize - 1) / 2f);
     }
+
+    /**
+     * @return true if this parallelepiped intersects with the given parallelepiped,
+     * false otherwise
+     */
+    public boolean intersects(Parallelepiped otherParallelepiped) {
+        for (Dimension dimension : Dimension.values()) {
+            IntegerInterval intervalA = new IntegerInterval(
+                    this.getCorner().get(dimension),
+                    this.getSize(dimension));
+            IntegerInterval intervalB = new IntegerInterval(
+                    otherParallelepiped.getCorner().get(dimension),
+                    otherParallelepiped.getSize(dimension));
+
+            if (!intervalA.intersects(intervalB)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
