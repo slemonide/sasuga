@@ -235,7 +235,7 @@ public class ParallelepipedTest {
     @Test
     public void testIntersectsCornerIntersect() {
         Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 4, 10);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 10), 2, 2, 3);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 9), 4, 5, 4);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -244,7 +244,7 @@ public class ParallelepipedTest {
     @Test
     public void testIntersectsSideIntersect() {
         Parallelepiped parallelepipedA = new Parallelepiped(new Position(0, 0, 0), 5, 4, 10);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 10), 2, 2, 30);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 9), 2, 2, 30);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));

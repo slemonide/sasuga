@@ -21,8 +21,10 @@ public class ParallelepipedSpaceTest {
     private static final int MAX_POSITIONS_Z = 17;
     private static final int MAX_POSITIONS_CUBE = 17;
     private static final int MAX_STEPS_RANDOMWALK = 1000;
-    private static final int MAX_POSITIONS_RANDOM_FILL = 1000;
-    private static final int RANDOM_FILL_RADIUS = 9;
+    private static final int RANDOM_FILL_RADIUS = 4;
+    private static final int MAX_POSITIONS_RANDOM_FILL = (RANDOM_FILL_RADIUS + 3) *
+                    (RANDOM_FILL_RADIUS + 3) *
+                    (RANDOM_FILL_RADIUS + 3);
     private ParallelepipedSpace testSpace;
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
 
@@ -237,18 +239,25 @@ public class ParallelepipedSpaceTest {
 
     @Test
     public void testAddManyCube() {
-        for (int x = 0; x < MAX_POSITIONS_CUBE; x++) {
-            for (int y = 0; y < MAX_POSITIONS_CUBE; y++) {
-                for (int z = 0; z < MAX_POSITIONS_CUBE; z++) {
-                    testSpace.add(new Position(x, y, z));
-                }
-            }
-        }
+        buildCube(MAX_POSITIONS_CUBE);
+
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
                 MAX_POSITIONS_CUBE,
                 MAX_POSITIONS_CUBE,
                 MAX_POSITIONS_CUBE)));
+    }
+
+    @Test
+    public void testAddManyCubeTwice() {
+        buildCube(MAX_POSITIONS_CUBE);
+        buildCube(MAX_POSITIONS_CUBE * 2);
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                MAX_POSITIONS_CUBE * 2,
+                MAX_POSITIONS_CUBE * 2,
+                MAX_POSITIONS_CUBE * 2)));
     }
 
     @Test

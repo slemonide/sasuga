@@ -28,7 +28,11 @@ public class ParallelepipedSpace {
     }
 
     public void add(Position position) {
+        /*if (this.contains(position)) {
+            return;
+        }*/
         remove(position);
+
         add(new Parallelepiped(position));
 
         hasValidState();
@@ -74,6 +78,8 @@ public class ParallelepipedSpace {
         } else {
             add(newParallelepiped);
         }
+
+        hasValidState();
     }
 
     @NotNull
@@ -113,6 +119,8 @@ public class ParallelepipedSpace {
                 addBack(position, toSplit);
             }
         }
+
+        hasValidState();
     }
 
     private void addBack(Position position, Parallelepiped toSplit) {
@@ -122,6 +130,8 @@ public class ParallelepipedSpace {
                     .setCorner(toSplit.getCorner().set(Z, position.z)
                             .set(Y, position.y).set(X, position.x + 1)));
         }
+
+        hasValidState();
     }
 
     private void addFront(Position position, Parallelepiped toSplit) {
@@ -131,6 +141,8 @@ public class ParallelepipedSpace {
             .setCorner(toSplit.getCorner().set(Z, position.z)
             .set(Y, position.y)));
         }
+
+        hasValidState();
     }
 
     private void addLeft(Position position, Parallelepiped toSplit) {
@@ -139,6 +151,8 @@ public class ParallelepipedSpace {
             .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - 1 - position.y)
             .setCorner(toSplit.getCorner().set(Z, position.z).set(Y, position.y + 1)));
         }
+
+        hasValidState();
     }
 
     private void addRight(Position position, Parallelepiped toSplit) {
@@ -147,6 +161,8 @@ public class ParallelepipedSpace {
                     .setSize(Y, position.y - toSplit.getCorner().y)
             .setCorner(toSplit.getCorner().set(Z, position.z)));
         }
+
+        hasValidState();
     }
 
     private void addTop(Position position, Parallelepiped toSplit) {
@@ -154,12 +170,16 @@ public class ParallelepipedSpace {
             add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - 1 - position.z)
             .setCorner(toSplit.getCorner().set(Z, position.z + 1)));
         }
+
+        hasValidState();
     }
 
     private void addBottom(Position position, Parallelepiped toSplit) {
         if (position.z > toSplit.getCorner().z) {
             add(toSplit.setSize(Z, position.z - toSplit.getCorner().z));
         }
+
+        hasValidState();
     }
 
     /**
