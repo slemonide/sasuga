@@ -27,19 +27,29 @@ public class ParallelepipedSpace {
         parallelepipeds = new CopyOnWriteArraySet<>();  //= new HashSet<>();
     }
 
+    /**
+     * If the given position is not in the set, add it. Otherwise, do nothing.
+     * @param position new position to be added
+     */
     public void add(Position position) {
-        /*if (this.contains(position)) {
+        if (this.contains(position)) {
             return;
-        }*/
-        remove(position);
+        }
 
         add(new Parallelepiped(position));
 
         hasValidState();
     }
 
+    /**
+     * If the given parallelepiped is not in the set, add it. Otherwise, do nothing.
+     * @param parallelepiped new position to be added
+     */
     private void add(@NotNull Parallelepiped parallelepiped) {
-        Parallelepiped newParallelepiped = null;
+        if (parallelepipeds.contains(parallelepiped)) {
+            return;
+        }
+
         for (Dimension dimension : Dimension.values()) {
 
             Position unitVector = dimension.getUnitVector();
@@ -48,49 +58,47 @@ public class ParallelepipedSpace {
             if (neighbour != null) {
 
                 if (parallelepipedsFit(parallelepiped, dimension, neighbour)) {
-                    Position newCorner = parallelepiped.getCorner();
-
-                    newParallelepiped = getParallelepiped(parallelepiped, dimension, neighbour, newCorner);
+                    mergeParallelepipeds(parallelepiped, dimension, neighbour);
+                    return;
                 }
             }
 
-            if (newParallelepiped == null) {
+            neighbour = get(parallelepiped.getCorner()
+                    .add(unitVector.inverse()));
+            if (neighbour != null) {
 
-                neighbour = get(parallelepiped.getCorner()
-                        .add(unitVector.inverse()));
-                if (neighbour != null) {
-
-                    if (parallelepipedsFit(parallelepiped, dimension, neighbour)) {
-                        Position newCorner = neighbour.getCorner();
-
-                        newParallelepiped = getParallelepiped(parallelepiped, dimension, neighbour, newCorner);
-                    }
+                if (parallelepipedsFit(parallelepiped, dimension, neighbour)) {
+                    mergeParallelepipeds(parallelepiped, dimension, neighbour);
+                    return;
                 }
             }
 
-            if (newParallelepiped != null) {
-                break;
-            }
         }
 
-        if (newParallelepiped == null) {
-            parallelepipeds.add(parallelepiped);
-        } else {
-            add(newParallelepiped);
-        }
+        parallelepipeds.add(parallelepiped);
 
         hasValidState();
     }
 
-    @NotNull
-    private Parallelepiped getParallelepiped(@NotNull Parallelepiped parallelepiped, Dimension dimension, Parallelepiped neighbour, Position newCorner) {
+    /**
+     * Remove the given parallelepipeds from the set; merge them and add the new parallelepiped to the set
+     * @param parallelepiped first parallelepiped
+     * @param dimension dimension of the adjacent side of the given parallelepipeds
+     * @param neighbour second parallelepiped
+     */
+    private void mergeParallelepipeds(@NotNull Parallelepiped parallelepiped, Dimension dimension,
+                                      Parallelepiped neighbour) {
         Parallelepiped newParallelepiped;
         parallelepipeds.remove(neighbour);
+        parallelepipeds.remove(parallelepiped);
 
-        newParallelepiped = neighbour
-                .setCorner(newCorner).setSize(dimension,
+        Position newCorner = Position.min(parallelepiped.getCorner(), neighbour.getCorner());
+
+        newParallelepiped = neighbour.setCorner(newCorner).setSize(dimension,
                         neighbour.getSize(dimension) + parallelepiped.getSize(dimension));
-        return newParallelepiped;
+        add(newParallelepiped);
+
+        hasValidState();
     }
 
     private boolean parallelepipedsFit(@NotNull Parallelepiped parallelepiped, Dimension dimension, Parallelepiped neighbour) {
@@ -100,7 +108,7 @@ public class ParallelepipedSpace {
                 == parallelepiped.getSize(dimension.getComplements()[1]);
     }
 
-    private boolean contains(@NotNull Position position) {
+    public boolean contains(@NotNull Position position) {
         return (get(position) != null);
     }
 

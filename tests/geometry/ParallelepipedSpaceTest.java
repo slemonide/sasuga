@@ -787,6 +787,7 @@ public class ParallelepipedSpaceTest {
             positions.add(position);
             testSpace.add(position);
 
+            assertTrue(testSpace.contains(position));
             assertEquals(positions.size(), testSpace.getVolume());
         }
     }
@@ -805,6 +806,7 @@ public class ParallelepipedSpaceTest {
             positions.add(position);
             testSpace.add(position);
 
+            assertTrue(testSpace.contains(position));
             assertEquals(positions.size(), testSpace.getVolume());
         }
     }
@@ -818,6 +820,7 @@ public class ParallelepipedSpaceTest {
             positions.add(currentPosition);
             testSpace.add(currentPosition);
 
+            assertTrue(testSpace.contains(currentPosition));
             assertEquals(positions.size(), testSpace.getVolume());
 
             currentPosition = currentPosition.add(RandomWalkCell.nextPosition());

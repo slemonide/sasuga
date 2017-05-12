@@ -142,4 +142,20 @@ public final class Position {
                 (int) (vector.y / SCALE),
                 (int) (vector.z / SCALE));
     }
+
+    /**
+     * Produce the minimum of the two given positions
+     * @param positionA first position
+     * @param positionB second position
+     * @return the position that is considered to be the smallest of the two given positions
+     */
+    public static Position min(Position positionA, Position positionB) {
+        if ((positionA.x <= positionB.x) &&
+                (positionA.y <= positionB.y) &&
+                (positionA.z <= positionB.z)) {
+            return positionA;
+        } else {
+            return positionB;
+        }
+    }
 }
