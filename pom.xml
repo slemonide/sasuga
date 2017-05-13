@@ -3,24 +3,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mycompany</groupId>
-    <artifactId>jme3-example</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <groupId>com.github.slemonide</groupId>
+    <artifactId>sasuga</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
-    <name>JME3 maven project</name>
+    <name>sasuga</name>
 
     <properties>
         <jme3.version>3.1.0-beta1</jme3.version>
@@ -44,27 +32,12 @@
         </dependency>
         <dependency>
             <groupId>org.jmonkeyengine</groupId>
-            <artifactId>jme3-networking</artifactId>
-            <version>${jme3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jmonkeyengine</groupId>
             <artifactId>jme3-effects</artifactId>
             <version>${jme3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jmonkeyengine</groupId>
             <artifactId>jme3-niftygui</artifactId>
-            <version>${jme3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jmonkeyengine</groupId>
-            <artifactId>jme3-bullet</artifactId>
-            <version>${jme3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jmonkeyengine</groupId>
-            <artifactId>jme3-bullet-native</artifactId>
             <version>${jme3.version}</version>
         </dependency>
         <dependency>
@@ -76,6 +49,21 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty-style-black</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty-default-controls</artifactId>
+            <version>1.4.2</version>
         </dependency>
     </dependencies>
 
