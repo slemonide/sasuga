@@ -11,6 +11,9 @@ import java.util.Set;
 
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
+ *
+ * invariant
+ *     [x/y/z]Size are always positive
  */
 public final class Parallelepiped {
     private final Position corner;
@@ -20,7 +23,7 @@ public final class Parallelepiped {
 
     /**
      * Creates a unit parallelepiped cornered at the given position
-     * @param corner corner position of the parallelepiped
+     * @param corner minimal position of the parallelepiped
      */
     public Parallelepiped(Position corner) {
         this.corner = corner;
@@ -29,7 +32,22 @@ public final class Parallelepiped {
         this.zSize = 1;
     }
 
-    public Parallelepiped(Position corner, int xSize, int ySize, int zSize) {
+    /**
+     * Creates a parallelepiped with the given dimensions centered at the given position
+     * @param corner minimal position of the parallelepiped
+     * @param xSize x-dimension of the parallelepiped
+     * @param ySize y-dimension of the parallelepiped
+     * @param zSize z-dimension of the parallelepiped
+     * @throws IllegalArgumentException if any of the dimensions are not positive
+     */
+    public Parallelepiped(Position corner, int xSize, int ySize, int zSize) throws IllegalArgumentException {
+        if (xSize <= 0)
+            throw new IllegalArgumentException("xSize must be positive");
+        if (ySize <= 0)
+            throw new IllegalArgumentException("ySize must be positive");
+        if (zSize <= 0)
+            throw new IllegalArgumentException("zSize must be positive");
+
         this.corner = corner;
         this.xSize = xSize;
         this.ySize = ySize;
@@ -159,7 +177,7 @@ public final class Parallelepiped {
 
     /**
      * Checks if given parallelepipeds can be combined into one parallelepiped
-     * based on whether their sizes match
+     * based on whether their sizes match and whether their positions coincide
      * @param axis axis that passes through both parallelepipeds
      * @param parallelepiped parallelepiped to check the fitness with
      * @return true if the sizes of parallelepipeds match, false otherwise
@@ -168,7 +186,8 @@ public final class Parallelepiped {
                         @NotNull Parallelepiped parallelepiped) {
 
         for (Axis complementAxis : axis.getComplements()) {
-            if (this.getSize(complementAxis) != parallelepiped.getSize(complementAxis)) {
+            if (this.getSize(complementAxis) != parallelepiped.getSize(complementAxis)
+                    || this.getCorner().get(complementAxis) != parallelepiped.getCorner().get(complementAxis)) {
                 return false;
             }
         }

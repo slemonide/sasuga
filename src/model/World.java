@@ -12,7 +12,7 @@ import java.util.*;
  * Manages world
  */
 public class World extends Observable implements Runnable {
-    private static final double TICK_DELAY = 0.0001; // in seconds
+    private static final double TICK_DELAY = 0.01; // in seconds
     public static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
     private int generation;

@@ -15,7 +15,7 @@ import static geometry.Axis.Z;
  * Represents a set of parallelepipeds
  *
  * invariant
- *   no parallelepipeds contain the same block twice
+ *    no parallelepipeds contain the same block twice
  */
 public class ParallelepipedSpace {
     private Set<Parallelepiped> parallelepipeds;

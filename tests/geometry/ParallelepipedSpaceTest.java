@@ -23,6 +23,8 @@ public class ParallelepipedSpaceTest {
                     (RANDOM_FILL_RADIUS + 3) *
                     (RANDOM_FILL_RADIUS + 3);
     private static final int MAX_STEPS_RANDOMWALK_REMOVE = 20;
+    private static final int MAX_POSITIONS_RANDOM_LINE = 100;
+    private static final int MAX_POSITIONS_CUBE_RANDOM = 10;
     private ParallelepipedSpace testSpace;
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
 
@@ -285,6 +287,20 @@ public class ParallelepipedSpaceTest {
 
             assertEquals(testSpace.getVolume(), testSet.size());
         }
+    }
+
+    @Test
+    public void testAddNeighboursDoNotMerge() {
+        testSpace.add(new Position(0,1,0));
+        testSpace.add(new Position(1,1,0));
+        testSpace.add(new Position(1,0,0));
+        testSpace.add(new Position(2,0,0));
+
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.contains(new Position(0,1,0)));
+        assertTrue(testSpace.contains(new Position(1,1,0)));
+        assertTrue(testSpace.contains(new Position(1,0,0)));
+        assertTrue(testSpace.contains(new Position(2,0,0)));
     }
 
     // REMOVE
@@ -849,11 +865,51 @@ public class ParallelepipedSpaceTest {
     }
 
     @Test
+    public void testBuildLineRandomly() {
+        List<Position> cubePositions = new ArrayList<>();
+        for (int x = 0; x < MAX_POSITIONS_RANDOM_LINE; x++) {
+            cubePositions.add(new Position(x, 0, 0));
+        }
+
+        Collections.shuffle(cubePositions);
+
+        for (Position position : cubePositions) {
+            testSpace.add(position);
+        }
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(
+                new Position(0,0,0),
+                MAX_POSITIONS_RANDOM_LINE, 1, 1)));
+    }
+
+    @Test
+    public void testBuildThinStripeRandomly() {
+        List<Position> cubePositions = new ArrayList<>();
+        for (int x = 0; x < MAX_POSITIONS_RANDOM_LINE; x++) {
+            for (int y = 0; y < 2; y++) {
+                cubePositions.add(new Position(x, y, 0));
+            }
+        }
+
+        Collections.shuffle(cubePositions);
+
+        for (Position position : cubePositions) {
+            testSpace.add(position);
+        }
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(
+                new Position(0,0,0),
+                MAX_POSITIONS_RANDOM_LINE, 2, 1)));
+    }
+
+    @Test
     public void testBuildCubeRandomly() {
         List<Position> cubePositions = new ArrayList<>();
-        for (int x = 0; x < MAX_POSITIONS_CUBE; x++) {
-            for (int y = 0; y < MAX_POSITIONS_CUBE; y++) {
-                for (int z = 0; z < MAX_POSITIONS_CUBE; z++) {
+        for (int x = 0; x < MAX_POSITIONS_CUBE_RANDOM; x++) {
+            for (int y = 0; y < MAX_POSITIONS_CUBE_RANDOM; y++) {
+                for (int z = 0; z < MAX_POSITIONS_CUBE_RANDOM; z++) {
                     cubePositions.add(new Position(x, y, z));
                 }
             }
@@ -868,7 +924,7 @@ public class ParallelepipedSpaceTest {
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(
                 new Position(0,0,0),
-                MAX_POSITIONS_CUBE, MAX_POSITIONS_CUBE, MAX_POSITIONS_CUBE)));
+                MAX_POSITIONS_CUBE_RANDOM, MAX_POSITIONS_CUBE_RANDOM, MAX_POSITIONS_CUBE_RANDOM)));
     }
 
     // Implementation-dependent tests

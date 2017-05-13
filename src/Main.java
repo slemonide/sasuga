@@ -29,8 +29,8 @@ public class Main {
         //Thread randomLandscape = new Thread(new RandomLandscape());
         //randomLandscape.start();
 
-        Thread buildBoxAnimation = new Thread(new BuildBoxCutTop());
-        buildBoxAnimation.start();
+        //Thread buildBoxAnimation = new Thread(new BuildBoxCutTop());
+        //  buildBoxAnimation.start();
 
         World.getInstance().start();
         VisualGUI.main(args);

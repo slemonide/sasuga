@@ -84,6 +84,21 @@ public class ParallelepipedTest {
         assertFalse(parallelepiped.contains(new Position(0,-11, 0)));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorExceptionX() throws IllegalArgumentException {
+        new Parallelepiped(new Position(0,0,0), -10,2,1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorExceptionY() throws IllegalArgumentException {
+        new Parallelepiped(new Position(0,0,0), 10,-20,1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorExceptionZ() throws IllegalArgumentException {
+        new Parallelepiped(new Position(0,0,0), 10,1,0);
+    }
+
     @Test
     public void testTwoX() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 2, 1, 1);
@@ -323,24 +338,27 @@ public class ParallelepipedTest {
     public void testFitsHard() {
         for (Axis axis : Axis.values()) {
             Parallelepiped parallelepipedA = new Parallelepiped(new Position(
-                    random.nextInt(),
-                    random.nextInt(),
-                    random.nextInt()),
-                    random.nextInt(),
-                    random.nextInt(),
-                    random.nextInt());
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE)),
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE));
             Parallelepiped parallelepipedB = new Parallelepiped(new Position(
-                    random.nextInt(),
-                    random.nextInt(),
-                    random.nextInt()),
-                    random.nextInt(),
-                    random.nextInt(),
-                    random.nextInt());
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE)),
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE),
+                    random.nextInt(Integer.MAX_VALUE));
 
             for (Axis complement : axis.getComplements()) {
-                int complementValue = random.nextInt();
-                parallelepipedA = parallelepipedA.setSize(complement, complementValue);
-                parallelepipedB = parallelepipedB.setSize(complement, complementValue);
+                int size = random.nextInt(Integer.MAX_VALUE);
+                int coordinate = random.nextInt(Integer.MAX_VALUE);
+                parallelepipedA = parallelepipedA.setSize(complement, size);
+                parallelepipedB = parallelepipedB.setSize(complement, size);
+                parallelepipedA = parallelepipedA.setCorner(parallelepipedA.getCorner().set(complement, coordinate));
+                parallelepipedB = parallelepipedB.setCorner(parallelepipedB.getCorner().set(complement, coordinate));
             }
 
             assertTrue(parallelepipedA.fits(axis, parallelepipedB));
