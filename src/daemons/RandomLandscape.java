@@ -1,4 +1,4 @@
-package animations;
+package daemons;
 
 import cells.Cell;
 import geometry.Position;

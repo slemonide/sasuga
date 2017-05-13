@@ -10,7 +10,7 @@ import java.util.Observer;
  * @version     0.1
  * @since       0.1
  *
- * A simple console logging UI
+ * A console logger
  */
 public class ConsoleUI implements Observer {
     public void update(Observable o, Object arg) {

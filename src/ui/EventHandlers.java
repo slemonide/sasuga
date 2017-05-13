@@ -13,7 +13,6 @@ import world.*;
 import java.util.Observable;
 
 public class EventHandlers extends Observable {
-    private static final long ROTATION_DELAY = 20; // in ms
     private final VisualGUI visualGUI;
     private boolean isPaused = false;
 
@@ -54,22 +53,6 @@ public class EventHandlers extends Observable {
             notifyObservers();
         }
     };
-    private AnalogListener rotateCCWActionListener = (name, value, tpf) -> {
-        try {
-            Thread.sleep(ROTATION_DELAY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Player.getInstance().rotateCounterClockWise();
-    };
-    private AnalogListener rotateCWActionListener = (name, value, tpf) -> {
-        try {
-            Thread.sleep(ROTATION_DELAY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Player.getInstance().rotateClockWise();
-    };
 
     EventHandlers(VisualGUI visualGUI) {
         this.visualGUI = visualGUI;
@@ -102,11 +85,5 @@ public class EventHandlers extends Observable {
         visualGUI.getInputManager().addMapping("10", new KeyTrigger(KeyInput.KEY_0));
         visualGUI.getInputManager().addListener(inventorySelectionListener,
                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-
-        visualGUI.getInputManager().addMapping("Rotate CCW", new KeyTrigger(KeyInput.KEY_SLASH));
-        visualGUI.getInputManager().addListener(rotateCCWActionListener, "Rotate CCW");
-
-        visualGUI.getInputManager().addMapping("Rotate CW", new KeyTrigger(KeyInput.KEY_RSHIFT));
-        visualGUI.getInputManager().addListener(rotateCWActionListener, "Rotate CW");
     }
 }
