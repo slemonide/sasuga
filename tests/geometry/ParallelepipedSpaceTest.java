@@ -7,10 +7,7 @@ import org.junit.Test;
 import util.Difference;
 import util.SetObserver;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -849,6 +846,29 @@ public class ParallelepipedSpaceTest {
 
             currentPosition = currentPosition.add(RandomWalkCell.nextPosition());
         }
+    }
+
+    @Test
+    public void testBuildCubeRandomly() {
+        List<Position> cubePositions = new ArrayList<>();
+        for (int x = 0; x < MAX_POSITIONS_CUBE; x++) {
+            for (int y = 0; y < MAX_POSITIONS_CUBE; y++) {
+                for (int z = 0; z < MAX_POSITIONS_CUBE; z++) {
+                    cubePositions.add(new Position(x, y, z));
+                }
+            }
+        }
+
+        Collections.shuffle(cubePositions);
+
+        for (Position position : cubePositions) {
+            testSpace.add(position);
+        }
+
+        assertEquals(1, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(
+                new Position(0,0,0),
+                MAX_POSITIONS_CUBE, MAX_POSITIONS_CUBE, MAX_POSITIONS_CUBE)));
     }
 
     // Implementation-dependent tests
