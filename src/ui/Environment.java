@@ -29,10 +29,9 @@ import util.SetObserver;
 
 import java.util.*;
 
-import static config.Options.*;
-import static geometry.Dimension.X;
-import static geometry.Dimension.Y;
-import static geometry.Dimension.Z;
+import static geometry.Axis.X;
+import static geometry.Axis.Y;
+import static geometry.Axis.Z;
 
 public class Environment implements Observer {
     private static final float SCALE = Options.getInstance().getFloat("SCALE");

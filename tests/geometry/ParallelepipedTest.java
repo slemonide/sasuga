@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import static geometry.Dimension.X;
-import static geometry.Dimension.Y;
-import static geometry.Dimension.Z;
+import static geometry.Axis.X;
+import static geometry.Axis.Y;
+import static geometry.Axis.Z;
 import static org.junit.Assert.*;
 
 public class ParallelepipedTest {
@@ -213,11 +213,11 @@ public class ParallelepipedTest {
         Parallelepiped testParallelepiped = new Parallelepiped(new Position(0,0,0));
         Random random = new Random();
 
-        for (Dimension dimension : Dimension.values()) {
+        for (Axis axis : Axis.values()) {
             int size = Math.abs(random.nextInt());
 
-            testParallelepiped = testParallelepiped.setSize(dimension, size);
-            assertEquals(size, testParallelepiped.getSize(dimension));
+            testParallelepiped = testParallelepiped.setSize(axis, size);
+            assertEquals(size, testParallelepiped.getSize(axis));
         }
     }
 

@@ -5,6 +5,9 @@ import model.Position;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
  */
@@ -38,8 +41,8 @@ public final class Parallelepiped {
     }
 
     @Contract(pure = true)
-    public int getSize(Dimension dimension) {
-        switch (dimension) {
+    public int getSize(Axis axis) {
+        switch (axis) {
             case X:
                 return xSize;
             case Y:
@@ -82,8 +85,8 @@ public final class Parallelepiped {
     }
 
     @NotNull
-    public Parallelepiped setSize(Dimension dimension, int size) {
-        switch (dimension) {
+    public Parallelepiped setSize(Axis axis, int size) {
+        switch (axis) {
             case X:
                 return new Parallelepiped(corner, size, ySize, zSize);
             case Y:
@@ -96,8 +99,8 @@ public final class Parallelepiped {
     public int getVolume() {
         int volumeSoFar = 1;
 
-        for (Dimension dimension : Dimension.values()) {
-            volumeSoFar *= getSize(dimension);
+        for (Axis axis : Axis.values()) {
+            volumeSoFar *= getSize(axis);
         }
 
         return volumeSoFar;
@@ -116,13 +119,13 @@ public final class Parallelepiped {
      * false otherwise
      */
     public boolean intersects(Parallelepiped otherParallelepiped) {
-        for (Dimension dimension : Dimension.values()) {
+        for (Axis axis : Axis.values()) {
             IntegerInterval intervalA = new IntegerInterval(
-                    this.getCorner().get(dimension),
-                    this.getSize(dimension));
+                    this.getCorner().get(axis),
+                    this.getSize(axis));
             IntegerInterval intervalB = new IntegerInterval(
-                    otherParallelepiped.getCorner().get(dimension),
-                    otherParallelepiped.getSize(dimension));
+                    otherParallelepiped.getCorner().get(axis),
+                    otherParallelepiped.getSize(axis));
 
             if (!intervalA.intersects(intervalB)) {
                 return false;
@@ -130,5 +133,27 @@ public final class Parallelepiped {
         }
 
         return true;
+    }
+
+    /**
+     * Produce the neighbours whose corners lie on the given axis that passes through the center of this parallelepiped
+     *
+     * @param space space that this parallelepiped lives in
+     * @param axis axis on which to check for neighbours
+     * @return list of found neighbours
+     */
+    public Iterable<? extends Parallelepiped> getInterlockingNeighbours(ParallelepipedSpace space, Axis axis) {
+        Set<Parallelepiped> neighbours = new HashSet<>();
+
+        Position unitVector = axis.getUnitVector();
+
+        neighbours.add(space.get(this.getCorner()
+                .add(unitVector.scale(this.getSize(axis)))));
+
+        neighbours.add(space.get(this.getCorner()
+                .add(unitVector.inverse())));
+
+        neighbours.remove(null);
+        return neighbours;
     }
 }

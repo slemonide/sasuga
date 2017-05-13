@@ -2,7 +2,7 @@ package model;
 
 import com.jme3.math.Vector3f;
 import config.Options;
-import geometry.Dimension;
+import geometry.Axis;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -110,8 +110,8 @@ public final class Position {
         return new Position(-x, -y, -z);
     }
 
-    public Position set(Dimension dimension, int value) {
-        switch (dimension) {
+    public Position set(Axis axis, int value) {
+        switch (axis) {
             case X:
                 return new Position(value, y, z);
             case Y:
@@ -121,8 +121,8 @@ public final class Position {
         }
     }
 
-    public int get(Dimension dimension) {
-        switch (dimension) {
+    public int get(Axis axis) {
+        switch (axis) {
             case X:
                 return x;
             case Y:

@@ -5,14 +5,14 @@ import model.Position;
 /**
  * Represents the dimensions of a 3D space
  */
-public enum Dimension {
+public enum Axis {
     X (Position.X),
     Y (Position.Y),
     Z (Position.Z);
 
     private final Position unitVector;
 
-    Dimension(Position unitVector) {
+    Axis(Position unitVector) {
         this.unitVector = unitVector;
     }
 
@@ -20,8 +20,8 @@ public enum Dimension {
         return unitVector;
     }
 
-    public Dimension[] getComplements() {
-        Dimension[] complements = new Dimension[2];
+    public Axis[] getComplements() {
+        Axis[] complements = new Axis[2];
 
         switch (this) {
             case X:
