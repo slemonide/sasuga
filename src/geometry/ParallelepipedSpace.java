@@ -52,7 +52,7 @@ public class ParallelepipedSpace {
 
         for (Axis axis : Axis.values()) {
             for (Parallelepiped neighbour : parallelepiped.getInterlockingNeighbours(this, axis)) {
-                if (parallelepipedsFit(parallelepiped, axis, neighbour)) {
+                if (parallelepiped.fits(axis, neighbour)) {
                     mergeParallelepipeds(parallelepiped, axis, neighbour);
                     return;
                 }
@@ -74,38 +74,16 @@ public class ParallelepipedSpace {
                                       @NotNull Axis axis,
                                       @NotNull Parallelepiped parallelepipedB) {
 
-        Parallelepiped newParallelepiped;
         parallelepipeds.remove(parallelepipedB);
         parallelepipeds.remove(parallelepipedA);
 
         Position newCorner = Position.min(parallelepipedA.getCorner(), parallelepipedB.getCorner());
 
-        newParallelepiped = parallelepipedB.setCorner(newCorner).setSize(axis,
+        Parallelepiped newParallelepiped = parallelepipedB.setCorner(newCorner).setSize(axis,
                         parallelepipedB.getSize(axis) + parallelepipedA.getSize(axis));
         add(newParallelepiped);
 
         hasValidState();
-    }
-
-    /**
-     * Checks if given parallelepipeds can be combined into one parallelepiped
-     * based on whether their sizes match
-     * @param parallelepipedA first parallelepiped
-     * @param axis axis that passes through both parallelepipeds
-     * @param parallelepipedB second parallelepiped
-     * @return true if the sizes of parallelepipeds match, false otherwise
-     */
-    private boolean parallelepipedsFit(@NotNull Parallelepiped parallelepipedA,
-                                       @NotNull Axis axis,
-                                       @NotNull Parallelepiped parallelepipedB) {
-
-        for (Axis complementAxis : axis.getComplements()) {
-            if (parallelepipedA.getSize(complementAxis) != parallelepipedB.getSize(complementAxis)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -214,10 +192,19 @@ public class ParallelepipedSpace {
         return Collections.unmodifiableSet(parallelepipeds);
     }
 
+    /**
+     * Produce the number of parallelepipeds in this set
+     * @return number of parallelepipeds in this set
+     */
     public int size() {
         return parallelepipeds.size();
     }
 
+    /**
+     * Returns <tt>true</tt> if this set contains no elements.
+     *
+     * @return <tt>true</tt> if this set contains no elements
+     */
     public boolean isEmpty() {
         return parallelepipeds.isEmpty();
     }
@@ -236,12 +223,20 @@ public class ParallelepipedSpace {
      * Check invariant
      */
     private void hasValidState() {
+        assert !parallelepipedsIntersect();
+    }
+
+    private boolean parallelepipedsIntersect() {
         for (Parallelepiped parallelepiped1 : parallelepipeds) {
             for (Parallelepiped parallelepiped2 : parallelepipeds) {
                 if (parallelepiped1 != parallelepiped2) {
-                    assert (!parallelepiped1.intersects(parallelepiped2));
+                    if (parallelepiped1.intersects(parallelepiped2)) {
+                        return true;
+                    }
                 }
             }
         }
+
+        return false;
     }
 }

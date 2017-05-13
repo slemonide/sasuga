@@ -147,13 +147,30 @@ public final class Parallelepiped {
 
         Position unitVector = axis.getUnitVector();
 
-        neighbours.add(space.get(this.getCorner()
-                .add(unitVector.scale(this.getSize(axis)))));
+        neighbours.add(space.get(this.getCorner().add(unitVector.scale(this.getSize(axis)))));
 
-        neighbours.add(space.get(this.getCorner()
-                .add(unitVector.inverse())));
+        neighbours.add(space.get(this.getCorner().add(unitVector.inverse())));
 
         neighbours.remove(null);
         return neighbours;
+    }
+
+    /**
+     * Checks if given parallelepipeds can be combined into one parallelepiped
+     * based on whether their sizes match
+     * @param axis axis that passes through both parallelepipeds
+     * @param parallelepiped parallelepiped to check the fitness with
+     * @return true if the sizes of parallelepipeds match, false otherwise
+     */
+    public boolean fits(@NotNull Axis axis,
+                 @NotNull Parallelepiped parallelepiped) {
+
+        for (Axis complementAxis : axis.getComplements()) {
+            if (this.getSize(complementAxis) != parallelepiped.getSize(complementAxis)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
