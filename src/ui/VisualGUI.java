@@ -186,7 +186,7 @@ public class VisualGUI extends SimpleApplication implements Observer {
         return environment.getNumberOfParallelepipeds();
     }
 
-    public int getVolumeOfParallelepipeds() {
+    public long getVolumeOfParallelepipeds() {
         return environment.getVolumeOfParallelepipeds();
     }
 }

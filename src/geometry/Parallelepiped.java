@@ -97,7 +97,7 @@ public final class Parallelepiped {
         }
     }
 
-    public int getVolume() {
+    public long getVolume() {
         int volumeSoFar = 1;
 
         for (Axis axis : Axis.values()) {

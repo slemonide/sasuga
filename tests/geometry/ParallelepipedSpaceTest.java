@@ -20,11 +20,12 @@ public class ParallelepipedSpaceTest {
     private static final int MAX_POSITIONS_Y = 20;
     private static final int MAX_POSITIONS_Z = 17;
     private static final int MAX_POSITIONS_CUBE = 17;
-    private static final int MAX_STEPS_RANDOMWALK = 1000;
+    private static final int MAX_STEPS_RANDOMWALK = 100;
     private static final int RANDOM_FILL_RADIUS = 4;
     private static final int MAX_POSITIONS_RANDOM_FILL = (RANDOM_FILL_RADIUS + 3) *
                     (RANDOM_FILL_RADIUS + 3) *
                     (RANDOM_FILL_RADIUS + 3);
+    private static final int MAX_STEPS_RANDOMWALK_REMOVE = 20;
     private ParallelepipedSpace testSpace;
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
 
@@ -822,6 +823,29 @@ public class ParallelepipedSpaceTest {
 
             assertTrue(testSpace.contains(currentPosition));
             assertEquals(positions.size(), testSpace.getVolume());
+
+            currentPosition = currentPosition.add(RandomWalkCell.nextPosition());
+        }
+    }
+
+    @Test
+    public void testRandomWalkRemove() {
+        buildCube(MAX_STEPS_RANDOMWALK_REMOVE * 2);
+
+        Position currentPosition = new Position(MAX_STEPS_RANDOMWALK_REMOVE,
+                MAX_STEPS_RANDOMWALK_REMOVE,MAX_STEPS_RANDOMWALK_REMOVE);
+
+        Set<Position> removedPositions = new HashSet<>();
+        for (int i = 0; i < MAX_STEPS_RANDOMWALK_REMOVE; i++) {
+            removedPositions.add(currentPosition);
+
+            assertTrue(testSpace.contains(currentPosition) || removedPositions.contains(currentPosition));
+            testSpace.remove(currentPosition);
+
+            assertFalse(testSpace.contains(currentPosition));
+            assertEquals(((long) MAX_STEPS_RANDOMWALK_REMOVE * 2) *
+                    (MAX_STEPS_RANDOMWALK_REMOVE * 2) *
+                    (MAX_STEPS_RANDOMWALK_REMOVE * 2) - removedPositions.size(), testSpace.getVolume());
 
             currentPosition = currentPosition.add(RandomWalkCell.nextPosition());
         }

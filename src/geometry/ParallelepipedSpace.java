@@ -43,15 +43,16 @@ public class ParallelepipedSpace {
 
     /**
      * If the given parallelepiped is not in the set, add it. Otherwise, do nothing.
+     * <p>It's expected that the given parallelepiped does not intersect with any already existing parallelepipeds</p>
      * @param parallelepiped new position to be added
      */
     private void add(@NotNull Parallelepiped parallelepiped) {
-        if (parallelepipeds.contains(parallelepiped)) {
-            return;
-        }
+        assert (!parallelepipeds.contains(parallelepiped));
 
         for (Axis axis : Axis.values()) {
             for (Parallelepiped neighbour : parallelepiped.getInterlockingNeighbours(this, axis)) {
+                assert (!neighbour.intersects(parallelepiped));
+
                 if (parallelepiped.fits(axis, neighbour)) {
                     mergeParallelepipeds(parallelepiped, axis, neighbour);
                     return;
@@ -79,8 +80,9 @@ public class ParallelepipedSpace {
 
         Position newCorner = Position.min(parallelepipedA.getCorner(), parallelepipedB.getCorner());
 
-        Parallelepiped newParallelepiped = parallelepipedB.setCorner(newCorner).setSize(axis,
+        Parallelepiped newParallelepiped = parallelepipedA.setCorner(newCorner).setSize(axis,
                         parallelepipedB.getSize(axis) + parallelepipedA.getSize(axis));
+
         add(newParallelepiped);
 
         hasValidState();
@@ -209,7 +211,7 @@ public class ParallelepipedSpace {
         return parallelepipeds.isEmpty();
     }
 
-    public int getVolume() {
+    public long getVolume() {
         int volumeSoFar = 0;
 
         for (Parallelepiped parallelepiped : parallelepipeds) {

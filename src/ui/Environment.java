@@ -226,7 +226,7 @@ public class Environment implements Observer {
         return parallelepipedSpace.size();
     }
 
-    public int getVolumeOfParallelepipeds() {
+    public long getVolumeOfParallelepipeds() {
         return parallelepipedSpace.getVolume();
     }
 }
