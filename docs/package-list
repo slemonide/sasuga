@@ -1,6 +1,7 @@
-animations
 config
+daemons
 geometry
-model
+inventory
 ui
 util
+world
