@@ -14,6 +14,8 @@ import static geometry.Axis.Z;
 import static org.junit.Assert.*;
 
 public class ParallelepipedTest {
+    private static final Random random = new Random();
+
     @Test
     public void testConstructor() {
         Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
@@ -221,7 +223,7 @@ public class ParallelepipedTest {
         }
     }
 
-    // Intersects
+    // intersects
 
     @Test
     public void testIntersectsNoIntersect() {
@@ -302,5 +304,119 @@ public class ParallelepipedTest {
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
+    }
+
+    // fits
+
+    @Test
+    public void testFitsBasic() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0));
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0));
+
+        for (Axis axis : Axis.values()) {
+            assertTrue(parallelepipedA.fits(axis, parallelepipedB));
+            assertTrue(parallelepipedB.fits(axis, parallelepipedA));
+        }
+    }
+
+    @Test
+    public void testFitsHard() {
+        for (Axis axis : Axis.values()) {
+            Parallelepiped parallelepipedA = new Parallelepiped(new Position(
+                    random.nextInt(),
+                    random.nextInt(),
+                    random.nextInt()),
+                    random.nextInt(),
+                    random.nextInt(),
+                    random.nextInt());
+            Parallelepiped parallelepipedB = new Parallelepiped(new Position(
+                    random.nextInt(),
+                    random.nextInt(),
+                    random.nextInt()),
+                    random.nextInt(),
+                    random.nextInt(),
+                    random.nextInt());
+
+            for (Axis complement : axis.getComplements()) {
+                int complementValue = random.nextInt();
+                parallelepipedA = parallelepipedA.setSize(complement, complementValue);
+                parallelepipedB = parallelepipedB.setSize(complement, complementValue);
+            }
+
+            assertTrue(parallelepipedA.fits(axis, parallelepipedB));
+            assertTrue(parallelepipedB.fits(axis, parallelepipedA));
+
+            for (Axis complement : axis.getComplements()) {
+                assertFalse(parallelepipedA.fits(complement, parallelepipedB));
+                assertFalse(parallelepipedB.fits(complement, parallelepipedA));
+            }
+        }
+    }
+
+    @Test
+    public void testFitsNoFitBasic() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0));
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 2, 1, 2);
+
+        for (Axis axis : Axis.values()) {
+            assertFalse(parallelepipedA.fits(axis, parallelepipedB));
+            assertFalse(parallelepipedB.fits(axis, parallelepipedA));
+        }
+    }
+
+    @Test
+    public void testFitsCubeFitFit() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 3, 3, 3);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 3, 3, 3);
+
+        for (Axis axis : Axis.values()) {
+            assertTrue(parallelepipedA.fits(axis, parallelepipedB));
+            assertTrue(parallelepipedB.fits(axis, parallelepipedA));
+        }
+    }
+
+    // getInterlockingNeighbours
+
+    @Test
+    public void testGetInterlockingNeighboursHard() {
+        ParallelepipedSpace testSpace = new ParallelepipedSpace();
+
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        testSpace.add(new Position(0,0,0));
+        for (Axis axis : Axis.values()) {
+            assertTrue(parallelepiped.getInterlockingNeighbours(testSpace,axis).isEmpty());
+        }
+
+        for (Axis iteratedAxis : Axis.values()) {
+            parallelepiped = new Parallelepiped(new Position(0, 0, 0).set(iteratedAxis, 1));
+            for (Axis axis : Axis.values()) {
+                if (axis != iteratedAxis) {
+                    assertTrue(parallelepiped.getInterlockingNeighbours(testSpace, axis).isEmpty());
+                } else {
+                    assertEquals(1, parallelepiped.getInterlockingNeighbours(testSpace, axis).size());
+                    assertTrue(parallelepiped.getInterlockingNeighbours(testSpace, axis)
+                            .contains(new Parallelepiped(new Position(0, 0, 0))));
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testGetInterlockingNeighboursWeird() {
+        ParallelepipedSpace testSpace = new ParallelepipedSpace();
+
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        testSpace.add(new Position(0,0,0));
+        testSpace.add(new Position(0,1,0));
+
+        for (Axis axis : Axis.values()) {
+            if (axis != Axis.Y) {
+                assertTrue(parallelepiped.getInterlockingNeighbours(testSpace, axis).isEmpty());
+            } else {
+                assertEquals(1, parallelepiped.getInterlockingNeighbours(testSpace, axis).size());
+                assertTrue(parallelepiped.getInterlockingNeighbours(testSpace, axis)
+                        .contains(new Parallelepiped(new Position(0, 0, 0), 1, 2, 1)));
+            }
+        }
     }
 }

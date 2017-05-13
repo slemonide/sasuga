@@ -5,6 +5,7 @@ import model.Position;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -85,7 +86,7 @@ public final class Parallelepiped {
     }
 
     @NotNull
-    public Parallelepiped setSize(Axis axis, int size) {
+    public Parallelepiped setSize(@NotNull Axis axis, int size) {
         switch (axis) {
             case X:
                 return new Parallelepiped(corner, size, ySize, zSize);
@@ -118,7 +119,7 @@ public final class Parallelepiped {
      * @return true if this parallelepiped intersects with the given parallelepiped,
      * false otherwise
      */
-    public boolean intersects(Parallelepiped otherParallelepiped) {
+    public boolean intersects(@NotNull Parallelepiped otherParallelepiped) {
         for (Axis axis : Axis.values()) {
             IntegerInterval intervalA = new IntegerInterval(
                     this.getCorner().get(axis),
@@ -140,9 +141,10 @@ public final class Parallelepiped {
      *
      * @param space space that this parallelepiped lives in
      * @param axis axis on which to check for neighbours
-     * @return list of found neighbours
+     * @return collection of found neighbours
      */
-    public Iterable<? extends Parallelepiped> getInterlockingNeighbours(ParallelepipedSpace space, Axis axis) {
+    public Collection<? extends Parallelepiped> getInterlockingNeighbours(@NotNull ParallelepipedSpace space,
+                                                                          @NotNull Axis axis) {
         Set<Parallelepiped> neighbours = new HashSet<>();
 
         Position unitVector = axis.getUnitVector();
@@ -163,7 +165,7 @@ public final class Parallelepiped {
      * @return true if the sizes of parallelepipeds match, false otherwise
      */
     public boolean fits(@NotNull Axis axis,
-                 @NotNull Parallelepiped parallelepiped) {
+                        @NotNull Parallelepiped parallelepiped) {
 
         for (Axis complementAxis : axis.getComplements()) {
             if (this.getSize(complementAxis) != parallelepiped.getSize(complementAxis)) {
