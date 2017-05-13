@@ -12,6 +12,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.shadow.DirectionalLightShadowFilter;
@@ -22,6 +23,7 @@ import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
 import cells.Cell;
 import geometry.Position;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import world.World;
 import util.Difference;
 import util.SetObserver;
@@ -179,10 +181,18 @@ public class Environment implements Observer {
     }
 
     private void add(Parallelepiped parallelepiped) {
-        Mesh box = new Box(
-                parallelepiped.getSize(X) * SCALE/2,
-                parallelepiped.getSize(Y) * SCALE/2,
-                parallelepiped.getSize(Z) * SCALE/2);
+        Mesh box;
+        if (Options.getInstance().getBoolean("ENABLE_WIREFRAMES")) {
+            box = new WireBox(
+                    parallelepiped.getSize(X) * SCALE/2,
+                    parallelepiped.getSize(Y) * SCALE/2,
+                    parallelepiped.getSize(Z) * SCALE/2);
+        } else {
+            box = new Box(
+                    parallelepiped.getSize(X) * SCALE/2,
+                    parallelepiped.getSize(Y) * SCALE/2,
+                    parallelepiped.getSize(Z) * SCALE/2);
+        }
 
         Spatial node = new Geometry("Box", box);
         node.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
