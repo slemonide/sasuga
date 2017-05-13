@@ -2,6 +2,10 @@ package geometry;
 
 import model.Position;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents the dimensions of a 3D space
  */
@@ -20,23 +24,10 @@ public enum Axis {
         return unitVector;
     }
 
-    public Axis[] getComplements() {
-        Axis[] complements = new Axis[2];
-
-        switch (this) {
-            case X:
-                complements[0] = Y;
-                complements[1] = Z;
-                break;
-            case Y:
-                complements[0] = X;
-                complements[1] = Z;
-                break;
-            default:
-                complements[0] = X;
-                complements[1] = Y;
-                break;
-        }
+    public Set<Axis> getComplements() {
+        Set<Axis> complements = new HashSet<>();
+        Collections.addAll(complements, Axis.values());
+        complements.remove(this);
 
         return complements;
     }

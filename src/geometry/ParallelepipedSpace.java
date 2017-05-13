@@ -66,32 +66,55 @@ public class ParallelepipedSpace {
 
     /**
      * Remove the given parallelepipeds from the set; merge them and add the new parallelepiped to the set
-     * @param parallelepiped first parallelepiped
+     * @param parallelepipedA first parallelepiped
      * @param axis axis of the adjacent side of the given parallelepipeds
-     * @param neighbour second parallelepiped
+     * @param parallelepipedB second parallelepiped
      */
-    private void mergeParallelepipeds(@NotNull Parallelepiped parallelepiped, Axis axis,
-                                      Parallelepiped neighbour) {
+    private void mergeParallelepipeds(@NotNull Parallelepiped parallelepipedA,
+                                      @NotNull Axis axis,
+                                      @NotNull Parallelepiped parallelepipedB) {
+
         Parallelepiped newParallelepiped;
-        parallelepipeds.remove(neighbour);
-        parallelepipeds.remove(parallelepiped);
+        parallelepipeds.remove(parallelepipedB);
+        parallelepipeds.remove(parallelepipedA);
 
-        Position newCorner = Position.min(parallelepiped.getCorner(), neighbour.getCorner());
+        Position newCorner = Position.min(parallelepipedA.getCorner(), parallelepipedB.getCorner());
 
-        newParallelepiped = neighbour.setCorner(newCorner).setSize(axis,
-                        neighbour.getSize(axis) + parallelepiped.getSize(axis));
+        newParallelepiped = parallelepipedB.setCorner(newCorner).setSize(axis,
+                        parallelepipedB.getSize(axis) + parallelepipedA.getSize(axis));
         add(newParallelepiped);
 
         hasValidState();
     }
 
-    private boolean parallelepipedsFit(@NotNull Parallelepiped parallelepiped, Axis axis, Parallelepiped neighbour) {
-        return neighbour.getSize(axis.getComplements()[0])
-                == parallelepiped.getSize(axis.getComplements()[0])
-                && neighbour.getSize(axis.getComplements()[1])
-                == parallelepiped.getSize(axis.getComplements()[1]);
+    /**
+     * Checks if given parallelepipeds can be combined into one parallelepiped
+     * based on whether their sizes match
+     * @param parallelepipedA first parallelepiped
+     * @param axis axis that passes through both parallelepipeds
+     * @param parallelepipedB second parallelepiped
+     * @return true if the sizes of parallelepipeds match, false otherwise
+     */
+    private boolean parallelepipedsFit(@NotNull Parallelepiped parallelepipedA,
+                                       @NotNull Axis axis,
+                                       @NotNull Parallelepiped parallelepipedB) {
+
+        for (Axis complementAxis : axis.getComplements()) {
+            if (parallelepipedA.getSize(complementAxis) != parallelepipedB.getSize(complementAxis)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
+    /**
+     * Produces true if this space contains given position, false otherwise
+     * <p>Iterates through all parallelepipeds in the set to check if they
+     * contain the given position.</p>
+     * @param position position to check
+     * @return true if this space contains given position, false otherwise
+     */
     public boolean contains(@NotNull Position position) {
         return (get(position) != null);
     }

@@ -116,7 +116,7 @@ public class WorldTest {
 
         Thread worldThread = new Thread(World.getInstance());
         worldThread.start();
-        Thread.sleep(100);
+        Thread.sleep(200);
         worldThread.interrupt();
         assertTrue(World.getInstance().getGeneration() > 1);
         assertTrue(World.getInstance().getPopulationSize() > 3);
