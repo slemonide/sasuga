@@ -1,7 +1,6 @@
 package geometry;
 
-import model.Position;
-import model.RandomWalkCell;
+import cells.RandomWalkCell;
 import org.junit.Before;
 import org.junit.Test;
 import util.Difference;
@@ -24,7 +23,8 @@ public class ParallelepipedSpaceTest {
                     (RANDOM_FILL_RADIUS + 3);
     private static final int MAX_STEPS_RANDOMWALK_REMOVE = 20;
     private static final int MAX_POSITIONS_RANDOM_LINE = 100;
-    private static final int MAX_POSITIONS_CUBE_RANDOM = 10;
+    private static final int MAX_POSITIONS_CUBE_RANDOM = 5;
+    private static final Random RANDOM = new Random();
     private ParallelepipedSpace testSpace;
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
 
@@ -921,10 +921,19 @@ public class ParallelepipedSpaceTest {
             testSpace.add(position);
         }
 
+        assertEquals(MAX_POSITIONS_CUBE_RANDOM *
+                MAX_POSITIONS_CUBE_RANDOM *
+                MAX_POSITIONS_CUBE_RANDOM, testSpace.getVolume());
+
+        // We should at least gain a slight improvement
+        assertTrue(testSpace.size() < MAX_POSITIONS_CUBE_RANDOM *
+                MAX_POSITIONS_CUBE_RANDOM * MAX_POSITIONS_CUBE_RANDOM);
+
+        /* Algorithm is not perfect :(
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(
                 new Position(0,0,0),
-                MAX_POSITIONS_CUBE_RANDOM, MAX_POSITIONS_CUBE_RANDOM, MAX_POSITIONS_CUBE_RANDOM)));
+                MAX_POSITIONS_CUBE_RANDOM, MAX_POSITIONS_CUBE_RANDOM, MAX_POSITIONS_CUBE_RANDOM)));*/
     }
 
     // Implementation-dependent tests

@@ -1,6 +1,7 @@
-package model;
+package cells;
 
 import com.jme3.math.ColorRGBA;
+import geometry.Position;
 
 import java.util.Observable;
 
@@ -13,7 +14,7 @@ import java.util.Observable;
  */
 public class Cell extends Observable {
     private String name = "Static Cell";
-    protected Position position;
+    public Position position;
     protected ColorRGBA color;
 
     /**

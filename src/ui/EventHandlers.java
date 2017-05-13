@@ -1,12 +1,14 @@
 package ui;
 
+import cells.Player;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
-import model.*;
+import geometry.Position;
+import world.*;
 
 import java.util.Observable;
 

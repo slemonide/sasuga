@@ -1,13 +1,11 @@
-package model;
+package world;
 
-import model.RandomWalkCell;
+import cells.RandomWalkCell;
+import geometry.Position;
 import org.junit.Before;
 import org.junit.Test;
-import model.Cell;
-import model.Position;
-import model.World;
+import cells.Cell;
 
-import java.util.Collection;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;

@@ -1,6 +1,6 @@
-package model;
+package cells;
 
-import model.Player;
+import cells.Player;
 import org.junit.Before;
 import org.junit.Test;
 

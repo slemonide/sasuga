@@ -1,8 +1,8 @@
 package cells.wireworld;
 
-import model.ActiveCell;
-import model.Position;
-import model.World;
+import cells.ActiveCell;
+import geometry.Position;
+import world.World;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>

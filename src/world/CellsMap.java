@@ -1,4 +1,9 @@
-package model;
+package world;
+
+import cells.ActiveCell;
+import cells.Cell;
+import geometry.Position;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -70,7 +75,7 @@ public class CellsMap implements Map<Position, Cell> {
     }
 
     @Override
-    public void putAll(Map<? extends Position, ? extends Cell> m) {
+    public void putAll(@NotNull Map<? extends Position, ? extends Cell> m) {
         for (Position position : m.keySet()) {
             put(position, m.get(position));
         }
@@ -82,6 +87,7 @@ public class CellsMap implements Map<Position, Cell> {
         activeCells.clear();
     }
 
+    @NotNull
     @Override
     public Set<Position> keySet() {
         Set<Position> keySet = new HashSet<>();
@@ -95,6 +101,7 @@ public class CellsMap implements Map<Position, Cell> {
         return keySet;
     }
 
+    @NotNull
     @Override
     public Collection<Cell> values() {
         Collection<Cell> valueSet = new HashSet<>();
@@ -108,6 +115,7 @@ public class CellsMap implements Map<Position, Cell> {
         return valueSet;
     }
 
+    @NotNull
     @Override
     public Set<Entry<Position, Cell>> entrySet() {
         Set<Entry<Position, Cell>> entrySet = new HashSet<>();

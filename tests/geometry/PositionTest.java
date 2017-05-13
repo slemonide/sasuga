@@ -1,7 +1,6 @@
-package model;
+package geometry;
 
 import org.junit.Test;
-import model.Position;
 
 import java.util.HashSet;
 import java.util.Set;

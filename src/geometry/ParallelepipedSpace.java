@@ -1,6 +1,5 @@
 package geometry;
 
-import model.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;

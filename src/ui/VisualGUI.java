@@ -12,16 +12,16 @@ import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.shape.Sphere;
 import config.Options;
 import de.lessvoid.nifty.Nifty;
-import model.Player;
-import model.Position;
-import model.World;
+import cells.Player;
+import geometry.Position;
+import world.World;
 
 import java.util.Observable;
 import java.util.Observer;
 
 public class VisualGUI extends SimpleApplication implements Observer {
     private static final float SCALE = Options.getInstance().getFloat("SCALE");
-    private static final int CURSOR_DISTANCE = Options.getInstance().getInt("CURSOR_DISTANCE");;
+    private static final int CURSOR_DISTANCE = Options.getInstance().getInt("CURSOR_DISTANCE");
     private static final int CURSOR_SAMPLE_RATE = 2;
     private static VisualGUI app;
     private final EventHandlers eventHandlers = new EventHandlers(this);

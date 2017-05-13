@@ -1,8 +1,8 @@
 package cells.landscape;
 
-import model.ActiveCell;
-import model.Cell;
-import model.Position;
+import cells.ActiveCell;
+import cells.Cell;
+import geometry.Position;
 
 import java.util.Collection;
 import java.util.HashSet;

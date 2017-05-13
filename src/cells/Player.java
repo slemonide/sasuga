@@ -1,4 +1,4 @@
-package model;
+package cells;
 
 import cells.landscape.LandscapeCell;
 import cells.landscape.LandscapeCellX;
@@ -6,6 +6,10 @@ import cells.landscape.LandscapeCellZ;
 import cells.wireworld.Conductor;
 import cells.wireworld.ElectronHead;
 import cells.wireworld.ElectronTail;
+import geometry.Position;
+import inventory.Inventory;
+import inventory.InventoryItem;
+import world.*;
 
 import java.util.Collection;
 import java.util.Random;

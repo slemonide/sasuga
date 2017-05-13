@@ -1,5 +1,6 @@
-package model;
+package cells;
 
+import geometry.Position;
 import org.junit.Before;
 import org.junit.Test;
 

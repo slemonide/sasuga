@@ -1,8 +1,7 @@
-package model;
+package geometry;
 
 import com.jme3.math.Vector3f;
 import config.Options;
-import geometry.Axis;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

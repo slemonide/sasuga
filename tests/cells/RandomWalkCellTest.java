@@ -1,8 +1,7 @@
-package model;
+package cells;
 
-import model.Position;
-import model.RandomWalkCell;
-import model.World;
+import geometry.Position;
+import world.World;
 import org.junit.Before;
 import org.junit.Test;
 

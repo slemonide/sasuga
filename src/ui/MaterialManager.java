@@ -1,4 +1,4 @@
-package model;
+package ui;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
@@ -21,7 +21,7 @@ public class MaterialManager {
 
     private MaterialManager() {
         coloredMaterials = new HashMap<>();
-    };
+    }
 
     /**
      * Singleton pattern
@@ -48,7 +48,7 @@ public class MaterialManager {
      * @param color fill color for the whole material
      * @return colored material made of "Common/MatDefs/Misc/Unshaded.j3md"
      */
-    public Material getColoredMaterial(AssetManager assetManager, ColorRGBA color) {
+    Material getColoredMaterial(AssetManager assetManager, ColorRGBA color) {
         if (color == null) {
             return getDefaultMaterial(assetManager);
         }

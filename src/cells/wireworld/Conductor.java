@@ -1,9 +1,9 @@
 package cells.wireworld;
 
 import com.jme3.math.ColorRGBA;
-import model.Cell;
-import model.Position;
-import model.World;
+import cells.Cell;
+import geometry.Position;
+import world.World;
 
 import java.util.Collection;
 import java.util.HashSet;

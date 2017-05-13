@@ -1,6 +1,8 @@
-package model;
+package world;
 
-import geometry.Parallelepiped;
+import cells.ActiveCell;
+import cells.Cell;
+import geometry.Position;
 
 import java.util.*;
 

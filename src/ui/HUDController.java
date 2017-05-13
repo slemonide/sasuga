@@ -3,17 +3,15 @@ package ui;
 import com.jme3.renderer.Camera;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
-import de.lessvoid.nifty.elements.render.ElementRenderer;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
-import model.Player;
-import model.World;
+import cells.Player;
+import world.World;
 
 import javax.annotation.Nonnull;
-import javax.xml.soap.Text;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -56,16 +54,22 @@ public class HUDController implements ScreenController, Observer {
         update(null, null);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void readColorsFromTheNifty() {
         if (nifty == null) {
             return;
         }
 
-        Element pausePanel = nifty.getCurrentScreen().findElementById("pause_panel");
-        pausePanelColor = pausePanel.getRenderer(PanelRenderer.class).getBackgroundColor();
+        Screen screen = nifty.getCurrentScreen();
+        if (screen != null) {
+            Element pausePanel = screen.findElementById("pause_panel");
+            assert pausePanel != null;
+            pausePanelColor = pausePanel.getRenderer(PanelRenderer.class).getBackgroundColor();
 
-        Element pause = nifty.getCurrentScreen().findElementById("pause");
-        pauseTextColor = pause.getRenderer(TextRenderer.class).getColor();
+            Element pause = screen.findElementById("pause");
+            assert pause != null;
+            pauseTextColor = pause.getRenderer(TextRenderer.class).getColor();
+        }
     }
 
     @Override
@@ -108,9 +112,13 @@ public class HUDController implements ScreenController, Observer {
             return;
         }
 
-        Element niftyElement = nifty.getCurrentScreen().findElementById(id);
-        niftyElement.getRenderer(TextRenderer.class)
-                .setText(value);
+        Screen screen = nifty.getCurrentScreen();
+        if (screen != null) {
+            Element niftyElement = screen.findElementById(id);
+            //noinspection ConstantConditions
+            niftyElement.getRenderer(TextRenderer.class)
+                    .setText(value);
+        }
     }
     private void abstractUpdate(String id, String property, Object value, String units) {
         updateText(id, getLabel(property, value, units));
@@ -123,16 +131,28 @@ public class HUDController implements ScreenController, Observer {
             return;
         }
 
-        Element pausePanel = nifty.getCurrentScreen().findElementById(id);
-        pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(color);
+        Screen screen = nifty.getCurrentScreen();
+        if (screen != null) {
+            Element pausePanel = screen.findElementById(id);
+            assert pausePanel != null;
+            //noinspection ConstantConditions
+            pausePanel.getRenderer(PanelRenderer.class).setBackgroundColor(color);
+        }
     }
+
+    @SuppressWarnings("SameParameterValue")
     private void updateColor(String id, Color color) {
         if (nifty == null) {
             return;
         }
 
-        Element pause = nifty.getCurrentScreen().findElementById(id);
-        pause.getRenderer(TextRenderer.class).setColor(color);
+        Screen screen = nifty.getCurrentScreen();
+        if (screen != null) {
+            Element pause = screen.findElementById(id);
+            assert pause != null;
+            //noinspection ConstantConditions
+            pause.getRenderer(TextRenderer.class).setColor(color);
+        }
     }
     private String getLabel(String property, Object value, String units) {
         return property + ": " + value + " " + units;

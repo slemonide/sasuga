@@ -1,7 +1,5 @@
-package model;
+package inventory;
 
-import model.Inventory;
-import model.InventoryItem;
 import org.junit.Before;
 import org.junit.Test;
 

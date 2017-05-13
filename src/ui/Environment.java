@@ -20,10 +20,9 @@ import com.jme3.util.SkyFactory;
 import config.Options;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
-import model.Cell;
-import model.MaterialManager;
-import model.Position;
-import model.World;
+import cells.Cell;
+import geometry.Position;
+import world.World;
 import util.Difference;
 import util.SetObserver;
 
@@ -211,6 +210,7 @@ public class Environment implements Observer {
         updateSpatials();
     }
 
+    @SuppressWarnings("UseBulkOperation")
     @Override
     public void update(Observable o, Object arg) {
         // NOTE: addAll won't work here

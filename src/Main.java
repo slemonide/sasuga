@@ -1,9 +1,4 @@
-import animations.BuildBoxCutTop;
-import animations.BuildCube;
-import animations.RandomLandscape;
-import model.*;
-import ui.ConsoleUI;
-import ui.HUDController;
+import world.*;
 import ui.VisualGUI;
 
 /**

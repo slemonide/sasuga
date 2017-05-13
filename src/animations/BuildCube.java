@@ -1,8 +1,8 @@
 package animations;
 
-import model.Cell;
-import model.Position;
-import model.World;
+import cells.Cell;
+import geometry.Position;
+import world.World;
 
 /**
  * An animation that builds a cube

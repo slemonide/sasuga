@@ -1,6 +1,6 @@
 package ui;
 
-import model.World;
+import world.World;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -13,21 +13,6 @@ import java.util.Observer;
  * A simple console logging UI
  */
 public class ConsoleUI implements Observer {
-    private static ConsoleUI instance;
-
-    private ConsoleUI() {};
-
-    /**
-     * Singleton pattern
-     * @return instance
-     */
-    public static ConsoleUI getInstance() {
-        if(instance == null){
-            instance = new ConsoleUI();
-        }
-        return instance;
-    }
-
     public void update(Observable o, Object arg) {
         System.out.print("Generation: " + World.getInstance().getGeneration());
         System.out.print("    ");

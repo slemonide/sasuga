@@ -1,7 +1,8 @@
-package model;
+package cells;
+
+import geometry.Position;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author      Danil Platonov <slemonide@gmail.com>
@@ -14,7 +15,7 @@ public abstract class ActiveCell extends Cell {
     /**
      * Delay in ticks between a given cell updates
      */
-    protected int delay;
+    public int delay;
     /**
      * Create a cell at the given position
      *

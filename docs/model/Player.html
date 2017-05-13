@@ -102,13 +102,13 @@ var activeTableTab = "activeTableTab";
 <li>java.util.Observable</li>
 <li>
 <ul class="inheritance">
-<li><a href="../model/Cell.html" title="class in model">model.Cell</a></li>
+<li><a href="../model/Cell.html" title="class in model">cells.Cell</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../model/ActiveCell.html" title="class in model">model.ActiveCell</a></li>
+<li><a href="../model/ActiveCell.html" title="class in model">cells.ActiveCell</a></li>
 <li>
 <ul class="inheritance">
-<li>model.Player</li>
+<li>cells.Player</li>
 </ul>
 </li>
 </ul>
@@ -163,14 +163,14 @@ extends <a href="../model/ActiveCell.html" title="class in model">ActiveCell</a>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.model.ActiveCell">
+<li class="blockList"><a name="fields.inherited.from.class.cells.ActiveCell">
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;model.<a href="../model/ActiveCell.html" title="class in model">ActiveCell</a></h3>
 <code><a href="../model/ActiveCell.html#delay">delay</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.model.Cell">
+<li class="blockList"><a name="fields.inherited.from.class.cells.Cell">
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;model.<a href="../model/Cell.html" title="class in model">Cell</a></h3>
@@ -256,11 +256,11 @@ extends <a href="../model/ActiveCell.html" title="class in model">ActiveCell</a>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../model/Player.html#setSelectedBlock-model.Position-">setSelectedBlock</a></span>(<a href="../model/Position.html" title="class in model">Position</a>&nbsp;selectedBlock)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../model/Player.html#setSelectedBlock-geometry.Position-">setSelectedBlock</a></span>(<a href="../model/Position.html" title="class in model">Position</a>&nbsp;selectedBlock)</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../model/Player.html#setSelectedBlockFace-model.Position-">setSelectedBlockFace</a></span>(<a href="../model/Position.html" title="class in model">Position</a>&nbsp;selectedBlockFace)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../model/Player.html#setSelectedBlockFace-geometry.Position-">setSelectedBlockFace</a></span>(<a href="../model/Position.html" title="class in model">Position</a>&nbsp;selectedBlockFace)</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -284,7 +284,7 @@ extends <a href="../model/ActiveCell.html" title="class in model">ActiveCell</a>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.model.Cell">
+<li class="blockList"><a name="methods.inherited.from.class.cells.Cell">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;model.<a href="../model/Cell.html" title="class in model">Cell</a></h3>
@@ -327,7 +327,7 @@ extends <a href="../model/ActiveCell.html" title="class in model">ActiveCell</a>
 <pre>public static final&nbsp;int INVENTORY_SIZE</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#model.Player.INVENTORY_SIZE">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#cells.Player.INVENTORY_SIZE">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -535,7 +535,7 @@ extends <a href="../model/ActiveCell.html" title="class in model">ActiveCell</a>
 <pre>public&nbsp;<a href="../model/Position.html" title="class in model">Position</a>&nbsp;getSelectedBlockFace()</pre>
 </li>
 </ul>
-<a name="setSelectedBlock-model.Position-">
+<a name="setSelectedBlock-world.Position-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -544,7 +544,7 @@ extends <a href="../model/ActiveCell.html" title="class in model">ActiveCell</a>
 <pre>public&nbsp;void&nbsp;setSelectedBlock(<a href="../model/Position.html" title="class in model">Position</a>&nbsp;selectedBlock)</pre>
 </li>
 </ul>
-<a name="setSelectedBlockFace-model.Position-">
+<a name="setSelectedBlockFace-world.Position-">
 <!--   -->
 </a>
 <ul class="blockListLast">

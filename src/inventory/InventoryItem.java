@@ -1,4 +1,4 @@
-package model;
+package inventory;
 
 /**
  * An inventory item that has a name and an assigned action

@@ -75,7 +75,7 @@
 <dl>
 <dt><a href="model/ActiveCell.html" title="class in model"><span class="typeNameLink">ActiveCell</span></a> - Class in <a href="model/package-summary.html">model</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/ActiveCell.html#ActiveCell-model.Position-">ActiveCell(Position)</a></span> - Constructor for class model.<a href="model/ActiveCell.html" title="class in model">ActiveCell</a></dt>
+<dt><span class="memberNameLink"><a href="model/ActiveCell.html#ActiveCell-world.Position-">ActiveCell(Position)</a></span> - Constructor for class model.<a href="model/ActiveCell.html" title="class in model">ActiveCell</a></dt>
 <dd>
 <div class="block">Create a cell at the given position</div>
 </dd>
@@ -83,15 +83,15 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/CellsMap.html#activeCellsValues--">activeCellsValues()</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="geometry/ParallelepipedSpace.html#add-model.Position-">add(Position)</a></span> - Method in class geometry.<a href="geometry/ParallelepipedSpace.html" title="class in geometry">ParallelepipedSpace</a></dt>
+<dt><span class="memberNameLink"><a href="geometry/ParallelepipedSpace.html#add-world.Position-">add(Position)</a></span> - Method in class geometry.<a href="geometry/ParallelepipedSpace.html" title="class in geometry">ParallelepipedSpace</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/Position.html#add-int-int-int-">add(int, int, int)</a></span> - Method in class model.<a href="model/Position.html" title="class in model">Position</a></dt>
 <dd>
 <div class="block">Create a vector by adding given components to the components of this vector</div>
 </dd>
-<dt><span class="memberNameLink"><a href="model/Position.html#add-model.Position-">add(Position)</a></span> - Method in class model.<a href="model/Position.html" title="class in model">Position</a></dt>
+<dt><span class="memberNameLink"><a href="model/Position.html#add-world.Position-">add(Position)</a></span> - Method in class model.<a href="model/Position.html" title="class in model">Position</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/World.html#add-model.Cell-">add(Cell)</a></span> - Method in class model.<a href="model/World.html" title="class in model">World</a></dt>
+<dt><span class="memberNameLink"><a href="model/World.html#add-world.Cell-">add(Cell)</a></span> - Method in class model.<a href="model/World.html" title="class in model">World</a></dt>
 <dd>
 <div class="block">Adds the given cell to the world, updates population and generation
  and notify the observers about the change</div>
@@ -122,7 +122,7 @@
 <dl>
 <dt><a href="model/Cell.html" title="class in model"><span class="typeNameLink">Cell</span></a> - Class in <a href="model/package-summary.html">model</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/Cell.html#Cell-model.Position-">Cell(Position)</a></span> - Constructor for class model.<a href="model/Cell.html" title="class in model">Cell</a></dt>
+<dt><span class="memberNameLink"><a href="model/Cell.html#Cell-world.Position-">Cell(Position)</a></span> - Constructor for class model.<a href="model/Cell.html" title="class in model">Cell</a></dt>
 <dd>
 <div class="block">Create a cell at the given position</div>
 </dd>
@@ -142,9 +142,9 @@
 <dd>&nbsp;</dd>
 <dt><a href="ui/ConsoleUI.html" title="class in ui"><span class="typeNameLink">ConsoleUI</span></a> - Class in <a href="ui/package-summary.html">ui</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#contains-model.Position-">contains(Position)</a></span> - Method in class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
+<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#contains-world.Position-">contains(Position)</a></span> - Method in class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/World.html#containsCellAt-model.Position-">containsCellAt(Position)</a></span> - Method in class model.<a href="model/World.html" title="class in model">World</a></dt>
+<dt><span class="memberNameLink"><a href="model/World.html#containsCellAt-world.Position-">containsCellAt(Position)</a></span> - Method in class model.<a href="model/World.html" title="class in model">World</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/CellsMap.html#containsKey-java.lang.Object-">containsKey(Object)</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
@@ -380,7 +380,7 @@
 <dd>
 <div class="block">An inventory item that has a name and an assigned action</div>
 </dd>
-<dt><span class="memberNameLink"><a href="model/InventoryItem.html#InventoryItem-java.lang.String-model.InventoryItem.F-">InventoryItem(String, InventoryItem.F)</a></span> - Constructor for class model.<a href="model/InventoryItem.html" title="class in model">InventoryItem</a></dt>
+<dt><span class="memberNameLink"><a href="model/InventoryItem.html#InventoryItem-java.lang.String-inventory.InventoryItem.F-">InventoryItem(String, InventoryItem.F)</a></span> - Constructor for class model.<a href="model/InventoryItem.html" title="class in model">InventoryItem</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="model/InventoryItem.F.html" title="interface in model"><span class="typeNameLink">InventoryItem.F</span></a> - Interface in <a href="model/package-summary.html">model</a></dt>
 <dd>
@@ -446,11 +446,11 @@
 <dd>
 <div class="block">Represents a right-angled parallelepiped with integer-valued side lengths</div>
 </dd>
-<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#Parallelepiped-model.Position-">Parallelepiped(Position)</a></span> - Constructor for class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
+<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#Parallelepiped-world.Position-">Parallelepiped(Position)</a></span> - Constructor for class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
 <dd>
 <div class="block">Creates a unit parallelepiped cornered at the given position</div>
 </dd>
-<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#Parallelepiped-model.Position-int-int-int-">Parallelepiped(Position, int, int, int)</a></span> - Constructor for class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
+<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#Parallelepiped-world.Position-int-int-int-">Parallelepiped(Position, int, int, int)</a></span> - Constructor for class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="geometry/ParallelepipedSpace.html" title="class in geometry"><span class="typeNameLink">ParallelepipedSpace</span></a> - Class in <a href="geometry/package-summary.html">geometry</a></dt>
 <dd>
@@ -471,7 +471,7 @@
 <dd>
 <div class="block">Creates a vector with the given coordinates</div>
 </dd>
-<dt><span class="memberNameLink"><a href="model/CellsMap.html#put-model.Position-model.Cell-">put(Position, Cell)</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
+<dt><span class="memberNameLink"><a href="model/CellsMap.html#put-world.Position-world.Cell-">put(Position, Cell)</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/CellsMap.html#putAll-java.util.Map-">putAll(Map&lt;? extends Position, ? extends Cell&gt;)</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
@@ -489,15 +489,15 @@
 <dd>&nbsp;</dd>
 <dt><a href="model/RandomWalkCell.html" title="class in model"><span class="typeNameLink">RandomWalkCell</span></a> - Class in <a href="model/package-summary.html">model</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/RandomWalkCell.html#RandomWalkCell-model.Position-">RandomWalkCell(Position)</a></span> - Constructor for class model.<a href="model/RandomWalkCell.html" title="class in model">RandomWalkCell</a></dt>
+<dt><span class="memberNameLink"><a href="model/RandomWalkCell.html#RandomWalkCell-world.Position-">RandomWalkCell(Position)</a></span> - Constructor for class model.<a href="model/RandomWalkCell.html" title="class in model">RandomWalkCell</a></dt>
 <dd>
 <div class="block">Create a cell at the given position</div>
 </dd>
-<dt><span class="memberNameLink"><a href="geometry/ParallelepipedSpace.html#remove-model.Position-">remove(Position)</a></span> - Method in class geometry.<a href="geometry/ParallelepipedSpace.html" title="class in geometry">ParallelepipedSpace</a></dt>
+<dt><span class="memberNameLink"><a href="geometry/ParallelepipedSpace.html#remove-world.Position-">remove(Position)</a></span> - Method in class geometry.<a href="geometry/ParallelepipedSpace.html" title="class in geometry">ParallelepipedSpace</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/CellsMap.html#remove-java.lang.Object-">remove(Object)</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/World.html#remove-model.Position-">remove(Position)</a></span> - Method in class model.<a href="model/World.html" title="class in model">World</a></dt>
+<dt><span class="memberNameLink"><a href="model/World.html#remove-world.Position-">remove(Position)</a></span> - Method in class model.<a href="model/World.html" title="class in model">World</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/CellsMap.html#removeAll-java.util.Set-">removeAll(Set&lt;Position&gt;)</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
@@ -533,13 +533,13 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/Player.html#setAgility-int-">setAgility(int)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#setCorner-model.Position-">setCorner(Position)</a></span> - Method in class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
+<dt><span class="memberNameLink"><a href="geometry/Parallelepiped.html#setCorner-world.Position-">setCorner(Position)</a></span> - Method in class geometry.<a href="geometry/Parallelepiped.html" title="class in geometry">Parallelepiped</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/Player.html#setHealth-int-">setHealth(int)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/Player.html#setHunger-int-">setHunger(int)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/Inventory.html#setInventoryItem-int-model.InventoryItem-">setInventoryItem(int, InventoryItem)</a></span> - Method in class model.<a href="model/Inventory.html" title="class in model">Inventory</a></dt>
+<dt><span class="memberNameLink"><a href="model/Inventory.html#setInventoryItem-int-world.InventoryItem-">setInventoryItem(int, InventoryItem)</a></span> - Method in class model.<a href="model/Inventory.html" title="class in model">Inventory</a></dt>
 <dd>
 <div class="block">Sets inventory item at the given slot, overriding one if it exists.</div>
 </dd>
@@ -551,9 +551,9 @@
 </dd>
 <dt><span class="memberNameLink"><a href="util/SetObserver.html#SetObserver-java.util.Set-">SetObserver(Set&lt;E&gt;)</a></span> - Constructor for class util.<a href="util/SetObserver.html" title="class in util">SetObserver</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/Player.html#setSelectedBlock-model.Position-">setSelectedBlock(Position)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
+<dt><span class="memberNameLink"><a href="model/Player.html#setSelectedBlock-world.Position-">setSelectedBlock(Position)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/Player.html#setSelectedBlockFace-model.Position-">setSelectedBlockFace(Position)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
+<dt><span class="memberNameLink"><a href="model/Player.html#setSelectedBlockFace-world.Position-">setSelectedBlockFace(Position)</a></span> - Method in class model.<a href="model/Player.html" title="class in model">Player</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="model/Inventory.html#setSelectedSlot-int-">setSelectedSlot(int)</a></span> - Method in class model.<a href="model/Inventory.html" title="class in model">Inventory</a></dt>
 <dd>
@@ -577,7 +577,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="model/CellsMap.html#staticCellsKeySet--">staticCellsKeySet()</a></span> - Method in class model.<a href="model/CellsMap.html" title="class in model">CellsMap</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="model/Position.html#subtract-model.Position-">subtract(Position)</a></span> - Method in class model.<a href="model/Position.html" title="class in model">Position</a></dt>
+<dt><span class="memberNameLink"><a href="model/Position.html#subtract-world.Position-">subtract(Position)</a></span> - Method in class model.<a href="model/Position.html" title="class in model">Position</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a name="I:T">
