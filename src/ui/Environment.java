@@ -84,9 +84,12 @@ public class Environment implements Observer {
 
     private void addCells() {
         cellsNode = new Node();
-        cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-        visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         visualGUI.getRootNode().attachChild(cellsNode);
+
+        if (Options.getInstance().getBoolean("ENABLE_SHADOWS")) {
+            cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+            visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
+        }
 
         toAdd.addAll(World.getInstance().getCells());
     }
@@ -116,7 +119,10 @@ public class Environment implements Observer {
         Material unshaded = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         unshaded.setColor("Color", ColorRGBA.White);
         floor.setMaterial(unshaded);
-        floor.setShadowMode(RenderQueue.ShadowMode.Receive);
+
+        if (Options.getInstance().getBoolean("ENABLE_SHADOWS")) {
+            floor.setShadowMode(RenderQueue.ShadowMode.Receive);
+        }
 
         Quaternion q = new Quaternion();
         floor.setLocalRotation(q.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0)));
@@ -232,11 +238,11 @@ public class Environment implements Observer {
         }
     }
 
-    public int getNumberOfParallelepipeds() {
+    int getNumberOfParallelepipeds() {
         return parallelepipedSpace.size();
     }
 
-    public long getVolumeOfParallelepipeds() {
+    long getVolumeOfParallelepipeds() {
         return parallelepipedSpace.getVolume();
     }
 }
