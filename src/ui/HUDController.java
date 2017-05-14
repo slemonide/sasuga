@@ -180,7 +180,7 @@ public class HUDController implements ScreenController, Observer {
     private void updateInventoryItems() {
         for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
             if (Player.getInstance().getInventory().getInventoryItem(i) != null) {
-                updateText("cell_" + i, Player.getInstance().getInventory().getInventoryItem(i).getName());
+                updateText("cell_" + i, Player.getInstance().getInventory().getName(i));
             } else {
                 updateText("cell_" + i, EMPTY_INVENTORY_SLOT_VALUE);
             }

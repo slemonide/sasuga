@@ -148,8 +148,8 @@ extends java.lang.Object</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../model/Inventory.html#Inventory-int-">Inventory</a></span>(int&nbsp;size)</code>
-<div class="block">Create a new inventory of the given size and 0 as the selected slot.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../model/Inventory.html#Inventory-int-">Inventory</a></span>(int&nbsp;maxSize)</code>
+<div class="block">Create a new inventory of the given maxSize and 0 as the selected slot.</div>
 </td>
 </tr>
 </table>
@@ -243,9 +243,9 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Inventory</h4>
-<pre>public&nbsp;Inventory(int&nbsp;size)
+<pre>public&nbsp;Inventory(int&nbsp;maxSize)
           throws java.lang.RuntimeException</pre>
-<div class="block">Create a new inventory of the given size and 0 as the selected slot.
+<div class="block">Create a new inventory of the given maxSize and 0 as the selected slot.
  Also fills all slots with the default item</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -270,7 +270,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;int&nbsp;getInventorySize()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>size of this inventory</dd>
+<dd>maxSize of this inventory</dd>
 </dl>
 </li>
 </ul>

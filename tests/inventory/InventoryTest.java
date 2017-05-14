@@ -20,7 +20,8 @@ public class InventoryTest {
         assertEquals(0, testInventory.getSelectedSlot());
 
         for (int i = 0; i < INVENTORY_SIZE; i++) {
-            assertEquals(Inventory.DEFAULT_INVENTORY_ITEM, testInventory.getInventoryItem(i));
+            assertEquals(null, testInventory.getInventoryItem(i));
+            assertEquals("", testInventory.getName(i));
         }
 
         testInventory = new Inventory(2);
@@ -59,7 +60,7 @@ public class InventoryTest {
      */
     private void fillInventory(Inventory inventory) {
         for (int i = 0; i < inventory.getInventorySize(); i++) {
-            inventory.setInventoryItem(i, new InventoryItem(Integer.toString(i), null));
+            inventory.add(new InventoryItem(Integer.toString(i), null));
         }
     }
 

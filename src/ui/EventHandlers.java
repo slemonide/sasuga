@@ -30,7 +30,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener addCellActionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            Player.getInstance().getInventory().getSelectedItem().use();
+            Player.getInstance().getInventory().useSelectedItem();
 
             setChanged();
             notifyObservers();
@@ -47,7 +47,7 @@ public class EventHandlers extends Observable {
     };
     private ActionListener inventorySelectionListener = (name, pressed, tpf) -> {
         if (pressed) {
-            Player.getInstance().getInventory().setSelectedSlot(Integer.valueOf(name));
+            Player.getInstance().getInventory().setSelectedSlot(Integer.valueOf(name) - 1);
 
             setChanged();
             notifyObservers();

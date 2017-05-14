@@ -142,6 +142,13 @@
                 <panel id="cell_choice_panel" width="100%" height="25%" childLayout="vertical"
                        backgroundColor="#4b58">
                     <panel width="100%" height="10%" childLayout="horizontal">
+                        <text text="cell_0_panel"
+                              id="cell_0"
+                              font="Interface/Fonts/Arial_Small.fnt"
+                              color="a7883e"
+                              width="100%" height="100%"/>
+                    </panel>
+                    <panel width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_1_panel"
                               id="cell_1"
                               font="Interface/Fonts/Arial_Small.fnt"
@@ -200,13 +207,6 @@
                     <panel id="cell_9_panel" width="100%" height="10%" childLayout="horizontal">
                         <text text="cell_9"
                               id="cell_9"
-                              font="Interface/Fonts/Arial_Small.fnt"
-                              color="a7883e"
-                              width="100%" height="100%"/>
-                    </panel>
-                    <panel width="100%" height="10%" childLayout="horizontal">
-                        <text text="cell_0_panel"
-                              id="cell_0"
                               font="Interface/Fonts/Arial_Small.fnt"
                               color="a7883e"
                               width="100%" height="100%"/>
