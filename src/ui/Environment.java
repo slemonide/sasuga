@@ -1,5 +1,6 @@
 package ui;
 
+import cells.Cell;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -21,9 +22,7 @@ import com.jme3.util.SkyFactory;
 import config.Options;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
-import cells.Cell;
 import geometry.Position;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import world.World;
 import util.Difference;
 import util.SetObserver;
@@ -144,7 +143,7 @@ public class Environment implements Observer {
         float minimumY = 0; // should be at least at the sea level
 
         for (Cell cell : World.getInstance().getCells()) {
-            minimumY = Math.min(minimumY, cell.getPosition().y * SCALE);
+            minimumY = Math.min(minimumY, cell.parallelepiped.getCorner().y * SCALE);
         }
 
         Vector3f floorTranslation = getFloor().getLocalTranslation();
@@ -167,9 +166,9 @@ public class Environment implements Observer {
     }
 
     private void addSpatial(Cell cell) {
-        removeSpatial(cell.getPosition());
+        removeSpatial(cell.parallelepiped.getCorner());
 
-        parallelepipedSpace.add(cell.getPosition());
+        parallelepipedSpace.add(cell.parallelepiped.getCorner());
 
         updateSpatials();
     }
