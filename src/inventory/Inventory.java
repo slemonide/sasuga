@@ -125,7 +125,7 @@ public class Inventory {
 
     public void useSelectedItem() {
         if (getSelectedItem() != null) {
-            getSelectedItem().use(player.getSelectedBlock(), player.getSelectedBlockFace(), player.getPosition());
+            getSelectedItem().use(player.getSelectedBlockFace(), player.getSelectedBlock(), player.getPosition());
         }
     }
 }

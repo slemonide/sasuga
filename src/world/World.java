@@ -3,6 +3,8 @@ package world;
 import cells.AnimatedCell;
 import cells.Cell;
 import cells.StaticCell;
+import cells.WorldCell;
+import geometry.Parallelepiped;
 import geometry.Position;
 
 import java.util.*;
@@ -252,11 +254,7 @@ public class World extends Observable implements Runnable {
         return cellsMap.containsKey(position);
     }
 
-    public void add(Position placeCursor, StaticCell staticCell) {
-        // TODO: finish
-    }
-
-    public void add(Position placeCursor, AnimatedCell animatedCell) {
-        // TODO: finish
+    public void add(Position placeCursor, WorldCell staticCell) {
+        add(new Cell(new Parallelepiped(placeCursor), staticCell));
     }
 }
