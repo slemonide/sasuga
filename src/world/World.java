@@ -1,7 +1,7 @@
 package world;
 
 import cells.CellParallelepiped;
-import cells.VisibleCell;
+import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
 
@@ -20,7 +20,7 @@ public class World extends Observable implements Runnable {
     private long tickTime;
     private int generation;
     private int tickDelayNumber;
-    private CellsMap cellsMap;
+    private CellStorage cellStorage;
     private int population;
     private Thread worldThread;
     private static World instance;
@@ -38,7 +38,7 @@ public class World extends Observable implements Runnable {
         generation = 0;
         population = 0;
         tickDelayNumber = 0;
-        cellsMap = new CellsMap();
+        cellStorage = new CellStorage();
         worldThread = new Thread(this);
 
         lastSeenCellsSetToAdd = new HashSet<>();
@@ -101,7 +101,7 @@ public class World extends Observable implements Runnable {
      * @return Unmodifiable collection of all the cells in the world
      */
     public Collection<CellParallelepiped> getCells() {
-        return Collections.unmodifiableCollection(cellsMap.values());
+        return Collections.unmodifiableCollection(cellStorage.values());
     }
 
     /**
@@ -146,7 +146,7 @@ public class World extends Observable implements Runnable {
         long startTime = System.nanoTime();
 
         /*
-        for (ActiveCell cell : cellsMap.activeCellsValues()) {
+        for (ActiveCell cell : cellStorage.activeCellsValues()) {
             if (cell.delay == 0 || tickDelayNumber % cell.delay == 0) {
                 Collection<? extends CellParallelepiped> toAddFromThisCell = cell.tickToAdd();
                 Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
@@ -171,8 +171,8 @@ public class World extends Observable implements Runnable {
         growthRate = toAdd.size() - toRemove.size();
         // if there's no change, don't update the generation counter
         if (!(toAdd.isEmpty() && toRemove.isEmpty())) {
-            cellsMap.removeAll(toRemove);
-            cellsMap.addAll(toAdd);
+            cellStorage.removeAll(toRemove);
+            cellStorage.addAll(toAdd);
             population += growthRate;
             generation++;
 
@@ -217,8 +217,8 @@ public class World extends Observable implements Runnable {
         return growthRate;
     }
 
-    public CellsMap getCellsMap() {
-        return cellsMap;
+    public CellStorage getCellStorage() {
+        return cellStorage;
     }
 
     /**
@@ -241,18 +241,18 @@ public class World extends Observable implements Runnable {
     public Set<Position> getToRemove() {
         Set<Position> toRemove = new HashSet<>();
         toRemove.addAll(lastSeenPositionSetToRemove);
-        toRemove.removeAll(cellsMap.keySet());
+        toRemove.removeAll(cellStorage.keySet());
         lastSeenPositionSetToRemove.clear();
-        lastSeenPositionSetToRemove.addAll(cellsMap.keySet());
+        lastSeenPositionSetToRemove.addAll(cellStorage.keySet());
 
         return toRemove;
     }
 
     public boolean containsCellAt(Position position) {
-        return cellsMap.containsKey(position);
+        return cellStorage.containsKey(position);
     }
 
-    public void add(Position placeCursor, VisibleCell staticCell) {
+    public void add(Position placeCursor, WorldCell staticCell) {
         add(new CellParallelepiped(new Parallelepiped(placeCursor), staticCell));
     }
 }

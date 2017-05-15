@@ -10,7 +10,7 @@ import inventory.InventoryItem;
  *     CellParallelepiped state is hard to compute for every given tick
  * </p>
  */
-public enum DynamicCell implements InventoryItem, VisibleCell {
+public enum DynamicCell implements InventoryItem, WorldCell {
     ;
 
     @Override

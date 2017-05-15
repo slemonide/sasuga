@@ -7,10 +7,10 @@ import geometry.Parallelepiped;
  */
 public class CellParallelepiped {
     public Parallelepiped parallelepiped;
-    public VisibleCell cell;
+    public WorldCell cell;
 
-    public CellParallelepiped(Parallelepiped parallelepiped, VisibleCell visibleCell) {
+    public CellParallelepiped(Parallelepiped parallelepiped, WorldCell worldCell) {
         this.parallelepiped = parallelepiped;
-        this.cell = visibleCell;
+        this.cell = worldCell;
     }
 }

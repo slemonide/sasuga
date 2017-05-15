@@ -45,7 +45,7 @@ public class WorldTest {
     public void testRemoveCell() {
         World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(0, 0, 0)), StaticCell.WOOD));
         World.getInstance().tick();
-        assertEquals(World.getInstance().getCellsMap().size(), 1);
+        assertEquals(World.getInstance().getCellStorage().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);
@@ -63,7 +63,7 @@ public class WorldTest {
     public void testRemoveCellPosition() {
         World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(0, 0, 0)), StaticCell.STONE));
         World.getInstance().tick();
-        assertEquals(World.getInstance().getCellsMap().size(), 1);
+        assertEquals(World.getInstance().getCellStorage().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
         assertEquals(World.getInstance().getPopulationSize(), 1);
         assertEquals(World.getInstance().getGeneration(), 1);

@@ -8,8 +8,8 @@ import world.World;
 /**
  * A cell whose state is known for any given tick
  */
-public enum AnimatedCell implements InventoryItem, VisibleCell {
-    OSCILLATOR("Oscillator", (tick, position) -> {
+public enum AnimatedCell implements InventoryItem, WorldCell {
+    OSCILLATOR("Oscillator", (tick) -> {
         if (tick % 2 == 0) {
             return ColorRGBA.Magenta;
         } else {
@@ -23,7 +23,7 @@ public enum AnimatedCell implements InventoryItem, VisibleCell {
     /**
      * A color function of tick and position
      */
-    interface F { ColorRGBA f(int tick, Position position); }
+    interface F { ColorRGBA f(int tick); }
 
     /**
      * Create an animated cell with given name and a color function
@@ -47,12 +47,11 @@ public enum AnimatedCell implements InventoryItem, VisibleCell {
     /**
      * Produce the color of this animated cell from the given tick and position
      * @param tick current tick
-     * @param position position of this animated cell
      * @return current color of this animated cell
      */
     @Override
     public ColorRGBA getColor(int tick, Position position) {
-        return function.f(tick, position);
+        return function.f(tick);
     }
 
     @Override
