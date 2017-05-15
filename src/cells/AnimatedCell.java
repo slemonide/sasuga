@@ -18,19 +18,19 @@ public enum AnimatedCell implements InventoryItem, WorldCell {
     });
 
     private final String name;
-    private final F function;
+    private final Function function;
 
     /**
      * A color function of tick and position
      */
-    interface F { ColorRGBA f(int tick); }
+    private interface Function { ColorRGBA apply(int tick); }
 
     /**
      * Create an animated cell with given name and a color function
      * @param name name of the animated cell
      * @param function color generating function
      */
-    AnimatedCell(String name, F function) {
+    AnimatedCell(String name, Function function) {
         this.name = name;
         this.function = function;
     }
@@ -51,7 +51,7 @@ public enum AnimatedCell implements InventoryItem, WorldCell {
      */
     @Override
     public ColorRGBA getColor(int tick, Position position) {
-        return function.f(tick);
+        return function.apply(tick);
     }
 
     @Override
