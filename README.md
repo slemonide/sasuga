@@ -8,8 +8,8 @@ Run `src/Main.java`.
 ## Keyboard Controls
 * W,A,S,D, Arrow Keys - move
 * 1,2,3,...,9,0 - choose inventory slot
-* ENTER / RIGHT MOUSE KEY - place cell
-* L / LEFT MOUSE KEY - remove cell
+* ENTER / RIGHT MOUSE KEY - place cellParallelepiped
+* L / LEFT MOUSE KEY - remove cellParallelepiped
 * SPACE BAR - pause rendering
 * R - restart the game
 

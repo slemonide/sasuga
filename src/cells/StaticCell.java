@@ -8,7 +8,7 @@ import world.World;
 /**
  * A cell that never changes
  */
-public enum StaticCell implements InventoryItem, WorldCell {
+public enum StaticCell implements InventoryItem, VisibleCell {
     STONE("Stone", ColorRGBA.Gray),
     DIRT("Dirt", ColorRGBA.Orange),
     GRASS("Grass", ColorRGBA.Green),

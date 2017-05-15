@@ -8,7 +8,7 @@ import world.World;
 /**
  * A cell whose state is known for any given tick
  */
-public enum AnimatedCell implements InventoryItem, WorldCell {
+public enum AnimatedCell implements InventoryItem, VisibleCell {
     OSCILLATOR("Oscillator", (tick, position) -> {
         if (tick % 2 == 0) {
             return ColorRGBA.Magenta;

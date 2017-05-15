@@ -5,12 +5,12 @@ import geometry.Parallelepiped;
 /**
  * A world cell assigned to a parallelepiped
  */
-public class Cell {
+public class CellParallelepiped {
     public Parallelepiped parallelepiped;
-    public WorldCell cell;
+    public VisibleCell cell;
 
-    public Cell(Parallelepiped parallelepiped, WorldCell worldCell) {
+    public CellParallelepiped(Parallelepiped parallelepiped, VisibleCell visibleCell) {
         this.parallelepiped = parallelepiped;
-        this.cell = worldCell;
+        this.cell = visibleCell;
     }
 }

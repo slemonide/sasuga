@@ -1,9 +1,7 @@
 package world;
 
-import cells.AnimatedCell;
-import cells.Cell;
-import cells.StaticCell;
-import cells.WorldCell;
+import cells.CellParallelepiped;
+import cells.VisibleCell;
 import geometry.Parallelepiped;
 import geometry.Position;
 
@@ -27,9 +25,9 @@ public class World extends Observable implements Runnable {
     private Thread worldThread;
     private static World instance;
     private int growthRate;
-    private Set<Cell> toAdd;
+    private Set<CellParallelepiped> toAdd;
     private Set<Position> toRemove;
-    private Set<Cell> lastSeenCellsSetToAdd;
+    private Set<CellParallelepiped> lastSeenCellsSetToAdd;
     private Set<Position> lastSeenPositionSetToRemove;
 
     /**
@@ -102,39 +100,39 @@ public class World extends Observable implements Runnable {
     /**
      * @return Unmodifiable collection of all the cells in the world
      */
-    public Collection<Cell> getCells() {
+    public Collection<CellParallelepiped> getCells() {
         return Collections.unmodifiableCollection(cellsMap.values());
     }
 
     /**
-     * Adds the given cell to the world, updates population and generation
+     * Adds the given cellParallelepiped to the world, updates population and generation
      * and notify the observers about the change
-     * @param cell cell to add
+     * @param cellParallelepiped cellParallelepiped to add
      */
-    public void add(Cell cell) {
-        toAdd.add(cell);
+    public void add(CellParallelepiped cellParallelepiped) {
+        toAdd.add(cellParallelepiped);
     }
 
     /**
-     * Removes the given cell from the world and updates population and generation
+     * Removes the given cellParallelepiped from the world and updates population and generation
      * and notify the observers about the change
-     * @param cell cell to remove
+     * @param cellParallelepiped cellParallelepiped to remove
      */
-    void remove(Cell cell) {
-        toRemove.add(cell.parallelepiped.getCorner());
+    void remove(CellParallelepiped cellParallelepiped) {
+        toRemove.add(cellParallelepiped.parallelepiped.getCorner());
     }
 
     public void remove(Position currentSelection) {
-        Cell cellToRemove = null;
-        for (Cell cell : toAdd) {
-            if (cell.parallelepiped.getCorner().equals(currentSelection)) {
-                cellToRemove = cell;
+        CellParallelepiped cellParallelepipedToRemove = null;
+        for (CellParallelepiped cellParallelepiped : toAdd) {
+            if (cellParallelepiped.parallelepiped.getCorner().equals(currentSelection)) {
+                cellParallelepipedToRemove = cellParallelepiped;
                 break;
             }
         }
 
-        if (cellToRemove != null) {
-            toAdd.remove(cellToRemove);
+        if (cellParallelepipedToRemove != null) {
+            toAdd.remove(cellParallelepipedToRemove);
         }
 
         toRemove.add(currentSelection);
@@ -150,7 +148,7 @@ public class World extends Observable implements Runnable {
         /*
         for (ActiveCell cell : cellsMap.activeCellsValues()) {
             if (cell.delay == 0 || tickDelayNumber % cell.delay == 0) {
-                Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
+                Collection<? extends CellParallelepiped> toAddFromThisCell = cell.tickToAdd();
                 Collection<? extends Position> toRemoveFromThisCell = cell.tickToRemove();
 
                 if (toAddFromThisCell != null) {
@@ -226,8 +224,8 @@ public class World extends Observable implements Runnable {
     /**
      * @return set of cells removed since last invocation of getToRemove()
      */
-    public Set<Cell> getToAdd() {
-        Set<Cell> toAdd = new HashSet<>();
+    public Set<CellParallelepiped> getToAdd() {
+        Set<CellParallelepiped> toAdd = new HashSet<>();
         toAdd.addAll(getCells());
         toAdd.removeAll(lastSeenCellsSetToAdd);
 
@@ -254,7 +252,7 @@ public class World extends Observable implements Runnable {
         return cellsMap.containsKey(position);
     }
 
-    public void add(Position placeCursor, WorldCell staticCell) {
-        add(new Cell(new Parallelepiped(placeCursor), staticCell));
+    public void add(Position placeCursor, VisibleCell staticCell) {
+        add(new CellParallelepiped(new Parallelepiped(placeCursor), staticCell));
     }
 }

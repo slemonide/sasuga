@@ -7,10 +7,10 @@ import inventory.InventoryItem;
 /**
  * A cell that modifies the world actively
  * <p>
- *     Cell state is hard to compute for every given tick
+ *     CellParallelepiped state is hard to compute for every given tick
  * </p>
  */
-public enum DynamicCell implements InventoryItem, WorldCell {
+public enum DynamicCell implements InventoryItem, VisibleCell {
     ;
 
     @Override

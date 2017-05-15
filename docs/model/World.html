@@ -165,8 +165,8 @@ implements java.lang.Runnable</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../model/World.html#add-cells.Cell-">add</a></span>(<a href="../model/Cell.html" title="class in model">Cell</a>&nbsp;cell)</code>
-<div class="block">Adds the given cell to the world, updates population and generation
+<td class="colLast"><code><span class="memberNameLink"><a href="../model/World.html#add-cells.CellParallelepipedelepipeds.Cell-">add</a></span>(<a href="../model/Cell.html" title="class in model">Cell</a>&nbsp;cellParallelepiped)</code>
+<div class="block">Adds the given cellParallelepiped to the world, updates population and generation
  and notify the observers about the change</div>
 </td>
 </tr>
@@ -237,7 +237,7 @@ implements java.lang.Runnable</pre>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../model/World.html#run--">run</a></span>()</code>
-<div class="block">Start time by consequently running tick()'s on all the active cells</div>
+<div class="block">Start time by consequently running tick()'s on all the active cellParallelepipeds</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
@@ -249,7 +249,7 @@ implements java.lang.Runnable</pre>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../model/World.html#tick--">tick</a></span>()</code>
-<div class="block">Update all active cells, update the tick time and notify the observers about the change</div>
+<div class="block">Update all active cellParallelepipeds, update the tick time and notify the observers about the change</div>
 </td>
 </tr>
 </table>
@@ -323,7 +323,7 @@ implements java.lang.Runnable</pre>
 <li class="blockList">
 <h4>run</h4>
 <pre>public&nbsp;void&nbsp;run()</pre>
-<div class="block">Start time by consequently running tick()'s on all the active cells</div>
+<div class="block">Start time by consequently running tick()'s on all the active cellParallelepipeds</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>run</code>&nbsp;in interface&nbsp;<code>java.lang.Runnable</code></dd>
@@ -381,7 +381,7 @@ implements java.lang.Runnable</pre>
 <pre>public&nbsp;java.util.Collection&lt;<a href="../model/Cell.html" title="class in model">Cell</a>&gt;&nbsp;getCells()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Unmodifiable collection of all the cells in the world</dd>
+<dd>Unmodifiable collection of all the cellParallelepipeds in the world</dd>
 </dl>
 </li>
 </ul>
@@ -391,12 +391,12 @@ implements java.lang.Runnable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre>public&nbsp;void&nbsp;add(<a href="../model/Cell.html" title="class in model">Cell</a>&nbsp;cell)</pre>
-<div class="block">Adds the given cell to the world, updates population and generation
+<pre>public&nbsp;void&nbsp;add(<a href="../model/Cell.html" title="class in model">Cell</a>&nbsp;cellParallelepiped)</pre>
+<div class="block">Adds the given cellParallelepiped to the world, updates population and generation
  and notify the observers about the change</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>cell</code> - cell to add</dd>
+<dd><code>cellParallelepiped</code> - cellParallelepiped to add</dd>
 </dl>
 </li>
 </ul>
@@ -416,7 +416,7 @@ implements java.lang.Runnable</pre>
 <li class="blockList">
 <h4>tick</h4>
 <pre>public&nbsp;void&nbsp;tick()</pre>
-<div class="block">Update all active cells, update the tick time and notify the observers about the change</div>
+<div class="block">Update all active cellParallelepipeds, update the tick time and notify the observers about the change</div>
 </li>
 </ul>
 <a name="reset--">
@@ -476,7 +476,7 @@ implements java.lang.Runnable</pre>
 <pre>public&nbsp;java.util.Set&lt;<a href="../model/Cell.html" title="class in model">Cell</a>&gt;&nbsp;getToAdd()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>set of cells removed since last invocation of getToRemove()</dd>
+<dd>set of cellParallelepipeds removed since last invocation of getToRemove()</dd>
 </dl>
 </li>
 </ul>
@@ -489,7 +489,7 @@ implements java.lang.Runnable</pre>
 <pre>public&nbsp;java.util.Set&lt;<a href="../model/Position.html" title="class in model">Position</a>&gt;&nbsp;getToRemove()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>set of cells added since last invocation of getToAdd()</dd>
+<dd>set of cellParallelepipeds added since last invocation of getToAdd()</dd>
 </dl>
 </li>
 </ul>

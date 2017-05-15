@@ -1,6 +1,6 @@
 package world;
 
-import cells.Cell;
+import cells.CellParallelepiped;
 import cells.StaticCell;
 import geometry.Parallelepiped;
 import geometry.Position;
@@ -43,7 +43,7 @@ public class WorldTest {
 
     @Test
     public void testRemoveCell() {
-        World.getInstance().add(new Cell(new Parallelepiped(new Position(0, 0, 0)), StaticCell.WOOD));
+        World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(0, 0, 0)), StaticCell.WOOD));
         World.getInstance().tick();
         assertEquals(World.getInstance().getCellsMap().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
@@ -51,7 +51,7 @@ public class WorldTest {
         assertEquals(World.getInstance().getGeneration(), 1);
         assertEquals(World.getInstance().getTickTime(), 0, DELTA);
 
-        World.getInstance().remove(new Cell(new Parallelepiped(new Position(0, 0, 0)), StaticCell.DIRT));
+        World.getInstance().remove(new CellParallelepiped(new Parallelepiped(new Position(0, 0, 0)), StaticCell.DIRT));
         World.getInstance().tick();
         assertEquals(World.getInstance().getCells().size(), 0);
         assertEquals(World.getInstance().getPopulationSize(), 0);
@@ -61,7 +61,7 @@ public class WorldTest {
 
     @Test
     public void testRemoveCellPosition() {
-        World.getInstance().add(new Cell(new Parallelepiped(new Position(0, 0, 0)), StaticCell.STONE));
+        World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(0, 0, 0)), StaticCell.STONE));
         World.getInstance().tick();
         assertEquals(World.getInstance().getCellsMap().size(), 1);
         assertEquals(World.getInstance().getCells().size(), 1);
@@ -80,7 +80,7 @@ public class WorldTest {
     /*
     @Test
     public void testGrowthRate() {
-        World.getInstance().add(new Cell(new Position(0,0,0)));
+        World.getInstance().add(new CellParallelepiped(new Position(0,0,0)));
         World.getInstance().start();
         assertEquals(0, World.getInstance().getGrowthRate());
 
@@ -130,29 +130,29 @@ public class WorldTest {
 
     @Test
     public void testGetToAddBasic() {
-        World.getInstance().add(new Cell(new Parallelepiped(new Position(1,2,3)), StaticCell.WOOD));
+        World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(1,2,3)), StaticCell.WOOD));
         World.getInstance().tick();
         assertTrue(World.getInstance().getToRemove().isEmpty());
-        Set<Cell> toAdd = World.getInstance().getToAdd();
+        Set<CellParallelepiped> toAdd = World.getInstance().getToAdd();
         assertEquals(1, toAdd.size());
-        assertTrue(toAdd.contains(new Cell(new Parallelepiped(new Position(1,2,3)), StaticCell.WOOD)));
+        assertTrue(toAdd.contains(new CellParallelepiped(new Parallelepiped(new Position(1,2,3)), StaticCell.WOOD)));
     }
 
     @Test
     public void testGetToNoChange() {
-        World.getInstance().add(new Cell(new Parallelepiped(new Position(0,0,0)), StaticCell.DIRT));
+        World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(0,0,0)), StaticCell.DIRT));
         World.getInstance().remove(new Position(0,0,0));
         World.getInstance().tick();
 
         assertTrue(World.getInstance().getToRemove().isEmpty());
-        Set<Cell> toAdd = World.getInstance().getToAdd();
+        Set<CellParallelepiped> toAdd = World.getInstance().getToAdd();
 
         assertTrue(World.getInstance().getToAdd().isEmpty());
     }
 
     @Test
     public void testGetToRemoveBasic() {
-        World.getInstance().add(new Cell(new Parallelepiped(new Position(-1,-2,-3)), StaticCell.WOOD));
+        World.getInstance().add(new CellParallelepiped(new Parallelepiped(new Position(-1,-2,-3)), StaticCell.WOOD));
         World.getInstance().tick();
         assertEquals(1, World.getInstance().getToAdd().size());
         assertTrue(World.getInstance().getToRemove().isEmpty());

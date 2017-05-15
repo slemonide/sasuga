@@ -1,6 +1,6 @@
 package ui;
 
-import cells.Cell;
+import cells.CellParallelepiped;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -41,7 +41,7 @@ public class Environment implements Observer {
     private Map<Parallelepiped, Spatial> voxelMap;
     private ParallelepipedSpace parallelepipedSpace;
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
-    private Queue<Cell> toAdd;
+    private Queue<CellParallelepiped> toAdd;
     private Queue<Position> toRemove;
 
     private Geometry floor;
@@ -142,8 +142,8 @@ public class Environment implements Observer {
     private void updateFloor() {
         float minimumY = 0; // should be at least at the sea level
 
-        for (Cell cell : World.getInstance().getCells()) {
-            minimumY = Math.min(minimumY, cell.parallelepiped.getCorner().y * SCALE);
+        for (CellParallelepiped cellParallelepiped : World.getInstance().getCells()) {
+            minimumY = Math.min(minimumY, cellParallelepiped.parallelepiped.getCorner().y * SCALE);
         }
 
         Vector3f floorTranslation = getFloor().getLocalTranslation();
@@ -153,9 +153,9 @@ public class Environment implements Observer {
 
     private void updateCells() {
         while (toAdd.peek() != null) {
-            Cell cell = toAdd.remove();
+            CellParallelepiped cellParallelepiped = toAdd.remove();
 
-            addSpatial(cell);
+            addSpatial(cellParallelepiped);
         }
 
         while (toRemove.peek() != null) {
@@ -165,10 +165,10 @@ public class Environment implements Observer {
         }
     }
 
-    private void addSpatial(Cell cell) {
-        removeSpatial(cell.parallelepiped.getCorner());
+    private void addSpatial(CellParallelepiped cellParallelepiped) {
+        removeSpatial(cellParallelepiped.parallelepiped.getCorner());
 
-        parallelepipedSpace.add(cell.parallelepiped.getCorner());
+        parallelepipedSpace.add(cellParallelepiped.parallelepiped.getCorner());
 
         updateSpatials();
     }
@@ -229,8 +229,8 @@ public class Environment implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         // NOTE: addAll won't work here
-        for (Cell cell : World.getInstance().getToAdd()) {
-            toAdd.add(cell);
+        for (CellParallelepiped cellParallelepiped : World.getInstance().getToAdd()) {
+            toAdd.add(cellParallelepiped);
         }
         for (Position position : World.getInstance().getToRemove()) {
             toRemove.add(position);

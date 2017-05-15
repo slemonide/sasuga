@@ -26,7 +26,7 @@
                               width="100%" height="100%"/>
                     </panel>
                     <panel width="100%" height="10%" childLayout="horizontal">
-                        <text text="Growth rate: 1 cells/tick"
+                        <text text="Growth rate: 1 cellParallelepipeds/tick"
                               id="growth_rate"
                               font="Interface/Fonts/Arial.fnt"
                               color="77883e"

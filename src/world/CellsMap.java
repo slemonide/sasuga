@@ -1,8 +1,6 @@
 package world;
 
-import cells.Cell;
-import cells.DynamicCell;
-import cells.StaticCell;
+import cells.CellParallelepiped;
 import geometry.Position;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,9 +13,9 @@ import java.util.*;
  *
  * Maps positions to cells
  */
-public class CellsMap implements Map<Position, Cell> {
-    Map<Position, Cell> staticCells;
-    Map<Position, Cell> activeCells;
+public class CellsMap implements Map<Position, CellParallelepiped> {
+    Map<Position, CellParallelepiped> staticCells;
+    Map<Position, CellParallelepiped> activeCells;
 
     public CellsMap() {
         staticCells = Collections.synchronizedMap(new HashMap<>());
@@ -45,13 +43,13 @@ public class CellsMap implements Map<Position, Cell> {
     }
 
     @Override
-    public Cell get(Object key) {
+    public CellParallelepiped get(Object key) {
         return staticCells.getOrDefault(key, activeCells.get(key));
     }
 
     @Override
-    public Cell put(Position key, Cell value) {
-        Cell previousValue = get(key);
+    public CellParallelepiped put(Position key, CellParallelepiped value) {
+        CellParallelepiped previousValue = get(key);
 
         // need this to avoid collisions between the maps
         remove(key);
@@ -66,8 +64,8 @@ public class CellsMap implements Map<Position, Cell> {
     }
 
     @Override
-    public Cell remove(Object key) {
-        Cell previousValue = get(key);
+    public CellParallelepiped remove(Object key) {
+        CellParallelepiped previousValue = get(key);
 
         activeCells.remove(key);
         staticCells.remove(key);
@@ -76,7 +74,7 @@ public class CellsMap implements Map<Position, Cell> {
     }
 
     @Override
-    public void putAll(@NotNull Map<? extends Position, ? extends Cell> m) {
+    public void putAll(@NotNull Map<? extends Position, ? extends CellParallelepiped> m) {
         for (Position position : m.keySet()) {
             put(position, m.get(position));
         }
@@ -104,8 +102,8 @@ public class CellsMap implements Map<Position, Cell> {
 
     @NotNull
     @Override
-    public Collection<Cell> values() {
-        Collection<Cell> valueSet = new HashSet<>();
+    public Collection<CellParallelepiped> values() {
+        Collection<CellParallelepiped> valueSet = new HashSet<>();
         synchronized (staticCells) {
             valueSet.addAll(staticCells.values());
         }
@@ -118,8 +116,8 @@ public class CellsMap implements Map<Position, Cell> {
 
     @NotNull
     @Override
-    public Set<Entry<Position, Cell>> entrySet() {
-        Set<Entry<Position, Cell>> entrySet = new HashSet<>();
+    public Set<Entry<Position, CellParallelepiped>> entrySet() {
+        Set<Entry<Position, CellParallelepiped>> entrySet = new HashSet<>();
         entrySet.addAll(staticCells.entrySet());
 
         for (Position position : activeCells.keySet()) {
@@ -143,10 +141,10 @@ public class CellsMap implements Map<Position, Cell> {
         return staticCells.keySet();
     }
 
-    public void addAll(Set<Cell> cells) {
-        synchronized (cells) {
-            for (Cell cell : cells) {
-                put(cell.parallelepiped.getCorner(), cell);
+    public void addAll(Set<CellParallelepiped> cellParallelepipeds) {
+        synchronized (cellParallelepipeds) {
+            for (CellParallelepiped cellParallelepiped : cellParallelepipeds) {
+                put(cellParallelepiped.parallelepiped.getCorner(), cellParallelepiped);
             }
         }
     }
