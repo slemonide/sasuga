@@ -1,7 +1,8 @@
 package world;
 
-import cells.ActiveCell;
 import cells.Cell;
+import cells.DynamicCell;
+import cells.StaticCell;
 import geometry.Position;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ import java.util.*;
  */
 public class CellsMap implements Map<Position, Cell> {
     Map<Position, Cell> staticCells;
-    Map<Position, ActiveCell> activeCells;
+    Map<Position, Cell> activeCells;
 
     public CellsMap() {
         staticCells = Collections.synchronizedMap(new HashMap<>());
@@ -55,11 +56,11 @@ public class CellsMap implements Map<Position, Cell> {
         // need this to avoid collisions between the maps
         remove(key);
 
-        if (value instanceof ActiveCell) {
-            activeCells.put(key, (ActiveCell) value);
-        } else {
+        //if (value instanceof DynamicCell) {
+        //    activeCells.put(key, (ActiveCell) value);
+        //} else {
             staticCells.put(key, value);
-        }
+        //}
 
         return previousValue;
     }
@@ -142,14 +143,10 @@ public class CellsMap implements Map<Position, Cell> {
         return staticCells.keySet();
     }
 
-    public Collection<ActiveCell> activeCellsValues() {
-        return activeCells.values();
-    }
-
     public void addAll(Set<Cell> cells) {
         synchronized (cells) {
             for (Cell cell : cells) {
-                put(cell.getPosition(), cell);
+                put(cell.parallelepiped.getCorner(), cell);
             }
         }
     }

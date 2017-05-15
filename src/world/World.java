@@ -1,7 +1,8 @@
 package world;
 
-import cells.ActiveCell;
+import cells.AnimatedCell;
 import cells.Cell;
+import cells.StaticCell;
 import geometry.Position;
 
 import java.util.*;
@@ -118,13 +119,13 @@ public class World extends Observable implements Runnable {
      * @param cell cell to remove
      */
     void remove(Cell cell) {
-        toRemove.add(cell.getPosition());
+        toRemove.add(cell.parallelepiped.getCorner());
     }
 
     public void remove(Position currentSelection) {
         Cell cellToRemove = null;
         for (Cell cell : toAdd) {
-            if (cell.position.equals(currentSelection)) {
+            if (cell.parallelepiped.getCorner().equals(currentSelection)) {
                 cellToRemove = cell;
                 break;
             }
@@ -144,6 +145,7 @@ public class World extends Observable implements Runnable {
         // tickTime measurement
         long startTime = System.nanoTime();
 
+        /*
         for (ActiveCell cell : cellsMap.activeCellsValues()) {
             if (cell.delay == 0 || tickDelayNumber % cell.delay == 0) {
                 Collection<? extends Cell> toAddFromThisCell = cell.tickToAdd();
@@ -159,7 +161,7 @@ public class World extends Observable implements Runnable {
                 cell.tick();
             }
         }
-        tickDelayNumber++;
+        tickDelayNumber++;*/
 
         // update cursor location
         // NOTE: if too costly, move to GUI and use only on camera movement
@@ -248,5 +250,13 @@ public class World extends Observable implements Runnable {
 
     public boolean containsCellAt(Position position) {
         return cellsMap.containsKey(position);
+    }
+
+    public void add(Position placeCursor, StaticCell staticCell) {
+        // TODO: finish
+    }
+
+    public void add(Position placeCursor, AnimatedCell animatedCell) {
+        // TODO: finish
     }
 }

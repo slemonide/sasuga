@@ -1,5 +1,7 @@
 package inventory;
 
+import cells.Player;
+import geometry.Position;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,11 +9,12 @@ import static org.junit.Assert.*;
 
 public class InventoryTest {
     private static final int INVENTORY_SIZE = 10;
+    private static final Player testPlayer = new Player(new Position(0,0,0));
     private Inventory testInventory;
 
     @Before
     public void runBefore() throws Exception {
-        testInventory = new Inventory(INVENTORY_SIZE);
+        testInventory = new Inventory(testPlayer, INVENTORY_SIZE);
     }
 
     @Test
@@ -24,56 +27,25 @@ public class InventoryTest {
             assertEquals("", testInventory.getName(i));
         }
 
-        testInventory = new Inventory(2);
+        testInventory = new Inventory(testPlayer, 2);
         assertEquals(2, testInventory.getInventorySize());
     }
 
     @Test(expected = Exception.class)
     public void testConstructorInvalidSize() throws Exception {
-        new Inventory(-1);
+        new Inventory(testPlayer, -1);
     }
 
     @Test(expected = Exception.class)
     public void testConstructorInvalidSizeAnotherOne() throws Exception {
-        new Inventory(-100);
+        new Inventory(testPlayer, -100);
     }
 
     @Test
     public void testConstructorZeroSize() throws Exception {
-        testInventory = new Inventory(0);
+        testInventory = new Inventory(testPlayer, 0);
 
         assertEquals(0, testInventory.getInventorySize());
-    }
-
-    @Test
-    public void testSelectedSlot() {
-        fillInventory(testInventory);
-        testInventory.setSelectedSlot(1);
-        assertEquals("1", testInventory.getSelectedItem().getName());
-
-        testInventory.setSelectedSlot(6);
-        assertEquals("6", testInventory.getSelectedItem().getName());
-    }
-
-    /**
-     * Fills inventory with test items
-     */
-    private void fillInventory(Inventory inventory) {
-        for (int i = 0; i < inventory.getInventorySize(); i++) {
-            inventory.add(new InventoryItem(Integer.toString(i), null));
-        }
-    }
-
-    private void checkInventoryFilling(Inventory inventory) {
-        for (int i = 0; i < inventory.getInventorySize(); i++) {
-            assertEquals(Integer.toString(i), inventory.getInventoryItem(i).getName());
-        }
-    }
-
-    @Test
-    public void testInventoryFilling() {
-        fillInventory(testInventory);
-        checkInventoryFilling(testInventory);
     }
 
     @Test

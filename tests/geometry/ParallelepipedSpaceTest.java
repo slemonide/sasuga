@@ -1,6 +1,5 @@
 package geometry;
 
-import cells.RandomWalkCell;
 import org.junit.Before;
 import org.junit.Test;
 import util.Difference;
@@ -837,7 +836,24 @@ public class ParallelepipedSpaceTest {
             assertTrue(testSpace.contains(currentPosition));
             assertEquals(positions.size(), testSpace.getVolume());
 
-            currentPosition = currentPosition.add(RandomWalkCell.nextPosition());
+            currentPosition = currentPosition.add(nextPosition());
+        }
+    }
+
+    private Position nextPosition() {
+        switch (RANDOM.nextInt(6)) {
+            case 0:
+                return new Position(1, 0, 0);
+            case 1:
+                return new Position(-1, 0, 0);
+            case 2:
+                return new Position(0, 1, 0);
+            case 3:
+                return new Position(0, -1, 0);
+            case 4:
+                return new Position(0, 0, 1);
+            default:
+                return new Position(0, 0, -1);
         }
     }
 
@@ -860,7 +876,7 @@ public class ParallelepipedSpaceTest {
                     (MAX_STEPS_RANDOMWALK_REMOVE * 2) *
                     (MAX_STEPS_RANDOMWALK_REMOVE * 2) - removedPositions.size(), testSpace.getVolume());
 
-            currentPosition = currentPosition.add(RandomWalkCell.nextPosition());
+            currentPosition = currentPosition.add(nextPosition());
         }
     }
 

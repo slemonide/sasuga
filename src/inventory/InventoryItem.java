@@ -1,34 +1,12 @@
 package inventory;
 
+import geometry.Position;
+
 /**
- * An inventory item that has a name and an assigned action
+ * An item that can be stored in the inventory
  */
-public class InventoryItem {
-    private String name;
-    private F action;
+public interface InventoryItem {
 
-    /**
-     * Create a new InventoryItem with the given name and an assigned action
-     */
-    public interface F { void f(); }
-    public InventoryItem(String name, F action) {
-        this.name = name;
-        this.action = action;
-    }
-
-    /**
-     * @return name of this inventory item
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Execute the assigned action
-     */
-    public void use() {
-        if (action != null) {
-            action.f();
-        }
-    }
+    String getName();
+    void use(Position placeCursor, Position removeCursor, Position player);
 }

@@ -1,17 +1,11 @@
 package cells;
 
-import cells.landscape.LandscapeCell;
-import cells.landscape.LandscapeCellX;
-import cells.landscape.LandscapeCellZ;
-import cells.wireworld.Conductor;
-import cells.wireworld.ElectronHead;
-import cells.wireworld.ElectronTail;
 import geometry.Position;
 import inventory.Inventory;
-import inventory.InventoryItem;
 import world.*;
 
 import java.util.Collection;
+import java.util.Observable;
 import java.util.Random;
 
 /**
@@ -30,7 +24,7 @@ import java.util.Random;
  *      selectedInventorySlot < inventory.length
  *      0 <= rotation <= 2 * Math.PI
  */
-public class Player extends ActiveCell {
+public class Player extends Observable {
     private static final int MIN_HUNGER_DELAY = World.TICKS_PER_SECOND; // in ticks
     private static final int STRENGTH_REDUCTION_THRESHOLD = 30;
     private static final int AGILITY_REDUCTION_THRESHOLD = 20;
@@ -47,16 +41,14 @@ public class Player extends ActiveCell {
     private float rotation;
     private Position selectedBlock;
     private Position selectedBlockFace;
+    private Position position;
 
     /**
      * Create a cell at the given position with randomly chosen stats
      *
      * @param position position of this cell
      */
-    private Player(Position position) {
-        super(position);
-        setName("Player");
-
+    public Player(Position position) {
         selectedBlock = position;
         selectedBlockFace = position;
 
@@ -69,28 +61,11 @@ public class Player extends ActiveCell {
         agility = 30 + random.nextInt(71);
         hunger = 40 + random.nextInt(61);
 
-        inventory = new Inventory(INVENTORY_SIZE);
-        //inventory.add(new InventoryItem("Say Hi",
-        //        () -> System.out.println("Hi")));
+        inventory = new Inventory(this, INVENTORY_SIZE);
 
-        inventory.add(new InventoryItem("Cell",
-                () ->  World.getInstance().add(new Cell(getSelectedBlockFace()))));
-        inventory.add(new InventoryItem("Random Walk",
-                () ->  World.getInstance().add(new RandomWalkCell(getSelectedBlockFace()))));
-        inventory.add(new InventoryItem("Landscape",
-                () ->  World.getInstance().add(new LandscapeCell(getSelectedBlockFace()))));
-
-
-        /*inventory.add(new InventoryItem("Landscape X",
-                () ->  World.getInstance().add(new LandscapeCellX(getSelectedBlockFace()))));
-        inventory.add(new InventoryItem("Landscape Z",
-                () ->  World.getInstance().add(new LandscapeCellZ(getSelectedBlockFace()))));
-        inventory.add(new InventoryItem("Wireworld Wire",
-                () ->  World.getInstance().add(new Conductor(getSelectedBlockFace()))));
-        inventory.add(new InventoryItem("Electron Head",
-                () ->  World.getInstance().add(new ElectronHead(getSelectedBlockFace()))));
-        inventory.add(new InventoryItem("Electron Tail",
-                () ->  World.getInstance().add(new ElectronTail(getSelectedBlockFace()))));*/
+        for (StaticCell staticCell : StaticCell.values()) {
+            inventory.add(staticCell);
+        }
 
         hasValidState();
     }
@@ -119,7 +94,6 @@ public class Player extends ActiveCell {
      * lowers player's stats, if below certain thresholds individual to each stat
      * Counts MIN_HUNGER_DELAY world ticks between each hunger tick
      */
-    @Override
     public void tick() {
         if (hungerDelay > MIN_HUNGER_DELAY) {
             int hunger = getHunger();
@@ -146,17 +120,6 @@ public class Player extends ActiveCell {
 
         hasValidState();
     }
-
-    @Override
-    public Collection<? extends Cell> tickToAdd() {
-        return null;
-    }
-
-    @Override
-    public Collection<? extends Position> tickToRemove() {
-        return null;
-    }
-
 
     public int getHealth() {
         return health;
@@ -279,5 +242,9 @@ public class Player extends ActiveCell {
 
     public void setSelectedBlockFace(Position selectedBlockFace) {
         this.selectedBlockFace = selectedBlockFace;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

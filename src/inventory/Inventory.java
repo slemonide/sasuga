@@ -1,5 +1,7 @@
 package inventory;
 
+import cells.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * An inventory that can contain InventoryItems's
  */
 public class Inventory {
+    private Player player;
     private int maxSize;
     private int selectedSlot;
     private List<InventoryItem> inventory;
@@ -15,11 +18,12 @@ public class Inventory {
      * Create a new inventory of the given maxSize and 0 as the selected slot.
      * Also fills all slots with the default item
      */
-    public Inventory(int maxSize) throws RuntimeException {
+    public Inventory(Player player, int maxSize) throws RuntimeException {
         if (maxSize < 0) {
             throw new RuntimeException("Inventory maxSize must be nonnegative");
         }
 
+        this.player = player;
         this.maxSize = maxSize;
         this.selectedSlot = 0;
         this.inventory = new ArrayList<>(maxSize + 1);
@@ -121,7 +125,7 @@ public class Inventory {
 
     public void useSelectedItem() {
         if (getSelectedItem() != null) {
-            getSelectedItem().use();
+            getSelectedItem().use(player.getSelectedBlock(), player.getSelectedBlockFace(), player.getPosition());
         }
     }
 }
