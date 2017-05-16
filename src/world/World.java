@@ -38,7 +38,7 @@ public class World extends Observable implements Runnable {
         generation = 0;
         population = 0;
         tickDelayNumber = 0;
-        cellStorage = new CellStorage();
+        cellStorage = new SetCellStorage();
         worldThread = new Thread(this);
 
         lastSeenCellsSetToAdd = new HashSet<>();
@@ -101,7 +101,7 @@ public class World extends Observable implements Runnable {
      * @return Unmodifiable collection of all the cells in the world
      */
     public Collection<CellParallelepiped> getCells() {
-        return Collections.unmodifiableCollection(cellStorage.values());
+        return Collections.unmodifiableCollection(cellStorage.cellParallelepipeds());
     }
 
     /**
@@ -241,15 +241,15 @@ public class World extends Observable implements Runnable {
     public Set<Position> getToRemove() {
         Set<Position> toRemove = new HashSet<>();
         toRemove.addAll(lastSeenPositionSetToRemove);
-        toRemove.removeAll(cellStorage.keySet());
+        toRemove.removeAll(cellStorage.positions());
         lastSeenPositionSetToRemove.clear();
-        lastSeenPositionSetToRemove.addAll(cellStorage.keySet());
+        lastSeenPositionSetToRemove.addAll(cellStorage.positions());
 
         return toRemove;
     }
 
     public boolean containsCellAt(Position position) {
-        return cellStorage.containsKey(position);
+        return cellStorage.contains(position);
     }
 
     public void add(Position placeCursor, WorldCell staticCell) {
