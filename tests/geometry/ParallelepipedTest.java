@@ -181,11 +181,11 @@ public class ParallelepipedTest {
     @Test
     public void testGetVolume() {
         assertEquals(1,
-                new Parallelepiped(new Position(0,0,0)).getVolume());
+                new Parallelepiped(new Position(0,0,0)).volume());
         assertEquals(2,
-                new Parallelepiped(new Position(0,0,0), 1, 2, 1).getVolume());
+                new Parallelepiped(new Position(0,0,0), 1, 2, 1).volume());
         assertEquals(10 * 4 * 7,
-                new Parallelepiped(new Position(0,0,0), 10, 4, 7).getVolume());
+                new Parallelepiped(new Position(0,0,0), 10, 4, 7).volume());
     }
 
     @Test
@@ -435,5 +435,46 @@ public class ParallelepipedTest {
                         .contains(new Parallelepiped(new Position(0, 0, 0), 1, 2, 1)));
             }
         }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPositionFromIndexTooBigException() {
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+
+        parallelepiped.positionFromIndex(2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPositionFromIndexTooSmallException() {
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+
+        parallelepiped.positionFromIndex(0);
+    }
+
+    @Test
+    public void testPositionFromIndex() {
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 11, 21, 27);
+
+        Set<Position> positions = new HashSet<>();
+
+        for (int i = 1; i <= parallelepiped.volume(); i++) {
+            positions.add(parallelepiped.positionFromIndex(i));
+        }
+
+        assertEquals(positions.size(), parallelepiped.volume());
+    }
+
+    @Test
+    public void testPositionFromIndexNonZeroPosition() {
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(-30,4,5), 11, 21, 27);
+
+        Set<Position> positions = new HashSet<>();
+
+        for (int i = 1; i <= parallelepiped.volume(); i++) {
+            positions.add(parallelepiped.positionFromIndex(i));
+        }
+
+        assertEquals(positions.size(), parallelepiped.volume());
+        assertTrue(positions.contains(new Position(-30,4,5)));
     }
 }

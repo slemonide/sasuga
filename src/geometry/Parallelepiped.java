@@ -97,13 +97,11 @@ public final class Parallelepiped {
         return result;
     }
 
-    @NotNull
-    public Parallelepiped setCorner(Position corner) {
+    @NotNull Parallelepiped setCorner(Position corner) {
         return new Parallelepiped(corner, xSize, ySize, zSize);
     }
 
-    @NotNull
-    public Parallelepiped setSize(@NotNull Axis axis, int size) {
+    @NotNull Parallelepiped setSize(@NotNull Axis axis, int size) {
         switch (axis) {
             case X:
                 return new Parallelepiped(corner, size, ySize, zSize);
@@ -114,7 +112,15 @@ public final class Parallelepiped {
         }
     }
 
-    public long getVolume() {
+    /**
+     * Produce the volume of this parallelepiped
+     *
+     * <p>
+     *     Volume is equal to xSize * ySize * zSize
+     * </p>
+     * @return volume of this parallelepiped
+     */
+    long volume() {
         int volumeSoFar = 1;
 
         for (Axis axis : Axis.values()) {
@@ -136,7 +142,7 @@ public final class Parallelepiped {
      * @return true if this parallelepiped intersects with the given parallelepiped,
      * false otherwise
      */
-    public boolean intersects(@NotNull Parallelepiped otherParallelepiped) {
+    boolean intersects(@NotNull Parallelepiped otherParallelepiped) {
         for (Axis axis : Axis.values()) {
             IntegerInterval intervalA = new IntegerInterval(
                     this.getCorner().get(axis),
@@ -160,8 +166,8 @@ public final class Parallelepiped {
      * @param axis axis on which to check for neighbours
      * @return collection of found neighbours
      */
-    public Collection<? extends Parallelepiped> getInterlockingNeighbours(@NotNull ParallelepipedSpace space,
-                                                                          @NotNull Axis axis) {
+    Collection<? extends Parallelepiped> getInterlockingNeighbours(@NotNull ParallelepipedSpace space,
+                                                                   @NotNull Axis axis) {
         Set<Parallelepiped> neighbours = new HashSet<>();
 
         Position unitVector = axis.getUnitVector();
@@ -181,8 +187,8 @@ public final class Parallelepiped {
      * @param parallelepiped parallelepiped to check the fitness with
      * @return true if the sizes of parallelepipeds match, false otherwise
      */
-    public boolean fits(@NotNull Axis axis,
-                        @NotNull Parallelepiped parallelepiped) {
+    boolean fits(@NotNull Axis axis,
+                 @NotNull Parallelepiped parallelepiped) {
 
         for (Axis complementAxis : axis.getComplements()) {
             if (this.getSize(complementAxis) != parallelepiped.getSize(complementAxis)
@@ -192,5 +198,31 @@ public final class Parallelepiped {
         }
 
         return true;
+    }
+
+    /**
+     * If index is in [1,volume()], then produce a unique position inside this parallelepiped,
+     * otherwise throw IllegalArgumentException
+     * @param index any positive number between 1 and volume() (inclusive)
+     * @return position in this parallelepiped
+     * @throws IllegalArgumentException if index is less then 1 or greater then volume()
+     */
+    @NotNull Position positionFromIndex(int index) throws IllegalArgumentException {
+        if (index < 1 || index > volume()) {
+            throw new IllegalArgumentException();
+        }
+
+        int x = index % xSize;
+        assert x < xSize;
+        int y = (index / xSize) % ySize;
+        assert y < ySize;
+        int z = (index / (xSize * ySize)) % zSize;
+        assert z < zSize;
+
+        Position position = corner.add(x, y, z);
+
+        assert this.contains(position);
+
+        return position;
     }
 }

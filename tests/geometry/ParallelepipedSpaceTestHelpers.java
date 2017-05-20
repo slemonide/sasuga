@@ -1,6 +1,7 @@
 package geometry;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  * Helpers for the ParallelepipedSpaceTest class
@@ -68,5 +69,19 @@ final class ParallelepipedSpaceTestHelpers {
                 space.remove(new Position(x, y, 0));
             }
         }
+    }
+
+    static void buildRandomCloud(ParallelepipedSpace space) {
+        Stream.iterate(1, i -> i+1).limit(1000).forEach(integer -> {
+            if (RANDOM.nextInt(10) == 1) {
+                space.add(positionFromIndex(integer));
+            }
+        });
+    }
+
+    private static Position positionFromIndex(int integer) {
+        // TODO: finish
+
+        return new Position(0,0,0);
     }
 }

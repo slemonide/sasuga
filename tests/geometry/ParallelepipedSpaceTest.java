@@ -961,4 +961,11 @@ public class ParallelepipedSpaceTest {
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(2,1,1),
                 2,1,1)));
     }
+
+    // End of implementation-dependent tests
+
+    @Test
+    public void testIterator() {
+
+    }
 }
