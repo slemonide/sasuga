@@ -4,8 +4,10 @@ import cells.CellParallelepiped;
 import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -73,21 +75,47 @@ public interface CellStorage {
     void removeAll(Collection<Position> toRemove);
 
     /**
+     * Produce true if the given position is in this storage, false otherwise
+     * @param position position whose presence in this storage is to be tested
+     * @return true if the given position is in this storage, false otherwise
+     */
+    boolean contains(Position position);
+
+    /**
+     * Remove all elements from this CellStorage
+     */
+    void clear();
+
+    /**
+     * Produce true if this CellStorage is empty, false otherwise
+     * @return true if this CellStorage is empty, false otherwise
+     */
+    boolean isEmpty();
+
+    /**
+     * Produce the number of parallelepipeds in this CellStorage
+     * @return number of parallelepipeds in this CellStorage
+     */
+    int size();
+
+    /**
      * Produce the set of all cell parallelepipeds in the storage
      * @return set of all cell parallelepipeds in the storage
      */
+    @NotNull
     Set<CellParallelepiped> cellParallelepipeds();
 
     /**
      * Produce the set of all positions in the storage
      * @return set of all positions in the storage
      */
+    @NotNull
     Set<Position> positions();
 
     /**
-     * Produce true if the given position is in this storage, false otherwise
-     * @param position position whose presence in this storage is to be tested
-     * @return true if the given position is in this storage, false otherwise
+     * Maybe produce the cellParallelepiped containing the given position
+     * @param position position that the cellParallelepiped contains
      */
-    boolean contains(Position position);
+    @NotNull
+    Optional<CellParallelepiped> get(Position position);
 }

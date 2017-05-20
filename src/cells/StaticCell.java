@@ -12,7 +12,8 @@ public enum StaticCell implements InventoryItem, WorldCell {
     STONE("Stone", ColorRGBA.Gray),
     DIRT("Dirt", ColorRGBA.Orange),
     GRASS("Grass", ColorRGBA.Green),
-    WOOD("Wood", ColorRGBA.Brown);
+    WOOD("Wood", ColorRGBA.Brown),
+    WOOL("Wool", ColorRGBA.White);
 
     private final String name;
     private final ColorRGBA color;

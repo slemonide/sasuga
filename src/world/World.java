@@ -38,7 +38,7 @@ public class World extends Observable implements Runnable {
         generation = 0;
         population = 0;
         tickDelayNumber = 0;
-        cellStorage = new SetCellStorage();
+        cellStorage = new HashMapCellStorage();
         worldThread = new Thread(this);
 
         lastSeenCellsSetToAdd = new HashSet<>();
@@ -192,7 +192,7 @@ public class World extends Observable implements Runnable {
     /**
      * Reset the world and notify the observers about the change
      */
-    public void reset() {
+    void reset() {
         instance = new World();
 
         setChanged();
@@ -217,7 +217,7 @@ public class World extends Observable implements Runnable {
         return growthRate;
     }
 
-    public CellStorage getCellStorage() {
+    CellStorage getCellStorage() {
         return cellStorage;
     }
 

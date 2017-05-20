@@ -2,8 +2,7 @@ package geometry;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static geometry.Axis.X;
@@ -16,7 +15,7 @@ import static geometry.Axis.Z;
  * invariant
  *    no parallelepipeds contain the same block twice
  */
-public class ParallelepipedSpace {
+public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     private Set<Parallelepiped> parallelepipeds;
 
     /**
@@ -45,7 +44,7 @@ public class ParallelepipedSpace {
      * <p>It's expected that the given parallelepiped does not intersect with any already existing parallelepipeds</p>
      * @param parallelepiped new position to be added
      */
-    private void add(@NotNull Parallelepiped parallelepiped) {
+    public void add(@NotNull Parallelepiped parallelepiped) {
         assert (!parallelepipeds.contains(parallelepiped));
 
         for (Axis axis : Axis.values()) {
@@ -239,5 +238,31 @@ public class ParallelepipedSpace {
         }
 
         return false;
+    }
+
+    public void remove(Parallelepiped parallelepiped) {
+        // TODO: implement
+    }
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @NotNull
+    @Override
+    public Iterator<Parallelepiped> iterator() {
+        return parallelepipeds.iterator();
+    }
+
+    /**
+     * Produce the set of all positions in the storage
+     *
+     * @return set of all positions in the storage
+     */
+    public Collection<? extends Position> positions() {
+        // TODO: implement
+
+        return new HashSet<>();
     }
 }
