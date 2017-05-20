@@ -81,7 +81,6 @@ public class HashMapCellStorage implements CellStorage {
     /**
      * Adds given parallelepiped with assigned worldCell to the storage
      * <p>
-     * <p>
      * Creates a unit parallelepiped from the given position.
      * </p>
      *
