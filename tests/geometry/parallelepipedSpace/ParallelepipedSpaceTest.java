@@ -305,11 +305,7 @@ public class ParallelepipedSpaceTest {
     public void testPositions() {
         buildRandomCloud(testSpace);
 
-        int volume = 0;
-
-        for (Position position : testSpace.positions()) {
-            volume++;
-        }
+        int volume = testSpace.positions().mapToInt(position -> 1).sum();
 
         assertEquals(volume, testSpace.getVolume());
     }

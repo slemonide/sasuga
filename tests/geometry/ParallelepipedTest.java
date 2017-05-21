@@ -477,4 +477,13 @@ public class ParallelepipedTest {
         assertEquals(positions.size(), parallelepiped.getVolume());
         assertTrue(positions.contains(new Position(-30,4,5)));
     }
+
+    @Test
+    public void testPositions() {
+        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 7, 9, 11);
+
+        int volume = parallelepiped.positions().mapToInt(position -> 1).sum();
+
+        assertEquals(volume, parallelepiped.getVolume());
+    }
 }

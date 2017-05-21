@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Stream;
 
 import static geometry.Axis.X;
 import static geometry.Axis.Y;
@@ -261,14 +262,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      * @return set of all positions in the storage
      */
     @NotNull
-    public Collection<? extends Position> positions() {
-        // TODO: implement using streams
-        Set<Position> positions = new HashSet<>();
-
-        for (Parallelepiped parallelepiped : parallelepipeds) {
-            positions.addAll(parallelepiped.positions());
-        }
-
-        return positions;
+    public Stream<Position> positions() {
+        return parallelepipeds.stream().flatMap(Parallelepiped::positions);
     }
 }

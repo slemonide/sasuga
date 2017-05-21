@@ -8,6 +8,7 @@ import geometry.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Set-based implementation of CellStorage
@@ -222,7 +223,7 @@ public class HashMapCellStorage implements CellStorage {
         Set<Position> positions = new HashSet<>();
 
         for (ParallelepipedSpace parallelepipedSpace : storage.values()) {
-            positions.addAll(parallelepipedSpace.positions());
+            positions.addAll(parallelepipedSpace.positions().collect(Collectors.toSet()));
         }
 
         return positions;

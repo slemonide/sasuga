@@ -233,13 +233,7 @@ public final class Parallelepiped {
      *
      * @return set of all positions in the parallelepiped
      */
-    public Collection<? extends Position> positions() {
-        // TODO: test this
-        Set<Position> positions = new HashSet<>();
-
-        Stream.iterate(1, i -> i+1).limit(getVolume())
-                .forEach(index -> positions.add(positionFromIndex(index)));
-
-        return positions;
+    public Stream<Position> positions() {
+        return Stream.iterate(1, i -> i+1).limit(getVolume()).map(this::positionFromIndex);
     }
 }
