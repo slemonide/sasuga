@@ -1,4 +1,8 @@
-package geometry;
+package geometry.parallelepipedSpace;
+
+import geometry.Parallelepiped;
+import geometry.ParallelepipedSpace;
+import geometry.Position;
 
 import java.util.Random;
 import java.util.stream.Stream;
@@ -72,16 +76,34 @@ final class ParallelepipedSpaceTestHelpers {
     }
 
     static void buildRandomCloud(ParallelepipedSpace space) {
-        Stream.iterate(1, i -> i+1).limit(1000).forEach(integer -> {
+        Position center = new Position(0,0,0);
+        Parallelepiped parallelepiped = new Parallelepiped(center, 13, 21, 33);
+
+        Stream.iterate(1, i -> i+1).limit(parallelepiped.getVolume() + 1).forEach(index -> {
             if (RANDOM.nextInt(10) == 1) {
-                space.add(positionFromIndex(integer));
+                space.add(parallelepiped.positionFromIndex(index));
             }
         });
     }
 
-    private static Position positionFromIndex(int integer) {
-        // TODO: finish
+    static void buildParallelepiped(ParallelepipedSpace space) {
+        for (int x = 0; x < ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X; x++) {
+            for (int y = 0; y < ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y; y++) {
+                for (int z = 0; z < ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z; z++) {
+                    space.add(new Position(x, y, z));
+                }
+            }
+        }
+    }
 
-        return new Position(0,0,0);
+    static void buildUnitCube(ParallelepipedSpace space) {
+        space.add(new Position(1,0,0));
+        space.add(new Position(0,0,0));
+        space.add(new Position(1,1,0));
+        space.add(new Position(0,1,0));
+        space.add(new Position(1,0,1));
+        space.add(new Position(0,0,1));
+        space.add(new Position(1,1,1));
+        space.add(new Position(0,1,1));
     }
 }

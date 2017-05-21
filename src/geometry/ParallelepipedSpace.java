@@ -103,7 +103,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
             assert toSplit != null;
 
             parallelepipeds.remove(toSplit);
-            if (toSplit.volume() != 1) {
+            if (toSplit.getVolume() != 1) {
                 addBottom(position, toSplit);
                 addTop(position, toSplit);
                 addRight(position, toSplit);
@@ -213,7 +213,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         int volumeSoFar = 0;
 
         for (Parallelepiped parallelepiped : parallelepipeds) {
-            volumeSoFar += parallelepiped.volume();
+            volumeSoFar += parallelepiped.getVolume();
         }
 
         return volumeSoFar;

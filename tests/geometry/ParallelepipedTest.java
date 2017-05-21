@@ -181,11 +181,11 @@ public class ParallelepipedTest {
     @Test
     public void testGetVolume() {
         assertEquals(1,
-                new Parallelepiped(new Position(0,0,0)).volume());
+                new Parallelepiped(new Position(0,0,0)).getVolume());
         assertEquals(2,
-                new Parallelepiped(new Position(0,0,0), 1, 2, 1).volume());
+                new Parallelepiped(new Position(0,0,0), 1, 2, 1).getVolume());
         assertEquals(10 * 4 * 7,
-                new Parallelepiped(new Position(0,0,0), 10, 4, 7).volume());
+                new Parallelepiped(new Position(0,0,0), 10, 4, 7).getVolume());
     }
 
     @Test
@@ -457,11 +457,11 @@ public class ParallelepipedTest {
 
         Set<Position> positions = new HashSet<>();
 
-        for (int i = 1; i <= parallelepiped.volume(); i++) {
+        for (int i = 1; i <= parallelepiped.getVolume(); i++) {
             positions.add(parallelepiped.positionFromIndex(i));
         }
 
-        assertEquals(positions.size(), parallelepiped.volume());
+        assertEquals(positions.size(), parallelepiped.getVolume());
     }
 
     @Test
@@ -470,11 +470,11 @@ public class ParallelepipedTest {
 
         Set<Position> positions = new HashSet<>();
 
-        for (int i = 1; i <= parallelepiped.volume(); i++) {
+        for (int i = 1; i <= parallelepiped.getVolume(); i++) {
             positions.add(parallelepiped.positionFromIndex(i));
         }
 
-        assertEquals(positions.size(), parallelepiped.volume());
+        assertEquals(positions.size(), parallelepiped.getVolume());
         assertTrue(positions.contains(new Position(-30,4,5)));
     }
 }

@@ -39,7 +39,7 @@ public final class Parallelepiped {
      * @param zSize z-dimension of the parallelepiped
      * @throws IllegalArgumentException if any of the dimensions are not positive
      */
-    public Parallelepiped(Position corner, int xSize, int ySize, int zSize) throws IllegalArgumentException {
+    public Parallelepiped(@NotNull Position corner, int xSize, int ySize, int zSize) throws IllegalArgumentException {
         if (xSize <= 0)
             throw new IllegalArgumentException("xSize must be positive");
         if (ySize <= 0)
@@ -59,7 +59,7 @@ public final class Parallelepiped {
     }
 
     @Contract(pure = true)
-    public int getSize(Axis axis) {
+    public int getSize(@NotNull Axis axis) {
         switch (axis) {
             case X:
                 return xSize;
@@ -71,7 +71,7 @@ public final class Parallelepiped {
     }
 
     @Contract(pure = true)
-    public boolean contains(Position position) {
+    public boolean contains(@NotNull Position position) {
         return ((corner.x <= position.x) && (position.x < corner.x + xSize) &&
                 (corner.y <= position.y) && (position.y < corner.y + ySize) &&
                 (corner.z <= position.z) && (position.z < corner.z + zSize));
@@ -97,7 +97,7 @@ public final class Parallelepiped {
         return result;
     }
 
-    @NotNull Parallelepiped setCorner(Position corner) {
+    @NotNull Parallelepiped setCorner(@NotNull Position corner) {
         return new Parallelepiped(corner, xSize, ySize, zSize);
     }
 
@@ -113,14 +113,14 @@ public final class Parallelepiped {
     }
 
     /**
-     * Produce the volume of this parallelepiped
+     * Produce the getVolume of this parallelepiped
      *
      * <p>
      *     Volume is equal to xSize * ySize * zSize
      * </p>
-     * @return volume of this parallelepiped
+     * @return getVolume of this parallelepiped
      */
-    long volume() {
+    public long getVolume() {
         int volumeSoFar = 1;
 
         for (Axis axis : Axis.values()) {
@@ -201,14 +201,15 @@ public final class Parallelepiped {
     }
 
     /**
-     * If index is in [1,volume()], then produce a unique position inside this parallelepiped,
+     * If index is in [1,getVolume()], then produce a unique position inside this parallelepiped,
      * otherwise throw IllegalArgumentException
-     * @param index any positive number between 1 and volume() (inclusive)
+     * @param index any positive number between 1 and getVolume() (inclusive)
      * @return position in this parallelepiped
-     * @throws IllegalArgumentException if index is less then 1 or greater then volume()
+     * @throws IllegalArgumentException if index is less then 1 or greater then getVolume()
      */
-    @NotNull Position positionFromIndex(int index) throws IllegalArgumentException {
-        if (index < 1 || index > volume()) {
+    @NotNull
+    public Position positionFromIndex(int index) throws IllegalArgumentException {
+        if (index < 1 || index > getVolume()) {
             throw new IllegalArgumentException();
         }
 
