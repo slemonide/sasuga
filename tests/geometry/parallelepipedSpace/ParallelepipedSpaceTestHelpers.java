@@ -77,9 +77,9 @@ final class ParallelepipedSpaceTestHelpers {
 
     static void buildRandomCloud(ParallelepipedSpace space) {
         Position center = new Position(0,0,0);
-        Parallelepiped parallelepiped = new Parallelepiped(center, 13, 21, 33);
+        Parallelepiped parallelepiped = new Parallelepiped(center, 13, 7, 9);
 
-        Stream.iterate(1, i -> i+1).limit(parallelepiped.getVolume() + 1).forEach(index -> {
+        Stream.iterate(1, i -> i+1).limit(parallelepiped.getVolume()).forEach(index -> {
             if (RANDOM.nextInt(10) == 1) {
                 space.add(parallelepiped.positionFromIndex(index));
             }

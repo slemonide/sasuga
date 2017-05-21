@@ -260,9 +260,15 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      *
      * @return set of all positions in the storage
      */
+    @NotNull
     public Collection<? extends Position> positions() {
-        // TODO: implement
+        // TODO: implement using streams
+        Set<Position> positions = new HashSet<>();
 
-        return new HashSet<>();
+        for (Parallelepiped parallelepiped : parallelepipeds) {
+            positions.addAll(parallelepiped.positions());
+        }
+
+        return positions;
     }
 }

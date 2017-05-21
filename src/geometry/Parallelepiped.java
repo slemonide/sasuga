@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
@@ -225,5 +226,20 @@ public final class Parallelepiped {
         assert this.contains(position);
 
         return position;
+    }
+
+    /**
+     * Produce the set of all positions in the parallelepiped
+     *
+     * @return set of all positions in the parallelepiped
+     */
+    public Collection<? extends Position> positions() {
+        // TODO: test this
+        Set<Position> positions = new HashSet<>();
+
+        Stream.iterate(1, i -> i+1).limit(getVolume())
+                .forEach(index -> positions.add(positionFromIndex(index)));
+
+        return positions;
     }
 }
