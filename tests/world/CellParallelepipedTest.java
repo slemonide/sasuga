@@ -1,10 +1,10 @@
-package cells;
+package world;
 
 import geometry.Parallelepiped;
 import geometry.Position;
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +22,7 @@ public class CellParallelepipedTest {
     public void testPositionConstructor() {
         testCP = new CellParallelepiped(new Position(0,0,0), WOOL);
 
-        assertEquals(testCP.cell, WOOL);
+        Assert.assertEquals(testCP.cell, WOOL);
         // TODO: make position be a kind of parallelepiped (parallelepiped extends position?)
         assertEquals(testCP.parallelepiped, new Parallelepiped(new Position(0,0,0)));
     }
@@ -31,7 +31,7 @@ public class CellParallelepipedTest {
     public void testParallelepipedConstructorBasic() {
         testCP = new CellParallelepiped(new Parallelepiped(new Position(0,0,0)), STONE);
 
-        assertEquals(testCP.cell, STONE);
+        Assert.assertEquals(testCP.cell, STONE);
         assertEquals(testCP.parallelepiped, new Parallelepiped(new Position(0,0,0)));
     }
 
@@ -39,7 +39,7 @@ public class CellParallelepipedTest {
     public void testParallelepipedConstructorHarder() {
         testCP = new CellParallelepiped(new Parallelepiped(new Position(0,0,0), 10, 20, 30), WOOD);
 
-        assertEquals(testCP.cell, WOOD);
+        Assert.assertEquals(testCP.cell, WOOD);
         assertEquals(testCP.parallelepiped, new Parallelepiped(new Position(0,0,0), 10, 20,30));
     }
 

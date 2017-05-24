@@ -242,7 +242,9 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     }
 
     public void remove(Parallelepiped parallelepiped) {
-        // TODO: implement
+        // TODO: add a faster implementations
+
+        parallelepiped.positions().forEach(this::remove);
     }
 
     /**
@@ -264,5 +266,31 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     @NotNull
     public Stream<Position> positions() {
         return parallelepipeds.stream().flatMap(Parallelepiped::positions);
+    }
+
+    /**
+     * Remove all the parallelepipeds in the given space from this space
+     * @param toRemove parallelepipeds to be removed
+     */
+    public void removeAll(@NotNull ParallelepipedSpace toRemove) {
+        for (Parallelepiped parallelepiped : toRemove) {
+            remove(parallelepiped);
+        }
+    }
+
+    /**
+     * Add all the parallelepipeds from the given space to this space,
+     * ignoring the ones that replace already placed ones
+     *
+     * <p>
+     *    Parallelepipeds that clash with already existing ones are reduced and
+     *    all parts that can be placed are placed
+     * </p>
+     * @param toAdd parallelepipeds to be added
+     */
+    public void addAll(@NotNull ParallelepipedSpace toAdd) {
+        for (Parallelepiped parallelepiped : toAdd) {
+            add(parallelepiped);
+        }
     }
 }

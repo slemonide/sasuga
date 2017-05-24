@@ -1,6 +1,5 @@
 package world;
 
-import cells.CellParallelepiped;
 import cells.StaticCell;
 import geometry.Parallelepiped;
 import geometry.Position;
@@ -146,7 +145,7 @@ public class HashMapCellStorageTest {
         assertTrue(testHashMapCellStorage.cellParallelepipeds().contains(new CellParallelepiped(
                 new Parallelepiped(new Position(0,0,0), 1,1,1),StaticCell.WOOD)));
         assertTrue(testHashMapCellStorage.cellParallelepipeds().contains(new CellParallelepiped(
-                new Parallelepiped(new Position(1,0,1), 1,1,1),StaticCell.STONE)));
+                new Parallelepiped(new Position(0,0,1), 1,1,1),StaticCell.STONE)));
     }
 
     @Test
@@ -241,7 +240,7 @@ public class HashMapCellStorageTest {
     public void testAddParallelepipedIntersectSameMaterial() {
         testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 10, 1, 1), WOOD);
         testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 1, 10, 1), WOOD);
-        assertEquals(3, testHashMapCellStorage.size());
+        assertEquals(2, testHashMapCellStorage.size());
 
         assertTrue(testHashMapCellStorage.contains(new Position(0,0,0)));
         assertTrue(testHashMapCellStorage.get(new Position(0,0,0)).isPresent());
@@ -258,6 +257,24 @@ public class HashMapCellStorageTest {
     public void testAddParallelepipedIntersectDifferentMaterial() {
         testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 10, 1, 1), WOOD);
         testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 1, 10, 1), STONE);
+        assertEquals(2, testHashMapCellStorage.size());
+
+        assertTrue(testHashMapCellStorage.contains(new Position(0,0,0)));
+        assertTrue(testHashMapCellStorage.get(new Position(0,0,0)).isPresent());
+        assertEquals(testHashMapCellStorage.get(new Position(0,0,0)).get(),
+                new CellParallelepiped(new Parallelepiped(new Position(0,0,0), 10, 1, 1), WOOD));
+
+        assertTrue(testHashMapCellStorage.contains(new Position(0,2,0)));
+        assertTrue(testHashMapCellStorage.get(new Position(0,2,0)).isPresent());
+        assertEquals(testHashMapCellStorage.get(new Position(0,2,0)).get(),
+                new CellParallelepiped(new Parallelepiped(new Position(0,1,0), 1, 9, 1), STONE));
+    }
+
+    @Test
+    public void testAddParallelepipedIntersectDifferentMaterialMany() {
+        testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 10, 1, 1), WOOD);
+        testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 1, 10, 1), STONE);
+        testHashMapCellStorage.add(new Parallelepiped(new Position(0,0,0), 1, 1, 10), DIRT);
         assertEquals(3, testHashMapCellStorage.size());
 
         assertTrue(testHashMapCellStorage.contains(new Position(0,0,0)));
@@ -269,5 +286,10 @@ public class HashMapCellStorageTest {
         assertTrue(testHashMapCellStorage.get(new Position(0,2,0)).isPresent());
         assertEquals(testHashMapCellStorage.get(new Position(0,2,0)).get(),
                 new CellParallelepiped(new Parallelepiped(new Position(0,1,0), 1, 9, 1), STONE));
+
+        assertTrue(testHashMapCellStorage.contains(new Position(0,0,2)));
+        assertTrue(testHashMapCellStorage.get(new Position(0,0,2)).isPresent());
+        assertEquals(testHashMapCellStorage.get(new Position(0,0,2)).get(),
+                new CellParallelepiped(new Parallelepiped(new Position(0,0,1), 1, 1, 9), DIRT));
     }
 }

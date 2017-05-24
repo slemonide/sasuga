@@ -1,6 +1,5 @@
 package world;
 
-import cells.CellParallelepiped;
 import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
@@ -78,7 +77,7 @@ public class World extends Observable implements Runnable {
      * @return time in seconds
      */
     public double getTickTime() {
-        return (double) tickTime / 1000000000;
+        return (double) tickTime / (1000 * 1000 * 1000);
     }
 
     /**

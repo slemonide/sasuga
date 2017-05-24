@@ -1,6 +1,5 @@
 package world;
 
-import cells.CellParallelepiped;
 import cells.StaticCell;
 import geometry.Parallelepiped;
 import geometry.Position;

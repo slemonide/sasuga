@@ -1,5 +1,6 @@
-package cells;
+package world;
 
+import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
 import org.jetbrains.annotations.NotNull;

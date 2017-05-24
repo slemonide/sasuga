@@ -1,6 +1,6 @@
 package ui;
 
-import cells.CellParallelepiped;
+import world.CellParallelepiped;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;

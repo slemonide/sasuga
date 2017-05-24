@@ -13,7 +13,7 @@ public class Main {
         /*for (int x=0; x < SIZE; x++) {
             for (int y=0; y < SIZE; y++) {
                 for (int z=0; z < SIZE; z++) {
-                    World.getInstance().add(new CellParallelepiped(new Position(x,y,z)));
+                    World.getInstance().add(new CellParallelepiped(new Position(x,y,z), WOOD));
                 }
             }
         }*/

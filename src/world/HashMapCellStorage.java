@@ -1,6 +1,5 @@
 package world;
 
-import cells.CellParallelepiped;
 import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
@@ -42,17 +41,12 @@ public class HashMapCellStorage implements CellStorage {
      */
     @Override
     public void add(CellParallelepiped cellParallelepiped) {
-        WorldCell material = cellParallelepiped.cell;
+        add(cellParallelepiped.parallelepiped, cellParallelepiped.cell);
+    }
 
-        // TODO: check if CP is already present
-
-        if (storage.containsKey(material)) {
-            storage.get(material).add(cellParallelepiped.parallelepiped);
-        } else {
-            ParallelepipedSpace parallelepipedSpace = new ParallelepipedSpace();
-            parallelepipedSpace.add(cellParallelepiped.parallelepiped);
-
-            storage.put(material, parallelepipedSpace);
+    private void removeOverlappingRegions(ParallelepipedSpace parallelepipedSpace) {
+        for (ParallelepipedSpace otherParallelepipedSpace : storage.values()) {
+            parallelepipedSpace.removeAll(otherParallelepipedSpace);
         }
     }
 
@@ -70,13 +64,19 @@ public class HashMapCellStorage implements CellStorage {
      * Adds given parallelepiped with assigned worldCell to the storage
      *
      * @param parallelepiped parallelepiped of the worldCell
-     * @param worldCell      worldCell of the parallelepiped
+     * @param material      worldCell of the parallelepiped
      */
     @Override
-    public void add(Parallelepiped parallelepiped, WorldCell worldCell) {
-        CellParallelepiped cellParallelepiped = new CellParallelepiped(parallelepiped, worldCell);
+    public void add(Parallelepiped parallelepiped, WorldCell material) {
+        ParallelepipedSpace parallelepipedSpace = new ParallelepipedSpace();
+        parallelepipedSpace.add(parallelepiped);
+        removeOverlappingRegions(parallelepipedSpace);
 
-        add(cellParallelepiped);
+        if (storage.containsKey(material)) {
+            storage.get(material).addAll(parallelepipedSpace);
+        } else {
+            storage.put(material, parallelepipedSpace);
+        }
     }
 
     /**
