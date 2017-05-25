@@ -3,6 +3,9 @@ package world;
 import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
+import org.jetbrains.annotations.NotNull;
+import util.CollectionObserver;
+import util.Difference;
 
 import java.util.*;
 
@@ -223,7 +226,7 @@ public class World extends Observable implements Runnable {
     /**
      * @return set of cells removed since last invocation of getToRemove()
      */
-    public Set<CellParallelepiped> getToAdd() {
+    Set<CellParallelepiped> getToAdd() {
         Set<CellParallelepiped> toAdd = new HashSet<>();
         toAdd.addAll(getCells());
         toAdd.removeAll(lastSeenCellsSetToAdd);
@@ -237,7 +240,7 @@ public class World extends Observable implements Runnable {
     /**
      * @return set of cells added since last invocation of getToAdd()
      */
-    public Set<Position> getToRemove() {
+    Set<Position> getToRemove() {
         Set<Position> toRemove = new HashSet<>();
         toRemove.addAll(lastSeenPositionSetToRemove);
         toRemove.removeAll(cellStorage.positions());
@@ -253,5 +256,24 @@ public class World extends Observable implements Runnable {
 
     public void add(Position placeCursor, WorldCell staticCell) {
         add(new CellParallelepiped(new Parallelepiped(placeCursor), staticCell));
+    }
+
+    /**
+     * Returns an object that can be used to find out detailed info about the changes in the world
+     * @return an object that can be used to find out detailed info about the changes in the world
+     */
+    @NotNull
+    public CollectionObserver<CellParallelepiped> registerCollectionObserver() {
+        // TODO: finish
+        return new EnvironmentObserver();
+    }
+
+    class EnvironmentObserver implements CollectionObserver<CellParallelepiped> {
+
+        @Override
+        public Difference<CellParallelepiped> getDifference() {
+
+            return null;
+        }
     }
 }

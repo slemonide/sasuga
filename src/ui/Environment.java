@@ -1,5 +1,6 @@
 package ui;
 
+import util.CollectionObserver;
 import world.CellParallelepiped;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -35,14 +36,33 @@ import static geometry.Axis.Z;
 
 public class Environment implements Observer {
     private static final float SCALE = Options.getInstance().getFloat("SCALE");
+    /**
+     * Side size of the floor spatial
+     */
     private static final float FLOOR_SIZE = 5000;
+    /**
+     * The main gui app
+     */
     private final VisualGUI visualGUI;
+    /**
+     * Node to which all spatials that represent cells are connected
+     */
     private Node cellsNode;
+    /**
+     * Map from Parallelepipeds to Spatials. Used to update the spatials.
+     */
     private Map<Parallelepiped, Spatial> voxelMap;
+    /**
+     * Used to optimize the number of spatials
+     */
     private ParallelepipedSpace parallelepipedSpace;
+    /**
+     * Observers parallelepipedSpace to update the voxelMap
+     */
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
-    private Queue<CellParallelepiped> toAdd;
-    private Queue<Position> toRemove;
+    private CollectionObserver<CellParallelepiped> worldObserver;
+    //private Queue<CellParallelepiped> toAdd;
+    //private Queue<Position> toRemove;
 
     private Geometry floor;
 
@@ -56,8 +76,9 @@ public class Environment implements Observer {
         voxelMap = new HashMap<>();
         parallelepipedSpace = new ParallelepipedSpace();
         parallelepipedSpaceObserver = new SetObserver<>(parallelepipedSpace.getParallelepipeds());
-        toAdd = new LinkedList<>();
-        toRemove = new LinkedList<>();
+        worldObserver = World.getInstance().registerCollectionObserver();
+        //toAdd = new LinkedList<>();
+        //toRemove = new LinkedList<>();
 
         World.getInstance().addObserver(this);
     }
@@ -90,7 +111,7 @@ public class Environment implements Observer {
             visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         }
 
-        toAdd.addAll(World.getInstance().getCells());
+        //toAdd.addAll(World.getInstance().getCells());
     }
 
     private void addShadows() {
@@ -152,7 +173,7 @@ public class Environment implements Observer {
     }
 
     private void updateCells() {
-        while (toAdd.peek() != null) {
+        /*while (toAdd.peek() != null) {
             CellParallelepiped cellParallelepiped = toAdd.remove();
 
             addSpatial(cellParallelepiped);
@@ -162,7 +183,7 @@ public class Environment implements Observer {
             Position position = toRemove.remove();
 
             removeSpatial(position);
-        }
+        }*/
     }
 
     private void addSpatial(CellParallelepiped cellParallelepiped) {
@@ -174,13 +195,13 @@ public class Environment implements Observer {
     }
 
     private void updateSpatials() {
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        for (Parallelepiped parallelepiped : difference.getRemoved()) {
+        for (Parallelepiped parallelepiped : difference.removed) {
             remove(parallelepiped);
         }
 
-        for (Parallelepiped parallelepiped : difference.getAdded()) {
+        for (Parallelepiped parallelepiped : difference.added) {
             add(parallelepiped);
         }
     }
@@ -225,16 +246,15 @@ public class Environment implements Observer {
         updateSpatials();
     }
 
-    @SuppressWarnings("UseBulkOperation")
     @Override
     public void update(Observable o, Object arg) {
         // NOTE: addAll won't work here
-        for (CellParallelepiped cellParallelepiped : World.getInstance().getToAdd()) {
+        /*for (CellParallelepiped cellParallelepiped : World.getInstance().getToAdd()) {
             toAdd.add(cellParallelepiped);
         }
         for (Position position : World.getInstance().getToRemove()) {
             toRemove.add(position);
-        }
+        }*/
     }
 
     int getNumberOfParallelepipeds() {

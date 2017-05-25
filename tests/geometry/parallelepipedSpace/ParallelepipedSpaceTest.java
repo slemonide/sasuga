@@ -37,10 +37,10 @@ public class ParallelepipedSpaceTest {
     @Test
     public void testConstructor() {
         assertTrue(testSpace.isEmpty());
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        assertTrue(difference.getAdded().isEmpty());
+        assertTrue(difference.removed.isEmpty());
+        assertTrue(difference.added.isEmpty());
         assertEquals(0, testSpace.size());
     }
 

@@ -1,6 +1,6 @@
 package util;
 
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public class SetObserver<E> implements CollectionObserver<E> {
     }
 
     @Override
-    public Difference<Collection<E>> getDifference() {
+    public Difference<E> getDifference() {
         Set<E> added = new HashSet<>();
         Set<E> removed = new HashSet<>();
 
@@ -32,6 +32,6 @@ public class SetObserver<E> implements CollectionObserver<E> {
         oldSet.clear();
         oldSet.addAll(currentSet);
 
-        return new Difference<>(added, removed);
+        return new Difference<>(added, removed, new HashMap<>());
     }
 }

@@ -35,12 +35,12 @@ public class SetObserverTest {
         parallelepipedSpaceObserver.getDifference();
         ParallelepipedSpaceTestHelpers.cutParallelepipedBottom(testSpace);
 
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.removed.size());
+        assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,1),
+        assertEquals(1, difference.added.size());
+        assertTrue(difference.added.contains(new Parallelepiped(new Position(0,0,1),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z - 1)));
 
         assertEquals(1, testSpace.size());
@@ -54,12 +54,12 @@ public class SetObserverTest {
         parallelepipedSpaceObserver.getDifference();
         ParallelepipedSpaceTestHelpers.cutParallelepipedTop(testSpace);
 
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.removed.size());
+        assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,0),
+        assertEquals(1, difference.added.size());
+        assertTrue(difference.added.contains(new Parallelepiped(new Position(0,0,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z - 1)));
 
         assertEquals(1, testSpace.size());
@@ -73,12 +73,12 @@ public class SetObserverTest {
         parallelepipedSpaceObserver.getDifference();
         ParallelepipedSpaceTestHelpers.cutParallelepipedLeft(testSpace);
 
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.removed.size());
+        assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,0,0),
+        assertEquals(1, difference.added.size());
+        assertTrue(difference.added.contains(new Parallelepiped(new Position(0,0,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y - 1, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
 
         assertEquals(1, testSpace.size());
@@ -92,12 +92,12 @@ public class SetObserverTest {
         parallelepipedSpaceObserver.getDifference();
         ParallelepipedSpaceTestHelpers.cutParallelepipedRight(testSpace);
 
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
-        assertTrue(difference.getRemoved().contains(new Parallelepiped(new Position(0,0,0),
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
+        assertEquals(1, difference.removed.size());
+        assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
-        assertEquals(1, difference.getAdded().size());
-        assertTrue(difference.getAdded().contains(new Parallelepiped(new Position(0,1,0),
+        assertEquals(1, difference.added.size());
+        assertTrue(difference.added.contains(new Parallelepiped(new Position(0,1,0),
                 ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y - 1, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
 
         assertEquals(1, testSpace.size());
@@ -111,10 +111,10 @@ public class SetObserverTest {
     public void testToAddSimple() {
         testSpace.add(new Position(0,0,0));
 
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        assertTrue(difference.removed.isEmpty());
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0))));
     }
@@ -123,10 +123,10 @@ public class SetObserverTest {
     public void testToAddTwo() {
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(0,1,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        assertTrue(difference.removed.isEmpty());
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0), 1, 2, 1)));
     }
@@ -136,10 +136,10 @@ public class SetObserverTest {
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(0,1,0));
         testSpace.add(new Position(0,2,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        assertTrue(difference.removed.isEmpty());
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0), 1, 3, 1)));
     }
@@ -149,10 +149,10 @@ public class SetObserverTest {
         for (int i = 0; i < MAX_POSITIONS; i++) {
             testSpace.add(new Position(0, i, 0));
         }
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        assertTrue(difference.removed.isEmpty());
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0),
                 1, MAX_POSITIONS, 1)));
@@ -161,10 +161,10 @@ public class SetObserverTest {
     @Test
     public void testToAddCube() {
         buildUnitCube(testSpace);
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        assertTrue(difference.removed.isEmpty());
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0),
                 2, 2, 2)));
@@ -173,17 +173,17 @@ public class SetObserverTest {
     @Test
     public void testToAddSeveralInvocations() {
         testSpace.add(new Position(0,0,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertEquals(1, difference.getAdded().size());
+        assertEquals(1, difference.added.size());
         testSpace.add(new Position(0,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
 
-        assertEquals(0, difference.getAdded().size());
+        assertEquals(0, difference.added.size());
         testSpace.add(new Position(1,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
 
-        assertEquals(1, difference.getAdded().size());
+        assertEquals(1, difference.added.size());
     }
 
     // toRemove
@@ -191,19 +191,19 @@ public class SetObserverTest {
     @Test
     public void testToRemoveEmpty() {
         testSpace.remove(new Position(0,0,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
-        assertTrue(difference.getRemoved().isEmpty());
-        assertTrue(difference.getAdded().isEmpty());
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
+        assertTrue(difference.removed.isEmpty());
+        assertTrue(difference.added.isEmpty());
     }
 
     @Test
     public void testToRemoveNoChange() {
         testSpace.add(new Position(0,0,0));
         testSpace.remove(new Position(0,0,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        assertTrue(difference.getAdded().isEmpty());
+        assertTrue(difference.removed.isEmpty());
+        assertTrue(difference.added.isEmpty());
     }
 
     @Test
@@ -211,10 +211,10 @@ public class SetObserverTest {
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(0,1,0));
         testSpace.remove(new Position(0,0,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        assertTrue(difference.removed.isEmpty());
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,1,0))));
     }
@@ -223,18 +223,18 @@ public class SetObserverTest {
     public void testToRemoveAnotherOne() {
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(0,1,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0), 1, 2, 1)));
         testSpace.remove(new Position(0,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
 
-        Collection<Parallelepiped> toRemove = difference.getRemoved();
+        Collection<Parallelepiped> toRemove = difference.removed;
         assertEquals(1, toRemove.size());
         assertTrue(toRemove.contains(new Parallelepiped(new Position(0,0,0), 1, 2, 1)));
-        toAdd = difference.getAdded();
+        toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,1,0))));
     }
@@ -244,18 +244,18 @@ public class SetObserverTest {
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(1,0,0));
         testSpace.add(new Position(2,0,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        Collection<Parallelepiped> toAdd = difference.getAdded();
+        Collection<Parallelepiped> toAdd = difference.added;
         assertEquals(1, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0), 3, 1, 1)));
         testSpace.remove(new Position(1,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
 
-        Collection<Parallelepiped> toRemove = difference.getRemoved();
+        Collection<Parallelepiped> toRemove = difference.removed;
         assertEquals(1, toRemove.size());
         assertTrue(toRemove.contains(new Parallelepiped(new Position(0,0,0), 3, 1, 1)));
-        toAdd = difference.getAdded();
+        toAdd = difference.added;
         assertEquals(2, toAdd.size());
         assertTrue(toAdd.contains(new Parallelepiped(new Position(0,0,0))));
         assertTrue(toAdd.contains(new Parallelepiped(new Position(2,0,0))));
@@ -264,24 +264,24 @@ public class SetObserverTest {
     @Test
     public void testToRemoveSeveralInvocations() {
         testSpace.add(new Position(0,0,0));
-        Difference<Collection<Parallelepiped>> difference = parallelepipedSpaceObserver.getDifference();
+        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
-        assertEquals(1, difference.getAdded().size());
+        assertEquals(1, difference.added.size());
         testSpace.add(new Position(0,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(0, difference.getAdded().size());
+        assertEquals(0, difference.added.size());
         testSpace.add(new Position(1,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getAdded().size());
+        assertEquals(1, difference.added.size());
 
         testSpace.remove(new Position(0,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
+        assertEquals(1, difference.removed.size());
         testSpace.remove(new Position(0,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(0, difference.getRemoved().size());
+        assertEquals(0, difference.removed.size());
         testSpace.remove(new Position(1,0,0));
         difference = parallelepipedSpaceObserver.getDifference();
-        assertEquals(1, difference.getRemoved().size());
+        assertEquals(1, difference.removed.size());
     }
 }

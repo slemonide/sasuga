@@ -22,10 +22,10 @@ public class SetObserverTest {
     @Test
     public void testConstructor() {
         assertTrue(testSet.isEmpty());
-        Difference<Collection<Integer>> difference = testSetObserver.getDifference();
+        Difference<Integer> difference = testSetObserver.getDifference();
 
-        assertTrue(difference.getAdded().isEmpty());
-        assertTrue(difference.getRemoved().isEmpty());
+        assertTrue(difference.added.isEmpty());
+        assertTrue(difference.removed.isEmpty());
     }
 
     @Test
@@ -35,10 +35,10 @@ public class SetObserverTest {
         testSetObserver = new SetObserver<>(testSet);
 
         assertEquals(2, testSet.size());
-        Difference<Collection<Integer>> difference = testSetObserver.getDifference();
+        Difference<Integer> difference = testSetObserver.getDifference();
 
-        assertTrue(difference.getAdded().isEmpty());
-        assertTrue(difference.getRemoved().isEmpty());
+        assertTrue(difference.added.isEmpty());
+        assertTrue(difference.removed.isEmpty());
     }
 
     @Test
@@ -47,10 +47,10 @@ public class SetObserverTest {
         testSet.add(2);
         testSet.add(3);
 
-        Difference<Collection<Integer>> difference = testSetObserver.getDifference();
+        Difference<Integer> difference = testSetObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        assertEquals(3, difference.getAdded().size());
+        assertTrue(difference.removed.isEmpty());
+        assertEquals(3, difference.added.size());
     }
 
     @Test
@@ -58,9 +58,9 @@ public class SetObserverTest {
         testSet.add(1);
         testSet.remove(1);
 
-        Difference<Collection<Integer>> difference = testSetObserver.getDifference();
+        Difference<Integer> difference = testSetObserver.getDifference();
 
-        assertTrue(difference.getRemoved().isEmpty());
-        assertTrue(difference.getAdded().isEmpty());
+        assertTrue(difference.removed.isEmpty());
+        assertTrue(difference.added.isEmpty());
     }
 }
