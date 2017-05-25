@@ -12,7 +12,7 @@ public class DifferenceTest {
     @Test
     public void testConstructor() {
         Map<Integer, Difference.UnaryFunction<Integer>> changeMap = new HashMap<>();
-        changeMap.put(100, -> e + 1);
+        changeMap.put(100, e -> e + 1);
         changeMap.put(200, e -> e * e);
 
         Difference<Integer> testDifference = new Difference<>(
