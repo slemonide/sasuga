@@ -34,7 +34,10 @@ import static geometry.Axis.X;
 import static geometry.Axis.Y;
 import static geometry.Axis.Z;
 
-public class Environment implements Observer {
+public class Environment {
+    /**
+     * World scale
+     */
     private static final float SCALE = Options.getInstance().getFloat("SCALE");
     /**
      * Side size of the floor spatial
@@ -60,9 +63,10 @@ public class Environment implements Observer {
      * Observers parallelepipedSpace to update the voxelMap
      */
     private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
+    /**
+     * Observes the world as a collection of CellParallelepiped's
+     */
     private CollectionObserver<CellParallelepiped> worldObserver;
-    //private Queue<CellParallelepiped> toAdd;
-    //private Queue<Position> toRemove;
 
     private Geometry floor;
 
@@ -77,12 +81,11 @@ public class Environment implements Observer {
         parallelepipedSpace = new ParallelepipedSpace();
         parallelepipedSpaceObserver = new SetObserver<>(parallelepipedSpace.getParallelepipeds());
         worldObserver = World.getInstance().registerCollectionObserver();
-        //toAdd = new LinkedList<>();
-        //toRemove = new LinkedList<>();
-
-        World.getInstance().addObserver(this);
     }
 
+    /**
+     * Initializes the environment using the configurable options
+     */
     void initializeEnvironment() {
         if (Options.getInstance().getBoolean("ENABLE_SKY_SPHERE")) {
             addSkySphere();
@@ -97,11 +100,18 @@ public class Environment implements Observer {
         addCells();
     }
 
+    /**
+     * Initializes the sky sphere
+     */
     private void addSkySphere() {
         visualGUI.getRootNode().attachChild(SkyFactory.createSky(visualGUI.getAssetManager(),
                 "Textures/Skysphere.jpg", SkyFactory.EnvMapType.SphereMap));
     }
 
+    /**
+     * Initialize the cell node and fill it with the already existing cell parallelepipeds
+     * ALso, optionally configure the shadows
+     */
     private void addCells() {
         cellsNode = new Node();
         visualGUI.getRootNode().attachChild(cellsNode);
@@ -111,9 +121,14 @@ public class Environment implements Observer {
             visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
         }
 
-        //toAdd.addAll(World.getInstance().getCells());
+        for (CellParallelepiped cellParallelepiped : World.getInstance().getCells()) {
+            add(cellParallelepiped.parallelepiped);
+        }
     }
 
+    /**
+     * Initialize global directional shadows
+     */
     private void addShadows() {
         DirectionalLight sun = new DirectionalLight();
         sun.setColor(ColorRGBA.White);
@@ -134,6 +149,9 @@ public class Environment implements Observer {
         visualGUI.getViewPort().addProcessor(fpp);
     }
 
+    /**
+     * Initialize the floor (looks nicely with the shadows)
+     */
     private void addFloor() {
         floor = new Geometry("Box", new Quad(FLOOR_SIZE, FLOOR_SIZE));
         Material unshaded = new Material(visualGUI.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -152,6 +170,10 @@ public class Environment implements Observer {
         updateFloor();
     }
 
+    /**
+     * Update the floor position and the visible cells
+     * @param tpf time since the last invoke
+     */
     void update(float tpf) {
         if (Options.getInstance().getBoolean("ENABLE_FLOOR")) {
             updateFloor();
@@ -160,6 +182,9 @@ public class Environment implements Observer {
         updateCells();
     }
 
+    /**
+     * Move the floor so that all of the visible cells are above it
+     */
     private void updateFloor() {
         float minimumY = 0; // should be at least at the sea level
 
@@ -172,29 +197,10 @@ public class Environment implements Observer {
         getFloor().setLocalTranslation(nextFloorTranslation);
     }
 
+    /**
+     * Update the cells according to the world state
+     */
     private void updateCells() {
-        /*while (toAdd.peek() != null) {
-            CellParallelepiped cellParallelepiped = toAdd.remove();
-
-            addSpatial(cellParallelepiped);
-        }
-
-        while (toRemove.peek() != null) {
-            Position position = toRemove.remove();
-
-            removeSpatial(position);
-        }*/
-    }
-
-    private void addSpatial(CellParallelepiped cellParallelepiped) {
-        removeSpatial(cellParallelepiped.parallelepiped.getCorner());
-
-        parallelepipedSpace.add(cellParallelepiped.parallelepiped.getCorner());
-
-        updateSpatials();
-    }
-
-    private void updateSpatials() {
         Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
 
         for (Parallelepiped parallelepiped : difference.removed) {
@@ -238,23 +244,6 @@ public class Environment implements Observer {
 
         cellsNode.detachChild(voxelMap.get(parallelepiped));
         voxelMap.remove(parallelepiped);
-    }
-
-    private void removeSpatial(Position position) {
-        parallelepipedSpace.remove(position);
-
-        updateSpatials();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        // NOTE: addAll won't work here
-        /*for (CellParallelepiped cellParallelepiped : World.getInstance().getToAdd()) {
-            toAdd.add(cellParallelepiped);
-        }
-        for (Position position : World.getInstance().getToRemove()) {
-            toRemove.add(position);
-        }*/
     }
 
     int getNumberOfParallelepipeds() {

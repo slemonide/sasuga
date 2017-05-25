@@ -4,6 +4,7 @@ import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
 import org.jetbrains.annotations.NotNull;
+import util.CollectionObserver;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -117,4 +118,11 @@ public interface CellStorage {
      */
     @NotNull
     Optional<CellParallelepiped> get(Position position);
+
+    /**
+     * Helps analyzing changes in the storage
+     * @return difference between current storage and its last seen version
+     */
+    @NotNull
+    CollectionObserver<CellParallelepiped> registerCollectionObserver();
 }

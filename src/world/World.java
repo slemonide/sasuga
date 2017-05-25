@@ -259,21 +259,11 @@ public class World extends Observable implements Runnable {
     }
 
     /**
-     * Returns an object that can be used to find out detailed info about the changes in the world
-     * @return an object that can be used to find out detailed info about the changes in the world
+     * Helps analyzing changes in the world
+     * @return difference between current world and its last seen version
      */
     @NotNull
     public CollectionObserver<CellParallelepiped> registerCollectionObserver() {
-        // TODO: finish
-        return new EnvironmentObserver();
-    }
-
-    class EnvironmentObserver implements CollectionObserver<CellParallelepiped> {
-
-        @Override
-        public Difference<CellParallelepiped> getDifference() {
-
-            return null;
-        }
+        return cellStorage.registerCollectionObserver();
     }
 }

@@ -5,6 +5,8 @@ import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
 import geometry.Position;
 import org.jetbrains.annotations.NotNull;
+import util.CollectionObserver;
+import util.Difference;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,6 +34,11 @@ public class HashMapCellStorage implements CellStorage {
     HashMapCellStorage(Collection<CellParallelepiped> cellParallelepipeds) throws NullPointerException {
         storage = new HashMap<>();
         addAll(cellParallelepipeds);
+    }
+
+    public HashMapCellStorage(HashMapCellStorage current) {
+        storage = new HashMap<>();
+        addAll(current.cellParallelepipeds());
     }
 
     /**
@@ -247,5 +254,42 @@ public class HashMapCellStorage implements CellStorage {
         }
 
         return Optional.empty();
+    }
+
+    /**
+     * Helps analyzing changes in the storage
+     *
+     * @return difference between current storage and its last seen version
+     */
+    @Override
+    public @NotNull CollectionObserver<CellParallelepiped> registerCollectionObserver() {
+        return new CellStorageObserver(this);
+    }
+
+    private class CellStorageObserver implements CollectionObserver<CellParallelepiped> {
+        private HashMapCellStorage current;
+        private HashMapCellStorage old;
+
+        CellStorageObserver(HashMapCellStorage current) {
+            this.current = current;
+            this.old = new HashMapCellStorage(current);
+        }
+
+        @Override
+        public Difference<CellParallelepiped> getDifference() {
+            Set<CellParallelepiped> added = new HashSet<>();
+            Set<CellParallelepiped> removed = new HashSet<>();
+
+            added.addAll(current.cellParallelepipeds());
+            added.removeAll(old.cellParallelepipeds());
+
+            removed.addAll(old.cellParallelepipeds());
+            removed.removeAll(current.cellParallelepipeds());
+
+            old.clear();
+            old.addAll(current.cellParallelepipeds());
+
+            return new Difference<>(added, removed, new HashMap<>());
+        }
     }
 }

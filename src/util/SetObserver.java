@@ -13,9 +13,7 @@ public class SetObserver<E> implements CollectionObserver<E> {
 
     public SetObserver(Set<E> currentSet) {
         this.currentSet = currentSet;
-
-        oldSet = new HashSet<>();
-        oldSet.addAll(currentSet);
+        oldSet = new HashSet<>(currentSet);
     }
 
     @Override
