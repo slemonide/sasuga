@@ -13,9 +13,23 @@ Run `src/Main.java`.
 * SPACE BAR - pause rendering
 * R - restart the game
 
-## Current Progress
-* It runs.
-* Estimated V0.1 release date - May 10th.
+## Planned features:
+
+* Key Features:
+  * Freely build structures made up of any composition of arbitrary sized
+    and arbitrary rotated parallelepipeds
+  * Change the size of the player (would increase/decrease the relative
+    size of the world accordingly) arbitrary
+  * Cursor can be chosen to have any shape made of a composition of
+    parallelepipeds
+  * Handy world editing tools
+  * Make it possible to connect two subspaces using arbitrary surface
+    (portals).
+  * Wireworld-based circuitry
+  * Some parallelepipeds are "alive" (plants, animals, player, robots, etc.)
+* Auxiliary features:
+  * Share the world in a distributed network so that anyone can get the full
+    version of the world
 
 ## Documentation
 * [Wiki](https://github.com/slemonide/sasuga/wiki)
