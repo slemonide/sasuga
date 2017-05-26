@@ -25,6 +25,10 @@ Run `src/Main.java`.
   * Handy world editing tools
   * Make it possible to connect two subspaces using arbitrary surface
     (portals).
+    * These two points can be at any arbitrary scale
+  * Completely infinite world
+  * Non-interacting parts of the world can run on separate agents
+  * Relative positioning
   * Wireworld-based circuitry
   * Some parallelepipeds are "alive" (plants, animals, player, robots, etc.)
 * Auxiliary features:
@@ -35,7 +39,6 @@ Run `src/Main.java`.
 * [Wiki](https://github.com/slemonide/sasuga/wiki)
 * [javadoc](https://slemonide.github.io/sasuga/)
 * [another javadoc](docs/index.html)
-
 
 ## Q/A
 Q: What is the difference between Cell, Box and Parallelepiped?

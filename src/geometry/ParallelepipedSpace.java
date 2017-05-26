@@ -250,10 +250,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     private boolean parallelepipedsIntersect() {
         for (Parallelepiped parallelepiped1 : parallelepipeds) {
             for (Parallelepiped parallelepiped2 : parallelepipeds) {
-                if (parallelepiped1 != parallelepiped2) {
-                    if (parallelepiped1.intersects(parallelepiped2)) {
-                        return true;
-                    }
+                if (parallelepiped1 != parallelepiped2 && parallelepiped1.intersects(parallelepiped2)) {
+                    return true;
                 }
             }
         }
@@ -333,6 +331,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
 
     @Override
     public int hashCode() {
+        // TODO: make the the tests for this method pass
+
         return parallelepipeds.hashCode();
     }
 }
