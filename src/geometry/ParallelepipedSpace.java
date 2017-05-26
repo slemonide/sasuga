@@ -32,7 +32,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      * @param space parallelepiped space from which to copy parallelepipeds
      */
     public ParallelepipedSpace(@NotNull ParallelepipedSpace space) {
-        // TODO: finsih
+        parallelepipeds = new CopyOnWriteArraySet<>();
+        parallelepipeds.addAll(space.parallelepipeds);
     }
 
     /**
