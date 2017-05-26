@@ -167,15 +167,15 @@ public final class Parallelepiped {
      * @param axis axis on which to check for neighbours
      * @return collection of found neighbours
      */
+    @NotNull
     Collection<? extends Parallelepiped> getInterlockingNeighbours(@NotNull ParallelepipedSpace space,
                                                                    @NotNull Axis axis) {
         Set<Parallelepiped> neighbours = new HashSet<>();
 
         Position unitVector = axis.getUnitVector();
 
-        neighbours.add(space.get(this.getCorner().add(unitVector.scale(this.getSize(axis)))));
-
-        neighbours.add(space.get(this.getCorner().add(unitVector.inverse())));
+        space.get(this.getCorner().add(unitVector.scale(this.getSize(axis)))).ifPresent(neighbours::add);
+        space.get(this.getCorner().add(unitVector.inverse())).ifPresent(neighbours::add);
 
         neighbours.remove(null);
         return neighbours;

@@ -1,6 +1,7 @@
 package inventory;
 
 import geometry.Position;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An item that can be stored in the inventory

@@ -5,6 +5,8 @@ import geometry.Position;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 public class InventoryTest {
@@ -23,7 +25,7 @@ public class InventoryTest {
         assertEquals(0, testInventory.getSelectedSlot());
 
         for (int i = 0; i < INVENTORY_SIZE; i++) {
-            assertEquals(null, testInventory.getInventoryItem(i));
+            assertEquals(Optional.empty(), testInventory.getInventoryItem(i));
             assertEquals("", testInventory.getName(i));
         }
 

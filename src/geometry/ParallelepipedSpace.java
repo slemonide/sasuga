@@ -31,7 +31,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      * <tt>space</tt> contains
      * @param space parallelepiped space from which to copy parallelepipeds
      */
-    public ParallelepipedSpace(ParallelepipedSpace space) {
+    public ParallelepipedSpace(@NotNull ParallelepipedSpace space) {
         // TODO: finsih
     }
 
@@ -39,7 +39,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      * If the given position is not in the set, add it. Otherwise, do nothing.
      * @param position new position to be added
      */
-    public void add(Position position) {
+    public void add(@NotNull Position position) {
         if (this.contains(position)) {
             return;
         }
@@ -104,14 +104,15 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      * @return true if this space contains given position, false otherwise
      */
     public boolean contains(@NotNull Position position) {
-        return (get(position) != null);
+        return (get(position).isPresent());
     }
 
-    public void remove(Position position) {
-        if (contains(position)) {
-            Parallelepiped toSplit = get(position);
-            assert toSplit != null;
-
+    /**
+     * Remove the given position from this space
+     * @param position position to be removed
+     */
+    public void remove(@NotNull Position position) {
+        get(position).ifPresent(toSplit -> {
             parallelepipeds.remove(toSplit);
             if (toSplit.getVolume() != 1) {
                 addBottom(position, toSplit);
@@ -121,12 +122,13 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
                 addFront(position, toSplit);
                 addBack(position, toSplit);
             }
-        }
+        });
 
         hasValidState();
     }
 
-    private void addBack(Position position, Parallelepiped toSplit) {
+    private void addBack(@NotNull Position position,
+                         @NotNull Parallelepiped toSplit) {
         if (position.x < toSplit.getCorner().x + toSplit.getSize(X) - 1) {
             add(toSplit.setSize(Z, 1).setSize(Y, 1)
             .setSize(X, toSplit.getCorner().x + toSplit.getSize(X) - 1 - position.x)
@@ -137,7 +139,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         hasValidState();
     }
 
-    private void addFront(Position position, Parallelepiped toSplit) {
+    private void addFront(@NotNull Position position,
+                          @NotNull Parallelepiped toSplit) {
         if (position.x > toSplit.getCorner().x) {
             add(toSplit.setSize(Z, 1).setSize(Y, 1)
             .setSize(X, position.x - toSplit.getCorner().x)
@@ -148,7 +151,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         hasValidState();
     }
 
-    private void addLeft(Position position, Parallelepiped toSplit) {
+    private void addLeft(@NotNull Position position,
+                         @NotNull Parallelepiped toSplit) {
         if (position.y < toSplit.getCorner().y + toSplit.getSize(Y) - 1) {
             add(toSplit.setSize(Z, 1)
             .setSize(Y, toSplit.getCorner().y + toSplit.getSize(Y) - 1 - position.y)
@@ -158,7 +162,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         hasValidState();
     }
 
-    private void addRight(Position position, Parallelepiped toSplit) {
+    private void addRight(@NotNull Position position,
+                          @NotNull Parallelepiped toSplit) {
         if (position.y > toSplit.getCorner().y) {
             add(toSplit.setSize(Z, 1)
                     .setSize(Y, position.y - toSplit.getCorner().y)
@@ -168,7 +173,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         hasValidState();
     }
 
-    private void addTop(Position position, Parallelepiped toSplit) {
+    private void addTop(@NotNull Position position,
+                        @NotNull Parallelepiped toSplit) {
         if (position.z < toSplit.getCorner().z + toSplit.getSize(Z) - 1) {
             add(toSplit.setSize(Z, toSplit.getCorner().z + toSplit.getSize(Z) - 1 - position.z)
             .setCorner(toSplit.getCorner().set(Z, position.z + 1)));
@@ -177,7 +183,8 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         hasValidState();
     }
 
-    private void addBottom(Position position, Parallelepiped toSplit) {
+    private void addBottom(@NotNull Position position,
+                           @NotNull Parallelepiped toSplit) {
         if (position.z > toSplit.getCorner().z) {
             add(toSplit.setSize(Z, position.z - toSplit.getCorner().z));
         }
@@ -186,18 +193,21 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     }
 
     /**
-     * Return a parallelepiped containing the voxel with the given position
-     * If there is no match, return null
+     * Maybe return a parallelepiped containing the voxel with the given position
+     * @param position position to check
+     * @return a parallelepiped if it exists, Optional.empty() otherwise
      */
-    public Parallelepiped get(Position position) {
+    @NotNull
+    public Optional<Parallelepiped> get(@NotNull Position position) {
         for (Parallelepiped parallelepiped : parallelepipeds) {
             if (parallelepiped.contains(position)) {
-                return parallelepiped;
+                return Optional.of(parallelepiped);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
+    @NotNull
     public Set<Parallelepiped> getParallelepipeds() {
         return Collections.unmodifiableSet(parallelepipeds);
     }

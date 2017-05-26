@@ -249,12 +249,13 @@ public class HashMapCellStorage implements CellStorage {
     public @NotNull Optional<CellParallelepiped> get(Position position) {
         for (WorldCell worldCell : storage.keySet()) {
             ParallelepipedSpace parallelepipedSpace = storage.get(worldCell);
-            if (parallelepipedSpace.contains(position)) {
+
+            parallelepipedSpace.get(position).map(parallelepiped -> {
                 CellParallelepiped cellParallelepiped =
-                        new CellParallelepiped(parallelepipedSpace.get(position), worldCell);
+                        new CellParallelepiped(parallelepiped, worldCell);
 
                 return Optional.of(cellParallelepiped);
-            }
+            });
         }
 
         return Optional.empty();

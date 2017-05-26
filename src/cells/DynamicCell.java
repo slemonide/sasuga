@@ -3,6 +3,7 @@ package cells;
 import com.jme3.math.ColorRGBA;
 import geometry.Position;
 import inventory.InventoryItem;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A cell that modifies the world actively
@@ -15,7 +16,7 @@ public enum DynamicCell implements InventoryItem, WorldCell {
 
     @Override
     public String getName() {
-        return null;
+        return "";
     }
 
     @Override
@@ -23,9 +24,10 @@ public enum DynamicCell implements InventoryItem, WorldCell {
 
     }
 
+    @NotNull
     @Override
     public ColorRGBA getColor(int tick, Position position) {
-        return null;
+        return ColorRGBA.Black;
     }
     // TODO: finish
 }

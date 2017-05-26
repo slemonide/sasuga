@@ -1,9 +1,11 @@
 package inventory;
 
 import cells.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * An inventory that can contain InventoryItems's
@@ -37,17 +39,18 @@ public class Inventory {
     }
 
     /**
-     * Returns the inventory item at the given slot.
+     * Maybe return the inventory item at the given slot.
      * If 0 &lt slot &lt INVENTORY_SIZE, slot is forcefully made to be inside this range
      * @param slot slot of the inventory item
      * @return inventory item at the given slot
      */
-    public InventoryItem getInventoryItem(int slot) {
+    @NotNull
+    public Optional<InventoryItem> getInventoryItem(int slot) {
         if (slot >= size()) {
-            return null;
+            return Optional.empty();
         }
 
-        return inventory.get(getSafeSlot(slot));
+        return Optional.of(inventory.get(getSafeSlot(slot)));
     }
 
     /**
@@ -84,7 +87,7 @@ public class Inventory {
     /**
      * @return selected inventory item
      */
-    public InventoryItem getSelectedItem() {
+    public Optional<InventoryItem> getSelectedItem() {
         return getInventoryItem(getSelectedSlot());
     }
 
@@ -124,8 +127,9 @@ public class Inventory {
     }
 
     public void useSelectedItem() {
-        if (getSelectedItem() != null) {
-            getSelectedItem().use(player.getSelectedBlockFace(), player.getSelectedBlock(), player.getPosition());
-        }
+        getSelectedItem().ifPresent(i -> i.use(
+                player.getSelectedBlockFace(),
+                player.getSelectedBlock(),
+                player.getPosition()));
     }
 }

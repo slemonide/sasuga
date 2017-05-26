@@ -3,6 +3,7 @@ package cells;
 import com.jme3.math.ColorRGBA;
 import geometry.Position;
 import inventory.InventoryItem;
+import org.jetbrains.annotations.NotNull;
 import world.World;
 
 /**
@@ -24,6 +25,7 @@ public enum StaticCell implements InventoryItem, WorldCell {
         this.color = color;
     }
 
+    @NotNull
     @Override
     public String getName() {
         return name;
@@ -39,6 +41,7 @@ public enum StaticCell implements InventoryItem, WorldCell {
         World.getInstance().add(placeCursor, this);
     }
 
+    @NotNull
     @Override
     public ColorRGBA getColor(int tick, Position position) {
         return getColor();

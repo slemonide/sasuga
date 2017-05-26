@@ -3,6 +3,7 @@ package cells;
 import com.jme3.math.ColorRGBA;
 import geometry.Position;
 import inventory.InventoryItem;
+import org.jetbrains.annotations.NotNull;
 import world.World;
 
 /**
@@ -39,6 +40,7 @@ public enum AnimatedCell implements InventoryItem, WorldCell {
      * Produce the name of this animated cell
      * @return name of this animated cell
      */
+    @NotNull
     @Override
     public String getName() {
         return name;
@@ -49,6 +51,7 @@ public enum AnimatedCell implements InventoryItem, WorldCell {
      * @param tick current tick
      * @return current color of this animated cell
      */
+    @NotNull
     @Override
     public ColorRGBA getColor(int tick, Position position) {
         return function.apply(tick);
