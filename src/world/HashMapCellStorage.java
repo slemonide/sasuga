@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Set-based implementation of CellStorage
+ * HashMap-based implementation of CellStorage
  */
 public class HashMapCellStorage implements CellStorage {
     private Map<WorldCell, ParallelepipedSpace> storage;
@@ -31,14 +31,18 @@ public class HashMapCellStorage implements CellStorage {
      * @param cellParallelepipeds the collection of elements to initially contain
      * @throws NullPointerException if the specified collection is null
      */
-    HashMapCellStorage(Collection<CellParallelepiped> cellParallelepipeds) throws NullPointerException {
+    HashMapCellStorage(@NotNull Collection<CellParallelepiped> cellParallelepipeds) throws NullPointerException {
         storage = new HashMap<>();
         addAll(cellParallelepipeds);
     }
 
-    public HashMapCellStorage(HashMapCellStorage current) {
+    /**
+     * Construct a new cell storage with the same contents as the given storage
+     * @param otherStorage storage from which to copy contents
+     */
+    public HashMapCellStorage(@NotNull CellStorage otherStorage) {
         storage = new HashMap<>();
-        addAll(current.cellParallelepipeds());
+        addAll(otherStorage.cellParallelepipeds());
     }
 
     /**
@@ -291,5 +295,20 @@ public class HashMapCellStorage implements CellStorage {
 
             return new Difference<>(added, removed, new HashMap<>());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HashMapCellStorage that = (HashMapCellStorage) o;
+
+        return storage.equals(that.storage);
+    }
+
+    @Override
+    public int hashCode() {
+        return storage.hashCode();
     }
 }

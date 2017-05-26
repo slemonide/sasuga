@@ -27,6 +27,15 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     }
 
     /**
+     * Create parallelepiped space that contains all of the parallelepipeds that
+     * <tt>space</tt> contains
+     * @param space parallelepiped space from which to copy parallelepipeds
+     */
+    public ParallelepipedSpace(ParallelepipedSpace space) {
+        // TODO: finsih
+    }
+
+    /**
      * If the given position is not in the set, add it. Otherwise, do nothing.
      * @param position new position to be added
      */
@@ -292,5 +301,27 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         for (Parallelepiped parallelepiped : toAdd) {
             add(parallelepiped);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ParallelepipedSpace that = (ParallelepipedSpace) o;
+
+        if (parallelepipeds.equals(that.parallelepipeds)) {
+            return true;
+        } else {
+            ParallelepipedSpace difference = new ParallelepipedSpace(this);
+            difference.removeAll(that);
+
+            return difference.isEmpty();
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return parallelepipeds.hashCode();
     }
 }
