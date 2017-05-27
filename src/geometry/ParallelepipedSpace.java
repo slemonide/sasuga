@@ -75,19 +75,6 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     }
 
     /**
-     * If the given parallelepiped is not in the set, add it. Otherwise, do nothing.
-     * @param x x coordinate of the corner
-     * @param y x coordinate of the corner
-     * @param z x coordinate of the corner
-     * @param xSize x size of the parallelepiped
-     * @param ySize y size of the parallelepiped
-     * @param zSize z size of the parallelepiped
-     */
-    public void add(int x, int y, int z, int xSize, int ySize, int zSize) {
-        add(new Parallelepiped(new Position(x, y, z), xSize, ySize, zSize));
-    }
-
-    /**
      * Remove the given parallelepipeds from the set; merge them and add the new parallelepiped to the set
      * @param parallelepipedA first parallelepiped
      * @param axis axis of the adjacent side of the given parallelepipeds

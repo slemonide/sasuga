@@ -1,11 +1,13 @@
 package geometry;
 
+import com.jme3.math.Vector3f;
 import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import static geometry.Position.SCALE;
 import static org.junit.Assert.*;
 
 /**
@@ -28,6 +30,28 @@ public class PositionTest {
     }
 
     @Test
+    public void testConstructorFromUIVector() {
+        Vector3f vector3f = new Vector3f(10, 20, 30);
+        Position positionA = Position.fromUIVector(vector3f);
+        Position positionB = new Position(
+                (int) (10 / SCALE),
+                (int) (20 / SCALE),
+                (int) (30 / SCALE));
+
+        assertEquals(positionA, positionB);
+
+
+        vector3f = new Vector3f(-10, 60, 33);
+        positionA = Position.fromUIVector(vector3f);
+        positionB = new Position(
+                (int) (-10 / SCALE),
+                (int) (60 / SCALE),
+                (int) (33 / SCALE));
+
+        assertEquals(positionA, positionB);
+    }
+
+    @Test
     public void testAdd() {
         Position position = new Position(1, 2, 0);
         assertEquals(new Position(1, 2, 0), position.add(0,0,0));
@@ -43,6 +67,15 @@ public class PositionTest {
         assertEquals(new Position(2, 2, 0), position.add(new Position(1,0,0)));
         assertEquals(new Position(0, 3, 0), position.add(new Position(-1, 1,0)));
         assertEquals(new Position(4, 4, 1), position.add(new Position(3, 2, 1)));
+    }
+
+    @Test
+    public void testSubtractVector() {
+        Position position = new Position(1, 2,0);
+        assertEquals(new Position(1, 2, 0), position.subtract(new Position(0,0,0)));
+        assertEquals(new Position(0, 2, 0), position.subtract(new Position(1,0,0)));
+        assertEquals(new Position(2, 1, 0), position.subtract(new Position(-1, 1,0)));
+        assertEquals(new Position(-2, 0, -1), position.subtract(new Position(3, 2, 1)));
     }
 
     @Test

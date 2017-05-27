@@ -33,7 +33,7 @@ public final class Position {
     /**
      * Scale of the world relative to the positions basis
      */
-    private static final float SCALE = Options.getInstance().getFloat("SCALE");
+    public static final float SCALE = Options.getInstance().getFloat("SCALE");
     /**
      * x component
      */
@@ -103,6 +103,7 @@ public final class Position {
     @NotNull
     @Contract(pure = true)
     public Vector3f getUIVector() {
+        // TODO: this might be the cause of the weird cursor behaviour
         return this.multiply(SCALE);
     }
 
