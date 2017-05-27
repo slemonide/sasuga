@@ -1,6 +1,7 @@
 package inventory;
 
 import cells.Player;
+import geometry.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

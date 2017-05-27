@@ -148,25 +148,26 @@ public class VisualGUI extends SimpleApplication implements Observer {
     }
 
     private void updateCursor() {
-        Position currentPosition = Position.fromUIVector(cam.getLocation()
-                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE)));
-        Position nextPosition = Position.fromUIVector(cam.getLocation()
-                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE)));
+        Vector3f selectedFacePosition = cam.getLocation()
+                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE));
+        Vector3f selectedPosition = cam.getLocation()
+                .add(cam.getDirection().mult(CURSOR_DISTANCE * SCALE));
 
         for (int i = 0; i < CURSOR_DISTANCE * CURSOR_SAMPLE_RATE; i++) {
-            currentPosition = Position.fromUIVector(cam.getLocation()
-                    .add(cam.getDirection().mult((float) i / CURSOR_SAMPLE_RATE * SCALE)));
-            nextPosition = Position.fromUIVector(cam.getLocation()
-                    .add(cam.getDirection().mult((float) (i + 1) / CURSOR_SAMPLE_RATE * SCALE)));
+            selectedFacePosition = cam.getLocation()
+                    .add(cam.getDirection().mult((float) i / CURSOR_SAMPLE_RATE * SCALE));
+            selectedPosition = cam.getLocation()
+                    .add(cam.getDirection().mult((float) (i + 1) / CURSOR_SAMPLE_RATE * SCALE));
 
-            if (World.getInstance().containsCellAt(nextPosition)) {
+            if (World.getInstance().containsCellAt(Position.fromUIVector(selectedPosition))) {
                 break;
+            } else {
+                selectedPosition = selectedFacePosition;
             }
-            nextPosition = currentPosition;
         }
 
-        Player.getInstance().setSelectedBlock(nextPosition);
-        Player.getInstance().setSelectedBlockFace(currentPosition);
+        Player.getInstance().setSelectedBlock(selectedPosition);
+        Player.getInstance().setSelectedBlockFace(selectedFacePosition);
 
         cursor.setLocalTranslation(Player.getInstance().getSelectedBlock().getUIVector());
     }

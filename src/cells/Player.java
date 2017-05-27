@@ -1,5 +1,6 @@
 package cells;
 
+import com.jme3.math.Vector3f;
 import geometry.Position;
 import inventory.Inventory;
 import world.*;
@@ -39,8 +40,8 @@ public class Player extends Observable {
     private Inventory inventory;
     private int hungerDelay;
     private float rotation;
-    private Position selectedBlock;
-    private Position selectedBlockFace;
+    private Vector3f selectedBlock;
+    private Vector3f selectedBlockFace;
     private Position position;
 
     /**
@@ -49,8 +50,8 @@ public class Player extends Observable {
      * @param position position of this cell
      */
     public Player(Position position) {
-        selectedBlock = position;
-        selectedBlockFace = position;
+        selectedBlock = position.getUIVector();
+        selectedBlockFace = position.getUIVector();
 
         Random random = new Random();
 
@@ -230,17 +231,17 @@ public class Player extends Observable {
     }
 
     public Position getSelectedBlock() {
-        return selectedBlock;
+        return Position.fromUIVector(selectedBlock);
     }
     public Position getSelectedBlockFace() {
-        return selectedBlockFace;
+        return Position.fromUIVector(selectedBlockFace);
     }
 
-    public void setSelectedBlock(Position selectedBlock) {
+    public void setSelectedBlock(Vector3f selectedBlock) {
         this.selectedBlock = selectedBlock;
     }
 
-    public void setSelectedBlockFace(Position selectedBlockFace) {
+    public void setSelectedBlockFace(Vector3f selectedBlockFace) {
         this.selectedBlockFace = selectedBlockFace;
     }
 
