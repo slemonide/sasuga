@@ -114,14 +114,14 @@ public final class Parallelepiped {
     }
 
     /**
-     * Produce the getVolume of this parallelepiped
+     * Produce the volume of this parallelepiped
      *
      * <p>
      *     Volume is equal to xSize * ySize * zSize
      * </p>
-     * @return getVolume of this parallelepiped
+     * @return volume of this parallelepiped
      */
-    public long getVolume() {
+    public int volume() {
         int volumeSoFar = 1;
 
         for (Axis axis : Axis.values()) {
@@ -174,7 +174,7 @@ public final class Parallelepiped {
 
         Position unitVector = axis.getUnitVector();
 
-        space.get(this.getCorner().add(unitVector.scale(this.getSize(axis)))).ifPresent(neighbours::add);
+        space.get(this.getCorner().add(unitVector.multiply(this.getSize(axis)))).ifPresent(neighbours::add);
         space.get(this.getCorner().add(unitVector.inverse())).ifPresent(neighbours::add);
 
         neighbours.remove(null);
@@ -202,15 +202,15 @@ public final class Parallelepiped {
     }
 
     /**
-     * If index is in [1,getVolume()], then produce a unique position inside this parallelepiped,
+     * If index is in [1,volume()], then produce a unique position inside this parallelepiped,
      * otherwise throw IllegalArgumentException
-     * @param index any positive number between 1 and getVolume() (inclusive)
+     * @param index any positive number between 1 and volume() (inclusive)
      * @return position in this parallelepiped
-     * @throws IllegalArgumentException if index is less then 1 or greater then getVolume()
+     * @throws IllegalArgumentException if index is less then 1 or greater then volume()
      */
     @NotNull
     public Position positionFromIndex(int index) throws IllegalArgumentException {
-        if (index < 1 || index > getVolume()) {
+        if (index < 1 || index > volume()) {
             throw new IllegalArgumentException();
         }
 
@@ -234,6 +234,32 @@ public final class Parallelepiped {
      * @return set of all positions in the parallelepiped
      */
     public Stream<Position> positions() {
-        return Stream.iterate(1, i -> i+1).limit(getVolume()).map(this::positionFromIndex);
+        return Stream.iterate(1, i -> i+1).limit(volume()).map(this::positionFromIndex);
+    }
+
+    /**
+     * Produce the (approximate) center of this parallelepiped
+     * @return the (approximate) center of this parallelepiped
+     */
+    @NotNull
+    public Position center() {
+        return new Position(
+                corner.x + (xSize - 1) / 2,
+                corner.y + (ySize - 1) / 2,
+                corner.z + (zSize - 1) / 2);
+    }
+
+    /**
+     * Computes the weighted average center position between this and that
+     * @param that the other parallelepiped
+     * @return the weighted average center position
+     */
+    @NotNull
+    public Position averageCenterPosition(Parallelepiped that) {
+
+        return (this.center().multiply(this.volume()))
+                .add(that.center().multiply(that.volume()))
+                .divide(this.volume() + that.volume());
     }
 }
+

@@ -3,6 +3,7 @@ package geometry.parallelepipedSpace;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
 import geometry.Position;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -14,6 +15,12 @@ import static org.junit.Assert.*;
  * Tests equals() and hashcode() methods of ParallelepipedSpace
  */
 public class EqualsHashCodeTest {
+    private ParallelepipedSpace parallelepipedSpace;
+
+    @Before
+    public void runBefore() {
+        parallelepipedSpace = new ParallelepipedSpace();
+    }
 
     @Test
     public void testEquals() {
@@ -157,5 +164,33 @@ public class EqualsHashCodeTest {
 
         assertTrue(parallelepipedSpaceSet.contains(parallelepipedSpaceA));
         assertTrue(parallelepipedSpaceSet.contains(parallelepipedSpaceB));
+    }
+
+    @Test
+    public void testGetCenterEmpty() {
+        assertFalse(parallelepipedSpace.getCenter().isPresent());
+    }
+
+    @Test
+    public void testGetCenterOneParallelepiped() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(1,1,1),2,3,4);
+
+        parallelepipedSpace.add(parallelepipedA);
+
+        assertTrue(parallelepipedSpace.getCenter().isPresent());
+        assertEquals(parallelepipedSpace.getCenter().get(), parallelepipedA.center());
+    }
+
+    @Test
+    public void testGetCenterTwoParallelepipeds() {
+        Parallelepiped parallelepipedA = new Parallelepiped(new Position(1,1,1),2,3,4);
+        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3,1,-3),9,10,11);
+
+        parallelepipedSpace.add(parallelepipedA);
+        parallelepipedSpace.add(parallelepipedB);
+
+        assertTrue(parallelepipedSpace.getCenter().isPresent());
+        assertEquals(parallelepipedSpace.getCenter().get(),
+                parallelepipedA.averageCenterPosition(parallelepipedB));
     }
 }

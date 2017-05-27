@@ -295,7 +295,7 @@ public class ParallelepipedSpaceTest {
         int volume = 0;
 
         for (Parallelepiped parallelepiped : testSpace) {
-            volume += parallelepiped.getVolume();
+            volume += parallelepiped.volume();
         }
 
         assertEquals(volume, testSpace.getVolume());

@@ -14,10 +14,13 @@ import static org.junit.Assert.*;
 
 public class ParallelepipedTest {
     private static final Random random = new Random();
+    private Parallelepiped parallelepiped;
+    private Parallelepiped parallelepipedA;
+    private Parallelepiped parallelepipedB;
 
     @Test
     public void testConstructor() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        parallelepiped = new Parallelepiped(new Position(0,0,0));
         assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
@@ -28,7 +31,7 @@ public class ParallelepipedTest {
 
     @Test
     public void testConstructorHard() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(-4,-9,-14), 10, 20, 30);
+        parallelepiped = new Parallelepiped(new Position(-4,-9,-14), 10, 20, 30);
         assertEquals(new Position(-4,-9,-14), parallelepiped.getCorner());
         assertEquals(10, parallelepiped.getSize(X));
         assertEquals(20, parallelepiped.getSize(Y));
@@ -100,7 +103,7 @@ public class ParallelepipedTest {
 
     @Test
     public void testTwoX() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 2, 1, 1);
+        parallelepiped = new Parallelepiped(new Position(0,0,0), 2, 1, 1);
         assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(2, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
@@ -114,7 +117,7 @@ public class ParallelepipedTest {
 
     @Test
     public void testTwoY() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 2, 1);
+        parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 2, 1);
         assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(2, parallelepiped.getSize(Y));
@@ -133,7 +136,7 @@ public class ParallelepipedTest {
 
     @Test
     public void testTwoZ() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 1, 2);
+        parallelepiped = new Parallelepiped(new Position(0,0,0), 1, 1, 2);
         assertEquals(new Position(0,0,0), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
@@ -147,7 +150,7 @@ public class ParallelepipedTest {
 
     @Test
     public void testNonZeroPosition() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(10,20,30), 1, 1, 2);
+        parallelepiped = new Parallelepiped(new Position(10,20,30), 1, 1, 2);
         assertEquals(new Position(10,20,30), parallelepiped.getCorner());
         assertEquals(1, parallelepiped.getSize(X));
         assertEquals(1, parallelepiped.getSize(Y));
@@ -161,7 +164,7 @@ public class ParallelepipedTest {
 
     @Test
     public void testGetWorldVector3f() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        parallelepiped = new Parallelepiped(new Position(0,0,0));
 
         assertEquals(new Vector3f(0f,0f,0f), parallelepiped.getWorldVector3f());
 
@@ -181,11 +184,11 @@ public class ParallelepipedTest {
     @Test
     public void testGetVolume() {
         assertEquals(1,
-                new Parallelepiped(new Position(0,0,0)).getVolume());
+                new Parallelepiped(new Position(0,0,0)).volume());
         assertEquals(2,
-                new Parallelepiped(new Position(0,0,0), 1, 2, 1).getVolume());
+                new Parallelepiped(new Position(0,0,0), 1, 2, 1).volume());
         assertEquals(10 * 4 * 7,
-                new Parallelepiped(new Position(0,0,0), 10, 4, 7).getVolume());
+                new Parallelepiped(new Position(0,0,0), 10, 4, 7).volume());
     }
 
     @Test
@@ -241,8 +244,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsNoIntersect() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 3, 10);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(9, 5, 1), 2, 2, 11);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 3, 10);
+        parallelepipedB = new Parallelepiped(new Position(9, 5, 1), 2, 2, 11);
 
         assertFalse(parallelepipedA.intersects(parallelepipedB));
         assertFalse(parallelepipedB.intersects(parallelepipedA));
@@ -250,8 +253,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsCornerIntersect() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 4, 10);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 9), 4, 5, 4);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 4, 10);
+        parallelepipedB = new Parallelepiped(new Position(3, 3, 9), 4, 5, 4);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -259,8 +262,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsSideIntersect() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0, 0, 0), 5, 4, 10);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(3, 3, 9), 2, 2, 30);
+        parallelepipedA = new Parallelepiped(new Position(0, 0, 0), 5, 4, 10);
+        parallelepipedB = new Parallelepiped(new Position(3, 3, 9), 2, 2, 30);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -268,8 +271,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsFullyInside() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 10, 11, 12);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(2, 2, 2), 2, 2, 3);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 10, 11, 12);
+        parallelepipedB = new Parallelepiped(new Position(2, 2, 2), 2, 2, 3);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -277,8 +280,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsPartialSideIntersect() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 7, 4, 1);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(5, 1,0), 7, 2, 1);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 7, 4, 1);
+        parallelepipedB = new Parallelepiped(new Position(5, 1,0), 7, 2, 1);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -286,8 +289,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsExactMatch() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 2, 2, 3);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 2, 2, 3);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 2, 2, 3);
+        parallelepipedB = new Parallelepiped(new Position(0,0,0), 2, 2, 3);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -295,8 +298,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsTShapeA() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 1, 5, 9);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 1, 9, 5);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 1, 5, 9);
+        parallelepipedB = new Parallelepiped(new Position(0,0,0), 1, 9, 5);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -304,8 +307,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsTShapeB() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 1, 9);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 9, 1, 5);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 5, 1, 9);
+        parallelepipedB = new Parallelepiped(new Position(0,0,0), 9, 1, 5);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -313,8 +316,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testIntersectsTShapeC() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 9, 5, 1);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 5, 9, 1);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 9, 5, 1);
+        parallelepipedB = new Parallelepiped(new Position(0,0,0), 5, 9, 1);
 
         assertTrue(parallelepipedA.intersects(parallelepipedB));
         assertTrue(parallelepipedB.intersects(parallelepipedA));
@@ -324,8 +327,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testFitsBasic() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0));
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0));
+        parallelepipedA = new Parallelepiped(new Position(0,0,0));
+        parallelepipedB = new Parallelepiped(new Position(0,0,0));
 
         for (Axis axis : Axis.values()) {
             assertTrue(parallelepipedA.fits(axis, parallelepipedB));
@@ -336,14 +339,14 @@ public class ParallelepipedTest {
     @Test
     public void testFitsHard() {
         for (Axis axis : Axis.values()) {
-            Parallelepiped parallelepipedA = new Parallelepiped(new Position(
+            parallelepipedA = new Parallelepiped(new Position(
                     random.nextInt(Integer.MAX_VALUE),
                     random.nextInt(Integer.MAX_VALUE),
                     random.nextInt(Integer.MAX_VALUE)),
                     random.nextInt(Integer.MAX_VALUE),
                     random.nextInt(Integer.MAX_VALUE),
                     random.nextInt(Integer.MAX_VALUE));
-            Parallelepiped parallelepipedB = new Parallelepiped(new Position(
+            parallelepipedB = new Parallelepiped(new Position(
                     random.nextInt(Integer.MAX_VALUE),
                     random.nextInt(Integer.MAX_VALUE),
                     random.nextInt(Integer.MAX_VALUE)),
@@ -372,8 +375,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testFitsNoFitBasic() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0));
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 2, 1, 2);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0));
+        parallelepipedB = new Parallelepiped(new Position(0,0,0), 2, 1, 2);
 
         for (Axis axis : Axis.values()) {
             assertFalse(parallelepipedA.fits(axis, parallelepipedB));
@@ -383,8 +386,8 @@ public class ParallelepipedTest {
 
     @Test
     public void testFitsCubeFitFit() {
-        Parallelepiped parallelepipedA = new Parallelepiped(new Position(0,0,0), 3, 3, 3);
-        Parallelepiped parallelepipedB = new Parallelepiped(new Position(0,0,0), 3, 3, 3);
+        parallelepipedA = new Parallelepiped(new Position(0,0,0), 3, 3, 3);
+        parallelepipedB = new Parallelepiped(new Position(0,0,0), 3, 3, 3);
 
         for (Axis axis : Axis.values()) {
             assertTrue(parallelepipedA.fits(axis, parallelepipedB));
@@ -398,7 +401,7 @@ public class ParallelepipedTest {
     public void testGetInterlockingNeighboursHard() {
         ParallelepipedSpace testSpace = new ParallelepipedSpace();
 
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        parallelepiped = new Parallelepiped(new Position(0,0,0));
         testSpace.add(new Position(0,0,0));
         for (Axis axis : Axis.values()) {
             assertTrue(parallelepiped.getInterlockingNeighbours(testSpace,axis).isEmpty());
@@ -422,7 +425,7 @@ public class ParallelepipedTest {
     public void testGetInterlockingNeighboursWeird() {
         ParallelepipedSpace testSpace = new ParallelepipedSpace();
 
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        parallelepiped = new Parallelepiped(new Position(0,0,0));
         testSpace.add(new Position(0,0,0));
         testSpace.add(new Position(0,1,0));
 
@@ -439,51 +442,103 @@ public class ParallelepipedTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testPositionFromIndexTooBigException() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        parallelepiped = new Parallelepiped(new Position(0,0,0));
 
         parallelepiped.positionFromIndex(2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testPositionFromIndexTooSmallException() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0));
+        parallelepiped = new Parallelepiped(new Position(0,0,0));
 
         parallelepiped.positionFromIndex(0);
     }
 
     @Test
     public void testPositionFromIndex() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 11, 21, 27);
+        parallelepiped = new Parallelepiped(new Position(0,0,0), 11, 21, 27);
 
         Set<Position> positions = new HashSet<>();
 
-        for (int i = 1; i <= parallelepiped.getVolume(); i++) {
+        for (int i = 1; i <= parallelepiped.volume(); i++) {
             positions.add(parallelepiped.positionFromIndex(i));
         }
 
-        assertEquals(positions.size(), parallelepiped.getVolume());
+        assertEquals(positions.size(), parallelepiped.volume());
     }
 
     @Test
     public void testPositionFromIndexNonZeroPosition() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(-30,4,5), 11, 21, 27);
+        parallelepiped = new Parallelepiped(new Position(-30,4,5), 11, 21, 27);
 
         Set<Position> positions = new HashSet<>();
 
-        for (int i = 1; i <= parallelepiped.getVolume(); i++) {
+        for (int i = 1; i <= parallelepiped.volume(); i++) {
             positions.add(parallelepiped.positionFromIndex(i));
         }
 
-        assertEquals(positions.size(), parallelepiped.getVolume());
+        assertEquals(positions.size(), parallelepiped.volume());
         assertTrue(positions.contains(new Position(-30,4,5)));
     }
 
     @Test
     public void testPositions() {
-        Parallelepiped parallelepiped = new Parallelepiped(new Position(0,0,0), 7, 9, 11);
+        parallelepiped = new Parallelepiped(new Position(0,0,0), 7, 9, 11);
 
         int volume = parallelepiped.positions().mapToInt(position -> 1).sum();
 
-        assertEquals(volume, parallelepiped.getVolume());
+        assertEquals(volume, parallelepiped.volume());
+    }
+    
+    @Test
+    public void testAverageCenterPositionOneParallelepiped() {
+        parallelepiped = new Parallelepiped(new Position(2,3,4),1,2,5);
+
+        Position center = parallelepiped.center();
+        Position averageCenter = parallelepiped.averageCenterPosition(parallelepiped);
+        assertEquals(center, averageCenter);
+    }
+
+    @Test
+    public void testAverageCenterPositionTwoParallelepipedsNotWeighted() {
+        Position positionA = new Position(2, 3, 2);
+        Position positionB = new Position(-100, 30, 7);
+
+        parallelepipedA = new Parallelepiped(positionA);
+        parallelepipedB = new Parallelepiped(positionB);
+
+        Position center = positionA.add(positionB).divide(2);
+
+        assertEquals(center, parallelepipedA.averageCenterPosition(parallelepipedB));
+    }
+
+    @Test
+    public void testAverageCenterPositionApplicationInvariance() {
+        Position positionA = new Position(2, 3, 2);
+        Position positionB = new Position(-100, 30, 7);
+
+        parallelepipedA = new Parallelepiped(positionA, 143, 3, 32);
+        parallelepipedB = new Parallelepiped(positionB, 53, 7, 10);
+
+        assertEquals(
+                parallelepipedA.averageCenterPosition(parallelepipedB),
+                parallelepipedB.averageCenterPosition(parallelepipedA));
+    }
+
+    @Test
+    public void testAverageCenterPositionTwoParallelepipedsWeighted() {
+        Position positionA = new Position(2, 3, 2);
+        Position positionB = new Position(-100, 30, 7);
+
+        parallelepipedA = new Parallelepiped(positionA, 123, 2, 32);
+        parallelepipedB = new Parallelepiped(positionB, 5, 7, 9);
+
+        Position center = ((parallelepipedA.center().multiply(parallelepipedA.volume()))
+                .add(parallelepipedB.center().multiply(parallelepipedB.volume())))
+                .divide(parallelepipedA.volume() + parallelepipedB.volume());
+
+        Position average = parallelepipedA.averageCenterPosition(parallelepipedB);
+
+        assertEquals(center, average);
     }
 }

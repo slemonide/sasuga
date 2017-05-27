@@ -52,10 +52,10 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
 
     /**
      * If the given parallelepiped is not in the set, add it. Otherwise, do nothing.
-     * <p>It's expected that the given parallelepiped does not intersect with any already existing parallelepipeds</p>
      * @param parallelepiped new position to be added
      */
     public void add(@NotNull Parallelepiped parallelepiped) {
+        // TODO: make this more robust
         assert (!parallelepipeds.contains(parallelepiped));
 
         for (Axis axis : Axis.values()) {
@@ -75,6 +75,19 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     }
 
     /**
+     * If the given parallelepiped is not in the set, add it. Otherwise, do nothing.
+     * @param x x coordinate of the corner
+     * @param y x coordinate of the corner
+     * @param z x coordinate of the corner
+     * @param xSize x size of the parallelepiped
+     * @param ySize y size of the parallelepiped
+     * @param zSize z size of the parallelepiped
+     */
+    public void add(int x, int y, int z, int xSize, int ySize, int zSize) {
+        add(new Parallelepiped(new Position(x, y, z), xSize, ySize, zSize));
+    }
+
+    /**
      * Remove the given parallelepipeds from the set; merge them and add the new parallelepiped to the set
      * @param parallelepipedA first parallelepiped
      * @param axis axis of the adjacent side of the given parallelepipeds
@@ -87,7 +100,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         parallelepipeds.remove(parallelepipedB);
         parallelepipeds.remove(parallelepipedA);
 
-        Position newCorner = Position.min(parallelepipedA.getCorner(), parallelepipedB.getCorner());
+        Position newCorner = parallelepipedA.getCorner().min(parallelepipedB.getCorner());
 
         Parallelepiped newParallelepiped = parallelepipedA.setCorner(newCorner).setSize(axis,
                         parallelepipedB.getSize(axis) + parallelepipedA.getSize(axis));
@@ -115,7 +128,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
     public void remove(@NotNull Position position) {
         get(position).ifPresent(toSplit -> {
             parallelepipeds.remove(toSplit);
-            if (toSplit.getVolume() != 1) {
+            if (toSplit.volume() != 1) {
                 addBottom(position, toSplit);
                 addTop(position, toSplit);
                 addRight(position, toSplit);
@@ -234,7 +247,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         int volumeSoFar = 0;
 
         for (Parallelepiped parallelepiped : parallelepipeds) {
-            volumeSoFar += parallelepiped.getVolume();
+            volumeSoFar += parallelepiped.volume();
         }
 
         return volumeSoFar;
@@ -331,8 +344,34 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
 
     @Override
     public int hashCode() {
-        // TODO: make the the tests for this method pass
+        return ((int) getVolume() + 31 * getCenter().hashCode());
+    }
 
-        return parallelepipeds.hashCode();
+    /**
+     * Maybe produce the weighted center of this space
+     *
+     * <p>
+     *     If this space is empty, produce nothing.
+     *     Otherwise, produce the center
+     * </p>
+     * @return the weighted center of this space
+     */
+    public Optional<Position> getCenter() {
+        if (parallelepipeds.isEmpty()) {
+            return Optional.empty();
+        } else {
+            Position dividendSoFar = new Position(0,0,0);
+            int divisorSoFar = 0;
+
+            for (Parallelepiped parallelepiped : parallelepipeds) {
+                dividendSoFar = dividendSoFar.add(parallelepiped.center().multiply(parallelepiped.volume()));
+                divisorSoFar += parallelepiped.volume();
+            }
+            assert divisorSoFar != 0;
+
+            Position center = dividendSoFar.divide(divisorSoFar);
+
+            return Optional.of(center);
+        }
     }
 }
