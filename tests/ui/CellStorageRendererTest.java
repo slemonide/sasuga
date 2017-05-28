@@ -111,7 +111,7 @@ public class CellStorageRendererTest {
         node = renderer.getNode();
 
         assertEquals(CELL_PARALLELEPIPEDS.size(), renderer.size());
-        assertEquals(CELL_PARALLELEPIPEDS.stream().mapToInt(CellParallelepiped::volume).sum(),
+        assertEquals(CELL_PARALLELEPIPEDS.parallelStream().mapToInt(CellParallelepiped::volume).sum(),
                 renderer.volume());
         assertEquals(CELL_PARALLELEPIPEDS.size(), node.getQuantity());
         assertEquals(node, renderer.getNode());
@@ -145,7 +145,7 @@ public class CellStorageRendererTest {
         node = renderer.getNode();
 
         assertEquals(5, renderer.size());
-        assertEquals(CELL_PARALLELEPIPEDS.stream().mapToInt(CellParallelepiped::volume).sum(),
+        assertEquals(CELL_PARALLELEPIPEDS.parallelStream().mapToInt(CellParallelepiped::volume).sum(),
                 renderer.volume());
         assertEquals(5, node.getQuantity());
         assertEquals(node, renderer.getNode());
@@ -164,7 +164,7 @@ public class CellStorageRendererTest {
             cellStorage.add(CELL_PARALLELEPIPEDS.get(i));
 
             assertEquals(i, renderer.size());
-            assertEquals(CELL_PARALLELEPIPEDS.stream().limit(i).mapToInt(CellParallelepiped::volume).sum(),
+            assertEquals(CELL_PARALLELEPIPEDS.parallelStream().limit(i).mapToInt(CellParallelepiped::volume).sum(),
                     renderer.volume());
             assertEquals(i, node.getQuantity());
             assertEquals(node, renderer.getNode());
@@ -172,7 +172,7 @@ public class CellStorageRendererTest {
             renderer.render();
 
             assertEquals(i + 1, renderer.size());
-            assertEquals(CELL_PARALLELEPIPEDS.stream().limit(i + 1).mapToInt(CellParallelepiped::volume).sum(),
+            assertEquals(CELL_PARALLELEPIPEDS.parallelStream().limit(i + 1).mapToInt(CellParallelepiped::volume).sum(),
                     renderer.volume());
             assertEquals(i + 1, node.getQuantity());
             assertEquals(node, renderer.getNode());

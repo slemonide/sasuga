@@ -334,7 +334,7 @@ public class RemoveParallelepipedTest {
         for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
             Parallelepiped randomParallelepiped = getRandomParallelepiped();
 
-            Set<Position> toBeRemoved = addedPositions.stream()
+            Set<Position> toBeRemoved = addedPositions.parallelStream()
                     .filter(randomParallelepiped::contains)
                     .collect(Collectors.toSet());
 
@@ -363,7 +363,7 @@ public class RemoveParallelepipedTest {
         for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
             Parallelepiped randomParallelepiped = getRandomParallelepiped(getRandomPosition(BOUND));
 
-            Set<Position> toBeRemoved = addedPositions.stream()
+            Set<Position> toBeRemoved = addedPositions.parallelStream()
                     .filter(randomParallelepiped::contains)
                     .collect(Collectors.toSet());
 

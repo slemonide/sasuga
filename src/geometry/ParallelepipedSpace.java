@@ -309,7 +309,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
      */
     @NotNull
     public Stream<Position> positions() {
-        return parallelepipeds.stream().flatMap(Parallelepiped::positions);
+        return parallelepipeds.parallelStream().flatMap(Parallelepiped::positions);
     }
 
     /**

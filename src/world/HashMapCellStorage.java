@@ -10,6 +10,7 @@ import util.Difference;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * HashMap-based implementation of CellStorage
@@ -56,9 +57,7 @@ public class HashMapCellStorage implements CellStorage {
     }
 
     private void removeOverlappingRegions(ParallelepipedSpace parallelepipedSpace) {
-        for (ParallelepipedSpace otherParallelepipedSpace : storage.values()) {
-            parallelepipedSpace.removeAll(otherParallelepipedSpace);
-        }
+        storage.values().forEach(parallelepipedSpace::removeAll);
     }
 
     /**
@@ -157,13 +156,8 @@ public class HashMapCellStorage implements CellStorage {
      */
     @Override
     public boolean contains(Position position) {
-        for (ParallelepipedSpace parallelepipedSpace : storage.values()) {
-            if (parallelepipedSpace.contains(position)) {
-                return true;
-            }
-        }
-
-        return false;
+        return storage.values().parallelStream()
+                .anyMatch(parallelepipeds -> parallelepipeds.contains(position));
     }
 
     /**
@@ -181,13 +175,8 @@ public class HashMapCellStorage implements CellStorage {
      */
     @Override
     public boolean isEmpty() {
-        for (ParallelepipedSpace parallelepipedSpace : storage.values()) {
-            if (!parallelepipedSpace.isEmpty()) {
-                return false;
-            }
-        }
-
-        return true;
+        return storage.values().parallelStream()
+                .allMatch(ParallelepipedSpace::isEmpty);
     }
 
     /**
@@ -197,19 +186,13 @@ public class HashMapCellStorage implements CellStorage {
      */
     @Override
     public int size() {
-        int sizeSoFar = 0;
-
-        for (ParallelepipedSpace parallelepipedSpace : storage.values()) {
-            sizeSoFar += parallelepipedSpace.size();
-        }
-
-        return sizeSoFar;
+        return storage.values().parallelStream().mapToInt(ParallelepipedSpace::size).sum();
     }
 
     /**
-     * Produce the set of all cell parallelepipeds in the storage
+     * Produce the stream of all cell parallelepipeds in the storage
      *
-     * @return set of all cell parallelepipeds in the storage
+     * @return stream of all cell parallelepipeds in the storage
      */
     @Override
     public @NotNull Set<CellParallelepiped> cellParallelepipeds() {
