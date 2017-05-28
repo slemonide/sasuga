@@ -219,7 +219,17 @@ public class World extends Observable implements Runnable {
         return growthRate;
     }
 
-    CellStorage getCellStorage() {
+    /**
+     * Produce the actual cell storage
+     *
+     * <p>
+     *     It's a working version of the cell storage,
+     *     any changes to the world are reflected on it.
+     * </p>
+     * TODO: make the returned value unmodifiable
+     * @return the actual cell storage
+     */
+    public CellStorage getCellStorage() {
         return cellStorage;
     }
 

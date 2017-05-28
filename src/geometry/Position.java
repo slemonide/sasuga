@@ -60,6 +60,13 @@ public final class Position {
     }
 
     /**
+     * Creates a position centered at (0,0,0)
+     */
+    public Position() {
+        x = y = z = 0;
+    }
+
+    /**
      * Constructs a position from the given Vector3f
      * @param vector a Vector3f used in the graphical engine
      * @return abstract position used by the game mechanics
@@ -160,6 +167,23 @@ public final class Position {
     }
 
     /**
+     * Subtract given change from this position
+     * @param dx change in x component
+     * @param dy change in y component
+     * @param dz change in z component
+     * @return this position minus the given change
+     */
+    @NotNull
+    @Contract(pure = true)
+    private Position subtract(int dx, int dy, int dz) {
+        return new Position(
+                x - dx,
+                y - dy,
+                z - dz
+        );
+    }
+
+    /**
      * Subtract that position from this position
      * @param that position which to subtract
      * @return this position minus the given position
@@ -167,7 +191,17 @@ public final class Position {
     @NotNull
     @Contract(pure = true)
     public Position subtract(Position that) {
-        return this.add(that.inverse());
+        return subtract(that.x, that.y, that.z);
+    }
+
+    /**
+     * Subtracts (1,1,1) from this position
+     * @return this position minus (1,1,1)
+     */
+    @NotNull
+    @Contract(pure = true)
+    public Position subtractOne() {
+        return this.subtract(1,1,1);
     }
 
     /**

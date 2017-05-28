@@ -20,7 +20,7 @@ public class HashMapCellStorage implements CellStorage {
     /**
      * Create a new empty cell storage
      */
-    HashMapCellStorage() {
+    public HashMapCellStorage() {
         storage = new HashMap<>();
     }
 
@@ -31,7 +31,7 @@ public class HashMapCellStorage implements CellStorage {
      * @param cellParallelepipeds the collection of elements to initially contain
      * @throws NullPointerException if the specified collection is null
      */
-    HashMapCellStorage(@NotNull Collection<CellParallelepiped> cellParallelepipeds) throws NullPointerException {
+    public HashMapCellStorage(@NotNull Collection<CellParallelepiped> cellParallelepipeds) throws NullPointerException {
         storage = new HashMap<>();
         addAll(cellParallelepipeds);
     }

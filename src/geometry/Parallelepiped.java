@@ -54,7 +54,28 @@ public final class Parallelepiped {
         this.zSize = zSize;
     }
 
+    /**
+     * Creates a parallelepiped with the given dimensions centered at the given position
+     * @param corner minimal position of the parallelepiped
+     * @param sides contains the dimensions of the sides
+     * @throws IllegalArgumentException if any of the dimensions are not positive
+     */
+    public Parallelepiped(Position corner, @NotNull Position sides) {
+        if (sides.x <= 0)
+            throw new IllegalArgumentException("x dimension must be positive");
+        if (sides.y <= 0)
+            throw new IllegalArgumentException("y dimension must be positive");
+        if (sides.z <= 0)
+            throw new IllegalArgumentException("z dimension must be positive");
+
+        this.corner = corner;
+        this.xSize = sides.x;
+        this.ySize = sides.y;
+        this.zSize = sides.z;
+    }
+
     @Contract(pure = true)
+    @NotNull
     public Position getCorner() {
         return corner;
     }
@@ -78,6 +99,7 @@ public final class Parallelepiped {
                 (corner.z <= position.z) && (position.z < corner.z + zSize));
     }
 
+    @Contract(pure = true)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,10 +120,13 @@ public final class Parallelepiped {
         return result;
     }
 
-    @NotNull Parallelepiped setCorner(@NotNull Position corner) {
+    @Contract(pure = true)
+    @NotNull
+    public Parallelepiped setCorner(@NotNull Position corner) {
         return new Parallelepiped(corner, xSize, ySize, zSize);
     }
 
+    @Contract(pure = true)
     @NotNull Parallelepiped setSize(@NotNull Axis axis, int size) {
         switch (axis) {
             case X:
@@ -121,6 +146,7 @@ public final class Parallelepiped {
      * </p>
      * @return volume of this parallelepiped
      */
+    @Contract(pure = true)
     public int volume() {
         int volumeSoFar = 1;
 
@@ -131,6 +157,7 @@ public final class Parallelepiped {
         return volumeSoFar;
     }
 
+    @Contract(pure = true)
     @NotNull
     public Vector3f getWorldVector3f() {
         return new Vector3f(
@@ -143,6 +170,7 @@ public final class Parallelepiped {
      * @return true if this parallelepiped intersects with the given parallelepiped,
      * false otherwise
      */
+    @Contract(pure = true)
     boolean intersects(@NotNull Parallelepiped otherParallelepiped) {
         for (Axis axis : Axis.values()) {
             IntegerInterval intervalA = new IntegerInterval(
@@ -167,6 +195,7 @@ public final class Parallelepiped {
      * @param axis axis on which to check for neighbours
      * @return collection of found neighbours
      */
+    @Contract(pure = true)
     @NotNull
     Collection<? extends Parallelepiped> getInterlockingNeighbours(@NotNull ParallelepipedSpace space,
                                                                    @NotNull Axis axis) {
@@ -188,6 +217,7 @@ public final class Parallelepiped {
      * @param parallelepiped parallelepiped to check the fitness with
      * @return true if the sizes of parallelepipeds match, false otherwise
      */
+    @Contract(pure = true)
     boolean fits(@NotNull Axis axis,
                  @NotNull Parallelepiped parallelepiped) {
 
@@ -208,6 +238,7 @@ public final class Parallelepiped {
      * @return position in this parallelepiped
      * @throws IllegalArgumentException if index is less then 1 or greater then volume()
      */
+    @Contract(pure = true)
     @NotNull
     public Position positionFromIndex(int index) throws IllegalArgumentException {
         if (index < 1 || index > volume()) {
@@ -233,6 +264,8 @@ public final class Parallelepiped {
      *
      * @return set of all positions in the parallelepiped
      */
+    @Contract(pure = true)
+    @NotNull
     public Stream<Position> positions() {
         return Stream.iterate(1, i -> i+1).limit(volume()).map(this::positionFromIndex);
     }
@@ -241,6 +274,7 @@ public final class Parallelepiped {
      * Produce the (approximate) center of this parallelepiped
      * @return the (approximate) center of this parallelepiped
      */
+    @Contract(pure = true)
     @NotNull
     public Position center() {
         return new Position(
@@ -254,12 +288,34 @@ public final class Parallelepiped {
      * @param that the other parallelepiped
      * @return the weighted average center position
      */
+    @Contract(pure = true)
     @NotNull
     public Position averageCenterPosition(Parallelepiped that) {
 
         return (this.center().multiply(this.volume()))
                 .add(that.center().multiply(that.volume()))
                 .divide(this.volume() + that.volume());
+    }
+
+    /**
+     * Produces all sides as a vector
+     * @return all sides as a vector
+     */
+    @Contract(pure = true)
+    @NotNull
+    public Position getSides() {
+        return new Position(xSize, ySize, zSize);
+    }
+
+    /**
+     * Sets the sides of this parallelepiped
+     * @param sides contains the sides of the parallelepiped
+     * @return parallelepiped with the given sides
+     */
+    @Contract(pure = true)
+    @NotNull
+    public Parallelepiped setSides(@NotNull Position sides) {
+        return new Parallelepiped(corner, sides);
     }
 }
 

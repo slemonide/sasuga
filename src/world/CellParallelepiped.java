@@ -40,4 +40,12 @@ public final class CellParallelepiped {
         result = 31 * result + cell.hashCode();
         return result;
     }
+
+    /**
+     * Produce the volume occupied by this cellParallelepiped
+     * @return volume occupied by this cellParallelepiped
+     */
+    public int volume() {
+        return parallelepiped.volume();
+    }
 }

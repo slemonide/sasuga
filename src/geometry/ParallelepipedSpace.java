@@ -1,5 +1,6 @@
 package geometry;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -99,13 +100,29 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
 
     /**
      * Produces true if this space contains given position, false otherwise
-     * <p>Iterates through all parallelepipeds in the set to check if they
-     * contain the given position.</p>
+     * <p>
+     *     Iterates through all parallelepipeds in the set to check if they
+     *     contain the given position.
+     * </p>
      * @param position position to check
      * @return true if this space contains given position, false otherwise
      */
     public boolean contains(@NotNull Position position) {
         return (get(position).isPresent());
+    }
+
+    /**
+     * Produces true if this space contains given parallelepiped, false otherwise
+     * <p>
+     *     Space contains given parallelepiped either if it is present in the collection,
+     *     or if it can be fully fit inside a number of present parallelepipeds
+     * </p>
+     * @param parallelepiped parallelepiped to search for
+     * @return true if this space contains given parallelepiped, false otherwise
+     */
+    public boolean contains(Parallelepiped parallelepiped) {
+        // TODO: cover all cases
+        return parallelepipeds.contains(parallelepiped);
     }
 
     /**
@@ -247,6 +264,7 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         assert !parallelepipedsIntersect();
     }
 
+    @Contract(pure = true)
     private boolean parallelepipedsIntersect() {
         for (Parallelepiped parallelepiped1 : parallelepipeds) {
             for (Parallelepiped parallelepiped2 : parallelepipeds) {
@@ -259,10 +277,18 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         return false;
     }
 
+    /**
+     * Entirely clears the space inside the given parallelepiped
+     * @param parallelepiped a parallelepiped describing what space to clear
+     */
     public void remove(Parallelepiped parallelepiped) {
         // TODO: add a faster implementations
 
-        parallelepiped.positions().forEach(this::remove);
+        // TODO: finish
+        // Also, this might be already (mostly) done in remove(Position)
+        parallelepipeds.remove(parallelepiped);
+
+        //parallelepiped.positions().forEach(this::remove);
     }
 
     /**
@@ -360,5 +386,12 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
 
             return Optional.of(center);
         }
+    }
+
+    /**
+     * Remove all parallelepipeds from this space
+     */
+    public void clear() {
+        parallelepipeds.clear();
     }
 }

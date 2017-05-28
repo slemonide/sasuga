@@ -5,6 +5,7 @@ import geometry.Parallelepiped;
 import geometry.Position;
 import org.junit.Before;
 import org.junit.Test;
+import ui.CellStorageRendererTest;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 import static cells.StaticCell.*;
 import static org.junit.Assert.*;
+import static ui.CellStorageRendererTest.CELL_PARALLELEPIPEDS;
 
 /**
  * Tests for the HashMapCellStorage class
@@ -70,6 +72,19 @@ public class HashMapCellStorageTest {
         assertEquals(1, testHashMapCellStorage.cellParallelepipeds().size());
         assertTrue(testHashMapCellStorage.cellParallelepipeds().contains(new CellParallelepiped(
                 new Parallelepiped(new Position(0,0,0), 2,1,1),StaticCell.WOOD)));
+    }
+
+    @Test
+    public void testConstructorCollectionGeneralCase() {
+        testHashMapCellStorage = new HashMapCellStorage(CELL_PARALLELEPIPEDS);
+        assertFalse(testHashMapCellStorage.isEmpty());
+        assertEquals(CELL_PARALLELEPIPEDS.size(), testHashMapCellStorage.size());
+
+        for (CellParallelepiped cellParallelepiped : CELL_PARALLELEPIPEDS) {
+            assertTrue(testHashMapCellStorage.contains(cellParallelepiped.parallelepiped.getCorner()));
+            assertTrue(testHashMapCellStorage.cellParallelepipeds().contains(cellParallelepiped));
+        }
+        assertEquals(CELL_PARALLELEPIPEDS.size(), testHashMapCellStorage.cellParallelepipeds().size());
     }
 
     @Test

@@ -52,21 +52,9 @@ public class Environment {
      */
     private Node cellsNode;
     /**
-     * Map from Parallelepipeds to Spatials. Used to update the spatials.
+     * Renderer that takes care of the cellsNode
      */
-    private Map<Parallelepiped, Spatial> voxelMap;
-    /**
-     * Used to optimize the number of spatials
-     */
-    private ParallelepipedSpace parallelepipedSpace;
-    /**
-     * Observers parallelepipedSpace to update the voxelMap
-     */
-    private SetObserver<Parallelepiped> parallelepipedSpaceObserver;
-    /**
-     * Observes the world as a collection of CellParallelepiped's
-     */
-    private CollectionObserver<CellParallelepiped> worldObserver;
+    private CellStorageRenderer renderer;
 
     private Geometry floor;
 
@@ -77,10 +65,7 @@ public class Environment {
     Environment(VisualGUI visualGUI) {
         this.visualGUI = visualGUI;
 
-        voxelMap = new HashMap<>();
-        parallelepipedSpace = new ParallelepipedSpace();
-        parallelepipedSpaceObserver = new SetObserver<>(parallelepipedSpace.getParallelepipeds());
-        worldObserver = World.getInstance().registerCollectionObserver();
+        renderer = new CellStorageRenderer(World.getInstance().getCellStorage());
     }
 
     /**
@@ -113,16 +98,13 @@ public class Environment {
      * ALso, optionally configure the shadows
      */
     private void addCells() {
-        cellsNode = new Node();
+        cellsNode = renderer.getNode();
         visualGUI.getRootNode().attachChild(cellsNode);
 
+        // Turn on shadows
         if (Options.getInstance().getBoolean("ENABLE_SHADOWS")) {
             cellsNode.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
             visualGUI.getRootNode().setShadowMode(RenderQueue.ShadowMode.Off);
-        }
-
-        for (CellParallelepiped cellParallelepiped : World.getInstance().getCells()) {
-            add(cellParallelepiped.parallelepiped);
         }
     }
 
@@ -179,7 +161,7 @@ public class Environment {
             updateFloor();
         }
 
-        updateCells();
+        renderer.render();
     }
 
     /**
@@ -195,21 +177,6 @@ public class Environment {
         Vector3f floorTranslation = getFloor().getLocalTranslation();
         Vector3f nextFloorTranslation = floorTranslation.setY(minimumY - SCALE/2);
         getFloor().setLocalTranslation(nextFloorTranslation);
-    }
-
-    /**
-     * Update the cells according to the world state
-     */
-    private void updateCells() {
-        Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
-
-        for (Parallelepiped parallelepiped : difference.removed) {
-            remove(parallelepiped);
-        }
-
-        for (Parallelepiped parallelepiped : difference.added) {
-            add(parallelepiped);
-        }
     }
 
     private void add(Parallelepiped parallelepiped) {
@@ -236,21 +203,13 @@ public class Environment {
         node.setLocalTranslation(parallelepiped.getWorldVector3f().mult(SCALE));
 
         cellsNode.attachChild(node);
-        voxelMap.put(parallelepiped, node);
-    }
-
-    private void remove(Parallelepiped parallelepiped) {
-        assert voxelMap.containsKey(parallelepiped);
-
-        cellsNode.detachChild(voxelMap.get(parallelepiped));
-        voxelMap.remove(parallelepiped);
     }
 
     int getNumberOfParallelepipeds() {
-        return parallelepipedSpace.size();
+        return renderer.size();
     }
 
     long getVolumeOfParallelepipeds() {
-        return parallelepipedSpace.getVolume();
+        return renderer.volume();
     }
 }
