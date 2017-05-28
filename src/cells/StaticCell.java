@@ -3,6 +3,8 @@ package cells;
 import com.jme3.math.ColorRGBA;
 import geometry.Position;
 import inventory.InventoryItem;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import world.World;
 
@@ -16,23 +18,15 @@ public enum StaticCell implements InventoryItem, WorldCell {
     WOOD("Wood", ColorRGBA.Brown),
     WOOL("Wool", ColorRGBA.White);
 
+    @Getter
     private final String name;
+    @Getter
     private final ColorRGBA color;
 
     StaticCell(String name, ColorRGBA color) {
 
         this.name = name;
         this.color = color;
-    }
-
-    @NotNull
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public ColorRGBA getColor() {
-        return color;
     }
 
     @Override

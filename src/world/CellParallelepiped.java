@@ -3,11 +3,13 @@ package world;
 import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
+import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A world cell assigned to a parallelepiped
  */
+@EqualsAndHashCode
 public final class CellParallelepiped {
     public final Parallelepiped parallelepiped;
     public final WorldCell cell;
@@ -22,23 +24,6 @@ public final class CellParallelepiped {
                               @NotNull WorldCell worldCell) {
         this.parallelepiped = new Parallelepiped(position);
         this.cell = worldCell;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CellParallelepiped that = (CellParallelepiped) o;
-
-        return parallelepiped.equals(that.parallelepiped) && cell.equals(that.cell);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = parallelepiped.hashCode();
-        result = 31 * result + cell.hashCode();
-        return result;
     }
 
     /**

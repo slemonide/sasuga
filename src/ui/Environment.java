@@ -58,10 +58,6 @@ public class Environment {
 
     private Geometry floor;
 
-    private Geometry getFloor() {
-        return floor;
-    }
-
     Environment(VisualGUI visualGUI) {
         this.visualGUI = visualGUI;
 
@@ -174,9 +170,9 @@ public class Environment {
             minimumY = Math.min(minimumY, cellParallelepiped.parallelepiped.getCorner().y * SCALE);
         }
 
-        Vector3f floorTranslation = getFloor().getLocalTranslation();
+        Vector3f floorTranslation = floor.getLocalTranslation();
         Vector3f nextFloorTranslation = floorTranslation.setY(minimumY - SCALE/2);
-        getFloor().setLocalTranslation(nextFloorTranslation);
+        floor.setLocalTranslation(nextFloorTranslation);
     }
 
     private void add(Parallelepiped parallelepiped) {

@@ -1,5 +1,7 @@
 package geometry;
 
+
+import lombok.Getter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,14 +14,10 @@ public enum Axis {
     Y (Position.Y),
     Z (Position.Z);
 
-    private final Position unitVector;
+    @Getter private final Position unitVector;
 
     Axis(Position unitVector) {
         this.unitVector = unitVector;
-    }
-
-    public Position getUnitVector() {
-        return unitVector;
     }
 
     public Set<Axis> getComplements() {

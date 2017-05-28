@@ -1,6 +1,8 @@
 package geometry;
 
 import com.jme3.math.Vector3f;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,8 +17,9 @@ import java.util.stream.Stream;
  * invariant
  *     [x/y/z]Size are always positive
  */
+@EqualsAndHashCode
 public final class Parallelepiped {
-    private final Position corner;
+    @Getter private final Position corner;
     private final int xSize;
     private final int ySize;
     private final int zSize;
@@ -75,12 +78,6 @@ public final class Parallelepiped {
     }
 
     @Contract(pure = true)
-    @NotNull
-    public Position getCorner() {
-        return corner;
-    }
-
-    @Contract(pure = true)
     public int getSize(@NotNull Axis axis) {
         switch (axis) {
             case X:
@@ -97,27 +94,6 @@ public final class Parallelepiped {
         return ((corner.x <= position.x) && (position.x < corner.x + xSize) &&
                 (corner.y <= position.y) && (position.y < corner.y + ySize) &&
                 (corner.z <= position.z) && (position.z < corner.z + zSize));
-    }
-
-    @Contract(pure = true)
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Parallelepiped that = (Parallelepiped) o;
-
-        return xSize == that.xSize && ySize == that.ySize && zSize == that.zSize && corner.equals(that.corner);
-    }
-
-    @Contract(pure = true)
-    @Override
-    public int hashCode() {
-        int result = corner.hashCode();
-        result = 31 * result + xSize;
-        result = 31 * result + ySize;
-        result = 31 * result + zSize;
-        return result;
     }
 
     @Contract(pure = true)

@@ -4,6 +4,7 @@ import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
 import geometry.Position;
+import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
 import util.CollectionObserver;
 import util.Difference;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
 /**
  * HashMap-based implementation of CellStorage
  */
+@EqualsAndHashCode
 public class HashMapCellStorage implements CellStorage {
     private Map<WorldCell, ParallelepipedSpace> storage;
 
@@ -281,20 +283,5 @@ public class HashMapCellStorage implements CellStorage {
 
             return new Difference<>(added, removed, new HashMap<>());
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        HashMapCellStorage that = (HashMapCellStorage) o;
-
-        return storage.equals(that.storage);
-    }
-
-    @Override
-    public int hashCode() {
-        return storage.hashCode();
     }
 }

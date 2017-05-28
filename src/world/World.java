@@ -3,9 +3,9 @@ package world;
 import cells.WorldCell;
 import geometry.Parallelepiped;
 import geometry.Position;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import util.CollectionObserver;
-import util.Difference;
 
 import java.util.*;
 
@@ -20,13 +20,13 @@ public class World extends Observable implements Runnable {
     private static final double TICK_DELAY = 0.01; // in seconds
     public static final int TICKS_PER_SECOND = (int) (1.0 / TICK_DELAY);
     private long tickTime;
-    private int generation;
+    @Getter private int generation;
     private int tickDelayNumber;
     private CellStorage cellStorage;
-    private int population;
+    @Getter private int populationSize;
     private Thread worldThread;
     private static World instance;
-    private int growthRate;
+    @Getter private int growthRate;
     private Set<CellParallelepiped> toAdd;
     private Set<Position> toRemove;
     private Set<CellParallelepiped> lastSeenCellsSetToAdd;
@@ -38,7 +38,7 @@ public class World extends Observable implements Runnable {
     private World() {
         tickTime = 0;
         generation = 0;
-        population = 0;
+        populationSize = 0;
         tickDelayNumber = 0;
         cellStorage = new HashMapCellStorage();
         worldThread = new Thread(this);
@@ -84,22 +84,6 @@ public class World extends Observable implements Runnable {
     }
 
     /**
-     * Produce the current generation
-     * @return generation
-     */
-    public int getGeneration() {
-        return generation;
-    }
-
-    /**
-     * Produce the current population size
-     * @return population
-     */
-    public int getPopulationSize() {
-        return population;
-    }
-
-    /**
      * @return Unmodifiable collection of all the cells in the world
      */
     public Collection<CellParallelepiped> getCells() {
@@ -107,7 +91,7 @@ public class World extends Observable implements Runnable {
     }
 
     /**
-     * Adds the given cellParallelepiped to the world, updates population and generation
+     * Adds the given cellParallelepiped to the world, updates populationSize and generation
      * and notify the observers about the change
      * @param cellParallelepiped cellParallelepiped to add
      */
@@ -116,7 +100,7 @@ public class World extends Observable implements Runnable {
     }
 
     /**
-     * Removes the given cellParallelepiped from the world and updates population and generation
+     * Removes the given cellParallelepiped from the world and updates populationSize and generation
      * and notify the observers about the change
      * @param cellParallelepiped cellParallelepiped to remove
      */
@@ -175,7 +159,7 @@ public class World extends Observable implements Runnable {
         if (!(toAdd.isEmpty() && toRemove.isEmpty())) {
             cellStorage.removeAll(toRemove);
             cellStorage.addAll(toAdd);
-            population += growthRate;
+            populationSize += growthRate;
             generation++;
 
             setChanged();
@@ -213,10 +197,6 @@ public class World extends Observable implements Runnable {
      */
     public void interrupt() {
         worldThread.interrupt();
-    }
-
-    public int getGrowthRate() {
-        return growthRate;
     }
 
     /**

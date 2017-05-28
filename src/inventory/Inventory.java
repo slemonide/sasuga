@@ -2,6 +2,7 @@ package inventory;
 
 import cells.Player;
 import geometry.Position;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class Inventory {
     private Player player;
     private int maxSize;
-    private int selectedSlot;
+    @Getter private int selectedSlot;
     private List<InventoryItem> inventory;
 
     /**
@@ -76,13 +77,6 @@ public class Inventory {
      */
     public void setInventoryItem(int slot, InventoryItem inventoryItem) {
         inventory.set(getSafeSlot(slot), inventoryItem);
-    }
-
-    /**
-     * @return selected slot
-     */
-    public int getSelectedSlot() {
-        return selectedSlot;
     }
 
     /**

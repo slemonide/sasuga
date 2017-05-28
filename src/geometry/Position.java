@@ -2,6 +2,7 @@ package geometry;
 
 import com.jme3.math.Vector3f;
 import config.Options;
+import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * A three-dimensional position
  */
+@EqualsAndHashCode
 public final class Position {
     /**
      * The X direction
@@ -134,36 +136,6 @@ public final class Position {
     @Contract(pure = true)
     public Position multiply(int factor) {
         return new Position(factor * x, factor * y, factor * z);
-    }
-
-    /**
-     * Produce true if all components of this and that positions are equal
-     * @param o another object
-     * @return true if the other object is a Position and components are equal
-     */
-    @Contract(pure = true)
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Position vector3 = (Position) o;
-
-        return x == vector3.x && y == vector3.y && z == vector3.z;
-    }
-
-    /**
-     * Produce a hashcode so that positions with the same components
-     * have the same hashcodes
-     * @return hashcode generated from the components of this position
-     */
-    @Contract(pure = true)
-    @Override
-    public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        result = 31 * result + z;
-        return result;
     }
 
     /**

@@ -3,6 +3,8 @@ package cells;
 import com.jme3.math.Vector3f;
 import geometry.Position;
 import inventory.Inventory;
+import lombok.Getter;
+import lombok.Setter;
 import world.*;
 
 import java.util.Collection;
@@ -33,15 +35,24 @@ public class Player extends Observable {
     private static final float ROTATION_SPEED = 0.01f;
     public static final int INVENTORY_SIZE = 10;
     private static Player instance;
+    @Getter
     private int health;
+    @Getter
     private int strength;
+    @Getter
     private int agility;
+    @Getter
     private int hunger;
+    @Getter
     private Inventory inventory;
     private int hungerDelay;
+    @Getter
     private float rotation;
+    @Setter
     private Vector3f selectedBlock;
+    @Setter
     private Vector3f selectedBlockFace;
+    @Getter
     private Position position;
 
     /**
@@ -122,22 +133,6 @@ public class Player extends Observable {
         hasValidState();
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getAgility() {
-        return agility;
-    }
-
-    public int getHunger() {
-        return hunger;
-    }
-
     public void setHealth(int health) {
         if (!validPercentage(health)) {
             return;
@@ -182,10 +177,6 @@ public class Player extends Observable {
         notifyObservers();
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
-
     public void rotateCounterClockWise() {
         rotation += ROTATION_SPEED;
         rotation = (float) (rotation % (Math.PI * 2));
@@ -202,10 +193,6 @@ public class Player extends Observable {
         hasValidState();
         setChanged();
         notifyObservers();
-    }
-
-    public float getRotation() {
-        return rotation;
     }
 
     /**
@@ -235,17 +222,5 @@ public class Player extends Observable {
     }
     public Position getSelectedBlockFace() {
         return Position.fromUIVector(selectedBlockFace);
-    }
-
-    public void setSelectedBlock(Vector3f selectedBlock) {
-        this.selectedBlock = selectedBlock;
-    }
-
-    public void setSelectedBlockFace(Vector3f selectedBlockFace) {
-        this.selectedBlockFace = selectedBlockFace;
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }

@@ -3,6 +3,7 @@ package cells;
 import com.jme3.math.ColorRGBA;
 import geometry.Position;
 import inventory.InventoryItem;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import world.World;
 
@@ -18,6 +19,7 @@ public enum AnimatedCell implements InventoryItem, WorldCell {
         }
     });
 
+    @Getter
     private final String name;
     private final Function function;
 
@@ -34,16 +36,6 @@ public enum AnimatedCell implements InventoryItem, WorldCell {
     AnimatedCell(String name, Function function) {
         this.name = name;
         this.function = function;
-    }
-
-    /**
-     * Produce the name of this animated cell
-     * @return name of this animated cell
-     */
-    @NotNull
-    @Override
-    public String getName() {
-        return name;
     }
 
     /**
