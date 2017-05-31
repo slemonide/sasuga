@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import util.Math;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -98,9 +99,9 @@ public final class Parallelepiped {
      */
     @Contract(pure = true)
     public boolean contains(@NotNull Position position) {
-        return ((corner.x <= position.x) && (position.x < corner.x + xSize) &&
-                (corner.y <= position.y) && (position.y < corner.y + ySize) &&
-                (corner.z <= position.z) && (position.z < corner.z + zSize));
+        return ((corner.x <= position.x) && Math.lessThanSum(position.x, corner.x, xSize) &&
+                (corner.y <= position.y) && Math.lessThanSum(position.y, corner.y, ySize) &&
+                (corner.z <= position.z) && Math.lessThanSum(position.z, corner.z, zSize));
     }
 
     /**
