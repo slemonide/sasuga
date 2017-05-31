@@ -11,6 +11,8 @@ import java.util.Set;
 import static geometry.Axis.X;
 import static geometry.Axis.Y;
 import static geometry.Axis.Z;
+import static geometry.parallelepipedSpace.Helpers.BOUND;
+import static geometry.parallelepipedSpace.Helpers.MAX_RANDOM_ITERATIONS_HARD;
 import static geometry.parallelepipedSpace.Helpers.RANDOM;
 import static org.junit.Assert.*;
 
@@ -549,18 +551,18 @@ public class ParallelepipedTest {
     }
 
     @Test
-    public void testContainsPositionItself() {
-        parallelepipedA = Helpers.getRandomParallelepiped();
+    public void testContainsPositionItselfBasicUnit() {
+        parallelepipedA = new Parallelepiped(new Position());
 
         assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()));
         assertTrue(parallelepipedA.contains(parallelepipedA.center()));
         assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
-                .add(parallelepipedA.getSides())));
+                .add(parallelepipedA.getSides().subtractOne())));
 
         for (Axis axisA : Axis.values()) {
             for (Axis axisB : Axis.values()) {
                 assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
-                        .add(parallelepipedA.getSides()
+                        .add(parallelepipedA.getSides().subtractOne()
                                 .set(axisA, 0)
                                 .set(axisB, 0))));
             }
@@ -568,45 +570,79 @@ public class ParallelepipedTest {
     }
 
     @Test
-    public void testContainsPositionItselfHarder() {
-        parallelepipedA = Helpers.getRandomParallelepiped();
+    public void testContainsPositionItselfBasic() {
+        parallelepipedA = new Parallelepiped(new Position(-123, 23, 21312),
+                123, 421, 3125);
 
-        assertTrue(parallelepipedA.positions()
-                .filter(position ->
-                        RANDOM.nextInt(
-                                Math.abs(Math.max(parallelepipedA.getSize(X),
-                                         parallelepipedA.getSize(Y))))
-                                == 1)
-                .allMatch(parallelepipedA::contains));
+        assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()));
+        assertTrue(parallelepipedA.contains(parallelepipedA.center()));
+        assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
+                .add(parallelepipedA.getSides().subtractOne())));
+
+        for (Axis axisA : Axis.values()) {
+            for (Axis axisB : Axis.values()) {
+                assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
+                        .add(parallelepipedA.getSides().subtractOne()
+                                .set(axisA, 0)
+                                .set(axisB, 0))));
+            }
+        }
+    }
+
+    @Test
+    public void testContainsPositionItself() {
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepipedA = Helpers.getRandomParallelepiped();
+
+            assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()));
+            assertTrue(parallelepipedA.contains(parallelepipedA.center()));
+            assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
+                    .add(parallelepipedA.getSides().subtractOne())));
+
+            for (Axis axisA : Axis.values()) {
+                for (Axis axisB : Axis.values()) {
+                    assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
+                            .add(parallelepipedA.getSides().subtractOne()
+                                    .set(axisA, 0)
+                                    .set(axisB, 0))));
+                }
+            }
+        }
     }
 
     @Test
     public void testContainsParallelepipedPositiveFullCover() {
-        parallelepipedA = Helpers.getRandomParallelepiped();
-        parallelepipedB = parallelepipedA;
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepipedA = Helpers.getRandomParallelepiped();
+            parallelepipedB = parallelepipedA;
 
-        assertTrue(parallelepipedA.contains(parallelepipedB));
-        assertTrue(parallelepipedB.contains(parallelepipedA));
+            assertTrue(parallelepipedA.contains(parallelepipedB));
+            assertTrue(parallelepipedB.contains(parallelepipedA));
+        }
     }
 
     @Test
     public void testContainsParallelepipedPositiveHalfCoverSideTouch() {
-        parallelepipedA = Helpers.getRandomParallelepiped();
-        parallelepipedB = parallelepipedA.setSides(parallelepipedA.getSides().divide(2));
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepipedA = Helpers.getRandomParallelepiped();
+            parallelepipedB = parallelepipedA.setSides(parallelepipedA.getSides().divide(2));
 
-        assertTrue(parallelepipedA.contains(parallelepipedB));
-        assertFalse(parallelepipedB.contains(parallelepipedA));
+            assertTrue(parallelepipedA.contains(parallelepipedB));
+            assertFalse(parallelepipedB.contains(parallelepipedA));
+        }
     }
 
     @Test
     public void testContainsParallelepipedPositiveHalfCoverInside() {
-        parallelepipedA = Helpers.getRandomParallelepiped();
-        parallelepipedB = parallelepipedA
-                .setSides(parallelepipedA.getSides().divide(2))
-                .setCorner(parallelepipedA.getCorner().add(1, 2, 3));
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepipedA = Helpers.getRandomParallelepiped();
+            parallelepipedB = parallelepipedA
+                    .setSides(parallelepipedA.getSides().divide(2))
+                    .setCorner(parallelepipedA.getCorner().add(1, 2, 3));
 
-        assertTrue(parallelepipedA.contains(parallelepipedB));
-        assertFalse(parallelepipedB.contains(parallelepipedA));
+            assertTrue(parallelepipedA.contains(parallelepipedB));
+            assertFalse(parallelepipedB.contains(parallelepipedA));
+        }
     }
 
     @Test
