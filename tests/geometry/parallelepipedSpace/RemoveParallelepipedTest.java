@@ -1,18 +1,16 @@
 package geometry.parallelepipedSpace;
 
-import geometry.Axis;
 import geometry.Parallelepiped;
 import geometry.ParallelepipedSpace;
 import geometry.Position;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static geometry.parallelepipedSpace.Helpers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -20,43 +18,11 @@ import static org.junit.Assert.*;
  */
 public class RemoveParallelepipedTest {
     private final ParallelepipedSpace testSpace = new ParallelepipedSpace();
-    private final static Random RANDOM = new Random();
-
-    // -----------------------------------------------------------------------
-    // User-defined constants
-
-    /**
-     * Default number of iterations for random-pick tests
-     */
-    private static final int MAX_RANDOM_ITERATIONS = 10000;
-
-    /**
-     * Default number of iterations for computationally-demanding
-     * random-pick tests
-     */
-    private static final int MAX_RANDOM_ITERATIONS_HARD = 100;
-
-    /**
-     * Specifies how many items to generate at maximum
-     */
-    private static final int MAX_ENTITIES = 100;
-
-
-    /**
-     * Specifies tha maximum edge used for the position-removing equivalence test
-     */
-    private static final int RANDOM_REMOVE_MAX_EDGE = 5;
 
     /**
      * Randomly-generated corner
      */
     private Position corner;
-
-    // Constants for the tests that test helper functions
-    /**
-     * Default bound with which to search for a random number
-     */
-    private static final int BOUND = 1000;
 
     // To be configured individually by each test
     private Parallelepiped parallelepipedA;
@@ -71,170 +37,6 @@ public class RemoveParallelepipedTest {
 
     // -----------------------------------------------------------------------
     // Helper functions
-
-    /**
-     * Produces a random number in the interval (-bound, bound)
-     * @param bound specifies the interval from which to chose the number
-     * @return a random number in the interval (-bound, bound)
-     */
-    private int getRandomNumber(int bound) {
-        return (RANDOM.nextInt(1) * 2 - 1) * RANDOM.nextInt(bound);
-    }
-
-    /**
-     * Produces a random position without any upper or lower bound
-     * @return a random position
-     */
-    @NotNull
-    private static Position getRandomPosition() {
-        return new Position(RANDOM.nextInt(), RANDOM.nextInt(), RANDOM.nextInt());
-    }
-
-    /**
-     * Produces a random position with components in the interval (-bound, bound)
-     * @param bound specifies the interval from which to chose the components
-     * @return a random position
-     */
-    @NotNull
-    private Position getRandomPosition(int bound) {
-        return new Position(
-                getRandomNumber(bound),
-                getRandomNumber(bound),
-                getRandomNumber(bound));
-    }
-
-    /**
-     * Produces a random position in the set (-bound, bound)
-     * @param bound specifies the set from which to chose the components
-     * @return a random position
-     */
-    @NotNull
-    private Position getRandomPosition(@NotNull Position bound) {
-        return new Position(
-                getRandomNumber(bound.x),
-                getRandomNumber(bound.y),
-                getRandomNumber(bound.z));
-    }
-
-    /**
-     * Produces a random parallelepiped with the given maximum side length
-     * @param maxSideLength maximum side length
-     * @return a random parallelepiped with the given maximum side length
-     */
-    @NotNull
-    private static Parallelepiped getRandomParallelepiped(int maxSideLength) {
-        return new Parallelepiped(getRandomPosition(),
-                RANDOM.nextInt(maxSideLength) + 1,
-                RANDOM.nextInt(maxSideLength) + 1,
-                RANDOM.nextInt(maxSideLength) + 1);
-    }
-
-    /**
-     * Randomly pick any parallelepiped
-     * @return unspecified parallelepiped
-     */
-    @NotNull
-    private Parallelepiped getRandomParallelepiped() {
-        return getRandomParallelepiped(Integer.MAX_VALUE);
-    }
-
-    /**
-     * Produces a random parallelepiped with the specified corner
-     * @param corner of the parallelepiped
-     * @return a random parallelepiped with the given corner
-     */
-    @NotNull
-    private Parallelepiped getRandomParallelepiped(@NotNull Position corner) {
-        return new Parallelepiped(corner,
-                RANDOM.nextInt(Integer.MAX_VALUE) + 1,
-                RANDOM.nextInt(Integer.MAX_VALUE) + 1,
-                RANDOM.nextInt(Integer.MAX_VALUE) + 1);
-    }
-
-    /**
-     * Produces a random parallelepiped close to the given position
-     *
-     * <p>
-     *     center of the returned parallelepiped is no further than maxSideLength
-     * </p>
-     * @param center position near which to pick a parallelepiped
-     * @param maxSideLength maximum side length
-     * @return a random parallelepiped near the given center
-     */
-    @NotNull
-    private Parallelepiped getRandomParallelepiped(@NotNull Position center, int maxSideLength) {
-        return new Parallelepiped(center.add(getRandomPosition(maxSideLength)),
-                RANDOM.nextInt(maxSideLength) + 1,
-                RANDOM.nextInt(maxSideLength) + 1,
-                RANDOM.nextInt(maxSideLength) + 1);
-    }
-
-    // -----------------------------------------------------------------------
-    // Test helper functions
-    @Test
-    public void testGetRandomNumber() {
-        int count = 0;
-        int sum = 0;
-
-        for (int i = 0; i < MAX_RANDOM_ITERATIONS; i++) {
-            int randomNumber = getRandomNumber(BOUND);
-            assertTrue(randomNumber > -BOUND);
-            assertTrue(randomNumber <  BOUND);
-
-            sum += randomNumber;
-            count++;
-        }
-
-        assertNotEquals(getRandomNumber(BOUND), sum / count);
-    }
-
-    @Test
-    public void testGetRandomPosition() {
-        int count = 0;
-        Position sum = new Position();
-
-        for (int i = 0; i < MAX_RANDOM_ITERATIONS; i++) {
-            Position randomPosition = getRandomPosition();
-
-            sum = sum.add(randomPosition);
-            count++;
-        }
-
-        assertNotEquals(getRandomPosition(), sum.divide(count));
-    }
-
-    @Test
-    public void testGetRandomPositionBound() {
-        int count = 0;
-        Position sum = new Position();
-
-        for (int i = 0; i < MAX_RANDOM_ITERATIONS; i++) {
-            Position randomPosition = getRandomPosition(BOUND);
-            for (Axis axis : Axis.values()) {
-                assertTrue(randomPosition.get(axis) > -BOUND);
-                assertTrue(randomPosition.get(axis) < BOUND);
-            }
-
-            sum = sum.add(randomPosition);
-            count++;
-        }
-
-        assertNotEquals(getRandomPosition(BOUND), sum.divide(count));
-    }
-
-    @Test
-    public void testGetRandomParallelepipedBound() {
-        for (int i = 0; i < MAX_RANDOM_ITERATIONS; i++) {
-            Parallelepiped randomParallelepiped = getRandomParallelepiped(corner, BOUND);
-
-            Position randomCenter = randomParallelepiped.center();
-            Position randomDisplacement = randomCenter.subtract(corner);
-            for (Axis axis : Axis.values()) {
-                assertTrue(randomDisplacement.get(axis) > -BOUND);
-                assertTrue(randomDisplacement.get(axis) < BOUND);
-            }
-        }
-    }
 
     // -----------------------------------------------------------------------
     // Test properties
@@ -387,6 +189,57 @@ public class RemoveParallelepipedTest {
     // -----------------------------------------------------------------------
     // Concrete tests
 
+    // -----------------------------------------------------------------------
+    // Removing a unit parallelepiped is equivalent to removing a position
+    // Copied from RebuildingLogicTest
+
+    @Test
+    public void testRemoveSliceThroughCube() {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    testSpace.add(new Parallelepiped(new Position(x, y, z)));
+                }
+            }
+        }
+
+        for (int x = 0; x < 3; x++) {
+            for (int z = 0; z < 3; z++) {
+                testSpace.remove(new Parallelepiped(new Position(x, 1, z)));
+            }
+        }
+
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
+                3, 1, 3)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,2,0),
+                3, 1, 3)));
+    }
+
+    @Test
+    public void testRemoveSliceThroughBigParallelepiped() {
+        buildParallelepiped(testSpace);
+        for (int x = 0; x < Helpers.MAX_POSITIONS_X; x++) {
+            for (int y = 0; y < Helpers.MAX_POSITIONS_Y; y++) {
+                testSpace.remove(new Parallelepiped(new Position(x, y, Helpers.MAX_POSITIONS_Z/2)));
+            }
+        }
+
+        assertEquals(2, testSpace.size());
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0, 0, 0),
+                Helpers.MAX_POSITIONS_X,
+                Helpers.MAX_POSITIONS_Y,
+                Helpers.MAX_POSITIONS_Z/2)));
+        assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(
+                0,
+                0,
+                Helpers.MAX_POSITIONS_Z/2 + 1),
+                Helpers.MAX_POSITIONS_X,
+                Helpers.MAX_POSITIONS_Y,
+                Helpers.MAX_POSITIONS_Z/2)));
+    }
+
+    // Other tests
     @Test
     public void noIntersection() {
         parallelepipedA = new Parallelepiped(corner, 10, 20, 30);

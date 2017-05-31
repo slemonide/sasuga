@@ -145,6 +145,18 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         hasValidState();
     }
 
+    /**
+     * Entirely clears the space inside the given parallelepiped
+     * @param parallelepiped a parallelepiped describing what space to clear
+     */
+    public void remove(Parallelepiped parallelepiped) {
+        // TODO: add a faster implementations
+
+        // TODO: finish
+        // Also, this might be already (mostly) done in remove(Position)
+        parallelepipeds.remove(parallelepiped);
+    }
+
     private void addBack(@NotNull Position position,
                          @NotNull Parallelepiped toSplit) {
         if (position.x < toSplit.getCorner().x + toSplit.getSize(X) - 1) {
@@ -225,6 +237,18 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         return Optional.empty();
     }
 
+    /**
+     * Maybe return a stream containing all parallelepipeds
+     * within the given region
+     * @param region region to check
+     * @return a stream containing all parallelepipeds within the given region
+     */
+    @NotNull
+    public Stream<Parallelepiped> get(@NotNull Parallelepiped region) {
+        // TODO: finish
+        return parallelepipeds.stream();
+    }
+
     @NotNull
     public Set<Parallelepiped> getParallelepipeds() {
         return Collections.unmodifiableSet(parallelepipeds);
@@ -275,20 +299,6 @@ public class ParallelepipedSpace implements Iterable<Parallelepiped> {
         }
 
         return false;
-    }
-
-    /**
-     * Entirely clears the space inside the given parallelepiped
-     * @param parallelepiped a parallelepiped describing what space to clear
-     */
-    public void remove(Parallelepiped parallelepiped) {
-        // TODO: add a faster implementations
-
-        // TODO: finish
-        // Also, this might be already (mostly) done in remove(Position)
-        parallelepipeds.remove(parallelepiped);
-
-        //parallelepiped.positions().forEach(this::remove);
     }
 
     /**

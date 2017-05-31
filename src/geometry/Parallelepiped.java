@@ -89,11 +89,39 @@ public final class Parallelepiped {
         }
     }
 
+    /**
+     * Produce true if this parallelepiped contains the given position,
+     * false otherwise
+     * @param position position to check for
+     * @return true if this parallelepiped contains the given position,
+     * false otherwise
+     */
     @Contract(pure = true)
     public boolean contains(@NotNull Position position) {
         return ((corner.x <= position.x) && (position.x < corner.x + xSize) &&
                 (corner.y <= position.y) && (position.y < corner.y + ySize) &&
                 (corner.z <= position.z) && (position.z < corner.z + zSize));
+    }
+
+    /**
+     * Produce true if this parallelepiped contains the given parallelepiped,
+     * false otherwise
+     *
+     * <p>
+     *     ALso produce false if given parallelepiped is only contained partially
+     * </p>
+     *
+     * // TODO: maybe increase the range?
+     *
+     * @param parallelepiped parallelepiped to check for
+     * @return true if this parallelepiped contains the given parallelepiped,
+     * false otherwise
+     */
+    @Contract(pure = true)
+    public boolean contains(@NotNull Parallelepiped parallelepiped) {
+        // TODO: finish
+
+        return this.contains(parallelepiped.corner);
     }
 
     @Contract(pure = true)

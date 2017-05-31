@@ -11,8 +11,8 @@ import util.SetObserver;
 
 import java.util.*;
 
-import static geometry.parallelepipedSpace.ParallelepipedSpaceTestHelpers.buildParallelepiped;
-import static geometry.parallelepipedSpace.ParallelepipedSpaceTestHelpers.buildRandomCloud;
+import static geometry.parallelepipedSpace.Helpers.buildParallelepiped;
+import static geometry.parallelepipedSpace.Helpers.buildRandomCloud;
 import static org.junit.Assert.*;
 
 public class ParallelepipedSpaceTest {
@@ -72,7 +72,7 @@ public class ParallelepipedSpaceTest {
     public void testGetVolumeHard() {
         buildParallelepiped(testSpace);
 
-        Assert.assertEquals(ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X * ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y * ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z, testSpace.getVolume());
+        Assert.assertEquals(Helpers.MAX_POSITIONS_X * Helpers.MAX_POSITIONS_Y * Helpers.MAX_POSITIONS_Z, testSpace.getVolume());
     }
 
     @Test
@@ -125,13 +125,13 @@ public class ParallelepipedSpaceTest {
             assertTrue(testSpace.contains(currentPosition));
             assertEquals(positions.size(), testSpace.getVolume());
 
-            currentPosition = currentPosition.add(ParallelepipedSpaceTestHelpers.nextPosition());
+            currentPosition = currentPosition.add(Helpers.nextPosition());
         }
     }
 
     @Test
     public void testRandomWalkRemove() {
-        ParallelepipedSpaceTestHelpers.buildCube(testSpace, MAX_STEPS_RANDOMWALK_REMOVE * 2);
+        Helpers.buildCube(testSpace, MAX_STEPS_RANDOMWALK_REMOVE * 2);
 
         Position currentPosition = new Position(MAX_STEPS_RANDOMWALK_REMOVE,
                 MAX_STEPS_RANDOMWALK_REMOVE,MAX_STEPS_RANDOMWALK_REMOVE);
@@ -148,7 +148,7 @@ public class ParallelepipedSpaceTest {
                     (MAX_STEPS_RANDOMWALK_REMOVE * 2) *
                     (MAX_STEPS_RANDOMWALK_REMOVE * 2) - removedPositions.size(), testSpace.getVolume());
 
-            currentPosition = currentPosition.add(ParallelepipedSpaceTestHelpers.nextPosition());
+            currentPosition = currentPosition.add(Helpers.nextPosition());
         }
     }
 
@@ -228,7 +228,7 @@ public class ParallelepipedSpaceTest {
 
     @Test
     public void testRemoveCenterOfAnOddCube() {
-        ParallelepipedSpaceTestHelpers.buildCube(testSpace, 3);
+        Helpers.buildCube(testSpace, 3);
         assertEquals(1, testSpace.size());
         assertEquals(3 * 3 * 3, testSpace.getVolume());
 
@@ -258,7 +258,7 @@ public class ParallelepipedSpaceTest {
 
     @Test
     public void testRemoveCenterOfAnEvenCube() {
-        ParallelepipedSpaceTestHelpers.buildCube(testSpace, 4);
+        Helpers.buildCube(testSpace, 4);
         assertEquals(1, testSpace.size());
         assertEquals(4 * 4 * 4, testSpace.getVolume());
 

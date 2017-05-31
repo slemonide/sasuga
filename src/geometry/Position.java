@@ -147,7 +147,7 @@ public final class Position {
      */
     @NotNull
     @Contract(pure = true)
-    private Position subtract(int dx, int dy, int dz) {
+    public Position subtract(int dx, int dy, int dz) {
         return new Position(
                 x - dx,
                 y - dy,

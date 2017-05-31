@@ -5,16 +5,13 @@ import geometry.ParallelepipedSpace;
 import geometry.Position;
 import org.junit.Before;
 import org.junit.Test;
-import util.Difference;
-import util.SetObserver;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import static geometry.parallelepipedSpace.ParallelepipedSpaceTest.MAX_POSITIONS;
-import static geometry.parallelepipedSpace.ParallelepipedSpaceTestHelpers.buildParallelepiped;
-import static geometry.parallelepipedSpace.ParallelepipedSpaceTestHelpers.buildUnitCube;
+import static geometry.parallelepipedSpace.Helpers.buildParallelepiped;
+import static geometry.parallelepipedSpace.Helpers.buildUnitCube;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -215,7 +212,7 @@ public class RebuildingLogicTest {
 
     @Test
     public void testAddManyCube() {
-        ParallelepipedSpaceTestHelpers.buildCube(testSpace, MAX_POSITIONS_CUBE);
+        Helpers.buildCube(testSpace, MAX_POSITIONS_CUBE);
 
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
@@ -226,8 +223,8 @@ public class RebuildingLogicTest {
 
     @Test
     public void testAddManyCubeTwice() {
-        ParallelepipedSpaceTestHelpers.buildCube(testSpace, MAX_POSITIONS_CUBE);
-        ParallelepipedSpaceTestHelpers.buildCube(testSpace, MAX_POSITIONS_CUBE * 2);
+        Helpers.buildCube(testSpace, MAX_POSITIONS_CUBE);
+        Helpers.buildCube(testSpace, MAX_POSITIONS_CUBE * 2);
 
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
@@ -241,7 +238,7 @@ public class RebuildingLogicTest {
         buildParallelepiped(testSpace);
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z)));
     }
 
     @Test
@@ -412,23 +409,23 @@ public class RebuildingLogicTest {
     @Test
     public void testRemoveSliceThroughBigParallelepiped() {
         buildParallelepiped(testSpace);
-        for (int x = 0; x < ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X; x++) {
-            for (int y = 0; y < ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y; y++) {
-                testSpace.remove(new Position(x, y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z/2));
+        for (int x = 0; x < Helpers.MAX_POSITIONS_X; x++) {
+            for (int y = 0; y < Helpers.MAX_POSITIONS_Y; y++) {
+                testSpace.remove(new Position(x, y, Helpers.MAX_POSITIONS_Z/2));
             }
         }
 
         assertEquals(2, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0, 0, 0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X,
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y,
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z/2)));
+                Helpers.MAX_POSITIONS_X,
+                Helpers.MAX_POSITIONS_Y,
+                Helpers.MAX_POSITIONS_Z/2)));
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(
                 0,
                 0,
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z/2 + 1),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X,
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y,
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z/2)));
+                Helpers.MAX_POSITIONS_Z/2 + 1),
+                Helpers.MAX_POSITIONS_X,
+                Helpers.MAX_POSITIONS_Y,
+                Helpers.MAX_POSITIONS_Z/2)));
     }
 }

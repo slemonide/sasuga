@@ -11,8 +11,8 @@ import util.SetObserver;
 import java.util.Collection;
 
 import static geometry.parallelepipedSpace.ParallelepipedSpaceTest.MAX_POSITIONS;
-import static geometry.parallelepipedSpace.ParallelepipedSpaceTestHelpers.buildParallelepiped;
-import static geometry.parallelepipedSpace.ParallelepipedSpaceTestHelpers.buildUnitCube;
+import static geometry.parallelepipedSpace.Helpers.buildParallelepiped;
+import static geometry.parallelepipedSpace.Helpers.buildUnitCube;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -33,76 +33,76 @@ public class SetObserverTest {
     public void testRemoveCutBottomAddTop() {
         buildParallelepiped(testSpace);
         parallelepipedSpaceObserver.getDifference();
-        ParallelepipedSpaceTestHelpers.cutParallelepipedBottom(testSpace);
+        Helpers.cutParallelepipedBottom(testSpace);
 
         Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
         assertEquals(1, difference.removed.size());
         assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z)));
         assertEquals(1, difference.added.size());
         assertTrue(difference.added.contains(new Parallelepiped(new Position(0,0,1),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z - 1)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z - 1)));
 
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,1),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z - 1)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z - 1)));
     }
 
     @Test
     public void testRemoveAddBottom() {
         buildParallelepiped(testSpace);
         parallelepipedSpaceObserver.getDifference();
-        ParallelepipedSpaceTestHelpers.cutParallelepipedTop(testSpace);
+        Helpers.cutParallelepipedTop(testSpace);
 
         Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
         assertEquals(1, difference.removed.size());
         assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z)));
         assertEquals(1, difference.added.size());
         assertTrue(difference.added.contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z - 1)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z - 1)));
 
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z - 1)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z - 1)));
     }
 
     @Test
     public void testRemoveAddRight() {
         buildParallelepiped(testSpace);
         parallelepipedSpaceObserver.getDifference();
-        ParallelepipedSpaceTestHelpers.cutParallelepipedLeft(testSpace);
+        Helpers.cutParallelepipedLeft(testSpace);
 
         Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
         assertEquals(1, difference.removed.size());
         assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z)));
         assertEquals(1, difference.added.size());
         assertTrue(difference.added.contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y - 1, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y - 1, Helpers.MAX_POSITIONS_Z)));
 
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y - 1, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y - 1, Helpers.MAX_POSITIONS_Z)));
     }
 
     @Test
     public void testRemoveAddLeft() {
         buildParallelepiped(testSpace);
         parallelepipedSpaceObserver.getDifference();
-        ParallelepipedSpaceTestHelpers.cutParallelepipedRight(testSpace);
+        Helpers.cutParallelepipedRight(testSpace);
 
         Difference<Parallelepiped> difference = parallelepipedSpaceObserver.getDifference();
         assertEquals(1, difference.removed.size());
         assertTrue(difference.removed.contains(new Parallelepiped(new Position(0,0,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y, Helpers.MAX_POSITIONS_Z)));
         assertEquals(1, difference.added.size());
         assertTrue(difference.added.contains(new Parallelepiped(new Position(0,1,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y - 1, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y - 1, Helpers.MAX_POSITIONS_Z)));
 
         assertEquals(1, testSpace.size());
         assertTrue(testSpace.getParallelepipeds().contains(new Parallelepiped(new Position(0,1,0),
-                ParallelepipedSpaceTestHelpers.MAX_POSITIONS_X, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Y - 1, ParallelepipedSpaceTestHelpers.MAX_POSITIONS_Z)));
+                Helpers.MAX_POSITIONS_X, Helpers.MAX_POSITIONS_Y - 1, Helpers.MAX_POSITIONS_Z)));
     }
 
     // toAdd
