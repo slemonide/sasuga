@@ -597,7 +597,7 @@ public class ParallelepipedTest {
             assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()));
             assertTrue(parallelepipedA.contains(parallelepipedA.center()));
             assertTrue(parallelepipedA.contains(parallelepipedA.getCorner()
-                    .add(parallelepipedA.getSides().subtractOne())));
+                    .add(parallelepipedA.getSides()).subtractOne()));
 
             for (Axis axisA : Axis.values()) {
                 for (Axis axisB : Axis.values()) {
