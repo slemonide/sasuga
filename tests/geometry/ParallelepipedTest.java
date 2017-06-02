@@ -2,11 +2,13 @@ package geometry;
 
 import com.jme3.math.Vector3f;
 import geometry.parallelepipedSpace.Helpers;
+import javafx.geometry.Pos;
 import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static geometry.Axis.X;
 import static geometry.Axis.Y;
@@ -589,6 +591,9 @@ public class ParallelepipedTest {
         }
     }
 
+    /**
+     * Note: this test requires Position to support arbitrary-precision coordinates
+     */
     @Test
     public void testContainsPositionItself() {
         for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
@@ -611,9 +616,29 @@ public class ParallelepipedTest {
     }
 
     @Test
+    public void testContainsParallelepipedPositiveFullCoverBasic() {
+        parallelepipedA = new Parallelepiped(new Position(), 10, 20, 50);
+        parallelepipedB = parallelepipedA;
+
+        assertTrue(parallelepipedA.contains(parallelepipedB));
+        assertTrue(parallelepipedB.contains(parallelepipedA));
+    }
+
+    @Test
     public void testContainsParallelepipedPositiveFullCover() {
         for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
             parallelepipedA = Helpers.getRandomParallelepiped();
+            parallelepipedB = parallelepipedA;
+
+            assertTrue(parallelepipedA.contains(parallelepipedB));
+            assertTrue(parallelepipedB.contains(parallelepipedA));
+        }
+    }
+
+    @Test
+    public void testContainsParallelepipedPositiveFullCoverBounded() {
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepipedA = Helpers.getRandomParallelepiped(BOUND);
             parallelepipedB = parallelepipedA;
 
             assertTrue(parallelepipedA.contains(parallelepipedB));
@@ -667,5 +692,80 @@ public class ParallelepipedTest {
 
         assertFalse(parallelepipedA.contains(parallelepipedB));
         assertFalse(parallelepipedB.contains(parallelepipedA));
+    }
+
+    // More basic tests
+    @Test
+    public void testContainsParallelepipedCornerIntersect() {
+        parallelepipedA = Helpers.getRandomParallelepiped(BOUND);
+        parallelepipedB = Helpers.getRandomParallelepiped(BOUND)
+                .setCorner(parallelepipedA.getCorner()
+                        .add(parallelepipedA.getSides().divide(2)));
+
+        assertFalse(parallelepipedA.contains(parallelepipedB));
+        assertFalse(parallelepipedB.contains(parallelepipedA));
+    }
+
+
+    @Test
+    public void testContainsParallelepipedMinusCornerIntersect() {
+        parallelepipedA = Helpers.getRandomParallelepiped(BOUND);
+        parallelepipedB = Helpers.getRandomParallelepiped(BOUND)
+                .setCorner(parallelepipedA.getCorner()
+                        .subtract(parallelepipedA.getSides().divide(2)));
+
+        assertFalse(parallelepipedA.contains(parallelepipedB));
+        assertFalse(parallelepipedB.contains(parallelepipedA));
+    }
+
+    @Test
+    public void testContainsParallelepipedInside() {
+        parallelepipedA = new Parallelepiped(new Position(), 10, 20, 30);
+        parallelepipedB = new Parallelepiped(new Position(2, 3, 4), 4, 5, 6);
+
+        assertTrue(parallelepipedA.contains(parallelepipedB));
+        assertFalse(parallelepipedB.contains(parallelepipedA));
+    }
+
+    @Test
+    public void testGetCornersBounded() {
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepiped = Helpers.getRandomParallelepiped(BOUND);
+
+            Set<Position> expectedCorners = new HashSet<>();
+
+            expectedCorners.add(parallelepiped.getCorner());
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne()));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(X, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(Y, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(Z, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(X, 0).set(Y, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(Y, 0).set(Z, 0)));
+
+            Set<Position> actualCorners = parallelepiped.getCorners().collect(Collectors.toSet());
+
+            assertEquals(expectedCorners, actualCorners);
+        }
+    }
+
+    @Test
+    public void testGetCornersUnBounded() {
+        for (int i = 0; i < MAX_RANDOM_ITERATIONS_HARD; i++) {
+            parallelepiped = Helpers.getRandomParallelepiped();
+
+            Set<Position> expectedCorners = new HashSet<>();
+
+            expectedCorners.add(parallelepiped.getCorner());
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides()));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(X, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(Y, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(Z, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(X, 0).set(Y, 0)));
+            expectedCorners.add(parallelepiped.getCorner().add(parallelepiped.getSides().subtractOne().set(Y, 0).set(Z, 0)));
+
+            Set<Position> actualCorners = parallelepiped.getCorners().collect(Collectors.toSet());
+
+            assertEquals(expectedCorners, actualCorners);
+        }
     }
 }

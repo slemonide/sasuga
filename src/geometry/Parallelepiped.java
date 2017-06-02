@@ -12,6 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static geometry.Axis.X;
+import static geometry.Axis.Y;
+import static geometry.Axis.Z;
+
 /**
  * Represents a right-angled parallelepiped with integer-valued side lengths
  *
@@ -20,7 +24,7 @@ import java.util.stream.Stream;
  */
 @EqualsAndHashCode
 public final class Parallelepiped {
-    @Getter private final Position corner;
+    @NotNull @Getter private final Position corner;
     private final int xSize;
     private final int ySize;
     private final int zSize;
@@ -29,7 +33,7 @@ public final class Parallelepiped {
      * Creates a unit parallelepiped cornered at the given position
      * @param corner minimal position of the parallelepiped
      */
-    public Parallelepiped(Position corner) {
+    public Parallelepiped(@NotNull Position corner) {
         this.corner = corner;
         this.xSize = 1;
         this.ySize = 1;
@@ -64,7 +68,7 @@ public final class Parallelepiped {
      * @param sides contains the dimensions of the sides
      * @throws IllegalArgumentException if any of the dimensions are not positive
      */
-    public Parallelepiped(Position corner, @NotNull Position sides) {
+    public Parallelepiped(@NotNull Position corner, @NotNull Position sides) {
         if (sides.x <= 0)
             throw new IllegalArgumentException("x dimension must be positive");
         if (sides.y <= 0)
@@ -120,9 +124,27 @@ public final class Parallelepiped {
      */
     @Contract(pure = true)
     public boolean contains(@NotNull Parallelepiped parallelepiped) {
-        // TODO: finish
+        return parallelepiped.getCorners().allMatch(this::contains);
+    }
 
-        return this.contains(parallelepiped.corner);
+    /**
+     * Stream all the corners of this parallelepiped
+     * @return stream of all the corners of this parallelepiped
+     */
+    @NotNull
+    public Stream<Position> getCorners() {
+        // TODO: add a better implementation
+        Set<Position> expectedCorners = new HashSet<>();
+
+        expectedCorners.add(getCorner());
+        expectedCorners.add(getCorner().add(getSides().subtractOne()));
+        expectedCorners.add(getCorner().add(getSides().subtractOne().set(X, 0)));
+        expectedCorners.add(getCorner().add(getSides().subtractOne().set(Y, 0)));
+        expectedCorners.add(getCorner().add(getSides().subtractOne().set(Z, 0)));
+        expectedCorners.add(getCorner().add(getSides().subtractOne().set(X, 0).set(Y, 0)));
+        expectedCorners.add(getCorner().add(getSides().subtractOne().set(Y, 0).set(Z, 0)));
+
+        return expectedCorners.stream();
     }
 
     @Contract(pure = true)

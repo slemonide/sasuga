@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * A three-dimensional position
  */
+// TODO: make position support arbitrary-precision coordinates
 @EqualsAndHashCode
 public final class Position {
     /**
